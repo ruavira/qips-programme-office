@@ -1,0 +1,201 @@
+# CANON — the fact registry.
+# The single source of truth for what has been established about this programme.
+#
+# STATUS values:
+#   APPROVED   the coordinating committee has ratified it. Binding on every workstream.
+#   PROPOSED   a workstream or council recommends it. NOT binding. Never publish it.
+#   SUPERSEDED replaced by a later fact. Kept for provenance. Never deleted.
+#
+# Only two things write to this file: a CCC decision, and a supersession recorded by the CCC.
+# No workstream may edit it directly.
+# Last promotion: 2026-07-28
+
+facts:
+  - id: F001
+    statement: "The programme is a 12-month hybrid professional programme, not a course."
+    status: APPROVED
+    owner: W02
+    source: "Owner decision, decisions-log D4/D5"
+    established: 2026-07-28
+
+  - id: F002
+    statement: "It is never described using the words course, class, lesson, student or module."
+    status: APPROVED
+    owner: W13
+    source: "Owner decision, decisions-log D4"
+    established: 2026-07-28
+
+  - id: F003
+    statement: "The unit of the programme is the month: one eLearning release, one live faculty session, one small-group coaching call, one artefact."
+    status: APPROVED
+    owner: W02
+    source: "Owner decision, decisions-log; governing design principle"
+    established: 2026-07-28
+
+  - id: F004
+    statement: "Artefacts are submitted four days before the coaching call so the coach arrives having read them."
+    status: APPROVED
+    owner: W02
+    source: "Programme architecture spec"
+    established: 2026-07-28
+
+  - id: F005
+    statement: "Coaching is monthly, in small groups, on Zoom."
+    status: APPROVED
+    owner: W06
+    source: "Owner decision, decisions-log D5 as amended"
+    established: 2026-07-28
+
+  - id: F006
+    statement: "The programme carries a 40-hour observership from month 3 to week 2 of month 4."
+    status: APPROVED
+    owner: W04
+    source: "Owner decision 2026-07-28, item 11"
+    established: 2026-07-28
+
+  - id: F007
+    statement: "Participants attend a qualified host site in their own country; travel and accommodation are met by the participant or their sponsoring organisation."
+    status: APPROVED
+    owner: W04
+    source: "Owner decision 2026-07-28, item 12"
+    established: 2026-07-28
+
+  - id: F008
+    statement: "Host sites are qualified against a published Host Site Standard derived from programme objectives, not from the characteristics of candidate sites."
+    status: APPROVED
+    owner: W04
+    source: "Owner decision, decisions-log"
+    established: 2026-07-28
+
+  - id: F009
+    statement: "Coaching capability is built internally rather than bought in."
+    status: APPROVED
+    owner: W06
+    source: "Owner decision 2026-07-28, item 13"
+    established: 2026-07-28
+
+  - id: F010
+    statement: "Measurement moves to month 3 and run charts to month 9."
+    status: APPROVED
+    owner: W02
+    source: "Owner decision 2026-07-28, item 14"
+    established: 2026-07-28
+
+  - id: F011
+    statement: "Emmanuel and Dr Ajibike hold written authority to cut or merge content to protect the monthly cap."
+    status: APPROVED
+    owner: W02
+    source: "Owner decision 2026-07-28, item 6"
+    established: 2026-07-28
+
+  - id: F012
+    statement: "Applications open October 2026 and close 31 December 2026."
+    status: APPROVED
+    owner: W07
+    source: "Owner decision 2026-07-28, item 4"
+    established: 2026-07-28
+
+  - id: F013
+    statement: "Cohort 1 runs January to December 2027."
+    status: APPROVED
+    owner: W10
+    source: "Owner decision 2026-07-28, item 4"
+    established: 2026-07-28
+
+  - id: F014
+    statement: "SQHN is the lead sponsor and the contracting entity that takes payment."
+    status: APPROVED
+    owner: W17
+    source: "Owner decision 2026-07-28, items 8 and 16"
+    established: 2026-07-28
+
+  - id: F015
+    statement: "All other organisations are presented as Partners, led by Ruavira Collective Inc, QAI and The Arete Connoisseurs (TAC). The word consortium is retired."
+    status: APPROVED
+    owner: W15
+    source: "Owner decision 2026-07-28, item 8"
+    established: 2026-07-28
+
+  - id: F016
+    statement: "The data controller is SQHN together with its partner organisations in each country of operation."
+    status: APPROVED
+    owner: W17
+    source: "Owner decision 2026-07-28, item 17"
+    established: 2026-07-28
+
+  - id: F017
+    statement: "Brand identity is a mix of RCI and SQHN assets for now."
+    status: APPROVED
+    owner: W13
+    source: "Owner decision 2026-07-28, item 18"
+    established: 2026-07-28
+
+  - id: F018
+    statement: "Admissions criteria are set on best practice."
+    status: APPROVED
+    owner: W07
+    source: "Owner decision 2026-07-28, item 15"
+    established: 2026-07-28
+
+  - id: F019
+    statement: "Published time commitment is about 4 hours a week in an ordinary week and about 228 hours in total, derived from the curriculum rather than chosen for marketing."
+    status: APPROVED
+    owner: W02
+    source: "Owner decision 2026-07-28, item 5"
+    established: 2026-07-28
+
+  - id: F020
+    statement: "Cohort 1 recruits in Nigeria, Ghana and Pakistan."
+    status: APPROVED
+    owner: W01
+    source: "Programme positioning, decisions-log"
+    established: 2026-07-28
+
+  - id: F021
+    statement: "No fact may be published that has not been confirmed. Unconfirmed facts appear as visible placeholders, never as plausible invented values."
+    status: APPROVED
+    owner: W17
+    source: "Standing rule from the first session"
+    established: 2026-07-28
+
+  - id: F022
+    statement: "ISQua involvement is at individual faculty level and is never described as institutional accreditation or endorsement."
+    status: APPROVED
+    owner: W15
+    source: "Claims-honesty audit"
+    established: 2026-07-28
+
+  - id: F023
+    statement: "The first live faculty session is Saturday 9 January 2027, because the literal first Saturday falls in the New Year holiday weekend."
+    status: PROPOSED
+    owner: W10
+    source: "Recommended 2026-07-28, awaiting CCC"
+    established: 2026-07-28
+
+  - id: F024
+    statement: "Published price ladder: International USD 3,000, UMIC 1,200, LMIC institutional 900, LMIC individual 600, LIC 400."
+    status: PROPOSED
+    owner: W16
+    source: "Council recommendation 2026-07-28, NOT APPROVED"
+    established: 2026-07-28
+
+  - id: F025
+    statement: "Cohort 1 target 50, hard floor 40 paid deposits, cap 64."
+    status: PROPOSED
+    owner: W07
+    source: "Council recommendation 2026-07-28, NOT APPROVED"
+    established: 2026-07-28
+
+  - id: F026
+    statement: "Per-learner indemnity above USD 75 triggers deferral of the observership to cohort 2 and an LMIC price of USD 475."
+    status: PROPOSED
+    owner: W16
+    source: "Council conditional ruling 2026-07-28, NOT APPROVED"
+    established: 2026-07-28
+
+  - id: F027
+    statement: "Go/no-go kill date is 20 November 2026: 40 paid deposits, 9 signed host-site MoUs, 12 consented faculty, all three at once."
+    status: PROPOSED
+    owner: W17
+    source: "Council recommendation 2026-07-28, NOT APPROVED"
+    established: 2026-07-28

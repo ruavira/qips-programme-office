@@ -1,0 +1,17 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+node_modules/
+.cache/
+tmp/
+*.tmp
+*.swp
+~$*.docx
+~$*.xlsx
+
+# Sensitive exports and local working copies stay out of Git.
+private/
+exports/

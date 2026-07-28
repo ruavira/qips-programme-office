@@ -1,0 +1,11 @@
+id: W14
+name: "Marketing, Demand Generation and Enrolment"
+directorate: D4
+state: DORMANT
+cohort1_scope: NOW
+last_run: null
+runs: 0
+dossiers_submitted: 0
+dossiers_approved: 0
+consecutive_dry_rounds: 0
+blocked_by: ['W01', 'W13', 'W16']

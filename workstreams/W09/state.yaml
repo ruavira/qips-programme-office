@@ -1,0 +1,11 @@
+id: W09
+name: "Technology and Learning Platform"
+directorate: D3
+state: DORMANT
+cohort1_scope: NOW
+last_run: null
+runs: 0
+dossiers_submitted: 0
+dossiers_approved: 0
+consecutive_dry_rounds: 0
+blocked_by: ['W02', 'W10']

@@ -1,0 +1,46 @@
+# Register of human-editable and published documents.
+# Add Drive URLs only after the target file has been grounded and verified.
+documents:
+  - id: DOC-CN-001
+    title: "QIPS Programme concept note — long historical version"
+    owner: W14
+    status: HISTORICAL_RECONCILIATION_REQUIRED
+    version: "factory-v2.2"
+    source_filename: "QIPS Program CONCEPT NOTE.docx"
+    sha256: "fb62841e0f590879714987a677886ed2bdb2d9246dc2c11bad27709da69a7659"
+    repository_source: null
+    drive_url: null
+    note: "Uses 12–18 months and Nigerian-validated language; not aligned to current canon/Sail Mode."
+
+  - id: DOC-CN-002
+    title: "QIPS Programme concept note — short historical version"
+    owner: W14
+    status: HISTORICAL_RECONCILIATION_REQUIRED
+    version: "factory-v2.2"
+    source_filename: "QIPS-Program-Concept-Note.docx"
+    sha256: "48be5316a01683da2af1c19cc46d853dfad4f495bddd0d10dcada185d6491082"
+    repository_source: null
+    drive_url: null
+    note: "Same bytes as the _1 and _2 copies; retain only one historical file."
+
+  - id: DOC-BROCHURE-001
+    title: "Foundation Professional Program brochure content master"
+    owner: W14
+    status: CURRENT_WITH_PLACEHOLDERS
+    version: "1.2"
+    source_filename: "QIPS-Foundation-Professional-Program-Brochure-Content-Master.docx"
+    sha256: "27421b7c55af231bc9a8dfc7f7e2389bda470b07065f3159006876b408625132"
+    repository_source: "canon/inventory.md"
+    drive_url: null
+    note: "Do not publish until affiliation, credential, faculty, price and other marked facts are approved."
+
+  - id: DOC-TOOLKIT-001
+    title: "Data-Driven Quality Improvement Part 1 Quick Reference Toolkit"
+    owner: W02
+    status: REFERENCE_ASSET
+    version: null
+    source_filename: "Quick_Reference_Toolkit_Part1.docx"
+    sha256: "cd66a1994667e4b355bbc39611ad9db732b7f42e14dc4bfd7380a7feb89a433e"
+    repository_source: null
+    drive_url: null
+    note: "Register as a reusable template/toolkit after ownership and curriculum alignment review."

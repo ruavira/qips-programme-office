@@ -1,0 +1,55 @@
+# Which workstreams must have APPROVED facts before another can finalise.
+# The engine refuses to promote a dossier whose upstream dependencies are unapproved.
+
+dependencies:
+  W01:  # Needs Assessment and Market Intelligence
+    depends_on: []
+    blocks: ['W02', 'W07', 'W14']
+  W02:  # Curriculum and Instructional Design
+    depends_on: ['W01', 'W03']
+    blocks: ['W03', 'W04', 'W05', 'W06', 'W08', 'W09', 'W10', 'W11']
+  W03:  # Assessment, Certification and Credentialing
+    depends_on: ['W02']
+    blocks: ['W02', 'W07', 'W08', 'W11', 'W12', 'W13', 'W16']
+  W04:  # Practicum and Observership
+    depends_on: ['W02', 'W17']
+    blocks: ['W16']
+  W05:  # Teaching Faculty and Faculty Development
+    depends_on: ['W02']
+    blocks: ['W06']
+  W06:  # Coaching Faculty and Coach Development
+    depends_on: ['W02', 'W05']
+    blocks: []
+  W07:  # Admissions, Recruitment and Selection
+    depends_on: ['W01', 'W03']
+    blocks: []
+  W08:  # Learner Success, Retention and Alumni
+    depends_on: ['W02', 'W03']
+    blocks: []
+  W09:  # Technology and Learning Platform
+    depends_on: ['W02', 'W10']
+    blocks: []
+  W10:  # Cohort Operations and the Global Calendar
+    depends_on: ['W02']
+    blocks: ['W09']
+  W11:  # Quality Assurance and Programme Evaluation
+    depends_on: ['W02', 'W03']
+    blocks: []
+  W12:  # Data, Outcomes and Research Assets
+    depends_on: ['W03', 'W17']
+    blocks: []
+  W13:  # Brand, Naming and Identity
+    depends_on: ['W03']
+    blocks: ['W14']
+  W14:  # Marketing, Demand Generation and Enrolment
+    depends_on: ['W01', 'W13', 'W16']
+    blocks: []
+  W15:  # Partnerships, Affiliations and Accreditation
+    depends_on: []
+    blocks: []
+  W16:  # Pricing, Finance and Revenue Operations
+    depends_on: ['W03', 'W04']
+    blocks: ['W14']
+  W17:  # Governance, Legal, Risk and Data Protection
+    depends_on: []
+    blocks: ['W04', 'W12']

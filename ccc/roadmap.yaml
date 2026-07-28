@@ -1,0 +1,41 @@
+# Cohort scope — what ships when.
+# NOW = cohort 1 (January 2027). NEXT = cohort 2 (2028). LATER = cohort 3 and the regional-centre model.
+# Only the CCC may move a workstream between columns.
+
+cohorts:
+  cohort_1:
+    label: "January 2027 — prove the monthly cycle and the observership"
+    starts: 2027-01
+    workstreams:
+      - W01  # Needs Assessment and Market Intelligence
+      - W02  # Curriculum and Instructional Design
+      - W03  # Assessment, Certification and Credentialing
+      - W04  # Practicum and Observership
+      - W05  # Teaching Faculty and Faculty Development
+      - W06  # Coaching Faculty and Coach Development
+      - W07  # Admissions, Recruitment and Selection
+      - W09  # Technology and Learning Platform
+      - W10  # Cohort Operations and the Global Calendar
+      - W11  # Quality Assurance and Programme Evaluation
+      - W12  # Data, Outcomes and Research Assets
+      - W13  # Brand, Naming and Identity
+      - W14  # Marketing, Demand Generation and Enrolment
+      - W15  # Partnerships, Affiliations and Accreditation
+      - W16  # Pricing, Finance and Revenue Operations
+      - W17  # Governance, Legal, Risk and Data Protection
+  cohort_2:
+    label: "2028 — compound the credential: alumni, coach pipeline, published outcomes"
+    workstreams:
+      - W08  # Learner Success, Retention and Alumni
+  cohort_3_and_beyond:
+    label: "Regional centres, advanced tier, institutional programme"
+    workstreams: []
+
+# The vision, held deliberately even where it does not ship in cohort 1:
+vision:
+  - "A published Host Site Standard that becomes regional infrastructure, not just a placement list."
+  - "A coach cadre grown from graduates, so cohort N teaches cohort N+1."
+  - "A capstone dataset across three countries that nobody else holds."
+  - "An advanced tier above the foundation programme, and a credential ladder between them."
+  - "Regional centres that qualify and monitor their own host sites under the same standard."
+  - "External evaluation of the programme itself, on the same terms it teaches participants to accept."

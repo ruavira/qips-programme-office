@@ -1,0 +1,45 @@
+name: Workstream update
+description: Record progress, a next action or a blocker for one QIPS workstream.
+title: "[W##] "
+labels: ["workstream"]
+body:
+  - type: input
+    id: workstream
+    attributes:
+      label: Workstream
+      placeholder: W03 — Assessment, Certification and Credentialing
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - DORMANT
+        - SCOUTING
+        - RESEARCHING
+        - IN_COUNCIL
+        - VERIFYING
+        - AWAITING_CCC
+        - BLOCKED
+        - APPROVED
+    validations:
+      required: true
+  - type: textarea
+    id: progress
+    attributes:
+      label: Progress and evidence
+      description: What changed, and where is the supporting work?
+    validations:
+      required: true
+  - type: textarea
+    id: next
+    attributes:
+      label: Next action
+      description: Name one owner and one next action.
+    validations:
+      required: true
+  - type: textarea
+    id: blocker
+    attributes:
+      label: Blocker or decision needed
