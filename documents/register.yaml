@@ -23,6 +23,17 @@ documents:
     drive_url: "https://docs.google.com/document/d/1HgE01VGW7oHnPdAu1vErelqE3aXRlcIpEL_O8OoiqQM/edit"
     note: "Three-page operating plan; rendered, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
 
+  - id: DOC-W15-001
+    title: "QIPS W15 Partner Verification and Claims Pack"
+    owner: W15
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-W15-Partner-Verification-and-Claims-Pack-final.docx"
+    sha256: "a8258ae1e4c9e49e716368daf97594aaeb610809b3f427edfd8eb7cd7ef88fa3"
+    repository_source: "workstreams/W15/working/partner-verification-and-claims-pack.md"
+    drive_url: "https://docs.google.com/document/d/1TrD7lHjUgKuRHoL8P9rJKg85tDEUO6hH8mM3z1bnt0c/edit"
+    note: "Five-page verification and claims-control pack; title-sanitized, rendered, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14
