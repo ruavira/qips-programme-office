@@ -1,11 +1,11 @@
 id: W07
 name: "Admissions, Recruitment and Selection"
 directorate: D2
-state: DORMANT
+state: AWAITING_CCC
 cohort1_scope: NOW
-last_run: null
-runs: 0
-dossiers_submitted: 0
+last_run: 2026-07-28
+runs: 1
+dossiers_submitted: 1
 dossiers_approved: 0
 consecutive_dry_rounds: 0
 blocked_by: ['W01', 'W03']
