@@ -12,6 +12,39 @@ documents:
     drive_url: "https://docs.google.com/document/d/1nj6kioqmp4WlhK0XyYPlm_WAC1J_Hra1/edit"
     note: "Four-page architecture and access brief; rendered and visually verified before upload."
 
+  - id: DOC-OPS-001
+    title: "QIPS Seventeen-Workstream Operating Plan"
+    owner: W09
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-Seventeen-Workstream-Operating-Plan.docx"
+    sha256: "c0a1de8785c868e49482efc313265d4e2be22054ff24d72bd0ed5aef27304f72"
+    repository_source: "docs/17-workstream-operating-plan.md"
+    drive_url: "https://docs.google.com/document/d/1HgE01VGW7oHnPdAu1vErelqE3aXRlcIpEL_O8OoiqQM/edit"
+    note: "Three-page operating plan; rendered, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
+
+  - id: DOC-W15-001
+    title: "QIPS W15 Partner Verification and Claims Pack"
+    owner: W15
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-W15-Partner-Verification-and-Claims-Pack-final.docx"
+    sha256: "a8258ae1e4c9e49e716368daf97594aaeb610809b3f427edfd8eb7cd7ef88fa3"
+    repository_source: "workstreams/W15/working/partner-verification-and-claims-pack.md"
+    drive_url: "https://docs.google.com/document/d/1TrD7lHjUgKuRHoL8P9rJKg85tDEUO6hH8mM3z1bnt0c/edit"
+    note: "Five-page verification and claims-control pack; title-sanitized, rendered, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
+
+  - id: DOC-W17-001
+    title: "QIPS W17 Insurance Data and Legal Instruction Pack"
+    owner: W17
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-W17-Insurance-Data-and-Legal-Instruction-Pack-final.docx"
+    sha256: "ad44c18008690b61c9e4fe3678dddec9f789dad7a525194f5083d4247b09ee92"
+    repository_source: "workstreams/W17/working/data-governance-and-legal-instruction-pack.md"
+    drive_url: "https://docs.google.com/document/d/1pCh4GgDrEnE0Q1ywUkej5D-hJWXZ6UOWE4GDTzryMVU/edit"
+    note: "Six-page insurance RFQ and legal/data instruction pack; title-sanitized, rendered, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14

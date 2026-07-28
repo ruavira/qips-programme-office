@@ -8,7 +8,7 @@ This is a hub-and-spoke model:
 
 1. GitHub holds the programme's structured memory and audit trail.
 2. Google Drive gives non-technical collaborators familiar commenting and editing.
-3. Floot presents a friendly dashboard generated from GitHub data.
+3. Base44 presents a friendly dashboard generated from governed programme data.
 4. Claude, Codex and ChatGPT connect to GitHub under the human owner's account and work through branches and pull requests.
 
 No AI account owns the programme. The human owners own the repository and decide who receives access.
@@ -34,9 +34,11 @@ Recommended Drive folders:
 - `90 Restricted`
 - `99 Archive`
 
-### Floot — the friendly front door
+### Base44 — the friendly, replaceable front door
 
-Floot is appropriate for the live control room because it can turn the repository's structured state into a readable, filterable interface for collaborators who do not want to work inside GitHub. Its first version should remain intentionally narrow:
+Base44 is the current live control room because it turns structured state into a readable,
+filterable interface for collaborators who do not want to work inside GitHub. It is a projection,
+not the permanent system of record. Its first version remains intentionally narrow:
 
 - workstream status, owner and next action;
 - blocking questions and due dates;
@@ -44,7 +46,11 @@ Floot is appropriate for the live control room because it can turn the repositor
 - links to the relevant GitHub dossier and Drive review document;
 - visible distinction between APPROVED, PROPOSED and historical content.
 
-Floot must not maintain separate editable copies of canon or workstream state. Writes should become repository pull requests or structured proposals, not silent database changes.
+Base44 must not maintain a competing canonical copy of programme truth. Its entities are an
+operational cache and collaboration surface. The portable contract in `contracts/` and exporter
+in `engine/` allow the same interface to migrate to another API and PostgreSQL deployment.
+Structured feedback may originate in Base44, but changes to canon or workstream state must become
+repository proposals and pass the CCC gate.
 
 ## The collaboration loop
 
