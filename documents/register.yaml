@@ -1,6 +1,17 @@
 # Register of human-editable and published documents.
 # Add Drive URLs only after the target file has been grounded and verified.
 documents:
+  - id: DOC-ARCH-001
+    title: "QIPS Shared Programme Office — setup brief"
+    owner: W09
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-Shared-Programme-Office-Setup-Brief.docx"
+    sha256: "66b2594f14cfffbd26aadf1de8cd5a96872deb057e5fe4328b3133e9482c3e3a"
+    repository_source: "docs/operating-model.md"
+    drive_url: "https://docs.google.com/document/d/1nj6kioqmp4WlhK0XyYPlm_WAC1J_Hra1/edit"
+    note: "Four-page architecture and access brief; rendered and visually verified before upload."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14
