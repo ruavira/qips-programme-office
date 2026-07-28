@@ -1,11 +1,11 @@
 id: W15
 name: "Partnerships, Affiliations and Accreditation"
 directorate: D4
-state: RESEARCHING
+state: BLOCKED
 cohort1_scope: NOW
 last_run: 2026-07-28
 runs: 1
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
-blocked_by: []
+blocked_by: ['Q004', 'Q005', 'Q008']

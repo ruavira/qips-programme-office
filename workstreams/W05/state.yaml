@@ -1,10 +1,10 @@
 id: W05
 name: "Teaching Faculty and Faculty Development"
 directorate: D2
-state: DORMANT
+state: RESEARCHING
 cohort1_scope: NOW
-last_run: null
-runs: 0
+last_run: 2026-07-28
+runs: 1
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
