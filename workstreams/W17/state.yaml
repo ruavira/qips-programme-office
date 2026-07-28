@@ -1,10 +1,10 @@
 id: W17
 name: "Governance, Legal, Risk and Data Protection"
 directorate: D4
-state: DORMANT
+state: SCOUTING
 cohort1_scope: NOW
-last_run: null
-runs: 0
+last_run: 2026-07-28
+runs: 1
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
