@@ -56,6 +56,17 @@ documents:
     drive_url: "https://docs.google.com/document/d/1NgEJPpYWjVob3NCFpIuS9U8IsqaDwvWlBslonIM1bx4/edit"
     note: "Six-page committee review pack; title-sanitized, rendered page-by-page, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
 
+  - id: DOC-BB1-002
+    title: "QIPS Calibration Pack — Credential, Faculty and Admissions"
+    owner: "W03/W05/W07"
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-Calibration-Pack-final.docx"
+    sha256: "82fd0e31c3ae76c938f18cd35a9169210d088c491e2ef5cef7394daa72bb799d"
+    repository_source: "docs/calibration-pack-credential-faculty-admissions.md"
+    drive_url: "https://docs.google.com/document/d/1fAErfTTJwXxJKMSUCTPm8YDJkkjxzpZtViX069xsUW0/edit"
+    note: "Eight-page operating-instrument pack; title-sanitized, rendered page-by-page, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14

@@ -51,6 +51,38 @@ This register supports the faculty operating system. It does not verify or autho
 - Supports: a 2024 systematic review and meta-analysis reported positive effects of teacher-development programmes in health professions education.
 - Programme consequence: selection for subject expertise does not remove the need for structured educator preparation.
 
+## E-W05-007 — ISQua curated expert network
+
+- Publisher: International Society for Quality in Health Care
+- Source: https://isqua.org/isqua-experts/
+- Status: verified official source
+- Supports: ISQua describes a curated, multidisciplinary, international expert network and a bounded speaker-request route.
+- Does not establish: availability for QIPS, a QIPS appointment, institutional endorsement or permission to use an individual's affiliation.
+
+## E-W05-008 — IHI faculty disclosure example
+
+- Publisher: Institute for Healthcare Improvement
+- Source: https://www.ihi.org/education/courses/hospital-flow-professional-development-program
+- Status: verified official programme source
+- Supports: a professional-development programme connects named faculty to relevant experience and states that faculty disclose economic or personal interests that may create conflicts.
+- Does not establish: IHI appointment criteria, QIPS faculty suitability or a complete conflict-mitigation policy.
+
+## E-W05-009 — Ghana postgraduate trainer controls
+
+- Publisher: Ghana College of Physicians and Surgeons
+- Source: https://gcps.edu.gh/rules-regulations/
+- Status: verified official source
+- Supports: approved curricula, trainer preparation, structured assessment, feedback, logbooks, mentorship and accredited settings are explicit institutional responsibilities.
+- Does not establish: that QIPS is a postgraduate medical college or should copy specialist faculty structures.
+
+## E-W05-010 — Nigerian postgraduate training accreditation controls
+
+- Publisher: National Postgraduate Medical College of Nigeria
+- Source: https://npmcn.edu.ng/old/accreditation-guidelines/
+- Status: verified official source
+- Supports: trainer/personnel qualification, structured programmes, skills evidence, current information, feedback and evaluation are explicit accreditation considerations.
+- Does not establish: NPMCN approval of QIPS or a transferable statutory accreditation route.
+
 ## Research conclusion
 
-The first faculty control is not recruitment publicity; it is a role-and-evidence system. Every core slot needs verified subject expertise, a complete appointment and disclosure record, a rehearsal/calibration gate and individual publication consent. Guest speakers cannot substitute for accountable core faculty coverage.
+The first faculty control is not recruitment publicity; it is a role-and-evidence system. Every core slot needs verified subject expertise, a complete appointment and disclosure record, a rehearsal/calibration gate and individual publication consent. Guest speakers and expert networks cannot substitute for accountable core faculty coverage.

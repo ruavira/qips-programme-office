@@ -59,6 +59,46 @@ This register supports credential-design research. It does not approve a certifi
 - Supports: PM&DC publicly described development of a continuing-professional-development framework.
 - Does not establish: current QIPS eligibility, a provider approval, a credit award or applicability to professions outside PM&DC's remit.
 
+## E-W03-008 — CPSP regulated fellowship structure
+
+- Publisher: College of Physicians and Surgeons Pakistan
+- Source: https://cpsp.edu.pk/general-info.php
+- Status: verified official source
+- Supports: FCPS sits within registered postgraduate training and examination regulations whose requirements are controlled by the College.
+- Does not establish: any equivalence between QIPS and FCPS, or a right for QIPS to use fellowship or certification status.
+
+## E-W03-009 — WACP fellowship evidence controls
+
+- Publisher: West African College of Physicians
+- Source: https://wacpcoam.org/wp-content/uploads/2022/05/subspecialty_included_control_forms.pdf
+- Status: verified official source
+- Supports: fellowship examination entry requires specified training, membership, logbook, update/research-method activity and dissertation/case evidence.
+- Does not establish: that WACP requirements or titles are transferable to a multidisciplinary QIPS completion award.
+
+## E-W03-010 — Nigerian nursing CPD context
+
+- Publisher: Nursing and Midwifery Council of Nigeria
+- Source: https://educator.elearn.nmcn.gov.ng/
+- Status: verified official source; external-provider route not established
+- Supports: the Council operates an official digital learning route that includes in-service continuing professional development.
+- Does not establish: QIPS provider eligibility, programme approval, a credit quantity or permitted wording.
+
+## E-W03-011 — Ghana nursing CPD provider context
+
+- Publisher: Nursing and Midwifery Council of Ghana
+- Source: https://nmc.gov.gh/web/ourservices-mobile/verification-mobile/story/n-mc-holds-stakeholders-meeting-for-accredited-cpd-providers-consultants
+- Status: verified official source
+- Supports: the Council recognises accredited CPD providers/consultants and links CPD points to professional development/licence systems.
+- Does not establish: QIPS approval, point allocation, provider eligibility or recognition outside nursing and midwifery.
+
+## E-W03-012 — Nigerian pharmacy MCPD authority
+
+- Publisher: Pharmacy Council of Nigeria
+- Source: https://pcn.gov.ng/
+- Status: verified official regulator source
+- Supports: the Council operates mandatory continuing professional development and regulates acceptable continuing education for pharmacy cadres.
+- Does not establish: QIPS approval, a programme application route or a credit allocation.
+
 ## Research conclusion
 
-The reviewed comparators distinguish a completion certificate, a maintained fellowship status and a professional certification. Post-nominals are controlled outcomes, not decorative programme abbreviations. CPD recognition is regulator- and profession-specific. Cohort 1 should therefore publish no post-nominal, certification or CPD claim until the CCC selects the award architecture and the relevant body grants written approval.
+The reviewed comparators distinguish a completion certificate, a maintained fellowship status, a professional certification and regulated postgraduate fellowships. Post-nominals are controlled outcomes, not decorative programme abbreviations. CPD recognition is regulator- and profession-specific. Cohort 1 should therefore publish no post-nominal, certification or CPD claim until the CCC selects the award architecture and the relevant body grants written approval.

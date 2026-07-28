@@ -24,7 +24,7 @@ Purpose: define a defensible completion credential and the evidence path for Q00
 - Compare CPHQ, ISQua Fellowship and ACHS QIL award, maintenance and post-nominal structures.
 - Verify current CPD-provider or activity routes with relevant regulators in Nigeria, Ghana and Pakistan.
 - Reconcile the supplied brochure's placeholders with canon and the final W02 assessment map when available.
-- Separate course/programme completion, professional certification, CPD credit and regulatory recognition in every claim.
+- Separate educational programme completion, professional certification, CPD credit and regulatory recognition in every claim.
 
 ## Human inputs that cannot be invented
 

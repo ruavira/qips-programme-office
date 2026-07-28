@@ -51,6 +51,22 @@ This register supports admissions-process design. It does not approve final elig
 - Supports: eligibility can be tied to institutional role and an applied project that returns capability to the home institution.
 - Does not establish: that employer sponsorship must be the only access route for QIPS.
 
+## E-W07-007 — Health Foundation GenerationQ programme history
+
+- Publisher: The Health Foundation
+- Source: https://reader.health.org.uk/short-history/introduction
+- Status: verified official historical source; current selection rubric not found
+- Supports: GenerationQ was one of the Foundation's healthcare quality leadership programmes.
+- Does not establish: a reproducible scoring method, current programme availability or thresholds suitable for QIPS.
+
+## E-W07-008 — Ghana postgraduate eligibility and interview structure
+
+- Publisher: Ghana College of Physicians and Surgeons
+- Source: https://gcps.edu.gh/rules-regulations/
+- Status: verified official source
+- Supports: a professional programme can publish documentary eligibility, registration/qualification requirements, structured interview and sponsor/training obligations.
+- Does not establish: that medical registration, specialist examinations or the same experience threshold are suitable for multidisciplinary QIPS applicants.
+
 ## Research conclusion
 
 Strong comparators separate eligibility from competitive selection, publish the criteria, require evidence linked to programme purpose and use independent committee review. QIPS should score readiness to complete an applied improvement programme, not prestige. Employer support is valuable but needs an equivalent route for self-employed, early-career or otherwise suitable applicants if the CCC wants those brochure audiences to remain eligible.
