@@ -34,6 +34,17 @@ documents:
     drive_url: "https://docs.google.com/document/d/1TrD7lHjUgKuRHoL8P9rJKg85tDEUO6hH8mM3z1bnt0c/edit"
     note: "Five-page verification and claims-control pack; title-sanitized, rendered, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
 
+  - id: DOC-W17-001
+    title: "QIPS W17 Insurance Data and Legal Instruction Pack"
+    owner: W17
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-W17-Insurance-Data-and-Legal-Instruction-Pack-final.docx"
+    sha256: "ad44c18008690b61c9e4fe3678dddec9f789dad7a525194f5083d4247b09ee92"
+    repository_source: "workstreams/W17/working/data-governance-and-legal-instruction-pack.md"
+    drive_url: "https://docs.google.com/document/d/1pCh4GgDrEnE0Q1ywUkej5D-hJWXZ6UOWE4GDTzryMVU/edit"
+    note: "Six-page insurance RFQ and legal/data instruction pack; title-sanitized, rendered, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14
