@@ -70,7 +70,7 @@ This register supports credential-design research. It does not approve a certifi
 ## E-W03-009 — WACP fellowship evidence controls
 
 - Publisher: West African College of Physicians
-- Source: https://wacpcoam.org/wp-content/uploads/2022/05/subspecialty_included_control_forms.pdf
+- Source: https://wacpcoam.org/wp-content/uploads/2022/05/fellowship_included_control_forms.pdf
 - Status: verified official source
 - Supports: fellowship examination entry requires specified training, membership, logbook, update/research-method activity and dissertation/case evidence.
 - Does not establish: that WACP requirements or titles are transferable to a multidisciplinary QIPS completion award.

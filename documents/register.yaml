@@ -67,6 +67,17 @@ documents:
     drive_url: "https://docs.google.com/document/d/1fAErfTTJwXxJKMSUCTPm8YDJkkjxzpZtViX069xsUW0/edit"
     note: "Eight-page operating-instrument pack; title-sanitized, rendered page-by-page, accessibility-checked and visually verified; native Google Doc shared with Dr Oyewumi and Shakira for editing."
 
+  - id: DOC-BB1-003
+    title: "QIPS CCC Decision Pack — Credential, Faculty and Admissions"
+    owner: "W03/W05/W07"
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-CCC-Decision-Pack-Credential-Faculty-Admissions-final.docx"
+    sha256: "81c9db8b72a71c3ff4bbd3e08d927f2cb23bb2ddf9d8928f4edba62894773837"
+    repository_source: "docs/ccc-decision-pack-credential-faculty-admissions.md"
+    drive_url: "https://docs.google.com/document/d/1gHkJVIpEpTv4ofGaOIqwyi7DJqJ0YUjpSkwXG8zlo9Y/edit"
+    note: "Eight-page CCC decision pack; title-sanitized, accessibility-checked, imported as a native Google Doc, connector-verified, HTML-checked and PDF-exported for page-by-page visual inspection; shared with Dr Oyewumi and Shakira for editing."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14

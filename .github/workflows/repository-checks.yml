@@ -14,9 +14,11 @@ jobs:
         with:
           python-version: "3.12"
       - name: Rebuild the generated control room
-        run: python engine/controlroom.py
+        run: |
+          python engine/agenda.py
+          python engine/controlroom.py
       - name: Verify generated files are committed
-        run: git diff --exit-code -- ccc/control-room.html
+        run: git diff --exit-code -- ccc/agenda.md ccc/control-room.html
       - name: Reject accidentally committed secrets and environment files
         shell: bash
         run: |
