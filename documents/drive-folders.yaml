@@ -1,0 +1,24 @@
+# Google Drive collaboration layer.
+# These identifiers are references, not credentials. Drive permissions remain authoritative.
+root:
+  title: "QIPS Programme Office"
+  id: "1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc"
+  url: "https://drive.google.com/drive/folders/1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc"
+
+folders:
+  - title: "00 Start Here"
+    id: "1fdZpLFzC9jAK8kcRLwvE6OZ8CtQJnRbI"
+  - title: "01 CCC Review"
+    id: "1A8F4ppXeRa1WLJ5EM1y1njEoGZYtQTJy"
+  - title: "02 Workstreams"
+    id: "1Kk8JydHbo2OSqPim8n5K7Ybb6gh1yUZ0"
+  - title: "03 Templates and Toolkits"
+    id: "1FBDw70HWhT6M552UH72QFBzKc0rDzG_Q"
+  - title: "04 Draft Deliverables"
+    id: "1RaC6HaSlMTPrT6yY2rU6c4JixJgoQA8I"
+  - title: "05 Approved Deliverables"
+    id: "1J6cZmwFIMrR2-4qwqxY0J9kwLXzl2Gig"
+  - title: "90 Restricted"
+    id: "1UEN4NR-ZX7pvfikWPSsR8VklEcBdkiEH"
+  - title: "99 Archive"
+    id: "1wU8ry00ia35X6uFLn_NQ83I_nXkTOEUa"
