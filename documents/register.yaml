@@ -100,6 +100,17 @@ documents:
     drive_url: "https://docs.google.com/spreadsheets/d/1Ls45Ig7vpHn5KWvfndFNexvYIWq_Gfnk5SHLI6q7fT0/edit"
     note: "Six-sheet formula-driven reconstruction; every sheet rendered and visually verified, formula-error scan clear, imported as a native Google Sheet and connector-verified. Publication gate intentionally fails on ten missing inputs. Shared with Dr Oyewumi and Shakira for editing."
 
+  - id: DOC-BB3-001
+    title: "QIPS Needs, Blueprint and Observership Review Pack"
+    owner: "W01/W02/W04"
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-Needs-Blueprint-Observership-Review-Pack-final.docx"
+    sha256: "43654ff0f83e03d9a925cef7d2df85e078630daa280f488d15237d292a9f6ea0"
+    repository_source: "docs/needs-blueprint-observership-review-pack.md"
+    drive_url: "https://docs.google.com/document/d/1w5LTKrPPXrx-iAii-3laz8kCMbTlSnh855_HFQMPhEI/edit"
+    note: "Four-page committee working pack; held outside the current three-slot CCC agenda. Title-sanitized, accessibility-checked, rendered page-by-page, imported as a native Google Doc, connector-verified and shared with Dr Oyewumi and Shakira for editing."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14
