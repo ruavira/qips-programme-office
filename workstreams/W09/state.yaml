@@ -1,10 +1,10 @@
 id: W09
 name: "Technology and Learning Platform"
 directorate: D3
-state: BLOCKED
+state: VERIFYING
 cohort1_scope: NOW
-last_run: 2026-07-28
-runs: 1
+last_run: 2026-07-29
+runs: 2
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
