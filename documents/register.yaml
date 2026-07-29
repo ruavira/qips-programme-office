@@ -78,6 +78,28 @@ documents:
     drive_url: "https://docs.google.com/document/d/1gHkJVIpEpTv4ofGaOIqwyi7DJqJ0YUjpSkwXG8zlo9Y/edit"
     note: "Eight-page CCC decision pack; title-sanitized, accessibility-checked, imported as a native Google Doc, connector-verified, HTML-checked and PDF-exported for page-by-page visual inspection; shared with Dr Oyewumi and Shakira for editing."
 
+  - id: DOC-BB2-001
+    title: "QIPS Identity, Demand and Commercial Review Pack"
+    owner: "W13/W14/W16"
+    status: DRAFT_FOR_REVIEW
+    version: "1.0"
+    source_filename: "QIPS-Identity-Demand-Commercial-Review-Pack-final.docx"
+    sha256: "58a3633db1c81af507a6c1678b7b5bea994e972760b77dac0f69f99f58d35885"
+    repository_source: "docs/identity-demand-commercial-review-pack.md"
+    drive_url: "https://docs.google.com/document/d/117RDRpbSAUxEyJPv6TDGMzUesVE345Ht6e6ekxD44p8/edit"
+    note: "Two-page committee review pack; title-sanitized, rendered page-by-page, accessibility-checked and connector-verified; native Google Doc shared with Dr Oyewumi and Shakira for editing. Held outside the full current CCC agenda."
+
+  - id: DOC-W16-001
+    title: "QIPS Pricing and Unit Economics Model v2"
+    owner: W16
+    status: INPUTS_REQUIRED
+    version: "2.0"
+    source_filename: "QIPS-Pricing-and-Unit-Economics-Model-v2.xlsx"
+    sha256: "b3510b48bfd7015378ab1bd8893ff87aa7132dce6fae1b663211dba8d4dc856a"
+    repository_source: "workstreams/W16/working/build-unit-economics-model.mjs"
+    drive_url: "https://docs.google.com/spreadsheets/d/1Ls45Ig7vpHn5KWvfndFNexvYIWq_Gfnk5SHLI6q7fT0/edit"
+    note: "Six-sheet formula-driven reconstruction; every sheet rendered and visually verified, formula-error scan clear, imported as a native Google Sheet and connector-verified. Publication gate intentionally fails on ten missing inputs. Shared with Dr Oyewumi and Shakira for editing."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14

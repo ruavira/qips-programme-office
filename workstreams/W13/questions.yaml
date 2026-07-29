@@ -1,2 +1,7 @@
 # Questions owned by W13. The workstream may add; only the CCC may close.
-questions: []
+questions:
+  - id: Q010
+    question: "What is the programme called?"
+    status: OPEN
+    due: 2026-08-31
+    next_evidence: "Trademark, company-name, domain and linguistic clearance of the primary and fallback territories."
