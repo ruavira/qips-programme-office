@@ -1,10 +1,10 @@
 id: W16
 name: "Pricing, Finance and Revenue Operations"
 directorate: D4
-state: DORMANT
+state: VERIFYING
 cohort1_scope: NOW
-last_run: null
-runs: 0
+last_run: 2026-07-29
+runs: 1
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0

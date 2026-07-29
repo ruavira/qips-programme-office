@@ -1,2 +1,7 @@
 # Questions owned by W14. The workstream may add; only the CCC may close.
-questions: []
+questions:
+  - id: Q006
+    question: "How many contactable names does SQHN hold, and what did the existing 3-hour course convert at?"
+    status: OPEN
+    due: 2026-09-15
+    next_evidence: "De-identified aggregate funnel counts using the run-001 data definition."
