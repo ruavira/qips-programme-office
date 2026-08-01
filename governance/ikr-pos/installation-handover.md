@@ -1,10 +1,12 @@
 # QIPS IKR-POS Installation Handover
 
-**Installation branch:** `agent/install-ikr-pos`  
 **Installation profile:** `QIPS-IKR-POS` v1.0.0  
 **Installation date:** 2026-07-31  
+**Installation PR:** #11  
+**Installation source revision:** `0c6334d8a48ee5552f155fa92f277f5ba9321f72`  
 **Operating owner:** W09  
-**Ratification authority:** CCC
+**Ratification authority:** CCC  
+**Mirror reconciliation:** COMPLETE
 
 ## Completed installation work
 
@@ -14,6 +16,10 @@
 - Extended the repository agent contract and pull-request template.
 - Added `engine/validate_ikr_pos.py` and made it a mandatory repository-check gate.
 - Recorded the initial migration and repository-health baseline.
+- Passed the CCC agenda and control-room generators, IKR-POS validator, generated-file consistency check, and secret/environment scan.
+- Reconciled the installed profile to Base44 and Google Drive and read both mirrors back.
+- Registered the Drive ratification pack in `documents/register.yaml`.
+- Recorded the full mirror evidence in `governance/ikr-pos/synchronization-record.md`.
 
 ## Locked decisions and unchanged canon
 
@@ -24,31 +30,43 @@
 - No programme fact or open question was changed by this installation.
 - No policy, dossier, workstream output, publication status, or CCC verdict was promoted.
 
-## Human gates
+## Human gate
 
-`IKR-D001` remains `PENDING`. The installation may operate as the repository governance baseline after merge, but formal policy ratification, publication, and any change to CCC authority require a minuted CCC decision.
+`IKR-D001` remains `PENDING` and is registered as `ready_for_ccc`. The installation operates as the
+current repository governance baseline, but formal policy ratification, publication, any change to
+CCC authority, database activation and deployment require their explicit human gates.
 
-## Validation required before merge
+## Validation result
 
-- `python engine/agenda.py`
-- `python engine/controlroom.py`
-- `python -m py_compile engine/validate_ikr_pos.py`
-- `python engine/validate_ikr_pos.py`
-- generated-file consistency check
-- repository secret and environment-file scan
+GitHub Actions run `30680835572`, job `91317371425`, completed successfully:
 
-## Post-merge synchronization
+- `python engine/agenda.py`: PASS;
+- `python engine/controlroom.py`: PASS;
+- `python -m py_compile engine/validate_ikr_pos.py`: PASS;
+- `python engine/validate_ikr_pos.py`: PASS;
+- generated-file consistency: PASS;
+- repository secret and environment-file scan: PASS.
 
-After merge, record the exact merge revision in:
+## Mirror reconciliation result
 
-1. Base44 programme-document and governance records;
-2. the registered Google Drive programme-office review layer;
-3. `governance/ikr-pos/registers/changes.yaml`;
-4. `governance/ikr-pos/registers/releases.yaml`;
-5. the workspace synchronization register.
+### Base44
+
+Application `6a68b8381ea8ff36dd473cd2` contains five IKR-POS programme-document records and decision
+dossier `IKR-D001`. The decision-dossier record is `6a6d5fadb7bc3f06457213fb`, references the exact
+installation revision and does not imply approval.
+
+### Google Drive
+
+The native Google Doc **QIPS IKR-POS Installation and Ratification Pack** was created in the QIPS
+Programme Office folder and read back:
+
+- folder ID: `1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc`;
+- document ID: `1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM`;
+- URL: `https://docs.google.com/document/d/1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM`.
 
 ## Remaining controlled actions
 
+- Obtain and record the CCC verdict for `IKR-D001`.
 - Complete a file-level inventory of active workstream working artifacts.
 - Audit Drive permissions, duplicates, restricted locations, and orphan files.
 - Run and record the first portable export-and-restore test.
@@ -57,4 +75,7 @@ After merge, record the exact merge revision in:
 
 ## Exact next objective
 
-Obtain and record the CCC verdict for `IKR-D001`, then execute the first repository-health review and portable restore test without expanding the authority of the installed profile beyond the recorded verdict.
+Place `IKR-D001` on the continuous CCC decision docket and record an `APPROVE`, `AMEND`, `DEFER`, or
+`REJECT` verdict. After the verdict, update GitHub, Base44 and the Drive decision record, then execute
+the first repository-health review and portable restore test within the authority granted by that
+verdict.
