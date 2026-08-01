@@ -77,8 +77,7 @@ implication.
 | Q001 | What is the per-learner medical indemnity and public liability premium across Nigeria, Ghana and Pakistan? | W17 | 2026-08-21 | W16, W04 |
 | Q002 | What is the exact certificate title, the awarding entity, any post-nominals, and what CPD recognition can be claimed? | W03 | 2026-08-31 | W13, W14, W16 |
 | Q003 | Who are the twelve faculty, and have they consented in writing to be named? | W05 | 2026-08-31 | W14 |
-| Q004 | What is the signed partner agreement between SQHN, RCI, QAI and TAC — revenue share, IP, exit, and who may sign a host-site MoU? | W15 | 2026-09-30 | W04, W12, W16 |
-| Q005 | What is QAI's full registered name, identity and programme role? | W15 | 2026-08-15 | W13, W14 |
+| Q004 | What is the signed partner agreement between SQHN, Ruavira Collective Inc and The Arete Connoisseurs (TAC) — revenue share, IP, exit terms, and who may sign a host-site MoU? | W15 | 2026-09-30 | W04, W12, W16 |
 | Q006 | How many contactable names does SQHN hold, and what did the existing 3-hour course convert at? | W14 | 2026-09-15 | W07, W16 |
 | Q008 | What is the approved affiliation wording from Shifa International Hospitals and from ISQua? | W15 | 2026-09-30 | W14 |
 | Q009 | What is the data retention period and who is the data-protection contact? | W17 | 2026-09-30 | W09, W14 |

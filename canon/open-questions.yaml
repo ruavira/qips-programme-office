@@ -3,77 +3,108 @@
 # BLOCKING means cohort 1 cannot proceed without it.
 
 questions:
-  - id: Q001
-    question: "What is the per-learner medical indemnity and public liability premium across Nigeria, Ghana and Pakistan?"
-    owner: W17
-    blocking: true
-    blocks: [W16, W04]
-    due: 2026-08-21
-    note: "The only zero in the financial model. Gates the price and the observership."
+- id: Q001
+  question: What is the per-learner medical indemnity and public liability premium across Nigeria, Ghana
+    and Pakistan?
+  owner: W17
+  blocking: true
+  blocks:
+  - W16
+  - W04
+  due: 2026-08-21
+  note: The only zero in the financial model. Gates the price and the observership.
 
-  - id: Q002
-    question: "What is the exact certificate title, the awarding entity, any post-nominals, and what CPD recognition can be claimed?"
-    owner: W03
-    blocking: true
-    blocks: [W13, W14, W16]
-    due: 2026-08-31
-    note: "The credential precedes the price. Nothing markets until this exists."
+- id: Q002
+  question: What is the exact certificate title, the awarding entity, any post-nominals, and what CPD
+    recognition can be claimed?
+  owner: W03
+  blocking: true
+  blocks:
+  - W13
+  - W14
+  - W16
+  due: 2026-08-31
+  note: The credential precedes the price. Nothing markets until this exists.
 
-  - id: Q003
-    question: "Who are the twelve faculty, and have they consented in writing to be named?"
-    owner: W05
-    blocking: true
-    blocks: [W14]
-    due: 2026-08-31
+- id: Q003
+  question: Who are the twelve faculty, and have they consented in writing to be named?
+  owner: W05
+  blocking: true
+  blocks:
+  - W14
+  due: 2026-08-31
 
-  - id: Q004
-    question: "What is the signed partner agreement between SQHN, RCI, QAI and TAC — revenue share, IP, exit, and who may sign a host-site MoU?"
-    owner: W15
-    blocking: true
-    blocks: [W04, W12, W16]
-    due: 2026-09-30
-    note: "Without a named signatory, host-site recruitment cannot legally start."
+- id: Q004
+  question: What is the signed partner agreement between SQHN, Ruavira Collective Inc and The Arete Connoisseurs
+    (TAC) — revenue share, IP, exit terms, and who may sign a host-site MoU?
+  owner: W15
+  blocking: true
+  blocks:
+  - W04
+  - W12
+  - W16
+  due: 2026-09-30
+  note: QAI removed 2026-08-01, so all three remaining parties are directly reachable. Signing this is
+    what unlocks host-site recruitment.
 
-  - id: Q005
-    question: "What is QAI's full registered name, identity and programme role?"
-    owner: W15
-    blocking: true
-    blocks: [W13, W14]
-    due: 2026-08-15
-    note: "QAI is on the brochure cover with no verified identity behind it."
+- id: Q005
+  question: PARKED — should the programme engage the Quality and Accreditation Institute (QAI) as a partner,
+    and on what terms?
+  owner: W15
+  blocking: false
+  blocks: []
+  due: 2026-08-15
+  note: 'Parked by the programme director 2026-08-01. QAI removed from all published material and from
+    the partner architecture with immediate effect. This defers the engagement decision; it does not reject
+    the organisation. Identity verified 2026-08-01 from qai.org.in: Quality and Accreditation Institute,
+    a private limited company under the Companies Act 1956, Noida, India; four centres covering health
+    and social care accreditation, international accreditation, veterinary facilities, and education and
+    training; claims APAC and ILAC full membership with MRA, ISQua institutional membership and ISQua
+    EEA accreditation. Revisit alongside W03, since QAI is most useful as an accreditation route rather
+    than a brand. Caution: QAI holds ISQua EEA accreditation in its own right while this programme claims
+    only individual-faculty-level ISQua involvement.'
+  status: PARKED
 
-  - id: Q006
-    question: "How many contactable names does SQHN hold, and what did the existing 3-hour course convert at?"
-    owner: W14
-    blocking: true
-    blocks: [W07, W16]
-    due: 2026-09-15
-    note: "Cohort size is a funnel output, not an opinion. Nobody has the denominator."
+- id: Q006
+  question: How many contactable names does SQHN hold, and what did the existing 3-hour course convert
+    at?
+  owner: W14
+  blocking: true
+  blocks:
+  - W07
+  - W16
+  due: 2026-09-15
+  note: Cohort size is a funnel output, not an opinion. Nobody has the denominator.
 
-  - id: Q007
-    question: "Is the Industrial Training Fund reimbursement real, and on what terms?"
-    owner: W16
-    blocking: false
-    due: 2026-09-30
-    note: "Booked at zero until primary-verified with the ITF itself."
+- id: Q007
+  question: Is the Industrial Training Fund reimbursement real, and on what terms?
+  owner: W16
+  blocking: false
+  due: 2026-09-30
+  note: Booked at zero until primary-verified with the ITF itself.
 
-  - id: Q008
-    question: "What is the approved affiliation wording from Shifa International Hospitals and from ISQua?"
-    owner: W15
-    blocking: true
-    blocks: [W14]
-    due: 2026-09-30
+- id: Q008
+  question: What is the approved affiliation wording from Shifa International Hospitals and from ISQua?
+  owner: W15
+  blocking: true
+  blocks:
+  - W14
+  due: 2026-09-30
 
-  - id: Q009
-    question: "What is the data retention period and who is the data-protection contact?"
-    owner: W17
-    blocking: true
-    blocks: [W09, W14]
-    due: 2026-09-30
+- id: Q009
+  question: What is the data retention period and who is the data-protection contact?
+  owner: W17
+  blocking: true
+  blocks:
+  - W09
+  - W14
+  due: 2026-09-30
 
-  - id: Q010
-    question: "What is the programme called?"
-    owner: W13
-    blocking: true
-    blocks: [W14, W03]
-    due: 2026-08-31
+- id: Q010
+  question: What is the programme called?
+  owner: W13
+  blocking: true
+  blocks:
+  - W14
+  - W03
+  due: 2026-08-31
