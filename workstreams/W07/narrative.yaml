@@ -1,0 +1,14 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W07
+plain_question: Who is eligible, how do we choose between two applicants, and how do we fill a cohort
+  without lowering the bar?
+success_looks_like: Every place goes to someone who will finish it and use it.
+waiting_on: A committee decision on the process. Dossier W07-01 is ready.
+can_proceed_now: Selection rubric, sponsorship undertaking and the employer release agreement. Eligibility
+  breadth is a parameter, so it does not hold up the design.
+parameters_touching:
+- F018
+- F025
+evidence_held: Selection methods that predict completion, and comparator fellowship selection processes.

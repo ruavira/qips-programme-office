@@ -48,7 +48,7 @@ WORKSTREAMS = [
            "Cognitive load and completion evidence for working adults at 4 hours a week"],
    benchmarks=["IHI Improvement Advisor", "ACHS Quality Improvement Lead", "AUC Hospital Management Diploma",
                "Health Foundation GenerationQ"],
-   depends_on=["W01", "W03"], cohort1="NOW",
+   depends_on=["W01"], calibrates_with=["W03"], cohort1="NOW",
    note="Largely built: the 12-month architecture, the artefact ladder and the monthly cycle already exist."),
 
  dict(id="W03", d="D1", name="Assessment, Certification and Credentialing",
@@ -130,7 +130,7 @@ WORKSTREAMS = [
            "Funnel benchmarks: enquiry to application to deposit to enrolment"],
    benchmarks=["Africa CDC Kofi Annan Fellowship selection", "Health Foundation GenerationQ selection",
                "Commonwealth Scholarship selection methodology"],
-   depends_on=["W01", "W03"], cohort1="NOW",
+   depends_on=["W01"], calibrates_with=["W03"], cohort1="NOW",
    note="Decision taken: set on best practice. The council's missing-denominator finding lands here."),
 
  dict(id="W08", d="D2", name="Learner Success, Retention and Alumni",

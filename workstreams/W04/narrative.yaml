@@ -1,0 +1,18 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W04
+plain_question: What must a participant go and see, where can that be seen, and how is it made safe,
+  lawful and assessable?
+success_looks_like: Every participant spends forty hours inside a working quality system and returns
+  with a portfolio of what they observed and what they would change.
+waiting_on: Indemnity cover, before any host-site agreement is signed. Design is not waiting.
+can_proceed_now: The Host Site Standard is drafted and deliberately site-agnostic, so qualification
+  criteria, observation instruments and the portfolio specification proceed regardless of which countries
+  are in cohort one.
+parameters_touching:
+- F007
+- F020
+- F025
+evidence_held: Host Site Standard with a scored assessment instrument, tiering model, supervisor standard,
+  capacity model and agreement pack.

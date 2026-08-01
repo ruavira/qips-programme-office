@@ -1,0 +1,17 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W16
+plain_question: What does it cost, what do we charge, how does the money actually arrive, and when does
+  it stop needing new money?
+success_looks_like: The programme funds its own second cohort.
+waiting_on: An indemnity quote. It is the only zero in the financial model, and every surplus figure
+  is overstated until it is filled.
+can_proceed_now: The model is built and live. Price is a parameter, so no design work anywhere waits
+  on it.
+parameters_touching:
+- F024
+- F025
+- F007
+evidence_held: A live nine-sheet unit-economics model with target costing and breakeven by configuration,
+  plus the full comparator pricing and ability-to-pay evidence base.

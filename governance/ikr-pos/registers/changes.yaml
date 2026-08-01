@@ -11,7 +11,9 @@ changes:
     requested_on: 2026-07-31
     requested_by: Emmanuel / Ruavira
     owner: W09
-    status: IMPLEMENTED_PENDING_RATIFICATION
+    status: IMPLEMENTED_AND_RATIFIED
+    ratified_on: 2026-08-01
+    ratifying_decision: IKR-D001
     change_type: GOVERNANCE_ARCHITECTURE
     scope:
       - governance/ikr-pos/

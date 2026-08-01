@@ -1,0 +1,17 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W15
+plain_question: Whose name adds credibility, what does each partner actually do, and what is written
+  down?
+success_looks_like: Every organisation named on the material has agreed in writing to exactly what it
+  is named as.
+waiting_on: Approved affiliation wording from Shifa International Hospitals and from ISQua. Both gate
+  what can be published, not what can be designed or signed.
+can_proceed_now: The partner agreement between SQHN, Ruavira Collective Inc and The Arete Connoisseurs
+  (TAC). All three parties are directly reachable, so it can be drafted and signed now — and signing
+  it is what unlocks host-site recruitment, because it names who has authority to sign an MoU.
+parameters_touching: []
+evidence_held: Verified public descriptions for SQHN, Shifa International Hospitals and ISQua. QAI was
+  removed from the partner set on 1 August 2026 and the engagement decision is parked under Q005 with
+  its identity verified for whenever it is revisited.

@@ -1,5 +1,5 @@
 id: W08
-name: "Learner Success, Retention and Alumni"
+name: Learner Success, Retention and Alumni
 directorate: D2
 state: DORMANT
 cohort1_scope: NEXT
@@ -8,4 +8,7 @@ runs: 0
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
-blocked_by: ['W02', 'W03']
+blocked_by: []
+cluster: Learner & Operations
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after
+  six facts became PARAMETER. Only genuine external dependencies now read as blocked.'

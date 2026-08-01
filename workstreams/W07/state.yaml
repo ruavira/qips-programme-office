@@ -1,11 +1,20 @@
 id: W07
-name: "Admissions, Recruitment and Selection"
+name: Admissions, Recruitment and Selection
 directorate: D2
-state: AWAITING_CCC
+state: RESEARCHING
 cohort1_scope: NOW
 last_run: 2026-07-28
 runs: 1
 dossiers_submitted: 1
-dossiers_approved: 0
+dossiers_approved: 1
 consecutive_dry_rounds: 0
-blocked_by: ['W01', 'W03']
+blocked_by: []
+cluster: Learner & Operations
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after six facts became PARAMETER.
+  Only genuine external dependencies now read as blocked.'
+decision_status: APPROVED_WITH_AMENDMENT_2026-08-01
+next_action: W07-01 approved with four amendments at the CCC sitting of 2026-08-01 (minute ccc/minutes/2026-08-01.md).
+  Section 3 canon references corrected; new conditions 6 (institutional seat transferable not guaranteed), 7 (reviewer
+  pool separate from teaching faculty) and 8 (non-scoring support-needs field). Threshold, cap, allocation and forecast
+  remain unapproved. Q006 remains open.
+ccc_minute: ccc/minutes/2026-08-01.md

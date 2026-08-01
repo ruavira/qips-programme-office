@@ -14,7 +14,9 @@ state_after_submission: AWAITING_CCC
 ---
 
 # DOSSIER W05-01 — Teaching Faculty and Faculty Development
-**For decision at the next CCC sitting · Prepared by workstream W05 · Run 1 · Verification: PASS WITH FINDINGS**
+**APPROVED WITH AMENDMENT by the CCC on 2026-08-01 · Prepared by workstream W05 · Run 1 · Verification: PASS WITH FINDINGS**
+> **CCC verdict 2026-08-01 (Item 3):** Option B approved. Three facts promoted. Condition 1 amended,
+> conditions 5 extended and 6 added (see §8). Q003 remains open; no dependent workstream wakes.
 
 ## 1. The decision requested
 
@@ -76,8 +78,10 @@ own required outcomes; guests are bounded additions under the same conflict and 
 
 ## 8. Conditions
 
-1. By 31 August 2026, W02 and W05 reconcile the provisional twelve-slot map to the approved monthly
-   calendar.
+1. Reconcile the slot map in full for months 1–2 as prototyped, and at outline level for the remaining
+   ten, with final content reconciliation deferred to W02's calibration.
+   *(Amended by the CCC on 2026-08-01. The Item 1 decision authorised months 1–2 prototyping only, so
+   no approved monthly calendar will exist by 31 August. The slot count is already derivable from F003.)*
 2. Before public release, every named person has verified evidence, a resolved conflict record,
    executed appointment and granular publication consent.
 3. Before enrolment commitments, every required slot has a primary and backup or an approved risk
@@ -86,6 +90,15 @@ own required outcomes; guests are bounded additions under the same conflict and 
    clearance.
 5. Restricted candidate and appointment records remain outside GitHub and committee-facing Base44
    views.
+   *(CCC ruling 2026-08-01: those records are held in a restricted Google Drive folder under SQHN's
+   control. An interim organisational Drive account is used until the SQHN-owned folder exists, with
+   access granted to SQHN. Registered as SYS-DRIVE-FACULTY in the system-of-record map; the account
+   identity and folder link are held in `documents/register.yaml` as DOC-FAC-001 and are deliberately
+   not written into this public repository. Retention pending Q009.)*
+
+6. Faculty remuneration is governed by F029 and is not settled. No appointment letter may state or imply
+   a remuneration model until F029 resolves.
+   *(Added by the CCC on 2026-08-01, Item 3.)*
 
 ## 9. What becomes canon if you approve
 

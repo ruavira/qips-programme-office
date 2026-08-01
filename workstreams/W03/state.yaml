@@ -1,15 +1,24 @@
 id: W03
-name: "Assessment, Certification and Credentialing"
+name: Assessment, Certification and Credentialing
 directorate: D1
-state: AWAITING_CCC
+state: RESEARCHING
 cohort1_scope: NOW
 last_run: 2026-07-28
 runs: 1
 dossiers_submitted: 1
-dossiers_approved: 0
+dossiers_approved: 1
 consecutive_dry_rounds: 0
 blocked_by: []
 dependencies:
   decision_input_from: []
-  joint_completion_blueprint_with: ['W02']
-next_action: "Obtain the CCC verdict on W03-01, then co-produce the completion blueprint with W02 without blocking W02 prototype work."
+  joint_completion_blueprint_with:
+  - W02
+next_action: 'W03-01 approved with amendment at the CCC sitting of 2026-08-01 (minute ccc/minutes/2026-08-01.md).
+  Option B: completion certificate plus profession-specific CPD applications. New condition 6 — record CPD application
+  lead times by 31 August 2026 and reset F020 decide_by accordingly. New condition 7 — no partner named on certificate
+  artwork (F028). Q002 remains open.'
+cluster: Evidence & Design
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after six facts became PARAMETER.
+  Only genuine external dependencies now read as blocked.'
+decision_status: APPROVED_WITH_AMENDMENT_2026-08-01
+ccc_minute: ccc/minutes/2026-08-01.md

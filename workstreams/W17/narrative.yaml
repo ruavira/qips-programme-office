@@ -1,0 +1,15 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W17
+plain_question: Who is legally responsible for what, in which jurisdiction, and what happens when something
+  goes wrong?
+success_looks_like: Nothing about this programme comes as a surprise to a lawyer.
+waiting_on: Nothing external. Counsel needs instructing and the insurance brief needs sending.
+can_proceed_now: The indemnity brief, the risk register, the data-protection work and the governance
+  terms of reference.
+parameters_touching:
+- F007
+- F020
+evidence_held: Data-protection regimes across the candidate markets and the placement-liability position
+  that makes observership the correct term rather than internship.

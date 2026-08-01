@@ -133,9 +133,37 @@ def validate_decisions() -> int:
     decisions = data.get("decisions", [])
     require_unique(decisions, "id", "IKR-POS decision register")
     ratification = next((item for item in decisions if item.get("id") == "IKR-D001"), None)
-    if not ratification or ratification.get("status") != "PENDING":
-        fail("IKR-D001 must exist and remain PENDING until a minuted CCC verdict")
+    if not ratification:
+        fail("IKR-D001 must exist in the decision register")
+    validate_decided_with_minute(ratification)
     return len(decisions)
+
+
+def validate_decided_with_minute(decision) -> None:
+    """A governance decision may leave PENDING only via a real, on-disk CCC minute.
+
+    The original guard pinned IKR-D001 to PENDING unconditionally, which meant the
+    validator would have blocked the ratification it exists to protect. The rule the
+    failure message actually promised — and the rule enforced here — is that a decision
+    may move off PENDING only when it carries a minute reference and that minute exists.
+    """
+    decided_states = {"APPROVED", "REJECTED", "DEFERRED", "SUPERSEDED"}
+    status = decision.get("status")
+    identifier = decision.get("id")
+    if status == "PENDING":
+        return
+    if status not in decided_states:
+        fail(
+            f"{identifier} has status {status!r}; a decision must be PENDING or one of "
+            + ", ".join(sorted(decided_states))
+        )
+    if not decision.get("decided_on"):
+        fail(f"{identifier} is {status} but records no decided_on date")
+    minute = decision.get("minute_reference")
+    if not minute:
+        fail(f"{identifier} is {status} but cites no minute_reference; a decision without a minute is not a decision")
+    if not (ROOT / minute).is_file():
+        fail(f"{identifier} cites minute {minute}, which does not exist in the repository")
 
 
 def validate_changes() -> int:
@@ -194,6 +222,60 @@ def validate_facts() -> int:
     return len(facts)
 
 
+def validate_dependency_graph() -> int:
+    """The dependency graph must be a DAG. A cycle silently breaks every downstream
+    calculation — concurrency planning, unblocking, and the agenda all depend on being
+    able to topologically sort it. W02 and W03 were mutually dependent until 2026-08-01,
+    which meant the sort halted after one wave and nobody noticed."""
+    data = load_yaml("canon/dependencies.yaml")
+    graph = {code: list(node.get("depends_on") or []) for code, node in data.get("dependencies", {}).items()}
+
+    for code, deps in graph.items():
+        unknown = [d for d in deps if d not in graph]
+        if unknown:
+            fail(f"{code} depends on unknown workstreams: {', '.join(unknown)}")
+
+    colour: dict[str, int] = {}
+
+    def visit(node: str, trail: list[str]) -> None:
+        colour[node] = 1
+        for nxt in graph[node]:
+            if colour.get(nxt) == 1:
+                cycle = trail[trail.index(nxt):] + [nxt] if nxt in trail else [nxt, node, nxt]
+                fail(
+                    "dependency graph contains a cycle: " + " -> ".join(cycle)
+                    + ". Use calibrates_with for a mutual, non-blocking relationship."
+                )
+            if colour.get(nxt, 0) == 0:
+                visit(nxt, trail + [nxt])
+        colour[node] = 2
+
+    for code in graph:
+        if colour.get(code, 0) == 0:
+            visit(code, [code])
+    return len(graph)
+
+
+def validate_narratives() -> int:
+    """Every workstream carries a human-readable layer in the repository, so no front end
+    is the only place a reviewer's view of the programme exists."""
+    required = {"code", "plain_question", "success_looks_like", "waiting_on", "can_proceed_now"}
+    codes = sorted((ROOT / "workstreams").iterdir()) if (ROOT / "workstreams").is_dir() else []
+    count = 0
+    for path in codes:
+        if not path.is_dir():
+            continue
+        narrative = path / "narrative.yaml"
+        if not narrative.exists():
+            fail(f"{path.name} has no narrative.yaml")
+        record = load_yaml(f"workstreams/{path.name}/narrative.yaml")
+        require_keys(record, required, f"{path.name} narrative")
+        if record.get("code") != path.name:
+            fail(f"{path.name}/narrative.yaml declares code {record.get('code')}")
+        count += 1
+    return count
+
+
 def validate_questions() -> int:
     data = load_yaml("canon/open-questions.yaml")
     questions = data.get("questions", [])
@@ -215,6 +297,8 @@ def main() -> None:
         "documents": validate_documents(),
         "facts": validate_facts(),
         "questions": validate_questions(),
+        "graph": validate_dependency_graph(),
+        "narratives": validate_narratives(),
     }
 
     summary = ", ".join(f"{key}={value}" for key, value in counts.items())

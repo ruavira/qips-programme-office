@@ -29,16 +29,15 @@ facts:
   established: 2026-07-28
 
 - id: F003
-  statement: 'The unit of the programme is the month: one eLearning release, one live faculty session,
-    one small-group coaching call, one artefact.'
+  statement: 'The unit of the programme is the month: one eLearning release, one live faculty session, one small-group
+    coaching call, one artefact.'
   status: APPROVED
   owner: W02
   source: Owner decision, decisions-log; governing design principle
   established: 2026-07-28
 
 - id: F004
-  statement: Artefacts are submitted four days before the coaching call so the coach arrives having read
-    them.
+  statement: Artefacts are submitted four days before the coaching call so the coach arrives having read them.
   status: APPROVED
   owner: W02
   source: Programme architecture spec
@@ -59,23 +58,26 @@ facts:
   established: 2026-07-28
 
 - id: F007
-  statement: Observership site geography is a deployment parameter. The 40-hour observership is delivered
-    at a site qualified against the Host Site Standard; travel and accommodation are met by the participant
-    or their sponsoring organisation.
+  statement: Observership site geography is a deployment parameter. The 40-hour observership is delivered at a site
+    qualified against the Host Site Standard; travel and accommodation are met by the participant or their sponsoring
+    organisation.
   status: PARAMETER
   owner: W04
-  source: Owner decision 2026-07-28, item 12 · reclassified to PARAMETER 2026-08-01 by programme director,
-    for CCC ratification
+  source: Owner decision 2026-07-28, item 12 · reclassified to PARAMETER 2026-08-01 by programme director, for CCC
+    ratification · PARAMETER status and declared range ratified by the CCC on 2026-08-01, Item 6 (minute ccc/minutes/2026-08-01.md)
   established: 2026-07-28
   parameter:
     range: own city | own country | any qualified site within the cohort country set
     design_valid_across_range: true
-    why: The 40 contact hours, the structured instruments, the portfolio and the assessment of the participant's
-      own analysis are identical at any qualified site.
+    why: 'The 40 contact hours, the structured instruments, the portfolio and the assessment of the participant''s
+      own analysis are identical at any qualified site. Note for whoever decides this: it is not an administrative
+      parameter. The in-person component accounted for 67-87% of total implementation cost in the closest African
+      blended-training costing study, and per diems, accommodation and travel were 30-40% of implementer direct
+      cost. This is the largest single determinant of whether the unit economics work. Evidence: workstreams/W16/working/W16-self-sustainability-mechanics-2026-08-01.md.'
     gates: Travel cost (W16) · indemnity jurisdiction (W17) · host-site recruitment footprint (W04)
-    does_not_gate: Observership pedagogy, the Host Site Standard, and capstone assessment do not depend
-      on this.
+    does_not_gate: Observership pedagogy, the Host Site Standard, and capstone assessment do not depend on this.
     decide_by: Before host-site MoUs are signed
+  ratified_on: '2026-08-01'
 
 - id: F008
   statement: Host sites are qualified against a published Host Site Standard derived from programme objectives,
@@ -100,8 +102,7 @@ facts:
   established: 2026-07-28
 
 - id: F011
-  statement: Emmanuel and Dr Ajibike hold written authority to cut or merge content to protect the monthly
-    cap.
+  statement: Emmanuel and Dr Ajibike hold written authority to cut or merge content to protect the monthly cap.
   status: APPROVED
   owner: W02
   source: Owner decision 2026-07-28, item 6
@@ -129,13 +130,19 @@ facts:
   established: 2026-07-28
 
 - id: F015
-  statement: All other organisations are presented as Partners, led by Ruavira Collective Inc and The
-    Arete Connoisseurs (TAC). The word consortium is retired.
-  status: APPROVED
+  statement: All other organisations are presented as Partners, led by Ruavira Collective Inc and The Arete Connoisseurs
+    (TAC). The word consortium is retired.
+  status: SUPERSEDED
   owner: W15
   source: 'Owner decision 2026-07-28, item 8 · amended 2026-08-01: QAI removed from the partner set; engagement
     decision parked under Q005'
   established: 2026-07-28
+  superseded_on: '2026-08-01'
+  superseded_by: F028
+  supersession_reason: CCC sitting 2026-08-01. The programme director ruled that no partner organisation is named
+    in any public-facing material for cohort 1. Naming Ruavira Collective Inc and The Arete Connoisseurs in canon
+    is incompatible with that rule. The partner set is not deleted; it moves to the restricted programme record
+    under F028.
 
 - id: F016
   statement: The data controller is SQHN together with its partner organisations in each country of operation.
@@ -148,130 +155,204 @@ facts:
   statement: Brand identity is a parameter. A mix of RCI and SQHN assets is in use pending a settled identity.
   status: PARAMETER
   owner: W13
-  source: Owner decision 2026-07-28, item 18 · reclassified to PARAMETER 2026-08-01 by programme director,
-    for CCC ratification
+  source: Owner decision 2026-07-28, item 18 · reclassified to PARAMETER 2026-08-01 by programme director, for CCC
+    ratification · range narrowed 2026-08-01 by CCC sitting, consequent on F028 · PARAMETER status and declared
+    range ratified by the CCC on 2026-08-01, Item 6 (minute ccc/minutes/2026-08-01.md)
   established: 2026-07-28
   parameter:
-    range: RCI-led | SQHN-led | co-branded (current working position)
+    range: SQHN-led (the only option available for public-facing material while F028 stands) | RCI-led | co-branded
+      — the latter two are reachable only after a CCC decision releases partner naming. A mixed RCI and SQHN asset
+      set remains the internal working position.
     design_valid_across_range: true
     why: No element of programme design depends on the visual identity.
-    gates: Collateral production (W14) · naming architecture (W13)
+    gates: Collateral production (W14) · naming architecture (W13) · partner-naming release (F028)
     does_not_gate: Curriculum, assessment, observership and operations do not depend on this.
     decide_by: Before collateral is printed
+  ratified_on: '2026-08-01'
 
 - id: F018
-  statement: Admissions criteria are a parameter to be set by W07 on best practice. Eligibility breadth
-    is not yet fixed.
+  statement: Admissions criteria are a parameter to be set by W07 on best practice. Eligibility breadth is not yet
+    fixed.
   status: PARAMETER
   owner: W07
-  source: Owner decision 2026-07-28, item 15 · reclassified to PARAMETER 2026-08-01 by programme director,
-    for CCC ratification
+  source: Owner decision 2026-07-28, item 15 · reclassified to PARAMETER 2026-08-01 by programme director, for CCC
+    ratification · PARAMETER status and declared range ratified by the CCC on 2026-08-01, Item 6 (minute ccc/minutes/2026-08-01.md)
   established: 2026-07-28
   parameter:
     range: clinical only | clinical and non-clinical | open with experience floor
     design_valid_across_range: true
-    why: The programme is designed for a mixed clinical and managerial cohort; narrowing eligibility removes
-      participants, not content.
+    why: The programme is designed for a mixed clinical and managerial cohort; narrowing eligibility removes participants,
+      not content.
     gates: Application form (W07) · marketing claims (W14) · cohort composition
     does_not_gate: Curriculum and assessment do not depend on this.
     decide_by: Before the application form is published
+  ratified_on: '2026-08-01'
 
 - id: F019
-  statement: Published time commitment is about 4 hours a week in an ordinary week and about 228 hours
-    in total, derived from the curriculum rather than chosen for marketing.
+  statement: Published time commitment is about 4 hours a week in an ordinary week and about 228 hours in total,
+    derived from the curriculum rather than chosen for marketing.
   status: APPROVED
   owner: W02
   source: Owner decision 2026-07-28, item 5
   established: 2026-07-28
 
 - id: F020
-  statement: The cohort 1 country set is a deployment parameter. Nigeria is the anchor market; Ghana and
-    Pakistan are candidates, not commitments.
+  statement: The cohort 1 country set is a deployment parameter. Nigeria is the anchor market; Ghana and Pakistan
+    are candidates, not commitments.
   status: PARAMETER
   owner: W01
-  source: Programme positioning, decisions-log · reclassified to PARAMETER 2026-08-01 by programme director,
-    for CCC ratification
+  source: Programme positioning, decisions-log · reclassified to PARAMETER 2026-08-01 by programme director, for
+    CCC ratification · PARAMETER status and declared range ratified by the CCC on 2026-08-01, Item 6 (minute ccc/minutes/2026-08-01.md)
   established: 2026-07-28
   parameter:
     range: '[Nigeria] | [Nigeria, Ghana] | [Nigeria, Ghana, Pakistan]'
     design_valid_across_range: true
-    why: The curriculum teaches improvement methods applied in the participant's own facility, so it is
-      country-agnostic by construction.
-    gates: CPD recognition routes (W03) · payment rails (W16) · calendar collisions (W10) · marketing
-      reach (W14)
+    why: The curriculum teaches improvement methods applied in the participant's own facility, so it is country-agnostic
+      by construction.
+    gates: CPD recognition routes (W03) · payment rails (W16) · calendar collisions (W10) · marketing reach (W14)
     does_not_gate: Curriculum, assessment design and observership design do not depend on this.
-    decide_by: Before applications open
+    decide_by: 'The earlier of (a) the date W03 records as the latest start for lodging CPD regulator applications,
+      to be established by 31 August 2026 under W03-01 condition 6, or (b) before applications open. Amended by
+      the CCC on 2026-08-01, Item 2: CPD applications are scoped by the country set and have lead times, so a decide_by
+      of ''before applications open'' in October could fall after the work it gates has had to begin.'
+  ratified_on: '2026-08-01'
 
 - id: F021
-  statement: No fact may be published that has not been confirmed. Unconfirmed facts appear as visible
-    placeholders, never as plausible invented values.
+  statement: No fact may be published that has not been confirmed. Unconfirmed facts appear as visible placeholders,
+    never as plausible invented values.
   status: APPROVED
   owner: W17
   source: Standing rule from the first session
   established: 2026-07-28
 
 - id: F022
-  statement: ISQua involvement is at individual faculty level and is never described as institutional
-    accreditation or endorsement.
+  statement: ISQua involvement is at individual faculty level and is never described as institutional accreditation
+    or endorsement.
   status: APPROVED
   owner: W15
   source: Claims-honesty audit
   established: 2026-07-28
 
 - id: F023
-  statement: The first live faculty session is Saturday 9 January 2027, because the literal first Saturday
-    falls in the New Year holiday weekend.
-  status: PROPOSED
+  statement: The first live faculty session is Saturday 9 January 2027, because the literal first Saturday falls
+    in the New Year holiday weekend.
+  status: APPROVED
   owner: W10
-  source: Recommended 2026-07-28, awaiting CCC
-  established: 2026-07-28
+  source: 'Recommended 2026-07-28 by W10 · APPROVED by the CCC on 2026-08-01, Item 7 (minute ccc/minutes/2026-08-01.md).
+    The committee verified the reasoning rather than accepting it: 1 January 2027 falls on a Friday, so the literal
+    first Saturday is 2 January, inside the New Year holiday weekend. 9 January is the second Saturday.'
+  established: '2026-08-01'
 
 - id: F024
   statement: Tuition is a parameter. A published ladder by World Bank income band is the recommended structure;
     the level is not settled.
   status: PARAMETER
   owner: W16
-  source: Council recommendation 2026-07-28, NOT APPROVED · reclassified to PARAMETER 2026-08-01 by programme
-    director, for CCC ratification
+  source: Council recommendation 2026-07-28, NOT APPROVED · reclassified to PARAMETER 2026-08-01 by programme director,
+    for CCC ratification · PARAMETER status and declared range ratified by the CCC on 2026-08-01, Item 6 (minute
+    ccc/minutes/2026-08-01.md)
   established: 2026-07-28
   parameter:
-    range: LMIC individual USD 400-900, with the international, UMIC, institutional and LIC rungs scaling
-      from it
+    range: LMIC individual USD 450-600, working figure USD 500, with the international, UMIC, institutional and
+      LIC rungs scaling from it. Narrowed by the CCC on 2026-08-01, Item 6, from USD 400-900. USD 500 is the only
+      point inside the committed self-pay bands of all three candidate markets and under all three ceilings (Nigeria
+      USD 294-661, ceiling ~USD 600 at WACP fellowship-exam parity; Ghana USD 530-970; Pakistan USD 270-540). The
+      former USD 700-900 band sits above Pakistan's ceiling and at or above Nigeria's, and moves to the institutional
+      rung.
     design_valid_across_range: true
-    why: No hour of curriculum, assessment or observership depends on the price.
-    gates: Marketing copy (W14) · application form (W07) · viability arithmetic (W16)
+    why: 'No hour of curriculum, assessment or observership depends on the price. Recommended ladder, published
+      openly on World Bank income bands after the ISQua precedent: individual LMIC USD 500; institutional per seat
+      USD 900 with 15% off at 3 seats and 25% at 10; international USD 1,500; hardship USD 250. Payable in four
+      quarterly instalments with progression gated on payment, priced in USD and published in three local currencies
+      after the West African College of Physicians precedent. Evidence: workstreams/W16/working/W16-faculty-economics-and-pricing-recommendation-2026-08-01.md.'
+    gates: Marketing copy (W14) · application form (W07) · viability arithmetic (W16) · F026 indemnity trigger
     does_not_gate: Programme design does not depend on this. Nothing is published until it is decided.
     decide_by: Before any price is published
+  ratified_on: '2026-08-01'
 
 - id: F025
-  statement: Cohort 1 size is a parameter. A viability floor and a delivery ceiling are declared; the
-    target is not settled.
+  statement: Cohort 1 size is a parameter. A viability floor and a delivery ceiling are declared; the target is
+    not settled.
   status: PARAMETER
   owner: W07
-  source: Council recommendation 2026-07-28, NOT APPROVED · reclassified to PARAMETER 2026-08-01 by programme
-    director, for CCC ratification
+  source: Council recommendation 2026-07-28, NOT APPROVED · reclassified to PARAMETER 2026-08-01 by programme director,
+    for CCC ratification · PARAMETER status and declared range ratified by the CCC on 2026-08-01, Item 6 (minute
+    ccc/minutes/2026-08-01.md)
   established: 2026-07-28
   parameter:
-    range: 25 to 64 participants
+    range: 25 to 64 participants. Target 40, floor 24, ceiling 64 — set by the CCC on 2026-08-01, Item 6. Coaching
+      runs in groups of eight and each group is a stepped cost, not a smooth one, so the economically clean sizes
+      are 24, 32, 40, 48, 56 and 64. A cohort off a multiple of eight pays for a coaching group it does not fill.
     design_valid_across_range: true
-    why: The monthly cycle, coaching group size of 8 and assessment model hold across the whole range;
-      only the number of coaching groups and host-site places change.
+    why: The monthly cycle, coaching group size of 8 and assessment model hold across the whole range; only the
+      number of coaching groups and host-site places change. Published break-even evidence puts the fixed-cost floor
+      far below this range (7 participants web-delivered in the only published health-professional break-even analysis;
+      15 in the only published institutional viability rule), so the risk sits in the allowance-and-travel-heavy
+      variable block, not the fixed block.
     gates: Coaching group count (W06) · host-site capacity required (W04) · viability (W16)
     does_not_gate: Curriculum, assessment and observership design do not depend on this.
     decide_by: At the go/no-go gate
+  ratified_on: '2026-08-01'
 
 - id: F026
-  statement: Per-learner indemnity above USD 75 triggers deferral of the observership to cohort 2 and
-    an LMIC price of USD 475.
-  status: PROPOSED
+  statement: If verified per-learner indemnity exceeds USD 75, the observership defers to cohort 2 and the LMIC
+    individual tuition rung drops to the floor of its declared F024 range.
+  status: APPROVED
   owner: W16
-  source: Council conditional ruling 2026-07-28, NOT APPROVED
-  established: 2026-07-28
+  source: Council conditional ruling 2026-07-28 · APPROVED WITH AMENDMENT by the CCC on 2026-08-01, Item 7 (minute
+    ccc/minutes/2026-08-01.md).
+  established: '2026-08-01'
+  amendment_note: 'Two amendments. First, the original stated a hard-coded LMIC price of USD 475, derived from the
+    2026-07-28 council recommendation rather than from the pricing evidence base. It is restated as a rule relative
+    to F024 so that it cannot silently contradict F024 once tuition settles. Second, the USD 75 threshold is a decision
+    threshold chosen by the committee, NOT an evidenced benchmark: published per-learner indemnity figures were
+    NOT FOUND for Nigeria, Ghana or Pakistan. Recorded so nobody later mistakes it for a market figure. Q001 remains
+    the open question that makes this rule testable.'
+  threshold_basis: COMMITTEE_CHOSEN_NOT_EVIDENCED
 
 - id: F027
-  statement: 'Go/no-go kill date is 20 November 2026: 40 paid deposits, 9 signed host-site MoUs, 12 consented
-    faculty, all three at once.'
+  statement: 'Go/no-go kill date is 20 November 2026: 40 paid deposits, 9 signed host-site MoUs, 12 consented faculty,
+    all three at once.'
   status: PROPOSED
   owner: W17
-  source: Council recommendation 2026-07-28, NOT APPROVED
+  source: Council recommendation 2026-07-28, NOT APPROVED · DEFERRED 2026-08-01, see deferral_reason
   established: 2026-07-28
+  deferred_on: '2026-08-01'
+  deferral_reason: 'DEFERRED by the CCC on 2026-08-01, Item 7, and returned to W17. Two conflicts with decisions
+    already approved, both of which the next version must resolve rather than re-propose. (1) DATE COLLISION. F012
+    is approved canon: applications close 31 December 2026. F027 requires 40 paid deposits by 20 November 2026,
+    forty-one days before the window closes. W07-01, approved at Item 4 of the same sitting, adopted eligibility
+    screening then two independent scores then moderation then offers. A moderated selection over a closed field
+    cannot yield 40 paid deposits six weeks before the field closes; only rolling first-qualified offers could,
+    and that is the Option A the council rejected. (2) FACULTY BACKUP CONFLICT. F027 asks for 12 consented faculty.
+    W05-01 condition 3, approved at Item 3, requires every required slot to hold a primary and a backup or an approved
+    risk treatment. Twelve consented faculty gives twelve primaries and no backups. Either the figure rises, or
+    the fact states twelve primaries plus an approved risk treatment for backup coverage.'
+
+- id: F028
+  statement: The programme is publicly convened by SQHN and Partners. No partner organisation is named in any public-facing
+    material for cohort 1. The identified partner set is held in the restricted programme record and may be named
+    only by a later CCC decision. The word consortium is retired.
+  status: APPROVED
+  owner: W15
+  source: CCC sitting 2026-08-01, ruling of the programme director. Supersedes F015.
+  established: '2026-08-01'
+  supersedes: F015
+
+- id: F029
+  statement: Faculty remuneration is a parameter. The model is not settled and cohort 1 proceeds on a declared placeholder.
+  status: PARAMETER
+  owner: W05
+  source: CCC sitting 2026-08-01, Item 3. The programme director directed that faculty payment remain an open decision
+    point rather than being closed by the CPD-credit finding in the faculty economics research of 2026-08-01.
+  established: '2026-08-01'
+  parameter:
+    range: in-kind only (CPD credit, faculty development, sponsored fellowship) | in-kind plus a session honorarium
+      | full honorarium at published benchmark rates
+    design_valid_across_range: true
+    why: The coverage-slot model, appointment gates, conflict clearance and consent architecture approved at W05-01
+      are identical whether a slot holder is paid, paid in kind, or unpaid.
+    gates: Viability arithmetic (W16) · tuition level (F024) · faculty recruitment terms (W05) · appointment letters
+    does_not_gate: Curriculum, assessment, observership design and the faculty operating model do not depend on
+      this.
+    decide_by: Before the first faculty appointment letter is issued

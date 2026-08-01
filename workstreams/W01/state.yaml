@@ -1,7 +1,7 @@
 id: W01
-name: "Needs Assessment and Market Intelligence"
+name: Needs Assessment and Market Intelligence
 directorate: D1
-state: BLOCKED
+state: RESEARCHING
 cohort1_scope: NOW
 last_run: 2026-07-29
 runs: 1
@@ -9,3 +9,6 @@ dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
 blocked_by: []
+cluster: Evidence & Design
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after
+  six facts became PARAMETER. Only genuine external dependencies now read as blocked.'

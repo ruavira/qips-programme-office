@@ -1,21 +1,35 @@
 id: W02
-name: "Curriculum and Instructional Design"
+name: Curriculum and Instructional Design
 directorate: D1
-state: AWAITING_CCC
+state: RESEARCHING
 cohort1_scope: NOW
 last_run: 2026-07-31
 runs: 2
 dossiers_submitted: 1
-dossiers_approved: 0
+dossiers_approved: 1
 consecutive_dry_rounds: 0
 blocked_by: []
 execution_status: PROTOTYPE_READY
-decision_status: AWAITING_CCC
-prototype_authorization: PENDING_CCC
+decision_status: APPROVED_WITH_AMENDMENT_2026-08-01
+prototype_authorization: AUTHORIZED_2026-08-01
 publication_status: PROHIBITED
 production_lock_status: PROHIBITED
 dependencies:
   prototype_start: []
-  final_calibration: ['W01', 'W03']
-  publication: ['W01', 'W03', 'W05', 'W11', 'W12', 'W17']
-next_action: "Obtain the CCC verdict on W02-01; if approved, execute the controlled months 1–2 prototype plan in run-002-operationalization-plan.md while final calibration dependencies progress."
+  final_calibration:
+  - W01
+  - W03
+  publication:
+  - W01
+  - W03
+  - W05
+  - W11
+  - W12
+  - W17
+next_action: 'W02-01 approved with amendment at the CCC sitting of 2026-08-01 (minute ccc/minutes/2026-08-01.md).
+  Execute the controlled months 1–2 prototype plan in run-002-operationalization-plan.md. Condition 5 as amended:
+  build for Nigeria and demonstrate, without building, adaptation across the F020 range. Prototypes stay DRAFT.'
+cluster: Evidence & Design
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after six facts became PARAMETER.
+  Only genuine external dependencies now read as blocked.'
+ccc_minute: ccc/minutes/2026-08-01.md

@@ -1,0 +1,12 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W05
+plain_question: Who teaches, on what basis are they qualified to, and how are they developed and quality-assured?
+success_looks_like: Twelve named faculty who have taught this material before and have agreed in writing
+  to be named.
+waiting_on: A committee decision on the operating model. Dossier W05-01 is ready. Then written consent
+  from each person.
+can_proceed_now: Faculty specification, contract and IP terms, and the faculty development programme.
+parameters_touching: []
+evidence_held: Faculty models from IHI, ISQua and the Nigerian and Ghanaian postgraduate colleges.

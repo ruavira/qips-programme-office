@@ -1,11 +1,20 @@
 id: W05
-name: "Teaching Faculty and Faculty Development"
+name: Teaching Faculty and Faculty Development
 directorate: D2
-state: AWAITING_CCC
+state: RESEARCHING
 cohort1_scope: NOW
 last_run: 2026-07-28
 runs: 1
 dossiers_submitted: 1
-dossiers_approved: 0
+dossiers_approved: 1
 consecutive_dry_rounds: 0
-blocked_by: ['W02']
+blocked_by: []
+cluster: Delivery & Faculty
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after six facts became PARAMETER.
+  Only genuine external dependencies now read as blocked.'
+decision_status: APPROVED_WITH_AMENDMENT_2026-08-01
+next_action: W05-01 approved with amendment at the CCC sitting of 2026-08-01 (minute ccc/minutes/2026-08-01.md).
+  Condition 1 amended to months 1-2 in full and the remaining ten at outline level. Restricted candidate records
+  registered as SYS-DRIVE-FACULTY. New condition 6 — no appointment letter may state a remuneration model until
+  F029 resolves. Q003 remains open; no dependent workstream wakes.
+ccc_minute: ccc/minutes/2026-08-01.md

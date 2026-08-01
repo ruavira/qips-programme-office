@@ -1,11 +1,14 @@
 id: W12
-name: "Data, Outcomes and Research Assets"
+name: Data, Outcomes and Research Assets
 directorate: D3
-state: BLOCKED
+state: RESEARCHING
 cohort1_scope: NOW
 last_run: 2026-07-29
 runs: 1
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
-blocked_by: ['W03', 'W17']
+blocked_by: []
+cluster: Quality & Data
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after
+  six facts became PARAMETER. Only genuine external dependencies now read as blocked.'

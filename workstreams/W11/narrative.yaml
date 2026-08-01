@@ -1,0 +1,11 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W11
+plain_question: How do we know the programme is any good, and how would we find out if it were not?
+success_looks_like: 'We hold ourselves to the standard we teach: measured, published, and improved on
+  the evidence.'
+waiting_on: The curriculum and assessment decisions, so we know what we are evaluating against.
+can_proceed_now: The evaluation framework, the outcome model and the feedback instruments.
+parameters_touching: []
+evidence_held: Evaluation frameworks used in professional CPD and the ISQua education standards.
