@@ -28,6 +28,22 @@ Never raw research. Only a **decision dossier**, in the fixed shape defined in
 verdict and a passed verification report is returned unread — not because the content is
 wrong, but because accepting it would teach the system that the gates are optional.
 
+## Agenda capacity and throughput
+
+The CCC agenda has **unlimited intake capacity**. Every dossier that passes the repository
+gates is placed on the continuous decision docket; no verified dossier may be hidden,
+held outside the agenda or delayed merely because a numeric slot limit has been reached.
+
+Unlimited agenda capacity does not mean automatic or hurried approval. The docket is
+sequenced by readiness, dependency impact, risk, age and time sensitivity. The chair may
+split decisions across sittings, commission amendments or defer an item with a named
+condition and date, but the item remains visible on the agenda until a minuted verdict is
+recorded.
+
+Operational limits on how many workstreams research or prototype simultaneously are
+separate capacity controls. They must never be implemented by suppressing a decision-ready
+dossier from the CCC agenda.
+
 ## The four verdicts
 
 **APPROVE** — the recommendation becomes canon. Its facts are promoted, its open
@@ -44,13 +60,15 @@ reason is the one thing that breaks the loop.
 
 ## Cadence
 
-Weekly during the application window (October to December 2026), fortnightly otherwise.
-The agenda assembles itself: `ccc/agenda.md` is regenerated from workstream state before
-each sitting. An agenda item that has waited more than two sittings escalates and is
-listed first.
+Weekly during the application window (October to December 2026), fortnightly otherwise,
+with additional decision windows when a dependency-critical dossier is ready. The agenda
+assembles itself: `ccc/agenda.md` is regenerated from workstream and submitted dossier
+state. An item that has waited more than two sittings escalates and is listed first within
+its readiness class.
 
 ## The rule that keeps the system honest
 
 If the CCC finds itself approving a dossier it does not have time to read, the answer is
-not to read faster. It is to send it back and reduce how many workstreams are active at
-once. Seventeen workstreams can run. Seventeen dossiers cannot be decided in one sitting.
+not to read faster and not to remove the dossier from view. The answer is to record a
+DEFER verdict with a named condition or schedule the decision in the next decision window.
+The docket may be unlimited; the quality gate is never waived.
