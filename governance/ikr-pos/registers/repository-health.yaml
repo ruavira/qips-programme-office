@@ -9,7 +9,8 @@ register:
 
 baseline:
   assessed_on: 2026-07-31
-  assessment_status: BASELINE_WITH_OPEN_ACTIONS
+  assessment_status: INSTALLED_BASELINE_WITH_OPEN_ACTIONS
+  source_revision: 0c6334d8a48ee5552f155fa92f277f5ba9321f72
   strengths:
     - GitHub is explicitly declared the system of record.
     - Programme facts and open questions have controlled registries.
@@ -18,6 +19,8 @@ baseline:
     - Drive documents have a repository register.
     - Base44 mirror discipline and synchronization register exist.
     - Repository CI rebuilds generated views and scans for secrets.
+    - IKR-POS governance paths and registers are installed and schema-validated.
+    - Base44 and Google Drive installation mirrors were reconciled and read back against the installation revision.
   open_actions:
     - id: RH-001
       issue: Complete file-level artifact inventory for active workstream working files.
@@ -57,7 +60,22 @@ indicators:
     current: 100
   yaml_validation:
     target: PASS
-    current: PENDING_CI
+    current: PASS
+    evidence: GitHub Actions run 30680835572
+  ikr_pos_validator:
+    target: PASS
+    current: PASS
+    evidence: GitHub Actions job 91317371425
+  generated_file_consistency:
+    target: PASS
+    current: PASS
+    evidence: GitHub Actions job 91317371425
+  mirror_reconciliation:
+    target: IN_SYNC
+    current: IN_SYNC
+    evidence:
+      base44_app_id: 6a68b8381ea8ff36dd473cd2
+      drive_document_id: 1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
   registered_drive_documents_with_id_owner_status_version:
     target: 100
     unit: percent
@@ -77,3 +95,7 @@ indicators:
   portable_restore_test:
     target: PASS
     current: NOT_RUN
+  ccc_ratification:
+    target: APPROVED_OR_AMENDED
+    current: PENDING
+    decision_id: IKR-D001

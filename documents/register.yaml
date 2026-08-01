@@ -133,6 +133,18 @@ documents:
     drive_url: "https://docs.google.com/document/d/1RmJDDAwvG3guCr_jhnJUt0J3SVxkVm_ehgVOh505oHk/edit"
     note: "Four-page committee working pack; held outside the current three-slot CCC agenda. Title-sanitized, accessibility-checked, rendered page-by-page, imported as a native Google Doc, normalized with a native date chip, connector-verified and shared with Dr Oyewumi and Shakira for editing."
 
+  - id: DOC-IKR-POS-001
+    title: "QIPS IKR-POS Installation and Ratification Pack"
+    owner: W09
+    status: DECISION_REQUIRED
+    version: "1.0"
+    source_filename: null
+    sha256: null
+    repository_source: "governance/ikr-pos/installation-handover.md"
+    source_revision: "0c6334d8a48ee5552f155fa92f277f5ba9321f72"
+    drive_url: "https://docs.google.com/document/d/1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM/edit"
+    note: "Native Google Doc created after PR #11; moved into the QIPS Programme Office folder, read back and verified. Human review and CCC ratification copy for IKR-D001; GitHub remains authoritative."
+
   - id: DOC-CN-001
     title: "QIPS Programme concept note — long historical version"
     owner: W14
