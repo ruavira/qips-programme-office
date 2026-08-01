@@ -1,0 +1,19 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W14
+plain_question: How does a qualified applicant find this, believe it, and complete an application?
+success_looks_like: The cohort fills with people who understood exactly what they were signing up for.
+waiting_on: The name, the certificate title, faculty names and the affiliation wording. Nothing publishes
+  without those four.
+can_proceed_now: Positioning, channel plan, and the whole collateral system. A complete brochure, Word
+  master and landing-page specification already exist, carrying visible placeholders wherever a fact
+  is unconfirmed.
+parameters_touching:
+- F017
+- F018
+- F020
+- F024
+- F025
+evidence_held: Full marketing pack with every statistic sourced and dated; channel and conversion evidence
+  for professional education in the target markets.

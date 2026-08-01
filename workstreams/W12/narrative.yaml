@@ -1,0 +1,15 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W12
+plain_question: What data does this programme generate, who owns it, and what is it worth beyond the
+  programme?
+success_looks_like: Fifty improvement projects with real baselines across several health systems. Evidence
+  nobody else in the region holds.
+waiting_on: 'Data-protection advice, and consent language agreed before cohort one starts. That window
+  matters: miss it and the asset is gone rather than delayed.'
+can_proceed_now: The dataset specification, the publication strategy and the reporting pack.
+parameters_touching:
+- F020
+evidence_held: Reporting standards for improvement work and comparator programmes that publish their
+  own outcomes.

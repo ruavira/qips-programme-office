@@ -1,0 +1,16 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W03
+plain_question: What exactly does a graduate hold at the end, who awards it, what did they prove to
+  get it, and who recognises it?
+success_looks_like: A credential that means something because it was earned by doing the work, not by
+  sitting an exam.
+waiting_on: A committee decision on the credential architecture. Dossier W03-01 is ready. The certificate
+  title itself is still open and is the single most consequential unanswered question in the programme.
+can_proceed_now: Assessment blueprint, capstone rubric and assessor calibration design.
+parameters_touching:
+- F020
+evidence_held: Naming and credential research covering CPHQ, ISQua Fellowship, ACHS, IHI and the West
+  African and Pakistani college structures, including which credential names and post-nominals are already
+  taken.

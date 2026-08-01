@@ -1,0 +1,14 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W09
+plain_question: What must the technology do, what do we already have, and what is the smallest stack
+  that reliably delivers the monthly cycle?
+success_looks_like: Nobody ever misses a session because the platform failed or their bandwidth could
+  not carry it.
+waiting_on: Two open findings on the platform selection dossier.
+can_proceed_now: Requirements are written. The existing Moodle estate needs inspecting against them,
+  plus low-bandwidth and restore testing.
+parameters_touching: []
+evidence_held: Platform requirements tied to the monthly cycle; a complete landing-page build specification
+  already exists.

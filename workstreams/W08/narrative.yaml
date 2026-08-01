@@ -1,0 +1,13 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W08
+plain_question: How do we get people to the end, and what happens to them afterwards that makes the
+  credential compound?
+success_looks_like: People finish. Then they stay connected, and they become the next cohort's coaches
+  and the programme's evidence.
+waiting_on: Nothing. Formally scheduled for cohort two.
+can_proceed_now: The retention half of this belongs in cohort one and can start whenever we choose.
+  Attrition is a revenue line, not only a quality measure.
+parameters_touching: []
+evidence_held: Attrition evidence for long-duration online professional programmes.

@@ -1,0 +1,15 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W10
+plain_question: How does one month actually run, and how does a virtual programme stay genuinely open
+  to people in time zones it was not designed around?
+success_looks_like: Twelve months run without a single scheduling surprise, and someone in a distant
+  time zone can still take part without being treated as an afterthought.
+waiting_on: Nothing.
+can_proceed_now: The master calendar, the monthly operating runbook and the time-zone participation
+  model.
+parameters_touching:
+- F020
+evidence_held: Research on how comparable global cohort programmes publish session times, handle duplicate
+  sittings and treat recordings.

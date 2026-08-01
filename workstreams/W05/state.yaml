@@ -1,5 +1,5 @@
 id: W05
-name: "Teaching Faculty and Faculty Development"
+name: Teaching Faculty and Faculty Development
 directorate: D2
 state: AWAITING_CCC
 cohort1_scope: NOW
@@ -8,4 +8,7 @@ runs: 1
 dossiers_submitted: 1
 dossiers_approved: 0
 consecutive_dry_rounds: 0
-blocked_by: ['W02']
+blocked_by: []
+cluster: Delivery & Faculty
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after
+  six facts became PARAMETER. Only genuine external dependencies now read as blocked.'

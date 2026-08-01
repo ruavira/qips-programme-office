@@ -1,0 +1,17 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W02
+plain_question: What must a graduate be able to do, and what sequence of learning, practice and feedback
+  reliably gets them there in twelve months?
+success_looks_like: A participant finishes with a completed improvement project in their own hospital,
+  and the skill to run the next one without us.
+waiting_on: A committee decision on the blueprint. Dossier W02-01 is ready and has no open blocking
+  findings.
+can_proceed_now: The twelve-month architecture, the monthly cycle and the artefact ladder are designed
+  and stable.
+parameters_touching:
+- F024
+- F025
+evidence_held: Full programme architecture spec, month-by-month curriculum map, artefact ladder, and
+  the duration decision resolved on comparator evidence.

@@ -1,0 +1,14 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W01
+plain_question: Who needs this programme, and how do we know the need is real rather than assumed?
+success_looks_like: A cohort recruited from evidence rather than hope. We know who the learner is, what
+  capability gap they have, and what they already pay for professional development.
+waiting_on: Nothing external. The field conversations have to be run.
+can_proceed_now: Practitioner and employer interviews. The comparator survey and ability-to-pay evidence
+  base are already built.
+parameters_touching:
+- F020
+evidence_held: 45 comparator programmes priced from published pages; 79 sources on earnings and what
+  this audience already pays; 46 sources on financing models.

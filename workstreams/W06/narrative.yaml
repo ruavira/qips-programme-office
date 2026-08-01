@@ -1,0 +1,14 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W06
+plain_question: Who coaches the monthly small groups, how are they trained and supervised, and what
+  happens when a coach stops?
+success_looks_like: A coach cadre grown from within, so that cohort two is taught partly by cohort one.
+waiting_on: Nothing at all.
+can_proceed_now: Everything. The coach competency framework, selection criteria and development pathway
+  are unstarted and entirely unblocked.
+parameters_touching:
+- F025
+evidence_held: Comparator coaching models and the evidence on coach-to-participant ratios and volunteer
+  coach attrition.

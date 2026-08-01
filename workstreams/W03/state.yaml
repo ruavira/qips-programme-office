@@ -1,5 +1,5 @@
 id: W03
-name: "Assessment, Certification and Credentialing"
+name: Assessment, Certification and Credentialing
 directorate: D1
 state: AWAITING_CCC
 cohort1_scope: NOW
@@ -11,5 +11,10 @@ consecutive_dry_rounds: 0
 blocked_by: []
 dependencies:
   decision_input_from: []
-  joint_completion_blueprint_with: ['W02']
-next_action: "Obtain the CCC verdict on W03-01, then co-produce the completion blueprint with W02 without blocking W02 prototype work."
+  joint_completion_blueprint_with:
+  - W02
+next_action: Obtain the CCC verdict on W03-01, then co-produce the completion blueprint
+  with W02 without blocking W02 prototype work.
+cluster: Evidence & Design
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after
+  six facts became PARAMETER. Only genuine external dependencies now read as blocked.'

@@ -194,6 +194,60 @@ def validate_facts() -> int:
     return len(facts)
 
 
+def validate_dependency_graph() -> int:
+    """The dependency graph must be a DAG. A cycle silently breaks every downstream
+    calculation — concurrency planning, unblocking, and the agenda all depend on being
+    able to topologically sort it. W02 and W03 were mutually dependent until 2026-08-01,
+    which meant the sort halted after one wave and nobody noticed."""
+    data = load_yaml("canon/dependencies.yaml")
+    graph = {code: list(node.get("depends_on") or []) for code, node in data.get("dependencies", {}).items()}
+
+    for code, deps in graph.items():
+        unknown = [d for d in deps if d not in graph]
+        if unknown:
+            fail(f"{code} depends on unknown workstreams: {', '.join(unknown)}")
+
+    colour: dict[str, int] = {}
+
+    def visit(node: str, trail: list[str]) -> None:
+        colour[node] = 1
+        for nxt in graph[node]:
+            if colour.get(nxt) == 1:
+                cycle = trail[trail.index(nxt):] + [nxt] if nxt in trail else [nxt, node, nxt]
+                fail(
+                    "dependency graph contains a cycle: " + " -> ".join(cycle)
+                    + ". Use calibrates_with for a mutual, non-blocking relationship."
+                )
+            if colour.get(nxt, 0) == 0:
+                visit(nxt, trail + [nxt])
+        colour[node] = 2
+
+    for code in graph:
+        if colour.get(code, 0) == 0:
+            visit(code, [code])
+    return len(graph)
+
+
+def validate_narratives() -> int:
+    """Every workstream carries a human-readable layer in the repository, so no front end
+    is the only place a reviewer's view of the programme exists."""
+    required = {"code", "plain_question", "success_looks_like", "waiting_on", "can_proceed_now"}
+    codes = sorted((ROOT / "workstreams").iterdir()) if (ROOT / "workstreams").is_dir() else []
+    count = 0
+    for path in codes:
+        if not path.is_dir():
+            continue
+        narrative = path / "narrative.yaml"
+        if not narrative.exists():
+            fail(f"{path.name} has no narrative.yaml")
+        record = load_yaml(f"workstreams/{path.name}/narrative.yaml")
+        require_keys(record, required, f"{path.name} narrative")
+        if record.get("code") != path.name:
+            fail(f"{path.name}/narrative.yaml declares code {record.get('code')}")
+        count += 1
+    return count
+
+
 def validate_questions() -> int:
     data = load_yaml("canon/open-questions.yaml")
     questions = data.get("questions", [])
@@ -215,6 +269,8 @@ def main() -> None:
         "documents": validate_documents(),
         "facts": validate_facts(),
         "questions": validate_questions(),
+        "graph": validate_dependency_graph(),
+        "narratives": validate_narratives(),
     }
 
     summary = ", ".join(f"{key}={value}" for key, value in counts.items())

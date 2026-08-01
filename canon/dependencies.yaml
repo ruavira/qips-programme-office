@@ -6,11 +6,17 @@ dependencies:
     depends_on: []
     blocks: ['W02', 'W07', 'W14']
   W02:  # Curriculum and Instructional Design
-    depends_on: ['W01', 'W03']
+    depends_on: ['W01']
+    calibrates_with: ['W03']  # mutual, non-blocking: W02 defines what a graduate can do,
+                              # W03 designs how that is evidenced, then W02 calibrates content.
+                              # Modelled as a dependency this was a cycle and the graph could
+                              # not sort. Both dossiers reached ready_for_ccc simultaneously,
+                              # which is the evidence that neither blocks the other.
     blocks: ['W03', 'W04', 'W05', 'W06', 'W08', 'W09', 'W10', 'W11']
   W03:  # Assessment, Certification and Credentialing
     depends_on: ['W02']
-    blocks: ['W02', 'W07', 'W08', 'W11', 'W12', 'W13', 'W16']
+    calibrates_with: ['W02']
+    blocks: ['W07', 'W08', 'W11', 'W12', 'W13', 'W16']
   W04:  # Practicum and Observership
     depends_on: ['W02', 'W17']
     blocks: ['W16']

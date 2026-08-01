@@ -1,11 +1,14 @@
 id: W17
-name: "Governance, Legal, Risk and Data Protection"
+name: Governance, Legal, Risk and Data Protection
 directorate: D4
-state: VERIFYING
+state: RESEARCHING
 cohort1_scope: NOW
 last_run: 2026-07-29
 runs: 2
 dossiers_submitted: 0
 dossiers_approved: 0
 consecutive_dry_rounds: 0
-blocked_by: ['Q001', 'Q009']
+blocked_by: []
+cluster: Partnerships & Governance
+state_recut: '2026-08-01: re-derived from what actually blocks this workstream, after
+  six facts became PARAMETER. Only genuine external dependencies now read as blocked.'

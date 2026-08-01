@@ -1,0 +1,16 @@
+# Human-readable layer for this workstream. Authored here, projected into any front end.
+# This is the narrative a reviewer reads; operational state lives in state.yaml.
+# Contains no personal data, so it is safe in a public repository.
+code: W13
+plain_question: What is this programme called, and whose name is on it?
+success_looks_like: A name that signals seniority to a mid-career clinician, is lawful to use in every
+  market we enter, and leaves room for an advanced tier above it.
+waiting_on: A naming decision, then trademark and domain clearance, which is a legal instruction rather
+  than a web search.
+can_proceed_now: The evidence is complete and the options paper can be written now.
+parameters_touching:
+- F017
+evidence_held: '73 sourced findings across 25+ comparator programmes. Three matter most: the word Foundation
+  reads as a pre-university remedial year in Nigeria and Pakistan and as the lowest tier in the field''s
+  dominant competency framework; ISQua launched a directly colliding product in February 2026; and QIPS
+  is already an institutional acronym elsewhere.'

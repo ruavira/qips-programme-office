@@ -1,106 +1,128 @@
 systems:
-  - id: SYS-GITHUB
-    name: GitHub repository
-    identifier: ruavira/qips-programme-office
-    role: AUTHORITATIVE_GOVERNED_SYSTEM_OF_RECORD
-    layers:
-      - CONTROLLED_PROJECT_KNOWLEDGE
-      - SOFTWARE_AND_AUTOMATION
-      - METADATA_AND_REGISTERS
-      - ARCHIVE_HISTORY
-    may_approve_programme_truth: false
-    approval_mechanism: MINUTED_CCC_DECISION_COMMITTED_TO_REPOSITORY
-    prohibited:
-      - secrets
-      - patient_data
-      - participant_personal_data
-      - private_contact_lists
-      - unapproved_signed_agreements
-      - unrestricted_legal_advice
-
-  - id: SYS-DRIVE
-    name: Google Drive
-    identifier: documents/register.yaml
-    role: HUMAN_REVIEW_AND_RESTRICTED_EVIDENCE_LAYER
-    layers:
-      - AUTHORITATIVE_SOURCE_LIBRARY
-      - EVIDENCE_AND_OBJECT_STORAGE
-      - HUMAN_REVIEW
-      - SIGNED_AND_MINUTED_RECORDS
-      - ARCHIVE_PRESERVATION
-    authority_rule: A Drive file is canonical only when its repository register and CCC status say so.
-    required_sync_fields:
-      - repository_source
-      - source_commit
-      - document_id
-      - document_revision
-      - validation
-    prohibited:
-      - silent_canon_changes
-      - unregistered_approved_claims
-
-  - id: SYS-BASE44
-    name: Base44 QIPS Programme Office
-    identifier: 6a68b8381ea8ff36dd473cd2
-    live_url: https://passionate-base-logic-core.base44.app/
-    role: OPERATIONAL_MIRROR_AND_COLLABORATION_INTERFACE
-    layers:
-      - STRUCTURED_KNOWLEDGE_MIRROR
-      - WORKFLOW_INTERFACE
-    authority_rule: GitHub source revision governs.
-    prohibited:
-      - independent_canon
-      - silent_status_promotion
-      - publication_without_source_revision
-
-  - id: SYS-SUPABASE
-    name: Supabase
-    identifier: null
-    role: FUTURE_APPROVED_OPERATIONAL_DATABASE
-    status: NOT_REGISTERED
-    layers:
-      - STRUCTURED_KNOWLEDGE_AND_PLATFORM_DATA
-      - AUDIT_EVENTS
-    activation_gates:
-      - project_identifier_registered
-      - schema_approved
-      - row_level_security_approved
-      - privacy_and_retention_controls_approved
-      - source_revision_contract_defined
-
-  - id: SYS-NETLIFY
-    name: Netlify
-    identifier: null
-    role: FUTURE_DEPLOYMENT_SURFACE
-    status: NOT_REGISTERED
-    layers:
-      - PUBLISHED_PORTAL
-    activation_gates:
-      - site_identifier_registered
-      - approved_artifact
-      - source_commit_recorded
-      - publication_authorized
-
-  - id: SYS-VERCEL
-    name: Vercel
-    identifier: null
-    role: FUTURE_DEPLOYMENT_SURFACE
-    status: NOT_REGISTERED
-    layers:
-      - PUBLISHED_APPLICATION_OR_SERVICE
-    activation_gates:
-      - project_identifier_registered
-      - approved_artifact
-      - source_commit_recorded
-      - publication_authorized
-
-  - id: SYS-CHAT
-    name: AI chats and agent workspaces
-    identifier: replaceable
-    role: EPHEMERAL_WORKER_CONTEXT
-    layers: []
-    authority_rule: No critical state may exist only in chat.
-    prohibited:
-      - sole_decision_record
-      - sole_artifact_location
-      - uncommitted_canon
+- id: SYS-GITHUB
+  name: GitHub repository
+  identifier: ruavira/qips-programme-office
+  role: AUTHORITATIVE_GOVERNED_SYSTEM_OF_RECORD
+  layers:
+  - CONTROLLED_PROJECT_KNOWLEDGE
+  - SOFTWARE_AND_AUTOMATION
+  - METADATA_AND_REGISTERS
+  - ARCHIVE_HISTORY
+  may_approve_programme_truth: false
+  approval_mechanism: MINUTED_CCC_DECISION_COMMITTED_TO_REPOSITORY
+  prohibited:
+  - secrets
+  - patient_data
+  - participant_personal_data
+  - private_contact_lists
+  - unapproved_signed_agreements
+  - unrestricted_legal_advice
+- id: SYS-DRIVE
+  name: Google Drive
+  identifier: documents/register.yaml
+  role: HUMAN_REVIEW_AND_RESTRICTED_EVIDENCE_LAYER
+  layers:
+  - AUTHORITATIVE_SOURCE_LIBRARY
+  - EVIDENCE_AND_OBJECT_STORAGE
+  - HUMAN_REVIEW
+  - SIGNED_AND_MINUTED_RECORDS
+  - ARCHIVE_PRESERVATION
+  authority_rule: A Drive file is canonical only when its repository register and CCC status say so.
+  required_sync_fields:
+  - repository_source
+  - source_commit
+  - document_id
+  - document_revision
+  - validation
+  prohibited:
+  - silent_canon_changes
+  - unregistered_approved_claims
+- id: SYS-BASE44
+  name: Base44 QIPS Programme Office
+  identifier: 6a68b8381ea8ff36dd473cd2
+  live_url: https://passionate-base-logic-core.base44.app/
+  role: OPERATIONAL_MIRROR_AND_COLLABORATION_INTERFACE
+  layers:
+  - STRUCTURED_KNOWLEDGE_MIRROR
+  - WORKFLOW_INTERFACE
+  authority_rule: GitHub source revision governs.
+  prohibited:
+  - independent_canon
+  - silent_status_promotion
+  - publication_without_source_revision
+  portability_position: Base44 is one renderer of contracts/control-room-v1.schema.json, not the destination.
+    Anything that can emit that contract can replace it. Nothing may become true inside the app.
+  exit_test: If Base44 were withdrawn tomorrow, what would be lost? Everything answerable from the repository
+    is safe. The resident_data block below is the honest remainder.
+  projected_from_repository:
+  - ProgrammeFact  <- canon/facts.yaml
+  - Decision       <- canon/open-questions.yaml
+  - Workstream     <- workstreams/W##/state.yaml (via engine/export_control_room.py)
+  - WorkstreamNarrative <- workstreams/W##/narrative.yaml
+  - ProgrammeDocument   <- documents/register.yaml
+  resident_data:
+    note: These exist only in Base44 and cannot be mirrored to the repository, because SECURITY.md prohibits
+      participant personal data and private contact details there. This is a deliberate boundary, not
+      an oversight.
+    entities:
+    - name: Feedback
+      why_resident: carries submitted_by_email and reviewer opinions
+      exit_path: export to a restricted Drive folder registered in documents/register.yaml; a pseudonymised
+        form may be committed if the email map stays out of the repository
+    - name: CollaboratorProfile
+      why_resident: carries collaborator email addresses
+      exit_path: roles and permissions are reconstructible from ccc/charter.md; the identity map is exported
+        to restricted Drive
+    - name: AccessRequest
+      why_resident: carries requester identity
+      exit_path: restricted Drive only
+    review: Re-check at every repository-health review. Any new Base44-only entity must be listed here
+      or moved to the repository.
+- id: SYS-SUPABASE
+  name: Supabase
+  identifier: null
+  role: FUTURE_APPROVED_OPERATIONAL_DATABASE
+  status: NOT_REGISTERED
+  layers:
+  - STRUCTURED_KNOWLEDGE_AND_PLATFORM_DATA
+  - AUDIT_EVENTS
+  activation_gates:
+  - project_identifier_registered
+  - schema_approved
+  - row_level_security_approved
+  - privacy_and_retention_controls_approved
+  - source_revision_contract_defined
+- id: SYS-NETLIFY
+  name: Netlify
+  identifier: null
+  role: FUTURE_DEPLOYMENT_SURFACE
+  status: NOT_REGISTERED
+  layers:
+  - PUBLISHED_PORTAL
+  activation_gates:
+  - site_identifier_registered
+  - approved_artifact
+  - source_commit_recorded
+  - publication_authorized
+- id: SYS-VERCEL
+  name: Vercel
+  identifier: null
+  role: FUTURE_DEPLOYMENT_SURFACE
+  status: NOT_REGISTERED
+  layers:
+  - PUBLISHED_APPLICATION_OR_SERVICE
+  activation_gates:
+  - project_identifier_registered
+  - approved_artifact
+  - source_commit_recorded
+  - publication_authorized
+- id: SYS-CHAT
+  name: AI chats and agent workspaces
+  identifier: replaceable
+  role: EPHEMERAL_WORKER_CONTEXT
+  layers: []
+  authority_rule: No critical state may exist only in chat.
+  prohibited:
+  - sole_decision_record
+  - sole_artifact_location
+  - uncommitted_canon
