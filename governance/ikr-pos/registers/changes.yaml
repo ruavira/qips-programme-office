@@ -1,0 +1,39 @@
+register:
+  id: QIPS-CCR
+  title: QIPS Change-Control Register
+  version: 1.0.0
+  owner: W09
+  status: ACTIVE
+
+changes:
+  - id: IKR-CR-001
+    title: Install IKR-POS over QIPS
+    requested_on: 2026-07-31
+    requested_by: Emmanuel / Ruavira
+    owner: W09
+    status: IMPLEMENTED_PENDING_RATIFICATION
+    change_type: GOVERNANCE_ARCHITECTURE
+    scope:
+      - governance/ikr-pos/
+      - AGENTS.md
+      - README.md
+      - docs/operating-model.md
+      - documents/register.yaml
+      - .github/pull_request_template.md
+      - .github/workflows/repository-checks.yml
+      - engine/validate_ikr_pos.py
+    rationale: Formalize QIPS as a governed institutional knowledge repository and portable project operating system.
+    destructive_actions: []
+    programme_facts_changed: []
+    human_gates_triggered:
+      - CCC_POLICY_RATIFICATION
+    validation:
+      - yaml_parse
+      - required_path_check
+      - register_schema_check
+      - document_register_identity_check
+      - existing_repository_checks
+    synchronization_required:
+      - Base44
+      - Google_Drive
+    synchronization_status: PENDING_POST_MERGE

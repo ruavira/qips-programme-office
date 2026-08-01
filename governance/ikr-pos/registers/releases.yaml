@@ -1,0 +1,26 @@
+register:
+  id: QIPS-RR
+  title: QIPS Release Register
+  version: 1.0.0
+  owner: W09
+  status: ACTIVE
+
+releases:
+  - id: QIPS-IKR-POS-1.0.0
+    title: Initial QIPS IKR-POS Profile
+    version: 1.0.0
+    release_type: GOVERNANCE_PROFILE
+    lifecycle_status: RELEASE_CANDIDATE
+    authority_class: PROPOSED
+    prepared_on: 2026-07-31
+    source_branch: agent/install-ikr-pos
+    source_commit: PENDING
+    approval_authority: CCC
+    approval_status: PENDING
+    included_paths:
+      - governance/ikr-pos/
+      - AGENTS.md
+      - engine/validate_ikr_pos.py
+      - .github/pull_request_template.md
+    publication_status: INTERNAL_ONLY
+    restore_test: PENDING

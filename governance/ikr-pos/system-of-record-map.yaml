@@ -1,0 +1,106 @@
+systems:
+  - id: SYS-GITHUB
+    name: GitHub repository
+    identifier: ruavira/qips-programme-office
+    role: AUTHORITATIVE_GOVERNED_SYSTEM_OF_RECORD
+    layers:
+      - CONTROLLED_PROJECT_KNOWLEDGE
+      - SOFTWARE_AND_AUTOMATION
+      - METADATA_AND_REGISTERS
+      - ARCHIVE_HISTORY
+    may_approve_programme_truth: false
+    approval_mechanism: MINUTED_CCC_DECISION_COMMITTED_TO_REPOSITORY
+    prohibited:
+      - secrets
+      - patient_data
+      - participant_personal_data
+      - private_contact_lists
+      - unapproved_signed_agreements
+      - unrestricted_legal_advice
+
+  - id: SYS-DRIVE
+    name: Google Drive
+    identifier: documents/register.yaml
+    role: HUMAN_REVIEW_AND_RESTRICTED_EVIDENCE_LAYER
+    layers:
+      - AUTHORITATIVE_SOURCE_LIBRARY
+      - EVIDENCE_AND_OBJECT_STORAGE
+      - HUMAN_REVIEW
+      - SIGNED_AND_MINUTED_RECORDS
+      - ARCHIVE_PRESERVATION
+    authority_rule: A Drive file is canonical only when its repository register and CCC status say so.
+    required_sync_fields:
+      - repository_source
+      - source_commit
+      - document_id
+      - document_revision
+      - validation
+    prohibited:
+      - silent_canon_changes
+      - unregistered_approved_claims
+
+  - id: SYS-BASE44
+    name: Base44 QIPS Programme Office
+    identifier: 6a68b8381ea8ff36dd473cd2
+    live_url: https://passionate-base-logic-core.base44.app/
+    role: OPERATIONAL_MIRROR_AND_COLLABORATION_INTERFACE
+    layers:
+      - STRUCTURED_KNOWLEDGE_MIRROR
+      - WORKFLOW_INTERFACE
+    authority_rule: GitHub source revision governs.
+    prohibited:
+      - independent_canon
+      - silent_status_promotion
+      - publication_without_source_revision
+
+  - id: SYS-SUPABASE
+    name: Supabase
+    identifier: null
+    role: FUTURE_APPROVED_OPERATIONAL_DATABASE
+    status: NOT_REGISTERED
+    layers:
+      - STRUCTURED_KNOWLEDGE_AND_PLATFORM_DATA
+      - AUDIT_EVENTS
+    activation_gates:
+      - project_identifier_registered
+      - schema_approved
+      - row_level_security_approved
+      - privacy_and_retention_controls_approved
+      - source_revision_contract_defined
+
+  - id: SYS-NETLIFY
+    name: Netlify
+    identifier: null
+    role: FUTURE_DEPLOYMENT_SURFACE
+    status: NOT_REGISTERED
+    layers:
+      - PUBLISHED_PORTAL
+    activation_gates:
+      - site_identifier_registered
+      - approved_artifact
+      - source_commit_recorded
+      - publication_authorized
+
+  - id: SYS-VERCEL
+    name: Vercel
+    identifier: null
+    role: FUTURE_DEPLOYMENT_SURFACE
+    status: NOT_REGISTERED
+    layers:
+      - PUBLISHED_APPLICATION_OR_SERVICE
+    activation_gates:
+      - project_identifier_registered
+      - approved_artifact
+      - source_commit_recorded
+      - publication_authorized
+
+  - id: SYS-CHAT
+    name: AI chats and agent workspaces
+    identifier: replaceable
+    role: EPHEMERAL_WORKER_CONTEXT
+    layers: []
+    authority_rule: No critical state may exist only in chat.
+    prohibited:
+      - sole_decision_record
+      - sole_artifact_location
+      - uncommitted_canon

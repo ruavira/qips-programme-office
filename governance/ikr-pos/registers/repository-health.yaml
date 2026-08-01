@@ -1,0 +1,79 @@
+register:
+  id: QIPS-RHR
+  title: QIPS Repository Health Register
+  version: 1.0.0
+  owner: W11
+  operating_owner: W09
+  status: ACTIVE
+  review_frequency: MONTHLY_AND_BEFORE_MAJOR_RELEASE
+
+baseline:
+  assessed_on: 2026-07-31
+  assessment_status: BASELINE_WITH_OPEN_ACTIONS
+  strengths:
+    - GitHub is explicitly declared the system of record.
+    - Programme facts and open questions have controlled registries.
+    - Seventeen workstreams have state and dossier structures.
+    - CCC governance, agenda, and generated control room exist.
+    - Drive documents have a repository register.
+    - Base44 mirror discipline and synchronization register exist.
+    - Repository CI rebuilds generated views and scans for secrets.
+  open_actions:
+    - id: RH-001
+      issue: Complete file-level artifact inventory for active workstream working files.
+      owner: W09
+      priority: HIGH
+      status: OPEN
+    - id: RH-002
+      issue: Audit Drive permissions, restricted locations, duplicate copies, and orphan files.
+      owner: W17
+      priority: HIGH
+      status: OPEN
+    - id: RH-003
+      issue: Record a successful portable export and restore test.
+      owner: W09
+      priority: MEDIUM
+      status: OPEN
+    - id: RH-004
+      issue: Ratify IKR-D001 through a minuted CCC decision.
+      owner: CCC
+      priority: HIGH
+      status: OPEN
+    - id: RH-005
+      issue: Resolve the stale W09 BLOCKED state after assessing platform dependencies under the new governance profile.
+      owner: W09
+      priority: MEDIUM
+      status: OPEN
+    - id: RH-006
+      issue: Define approved Supabase or equivalent structured-data architecture before activation.
+      owner: W09
+      priority: MEDIUM
+      status: OPEN
+
+indicators:
+  required_governance_paths_present:
+    target: 100
+    unit: percent
+    current: 100
+  yaml_validation:
+    target: PASS
+    current: PENDING_CI
+  registered_drive_documents_with_id_owner_status_version:
+    target: 100
+    unit: percent
+    current: BASELINE_REQUIRED
+  conflicting_approved_canon:
+    target: 0
+    current: BASELINE_REQUIRED
+  broken_registered_links:
+    target: 0
+    current: BASELINE_REQUIRED
+  orphan_active_artifacts:
+    target: 0
+    current: BASELINE_REQUIRED
+  overdue_reviews:
+    target: 0
+    current: BASELINE_REQUIRED
+  portable_restore_test:
+    target: PASS
+    current: NOT_RUN
