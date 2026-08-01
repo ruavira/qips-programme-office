@@ -8,13 +8,21 @@ register:
 migration:
   mode: NON_DESTRUCTIVE_ADAPTATION
   started_on: 2026-07-31
+  completed_on: 2026-07-31
   source_profile: IKR-POS-1.0.0
   target: ruavira/qips-programme-office
+  installation_pull_request: 11
+  installation_source_revision: 0c6334d8a48ee5552f155fa92f277f5ba9321f72
   completed_actions:
     - Classified existing QIPS repository layers.
     - Preserved canon, CCC, workstream, document, engine, and contract paths.
     - Added repository charter, system-of-record map, registers, agent contract, and validation.
     - Registered the source IKR-POS Drive artifacts.
+    - Installed mandatory IKR-POS validation in the repository workflow.
+    - Passed generator, schema, committed-view, and secret-scan checks.
+    - Reconciled and read back Base44 programme-document and IKR-D001 records.
+    - Created and read back the Google Drive installation and ratification pack in the QIPS Programme Office folder.
+    - Registered the Drive review copy in Base44 and the repository document register.
   not_performed:
     - file_deletion
     - folder_renaming
@@ -24,9 +32,22 @@ migration:
     - restricted_data_migration
     - database_activation
     - deployment_activation
+  mirror_reconciliation:
+    status: COMPLETE
+    synchronized_on: 2026-07-31T20:55:00-06:00
+    base44:
+      app_id: 6a68b8381ea8ff36dd473cd2
+      status: IN_SYNC
+      decision_dossier_record: 6a6d5fadb7bc3f06457213fb
+    google_drive:
+      folder_id: 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
+      document_id: 1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
+      status: IN_SYNC
   deferred_inventory:
     - file_level_artifact_inventory_for_all_workstream_working_files
     - duplicate_analysis_across_all_drive_folders
     - permission_audit_of_restricted_drive_locations
     - portable_restore_test
-  verification_status: INSTALLATION_BASELINE_COMPLETE
+  verification_status: INSTALLATION_AND_MIRROR_RECONCILIATION_COMPLETE
+  ratification_status: PENDING
+  ratification_decision_id: IKR-D001
