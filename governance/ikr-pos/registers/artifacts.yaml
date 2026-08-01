@@ -1,0 +1,97 @@
+register:
+  id: QIPS-AR
+  title: QIPS Artifact Register
+  version: 1.0.0
+  owner: W09
+  status: ACTIVE
+  authority_class: APPROVED_PROJECT_CONTENT
+  coverage_rule: Active artifact classes and canonical containers are registered here; file-level human-editable documents remain in documents/register.yaml.
+
+artifacts:
+  - id: ART-CANON-FACTS
+    title: Programme Fact Registry
+    owner: CCC
+    version: git
+    lifecycle_status: EFFECTIVE
+    authority_class: APPROVED_PROJECT_CONTENT
+    canonical_location: canon/facts.yaml
+    confidentiality: PROGRAMME
+    source_or_parent: MINUTED_CCC_DECISIONS
+    review_requirement: CCC_ONLY
+
+  - id: ART-CANON-QUESTIONS
+    title: Programme Open Questions and Dependencies
+    owner: CCC
+    version: git
+    lifecycle_status: EFFECTIVE
+    authority_class: APPROVED_PROJECT_CONTENT
+    canonical_location: canon/open-questions.yaml
+    confidentiality: PROGRAMME
+    source_or_parent: WORKSTREAM_AND_CCC_RECORDS
+    review_requirement: CCC_CLOSES_QUESTIONS
+
+  - id: ART-CCC
+    title: Central Coordinating Committee Governance Records
+    owner: CCC
+    version: git
+    lifecycle_status: EFFECTIVE
+    authority_class: APPROVED_PROJECT_CONTENT
+    canonical_location: ccc/
+    confidentiality: COMMITTEE
+    source_or_parent: PROGRAMME_GOVERNANCE
+    review_requirement: CCC
+
+  - id: ART-WORKSTREAMS
+    title: Seventeen Workstream Controlled Records
+    owner: W01-W17
+    version: git
+    lifecycle_status: EFFECTIVE
+    authority_class: ADAPTED
+    canonical_location: workstreams/
+    confidentiality: PROGRAMME
+    source_or_parent: PROGRAMME_OPERATING_MODEL
+    review_requirement: WORKSTREAM_AND_CCC_AS_APPLICABLE
+
+  - id: ART-DOC-REGISTER
+    title: Human-Editable and Published Document Register
+    owner: W09
+    version: git
+    lifecycle_status: EFFECTIVE
+    authority_class: APPROVED_PROJECT_CONTENT
+    canonical_location: documents/register.yaml
+    confidentiality: PROGRAMME
+    source_or_parent: docs/operating-model.md
+    review_requirement: PROGRAMME_OFFICE
+
+  - id: ART-SYNC-REGISTER
+    title: Workspace Synchronization Register
+    owner: W09
+    version: git
+    lifecycle_status: EFFECTIVE
+    authority_class: APPROVED_PROJECT_CONTENT
+    canonical_location: docs/workspace-synchronization-register.md
+    confidentiality: PROGRAMME
+    source_or_parent: PR-9-AND-PR-10
+    review_requirement: PROGRAMME_OFFICE
+
+  - id: ART-ENGINE
+    title: Programme Office Generators and Validation
+    owner: W09
+    version: git
+    lifecycle_status: EFFECTIVE
+    authority_class: DERIVED
+    canonical_location: engine/
+    confidentiality: PROGRAMME
+    source_or_parent: GOVERNED_REPOSITORY_STATE
+    review_requirement: PULL_REQUEST_AND_CI
+
+  - id: ART-IKR-POS
+    title: QIPS IKR-POS Governance Profile
+    owner: W09
+    version: 1.0.0
+    lifecycle_status: DECISION_REQUIRED
+    authority_class: PROPOSED
+    canonical_location: governance/ikr-pos/
+    confidentiality: PROGRAMME
+    source_or_parent: IKR-POS-v1.0.0
+    review_requirement: CCC_RATIFICATION
