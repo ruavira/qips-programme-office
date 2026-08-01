@@ -27,13 +27,38 @@ changes:
     programme_facts_changed: []
     human_gates_triggered:
       - CCC_POLICY_RATIFICATION
+    installation_pull_request: 11
+    installation_source_revision: 0c6334d8a48ee5552f155fa92f277f5ba9321f72
     validation:
-      - yaml_parse
-      - required_path_check
-      - register_schema_check
-      - document_register_identity_check
-      - existing_repository_checks
+      - yaml_parse: PASS
+      - required_path_check: PASS
+      - register_schema_check: PASS
+      - document_register_identity_check: PASS
+      - existing_repository_checks: PASS
+      - generated_file_consistency: PASS
+      - secret_and_environment_scan: PASS
     synchronization_required:
       - Base44
       - Google_Drive
-    synchronization_status: PENDING_POST_MERGE
+    synchronization_status: COMPLETE
+    synchronized_on: 2026-07-31T20:55:00-06:00
+    synchronization_evidence:
+      base44:
+        app_id: 6a68b8381ea8ff36dd473cd2
+        status: IN_SYNC
+        source_revision: 0c6334d8a48ee5552f155fa92f277f5ba9321f72
+        programme_document_records:
+          - 6a6d5fa0b7e20cd4a419626e
+          - 6a6d5fa0b7e20cd4a419626f
+          - 6a6d5fa0b7e20cd4a4196270
+          - 6a6d5fa0b7e20cd4a4196271
+          - 6a6d60349bba2f9b8ec3d4c2
+        decision_dossier_record: 6a6d5fadb7bc3f06457213fb
+      google_drive:
+        status: IN_SYNC
+        source_revision: 0c6334d8a48ee5552f155fa92f277f5ba9321f72
+        folder_id: 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
+        document_id: 1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
+        document_url: https://docs.google.com/document/d/1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
+        readback_status: VERIFIED
+    unresolved_decision: IKR-D001
