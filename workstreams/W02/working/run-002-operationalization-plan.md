@@ -1,6 +1,6 @@
 # W02 Run 002 — Prototype Operationalization Plan
 
-**Status:** AUTHORIZED FOR CONTROLLED PROTOTYPING  
+**Status:** READY FOR CCC AUTHORIZATION  
 **Date:** 31 July 2026  
 **Scope:** Months 1–2 only  
 **Production lock:** PROHIBITED  
@@ -8,9 +8,9 @@
 
 ## 1. Objective
 
-Convert the approved-for-prototype v0.9 programme spine into a tested, evidence-generating months
-1–2 learning system without implying that the final curriculum, assessment standard, award,
-country adaptation or publication package has been approved.
+Once W02-01 is approved, convert the v0.9 programme spine into a tested, evidence-generating
+months 1–2 learning system without implying that the final curriculum, assessment standard,
+award, country adaptation or publication package has been approved.
 
 ## 2. Exit criteria
 
@@ -253,6 +253,7 @@ A single word such as BLOCKED may not replace this multidimensional state.
 
 Until the relevant gates are passed and decisions approved:
 
+- do not begin controlled prototype execution before the W02-01 CCC authorization;
 - do not publish final programme outcomes;
 - do not claim certification, CPD recognition or award authority;
 - do not market prototype workload as final;
@@ -263,11 +264,11 @@ Until the relevant gates are passed and decisions approved:
 
 ## 8. Immediate next actions
 
-1. Build the architecture-to-evidence traceability matrix.
-2. Produce the month 1 component specification.
-3. Produce the month 2 component specification.
-4. Create draft analytic rubrics and moderation cases.
-5. Establish timing-log and defect-register templates.
-6. Mirror the branch state to Base44 after the GitHub PR is approved or explicitly marked as a
-   review branch.
-7. Prepare run-002 verification and council records after prototype evidence exists.
+1. Obtain and minute the CCC verdict on W02-01 through the continuous docket.
+2. If approved, build the architecture-to-evidence traceability matrix.
+3. Produce the month 1 component specification.
+4. Produce the month 2 component specification.
+5. Create draft analytic rubrics and moderation cases.
+6. Establish timing-log and defect-register templates.
+7. Mirror the approved source state to Base44 and Drive with the exact Git revision.
+8. Prepare run-002 verification and council records after prototype evidence exists.
