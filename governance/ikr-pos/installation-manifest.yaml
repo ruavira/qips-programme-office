@@ -1,0 +1,68 @@
+profile:
+  id: QIPS-IKR-POS
+  title: QIPS Institutional Knowledge Repository and Project Operating System
+  version: 1.0.0
+  installed_on: 2026-07-31
+  status: INSTALLED_PENDING_CCC_RATIFICATION
+  control_owner: W09
+  assurance_partner: W11
+  approval_authority: CCC
+  implementation_mode: NON_DESTRUCTIVE_ADAPTATION
+
+source_skill:
+  name: institutional-knowledge-repository
+  short_name: IKR-POS
+  version: 1.0.0
+  status: approved-for-reuse
+  canonical_skill_document:
+    title: SKILL - Institutional Knowledge Repository and Project Operating System v1.0
+    drive_id: 1v7JOjnP_zPXlB3ZwgnyouBTlwZNcXsws5DVOktJpoeE
+    url: https://docs.google.com/document/d/1v7JOjnP_zPXlB3ZwgnyouBTlwZNcXsws5DVOktJpoeE
+  reusable_specification:
+    title: IKR-POS Reusable Skill Specification v1.0
+    drive_id: 1jG9ByOLZSnpVQufAtEsZ5CIA5sAZetG6
+    url: https://drive.google.com/file/d/1jG9ByOLZSnpVQufAtEsZ5CIA5sAZetG6
+  source_folder:
+    title: SKILL_IKR-POS_Institutional Knowledge Repository_v1.0
+    drive_id: 1dc8qXBTjlwlqqtHb6IiJuYhjN4AI4YxL
+    url: https://drive.google.com/drive/folders/1dc8qXBTjlwlqqtHb6IiJuYhjN4AI4YxL
+
+governing_paths:
+  charter: governance/ikr-pos/repository-charter.md
+  system_of_record_map: governance/ikr-pos/system-of-record-map.yaml
+  agent_contract: AGENTS.md
+  artifact_register: governance/ikr-pos/registers/artifacts.yaml
+  decision_register: governance/ikr-pos/registers/decisions.yaml
+  change_register: governance/ikr-pos/registers/changes.yaml
+  release_register: governance/ikr-pos/registers/releases.yaml
+  access_register: governance/ikr-pos/registers/access-confidentiality.yaml
+  migration_log: governance/ikr-pos/registers/migration-log.yaml
+  health_register: governance/ikr-pos/registers/repository-health.yaml
+  export_manifest: governance/ikr-pos/portable-export-manifest.yaml
+  validator: engine/validate_ikr_pos.py
+
+protected_existing_architecture:
+  - canon/
+  - workstreams/
+  - ccc/
+  - documents/
+  - docs/
+  - engine/
+  - contracts/
+
+installation_assertions:
+  github_is_authoritative: true
+  ccc_controls_programme_truth: true
+  drive_is_review_layer: true
+  base44_is_replaceable_mirror: true
+  destructive_migration_performed: false
+  existing_paths_renamed: false
+  programme_facts_approved_by_installation: false
+  production_publication_authorized: false
+  restricted_data_migrated_to_github: false
+
+ratification:
+  decision_id: IKR-D001
+  required: true
+  status: PENDING
+  question: Ratify QIPS-IKR-POS v1.0.0 as the programme's repository and project-governance operating system.
