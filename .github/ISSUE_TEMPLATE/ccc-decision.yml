@@ -1,42 +1,121 @@
 name: CCC decision
-description: Put a decision-ready dossier before the Central Coordinating Committee.
+description: Put a decision-ready dossier before the Central Coordinating Committee, and record the verdict.
 title: "[CCC] "
 labels: ["ccc-decision"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        **How this works.** Fill in the top half to put a decision before the committee. The
+        committee fills in the bottom half to answer it. When a verdict other than `PENDING`
+        is saved, the system checks it against canon and opens a proposal branch carrying the
+        decision record.
+
+        Nothing here becomes canon. A verdict becomes true when a human merges the change that
+        promotes it and a minute records it.
+
   - type: input
     id: dossier
     attributes:
       label: Dossier
+      description: The dossier ID, e.g. W02-01. It must exist under `workstreams/W##/dossiers/`.
       placeholder: W16-01
     validations:
       required: true
+
   - type: textarea
     id: decision
     attributes:
       label: Decision requested
+      description: One sentence. What is the committee being asked to decide?
     validations:
       required: true
+
   - type: textarea
     id: options
     attributes:
       label: Genuine options and recommendation
+      description: |
+        The real alternatives, not a single option dressed as a choice, and which one is
+        recommended and why.
     validations:
       required: true
+
+  - type: textarea
+    id: canon
+    attributes:
+      label: What canon already establishes
+      description: |
+        Facts and open questions bearing on this decision. Write IDs in full (F024, Q006) —
+        they are read automatically and checked against canon before the verdict is accepted.
+      placeholder: "F003 fixes the monthly cycle. F024 is a PARAMETER. Q006 remains open."
+    validations:
+      required: false
+
   - type: textarea
     id: links
     attributes:
       label: Dossier, verification and Drive links
     validations:
       required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### The committee answers below this line
+
   - type: dropdown
     id: verdict
     attributes:
       label: CCC verdict
+      description: |
+        Leave as `PENDING` until the committee has decided. Any other value triggers the
+        consistency check and, if it passes, a proposal branch.
       options:
         - PENDING
         - APPROVE
         - AMEND
         - REJECT
         - DEFER
+      default: 0
     validations:
       required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for the verdict
+      description: |
+        **Required for AMEND, REJECT and DEFER.** The reason is written into the workstream's
+        brief as a permanent constraint — it is how the system stops re-proposing what you
+        already refused. A rejection without a reason is the only input that breaks this, and
+        the check will refuse it.
+    validations:
+      required: false
+
+  - type: textarea
+    id: amendments
+    attributes:
+      label: Amendments
+      description: |
+        If you are amending, say exactly what changes. Name the condition or option by number,
+        quote the original wording, and give the replacement. Be specific enough that someone
+        else could apply it without asking you what you meant.
+      placeholder: |
+        Condition 5. Original: "Country adaptation for Nigeria, Ghana and Pakistan is explicit."
+        Replace with: "Country adaptation is designed as a parameter. The prototype is built for
+        Nigeria and demonstrates, without building, how it adapts to any country in the F020 range."
+    validations:
+      required: false
+
+  - type: textarea
+    id: reopening
+    attributes:
+      label: Reopening clause
+      description: |
+        Under what condition should this decision come back to the committee automatically? No
+        decision is a one-way door, and this is how that is enforced rather than remembered.
+      placeholder: "Returns if the months 1–2 timing logs show load materially above four hours a week."
+    validations:
+      required: false

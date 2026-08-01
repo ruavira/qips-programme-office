@@ -74,6 +74,33 @@ python engine/validate_ikr_pos.py
 
 Then confirm generated files are committed and the repository secret scan passes.
 
+## How work reaches the repository
+
+There are three lanes. Use the one that matches what you are doing.
+
+**Lane 1 — you can push.** Work on a branch named `proposal/**`, `ccc/**` or `research/**` and push
+it. `.github/workflows/proposal.yml` runs the gates, writes the pull-request body from the actual
+diff, opens the pull request, and labels it `canon-change` if `canon/` was touched. You do not write
+a pull-request body by hand and you do not need the `gh` CLI.
+
+**Lane 2 — you cannot push.** An agent running outside the repository has no credential, and it must
+not be given one over a chat channel — this repository's own secret scan exists to catch exactly that
+mistake. Produce a patch and a one-command apply script instead, and let a human push the branch.
+Lane 1 takes over from there.
+
+**Lane 3 — a committee decision.** Open an issue with the `CCC decision` form. When a verdict other
+than `PENDING` is saved, `.github/workflows/decision-capture.yml` checks it against canon and, if it
+is consistent, opens a proposal branch carrying the decision record. The committee's answers become
+the change rather than becoming prose someone else has to translate into YAML — the translation step
+is where mistakes happen.
+
+None of these lanes writes canon. All of them produce a pull request.
+
+**A caveat worth knowing.** A pull request opened with `GITHUB_TOKEN` does not trigger other
+workflows, so `repository-checks.yml` does not run on a pull request that `proposal.yml` created.
+That is why `proposal.yml` runs the same gates itself and records the output in the pull-request
+body. Do not remove that on the assumption CI covers it.
+
 ## Handover minimum
 
 A handover must include:

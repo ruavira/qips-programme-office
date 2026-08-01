@@ -23,6 +23,10 @@ jobs:
         run: |
           python -m py_compile engine/validate_ikr_pos.py
           python engine/validate_ikr_pos.py
+      - name: Self-test the decision-capture engine
+        run: |
+          python -m py_compile engine/decision_capture.py
+          python engine/decision_capture.py --self-test
       - name: Verify generated files are committed
         run: git diff --exit-code -- ccc/agenda.md ccc/control-room.html
       - name: Reject accidentally committed secrets and environment files

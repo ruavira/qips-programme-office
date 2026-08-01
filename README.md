@@ -19,6 +19,37 @@ This repository is the shared operating system for the QIPS programme. It is des
 
 The full operating model is in [`docs/operating-model.md`](docs/operating-model.md). Cross-agent access instructions are in [`docs/agent-access.md`](docs/agent-access.md).
 
+## If you are here to decide something
+
+You will ever do three things. Nothing else in this repository is addressed to you.
+
+**Read.** Open [`ccc/control-room.html`](ccc/control-room.html). Every workstream is a card: the
+question it exists to answer, what it must produce, what it is waiting on. Dossiers link from the
+card. If you would rather read in the repository, they live at a predictable path —
+`workstreams/W03/dossiers/W03-01-*.md`.
+
+**Comment.** You do not need to learn git and you should not edit files directly. If you want
+something changed, say so in a comment; it is faster and it leaves a record of *why*.
+
+**Decide.** When a dossier is ready it appears in **Issues** with the label `ccc-decision`. The top
+half tells you what is being decided, what canon already establishes and what the genuine options
+are. The bottom half is yours: **Approve · Amend · Reject · Defer**, a box for your reasoning, and a
+box for the condition under which the decision should come back to you automatically.
+
+Two things happen when you save a verdict other than `PENDING`. It is **checked against canon
+before it is accepted** — if it cites a fact that has been superseded, or a dossier that does not
+exist, or if it is a rejection with no reason, the system refuses it and tells you why rather than
+recording something inconsistent. If it passes, a **proposal branch opens carrying your decision**,
+so your answer becomes the change rather than becoming prose somebody has to translate into YAML.
+
+Nothing you write becomes canon on its own. It becomes canon when the change is merged and a minute
+records it.
+
+One thing matters more than any other: **a rejection must carry a reason.** The reason is written
+back into the workstream's brief as a permanent constraint, and that is how the system stops
+proposing the thing you already refused. A rejection without a reason is the only input that breaks
+this — which is why the check refuses it.
+
 ## Repository map
 
 | Location | Purpose |
