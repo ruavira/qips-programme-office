@@ -1,17 +1,31 @@
-# CCC agenda — architecture decision sitting
+# CCC agenda — continuous decision docket
 
 Generated from workstream state, submitted dossier front matter and
 `canon/open-questions.yaml`. This file is a view; do not edit it by hand.
 
-**Prepared 28 July 2026 · sitting date, chair and quorum to be confirmed.**
+**Prepared 31 July 2026 · sitting date, chair and quorum to be confirmed.**
 
 ## Item 0 — adopt or confirm the governance
 
 Before deciding a dossier, confirm the committee's membership, chair, quorum, cadence and
 authority under `ccc/charter.md`. Only a minuted CCC verdict may promote a proposed fact into
-canon.
+canon. Every decision-ready dossier remains visible on this continuous docket until decided.
 
-## Item 1 — DOSSIER W03-01 · Assessment, Certification and Credentialing
+## Item 1 — DOSSIER W02-01 · Curriculum and Instructional Design
+
+**Ready for decision. Verification: PASS WITH FINDINGS; open blocking findings: 0.**
+
+Approve backward mapping from twelve learner artefacts as the prototype architecture and authorize controlled months 1–2 prototyping; do not approve final outcomes, rubrics, award, production lock or publication
+
+If approved exactly as submitted, this dossier proposes 0 new canon statements. It closes no open question unless the signed verdict explicitly says
+otherwise.
+
+Repository dossier: `workstreams/W02/dossiers/W02-01-blueprint-architecture.md`
+
+**Record:** APPROVE / AMEND / REJECT / DEFER · exact wording · reason or deferral
+condition · owner · due date.
+
+## Item 2 — DOSSIER W03-01 · Assessment, Certification and Credentialing
 
 **Ready for decision. Verification: PASS WITH FINDINGS; open blocking findings: 0.**
 
@@ -25,7 +39,7 @@ Repository dossier: `workstreams/W03/dossiers/W03-01-credential-architecture.md`
 **Record:** APPROVE / AMEND / REJECT / DEFER · exact wording · reason or deferral
 condition · owner · due date.
 
-## Item 2 — DOSSIER W05-01 · Teaching Faculty and Faculty Development
+## Item 3 — DOSSIER W05-01 · Teaching Faculty and Faculty Development
 
 **Ready for decision. Verification: PASS WITH FINDINGS; open blocking findings: 0.**
 
@@ -39,7 +53,7 @@ Repository dossier: `workstreams/W05/dossiers/W05-01-faculty-operating-model.md`
 **Record:** APPROVE / AMEND / REJECT / DEFER · exact wording · reason or deferral
 condition · owner · due date.
 
-## Item 3 — DOSSIER W07-01 · Admissions, Recruitment and Selection
+## Item 4 — DOSSIER W07-01 · Admissions, Recruitment and Selection
 
 **Ready for decision. Verification: PASS WITH FINDINGS; open blocking findings: 0.**
 
@@ -53,7 +67,7 @@ Repository dossier: `workstreams/W07/dossiers/W07-01-admissions-architecture.md`
 **Record:** APPROVE / AMEND / REJECT / DEFER · exact wording · reason or deferral
 condition · owner · due date.
 
-## Item 4 — blocking questions that remain open
+## Item 5 — blocking questions that remain open
 
 The architecture decisions above may narrow these questions but do not close them by
 implication.
@@ -70,17 +84,16 @@ implication.
 | Q009 | What is the data retention period and who is the data-protection contact? | W17 | 2026-09-30 | W09, W14 |
 | Q010 | What is the programme called? | W13 | 2026-08-31 | W14, W03 |
 
-## Item 5 — capacity and next cycle
+## Item 6 — continuous intake and decision sequencing
 
-There are 3 dossiers in this sitting, which meets the charter's maximum of
-three. Do not activate more than three research workstreams in the next cycle. The proposed
-next formal decision wave is W01 needs assessment, W02 programme blueprint and W04
-observership controls; their verified working drafts remain outside this sitting until capacity
-opens and their blocking evidence is resolved or explicitly presented for decision.
+There are 4 decision-ready dossiers on the continuous docket. The agenda
+has no numeric intake ceiling. Sequence decisions by readiness, dependency impact, risk, age
+and time sensitivity. Operational limits on simultaneous research or prototype workstreams are
+separate controls and may not be used to hide or hold a verified dossier outside this docket.
 
 ## Canon promotion control
 
 After signed minutes, create one decision record per dossier, promote only the exact approved
 wording, update open questions and workstream states, regenerate this agenda and the control-room
-export, and record the GitHub revision. No comment in Google Drive or Base44 becomes canon on its
-own.
+export, and record the GitHub revision. No comment in Google Drive, Base44 or another mirror
+becomes canon on its own.
