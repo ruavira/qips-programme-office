@@ -1,11 +1,20 @@
 id: W02
 name: "Curriculum and Instructional Design"
 directorate: D1
-state: BLOCKED
+state: VERIFYING
 cohort1_scope: NOW
-last_run: 2026-07-29
-runs: 1
-dossiers_submitted: 0
+last_run: 2026-07-31
+runs: 2
+dossiers_submitted: 1
 dossiers_approved: 0
 consecutive_dry_rounds: 0
-blocked_by: ['W01', 'W03']
+blocked_by: []
+execution_status: PROTOTYPE_READY
+decision_status: AWAITING_CCC
+publication_status: PROHIBITED
+production_lock_status: PROHIBITED
+dependencies:
+  prototype_start: []
+  final_calibration: ['W01', 'W03']
+  publication: ['W01', 'W03', 'W05', 'W11', 'W12', 'W17']
+next_action: "Execute the controlled months 1–2 prototype plan in run-002-operationalization-plan.md while final calibration dependencies progress."
