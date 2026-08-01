@@ -1,0 +1,50 @@
+register:
+  id: QIPS-ACR
+  title: QIPS Access and Confidentiality Register
+  version: 1.0.0
+  owner: W17
+  operating_owner: W09
+  status: ACTIVE
+
+classes:
+  - id: PUBLIC
+    description: Explicitly approved for public release.
+    github_allowed: true
+    external_sharing_requires_approval: true
+  - id: PROGRAMME
+    description: Internal programme working and governance information.
+    github_allowed: true
+    external_sharing_requires_approval: true
+  - id: COMMITTEE
+    description: CCC review, deliberation, and decision-support material.
+    github_allowed: true
+    external_sharing_requires_approval: true
+  - id: RESTRICTED
+    description: Personal data, signed agreements, legal advice, private contacts, insurance terms, or sensitive evidence.
+    github_allowed: false
+    required_location: APPROVED_RESTRICTED_DRIVE_OR_OBJECT_STORAGE
+    external_sharing_requires_approval: true
+  - id: SECRET
+    description: Credentials, tokens, private keys, passwords, and environment secrets.
+    github_allowed: false
+    required_location: APPROVED_SECRET_MANAGER
+    external_sharing_requires_approval: true
+
+roles:
+  repository_owner:
+    holder: Emmanuel / ruavira
+    permissions: ADMIN
+  programme_editors:
+    holder: NAMED_HUMAN_COLLABORATORS
+    permissions: WRITE_OR_TRIAGE_AS_APPROVED
+  ccc_reviewers:
+    holder: CCC_MEMBERS
+    permissions: REVIEW_AND_DECISION
+  ai_agents:
+    holder: REPLACEABLE_AGENT_SESSIONS
+    permissions: BRANCH_AND_PULL_REQUEST_ONLY
+    prohibitions:
+      - shared_credentials
+      - silent_canon_change
+      - external_sharing
+      - destructive_migration
