@@ -14,7 +14,9 @@ state_after_submission: AWAITING_CCC
 ---
 
 # DOSSIER W02-01 — Curriculum and Instructional Design
-**For decision on the continuous CCC docket · Prepared by workstream W02 · Run 2 · Verification: PASS WITH FINDINGS**
+**APPROVED WITH AMENDMENT by the CCC on 2026-08-01 · Prepared by workstream W02 · Run 2 · Verification: PASS WITH FINDINGS**
+> **CCC verdict 2026-08-01 (Item 1):** Option B approved as the prototype architecture. Months 1–2
+> prototyping authorised. Condition 5 amended (see §8). Conditions 1, 2, 3, 4 and 6 carried unamended.
 
 ## 1. The decision requested
 
@@ -72,7 +74,11 @@ accessibility equivalents and timing logs.
 3. Every prototype records participant time, faculty preparation time, coach review time,
    accessibility findings and unresolved assumptions.
 4. Source, copyright, intellectual-property and synthetic-data checks precede production lock.
-5. Country adaptation for Nigeria, Ghana and Pakistan is explicit rather than implied.
+5. Country adaptation is designed as a parameter. The prototype is built for Nigeria and demonstrates,
+   without building, how it adapts to any additional country within the F020 declared range.
+   *(Amended by the CCC on 2026-08-01. The original wording predated the reclassification of F020 to
+   PARAMETER and would have re-committed the programme to a three-country set through a curriculum
+   decision.)*
 6. Any material divergence between GitHub, Base44, Drive or a deployment surface is recorded in
    `docs/workspace-synchronization-register.md` and resolved against GitHub.
 

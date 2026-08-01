@@ -79,7 +79,6 @@ implication.
 | Q003 | Who are the twelve faculty, and have they consented in writing to be named? | W05 | 2026-08-31 | W14 |
 | Q004 | What is the signed partner agreement between SQHN, Ruavira Collective Inc and The Arete Connoisseurs (TAC) — revenue share, IP, exit terms, and who may sign a host-site MoU? | W15 | 2026-09-30 | W04, W12, W16 |
 | Q006 | How many contactable names does SQHN hold, and what did the existing 3-hour course convert at? | W14 | 2026-09-15 | W07, W16 |
-| Q008 | What is the approved affiliation wording from Shifa International Hospitals and from ISQua? | W15 | 2026-09-30 | W14 |
 | Q009 | What is the data retention period and who is the data-protection contact? | W17 | 2026-09-30 | W09, W14 |
 | Q010 | What is the programme called? | W13 | 2026-08-31 | W14, W03 |
 

@@ -14,7 +14,9 @@ state_after_submission: AWAITING_CCC
 ---
 
 # DOSSIER W03-01 — Assessment, Certification and Credentialing
-**For decision at the next CCC sitting · Prepared by workstream W03 · Run 1 · Verification: PASS WITH FINDINGS**
+**APPROVED WITH AMENDMENT by the CCC on 2026-08-01 · Prepared by workstream W03 · Run 1 · Verification: PASS WITH FINDINGS**
+> **CCC verdict 2026-08-01 (Item 2):** Option B approved as the cohort-one credential architecture.
+> Three facts promoted. Conditions 6 and 7 added (see §8). Q002 remains open.
 
 ## 1. The decision requested
 
@@ -92,6 +94,16 @@ recognition statements unapproved.
 4. Before issuance, the verification prototype passes forged-identifier, duplicate-issuance,
    correction, revocation and service-unavailable tests.
 5. W15 confirms every partner acknowledgement and logo right before certificate artwork is locked.
+6. By 31 August 2026, W03 establishes and records the lead time required to lodge each intended CPD
+   application route, and F020's `decide_by` is reset to the earliest date at which a country decision
+   must exist for those applications to be lodged in time.
+   *(Added by the CCC on 2026-08-01. Option B scopes regulator applications by the cohort country set,
+   but F020's declared decide_by is "before applications open" in October — potentially after the work
+   it gates has had to begin.)*
+
+7. Partner acknowledgement under condition 5 is now governed by F028: no partner organisation is named
+   on certificate artwork or in any public-facing material for cohort 1.
+   *(Added by the CCC on 2026-08-01, consequent on F028.)*
 
 ## 9. What becomes canon if you approve
 

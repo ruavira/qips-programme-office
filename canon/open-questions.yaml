@@ -4,8 +4,7 @@
 
 questions:
 - id: Q001
-  question: What is the per-learner medical indemnity and public liability premium across Nigeria, Ghana
-    and Pakistan?
+  question: What is the per-learner medical indemnity and public liability premium across Nigeria, Ghana and Pakistan?
   owner: W17
   blocking: true
   blocks:
@@ -15,8 +14,8 @@ questions:
   note: The only zero in the financial model. Gates the price and the observership.
 
 - id: Q002
-  question: What is the exact certificate title, the awarding entity, any post-nominals, and what CPD
-    recognition can be claimed?
+  question: What is the exact certificate title, the awarding entity, any post-nominals, and what CPD recognition
+    can be claimed?
   owner: W03
   blocking: true
   blocks:
@@ -44,30 +43,28 @@ questions:
   - W12
   - W16
   due: 2026-09-30
-  note: QAI removed 2026-08-01, so all three remaining parties are directly reachable. Signing this is
-    what unlocks host-site recruitment.
+  note: QAI removed 2026-08-01, so all three remaining parties are directly reachable. Signing this is what unlocks
+    host-site recruitment.
 
 - id: Q005
-  question: PARKED — should the programme engage the Quality and Accreditation Institute (QAI) as a partner,
-    and on what terms?
+  question: PARKED — should the programme engage the Quality and Accreditation Institute (QAI) as a partner, and
+    on what terms?
   owner: W15
   blocking: false
   blocks: []
   due: 2026-08-15
-  note: 'Parked by the programme director 2026-08-01. QAI removed from all published material and from
-    the partner architecture with immediate effect. This defers the engagement decision; it does not reject
-    the organisation. Identity verified 2026-08-01 from qai.org.in: Quality and Accreditation Institute,
-    a private limited company under the Companies Act 1956, Noida, India; four centres covering health
-    and social care accreditation, international accreditation, veterinary facilities, and education and
-    training; claims APAC and ILAC full membership with MRA, ISQua institutional membership and ISQua
-    EEA accreditation. Revisit alongside W03, since QAI is most useful as an accreditation route rather
-    than a brand. Caution: QAI holds ISQua EEA accreditation in its own right while this programme claims
-    only individual-faculty-level ISQua involvement.'
+  note: 'Parked by the programme director 2026-08-01. QAI removed from all published material and from the partner
+    architecture with immediate effect. This defers the engagement decision; it does not reject the organisation.
+    Identity verified 2026-08-01 from qai.org.in: Quality and Accreditation Institute, a private limited company
+    under the Companies Act 1956, Noida, India; four centres covering health and social care accreditation, international
+    accreditation, veterinary facilities, and education and training; claims APAC and ILAC full membership with
+    MRA, ISQua institutional membership and ISQua EEA accreditation. Revisit alongside W03, since QAI is most useful
+    as an accreditation route rather than a brand. Caution: QAI holds ISQua EEA accreditation in its own right while
+    this programme claims only individual-faculty-level ISQua involvement.'
   status: PARKED
 
 - id: Q006
-  question: How many contactable names does SQHN hold, and what did the existing 3-hour course convert
-    at?
+  question: How many contactable names does SQHN hold, and what did the existing 3-hour course convert at?
   owner: W14
   blocking: true
   blocks:
@@ -84,12 +81,17 @@ questions:
   note: Booked at zero until primary-verified with the ITF itself.
 
 - id: Q008
-  question: What is the approved affiliation wording from Shifa International Hospitals and from ISQua?
+  question: PARKED — what is the approved affiliation wording from Shifa International Hospitals and from ISQua?
   owner: W15
-  blocking: true
-  blocks:
-  - W14
+  blocking: false
+  blocks: []
   due: 2026-09-30
+  status: PARKED
+  note: Parked by the CCC on 2026-08-01. F028 rules that no partner organisation is named in any public-facing material
+    for cohort 1, so no affiliation wording is required and this question no longer blocks W14. It is deferred,
+    not answered and not rejected. It reopens automatically if and when a CCC decision releases partner naming.
+    F022 remains in force as a standing guardrail against any ISQua institutional claim, whether or not ISQua is
+    named.
 
 - id: Q009
   question: What is the data retention period and who is the data-protection contact?

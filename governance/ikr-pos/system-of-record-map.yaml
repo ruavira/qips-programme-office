@@ -37,6 +37,39 @@ systems:
   prohibited:
   - silent_canon_changes
   - unregistered_approved_claims
+- id: SYS-DRIVE-FACULTY
+  name: Restricted faculty candidate and appointment records
+  parent: SYS-DRIVE
+  role: RESTRICTED_PERSONAL_DATA_STORE
+  established: '2026-08-01'
+  established_by: CCC sitting 2026-08-01, Item 3, ruling of the programme director
+  layers:
+  - EVIDENCE_AND_OBJECT_STORAGE
+  - SIGNED_AND_MINUTED_RECORDS
+  holds:
+  - faculty candidate CVs and evidence of experience
+  - conflict-of-interest declarations
+  - appointment letters and executed agreements
+  - granular publication-consent records
+  - assessor calibration and clearance records
+  custody: A restricted Google Drive folder under SQHN's control.
+  interim_arrangement: 'Until the SQHN-owned folder exists, records are held in an interim organisational
+    Drive account with access granted to SQHN. The account identity and folder link are recorded in
+    documents/register.yaml as DOC-FAC-001 and are not written here, because this repository is public.
+    This is an interim custody arrangement, not the settled position, and it is recorded so that migration
+    to SQHN custody is a tracked action rather than an assumption.'
+  custody_record: DOC-FAC-001
+  retention: PENDING — governed by Q009 (data retention period and data-protection contact).
+  prohibited:
+  - storage_in_github
+  - exposure_in_committee_facing_base44_views
+  - publication_of_any_named_candidate_before_consent
+  governing_facts:
+  - F021
+  - W05-01 condition 2
+  - W05-01 condition 5
+  exit_test: Records are files, not application state. Migration is a folder move plus a register update;
+    no schema or vendor dependency is created by this arrangement.
 - id: SYS-BASE44
   name: Base44 QIPS Programme Office
   identifier: 6a68b8381ea8ff36dd473cd2

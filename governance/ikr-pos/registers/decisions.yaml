@@ -10,9 +10,20 @@ decisions:
   - id: IKR-D001
     title: Ratify QIPS-IKR-POS v1.0.0
     decision_requested: Ratify the installed QIPS IKR-POS profile as the programme's repository and project-governance operating system.
-    status: PENDING
+    status: APPROVED
     authority: CCC
     proposed_on: 2026-07-31
+    decided_on: 2026-08-01
+    decision: |
+      Ratified without conditions at the CCC sitting of 2026-08-01, Item 5.
+      A defect was reported to the committee during the sitting — that AGENTS.md and README.md
+      instructed agents to run scripts in a bin/ directory that does not exist. That report was
+      WRONG. It was made from a stale 28 July scaffold held outside the repository, not from the
+      repository itself. The actual AGENTS.md correctly instructs engine/agenda.py,
+      engine/controlroom.py and engine/validate_ikr_pos.py, which is exactly what CI runs.
+      The correction was made to the committee before the verdict was taken. Recorded here because
+      a decision register that hides a corrected error teaches the next reader nothing.
+    minute_reference: ccc/minutes/2026-08-01.md
     source:
       - governance/ikr-pos/repository-charter.md
       - governance/ikr-pos/installation-manifest.yaml

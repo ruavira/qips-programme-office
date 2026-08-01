@@ -14,7 +14,10 @@ state_after_submission: AWAITING_CCC
 ---
 
 # DOSSIER W07-01 — Admissions, Recruitment and Selection
-**For decision at the next CCC sitting · Prepared by workstream W07 · Run 1 · Verification: PASS WITH FINDINGS**
+**APPROVED WITH AMENDMENT by the CCC on 2026-08-01 · Prepared by workstream W07 · Run 1 · Verification: PASS WITH FINDINGS**
+> **CCC verdict 2026-08-01 (Item 4):** Option B approved, with institutional nomination as one source
+> under the same standard. Three facts promoted. Section 3 canon references corrected; conditions 6, 7
+> and 8 added (see §8). Threshold, cap, allocation and forecast remain unapproved. Q006 remains open.
 
 ## 1. The decision requested
 
@@ -30,10 +33,20 @@ prevent final thresholds and capacity decisions.
 ## 3. What canon already establishes
 
 - F012: applications open October 2026 and close 31 December 2026.
-- F018: admissions criteria are set on best practice.
-- F020: cohort one recruits in Nigeria, Ghana and Pakistan.
+- F018: admissions criteria are a PARAMETER. Eligibility breadth is not yet fixed; the declared range is
+  clinical only | clinical and non-clinical | open with an experience floor.
+- F020: the cohort 1 country set is a PARAMETER. Nigeria is the anchor market; Ghana and Pakistan are
+  candidates, not commitments. Eligibility wording must not presume a three-country set.
 - F021: unconfirmed numbers and claims are withheld.
-- F024 and F025 are PROPOSED and may not be used as approved price or capacity.
+- F024 (tuition) and F025 (cohort size) are PARAMETERs, not PROPOSED facts, and may not be used as an
+  approved price or capacity.
+- F028: no partner organisation is named in any public-facing material for cohort 1, including the
+  application form and applicant-facing guidance.
+
+*(Section corrected by the CCC on 2026-08-01. As drafted on 2026-07-28 this section stated that cohort
+one recruits in Nigeria, Ghana and Pakistan, and that F024 and F025 were PROPOSED. Both were overtaken by
+the PARAMETER reclassification of 2026-08-01. The decision does not depend on the error, but condition 2
+would have inherited it.)*
 
 ## 4. Benchmark
 
@@ -86,6 +99,30 @@ cap, allocation and forecast unapproved.
    difference; the CCC reviews the rule after observed data.
 5. Before applications open, the form, calculation, evidence gates, reasonable-adjustment route and
    reconsideration process pass an end-to-end test.
+
+6. An institutional seat is sold as **transferable within the institution, not guaranteed to a named
+   nominee**. Where an institution's nominee does not meet the standard, the institution may nominate
+   another; the seat is not refundable on that ground alone and does not entitle the nominee to a place.
+   This must be stated in writing before money changes hands.
+   *(Added by the CCC on 2026-08-01. Fact 3 of this dossier holds that sponsorship and ability to pay do
+   not affect the merit score. That is correct and is retained — but it means a paying institution can
+   have its nominee rejected, and a buyer who believes it purchased a place rather than an application
+   will not buy again.)*
+
+7. The reviewer pool is constituted **separately from the teaching faculty**. Overlap is permitted where
+   an individual consents to both roles; it is not assumed, and no person is assigned to admissions review
+   by virtue of holding a teaching slot.
+   *(Added by the CCC on 2026-08-01. Double scoring plus moderation is a substantial October–December
+   workload. The faculty economics research of 2026-08-01 found that time is the largest single driver of
+   teaching-faculty attrition and that first-year faculty are the most fragile cohort. Spending the
+   teaching faculty's goodwill on admissions in the weeks before they begin teaching is an avoidable risk.)*
+
+8. The application captures **what support an applicant will need, in a field that does not score**, and
+   that field is excluded from the evidence rubric and from moderation.
+   *(Added by the CCC on 2026-08-01. Completion evidence from a comparable blended programme showed
+   doctors succeeding at 53–67% where nurses succeeded at 9% on the same course. A correctly
+   profession-blind admissions process will therefore admit a cohort that completes asymmetrically. The
+   remedy is to know in December what must be resourced in February, not to discriminate at the gate.)*
 
 ## 9. What becomes canon if you approve
 

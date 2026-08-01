@@ -133,9 +133,37 @@ def validate_decisions() -> int:
     decisions = data.get("decisions", [])
     require_unique(decisions, "id", "IKR-POS decision register")
     ratification = next((item for item in decisions if item.get("id") == "IKR-D001"), None)
-    if not ratification or ratification.get("status") != "PENDING":
-        fail("IKR-D001 must exist and remain PENDING until a minuted CCC verdict")
+    if not ratification:
+        fail("IKR-D001 must exist in the decision register")
+    validate_decided_with_minute(ratification)
     return len(decisions)
+
+
+def validate_decided_with_minute(decision) -> None:
+    """A governance decision may leave PENDING only via a real, on-disk CCC minute.
+
+    The original guard pinned IKR-D001 to PENDING unconditionally, which meant the
+    validator would have blocked the ratification it exists to protect. The rule the
+    failure message actually promised — and the rule enforced here — is that a decision
+    may move off PENDING only when it carries a minute reference and that minute exists.
+    """
+    decided_states = {"APPROVED", "REJECTED", "DEFERRED", "SUPERSEDED"}
+    status = decision.get("status")
+    identifier = decision.get("id")
+    if status == "PENDING":
+        return
+    if status not in decided_states:
+        fail(
+            f"{identifier} has status {status!r}; a decision must be PENDING or one of "
+            + ", ".join(sorted(decided_states))
+        )
+    if not decision.get("decided_on"):
+        fail(f"{identifier} is {status} but records no decided_on date")
+    minute = decision.get("minute_reference")
+    if not minute:
+        fail(f"{identifier} is {status} but cites no minute_reference; a decision without a minute is not a decision")
+    if not (ROOT / minute).is_file():
+        fail(f"{identifier} cites minute {minute}, which does not exist in the repository")
 
 
 def validate_changes() -> int:

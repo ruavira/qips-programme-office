@@ -188,3 +188,21 @@ documents:
     repository_source: null
     drive_url: null
     note: "Register as a reusable template/toolkit after ownership and curriculum alignment review."
+
+  - id: DOC-FAC-001
+    title: "Restricted faculty candidate and appointment records — custody record"
+    owner: W05
+    status: RESTRICTED_PLACEHOLDER
+    version: "0.1"
+    source_filename: null
+    repository_source: "governance/ikr-pos/system-of-record-map.yaml#SYS-DRIVE-FACULTY"
+    drive_url: null
+    confidentiality: RESTRICTED
+    established: 2026-08-01
+    established_by: "CCC sitting 2026-08-01, Item 3"
+    note: >-
+      Placeholder for the custody record of restricted faculty candidate and appointment records.
+      The account identity and folder link are deliberately absent because this repository is public.
+      The chair named the interim account during the sitting of 2026-08-01; it is to be written to the
+      restricted record, not here. Populate drive_url only if and when a link may be published, which
+      on current classification it may not. Retention pending Q009.
