@@ -27,9 +27,9 @@ makes divergence visible until reconciled.
 | Environment | Identifier / URL | Current governance status |
 |---|---|---|
 | GitHub repository | `ruavira/qips-programme-office` | AUTHORITATIVE |
-| Base44 application | App ID `6a68b8381ea8ff36dd473cd2` | MIRROR — source commit required |
+| Base44 application | App ID `6a68b8381ea8ff36dd473cd2` | MIRROR — W02 reconciliation verified against `d7f300b45ccff2cef262a9dcbce7d255f6e3bfca` |
 | Base44 live URL | `https://passionate-base-logic-core.base44.app/` | MIRROR — publication claims remain gated |
-| Google Drive | URLs registered in `documents/register.yaml` | REVIEW LAYER |
+| Google Drive W02 review pack | `https://docs.google.com/document/d/1w5LTKrPPXrx-iAii-3laz8kCMbTlSnh855_HFQMPhEI` | REVIEW LAYER — W02 reconciliation verified against `d7f300b45ccff2cef262a9dcbce7d255f6e3bfca` |
 | Supabase | Project identifier not registered in this repository | NOT YET REGISTERED |
 | Netlify | Site/deployment identifier not registered in this repository | NOT YET REGISTERED |
 | Vercel | Project/deployment identifier not registered in this repository | NOT YET REGISTERED |
@@ -66,16 +66,35 @@ A URL without an exact source commit is not considered synchronized.
 
 ## 6. Current W02 synchronization baseline
 
-| Surface | Repository source | Source revision | Status | Required action |
+| Surface | Repository source | Source revision | Status | Validation / required action |
 |---|---|---|---|---|
-| GitHub branch | W02 state, W03 state, CCC charter/docket, W02 dossier, run-002 plan and this register | `agent/w02-governance-synchronization` | REVIEW_BRANCH_SYNC | Merge only after PR validation/review |
-| Base44 | W02 status, dependencies, dossier state and links | Pending branch/merge commit | SYNC_PENDING | Mirror after PR is approved or label explicitly as review-branch data |
-| Google Drive | Human review copy of W02 decision and operationalization pack | Pending approved source revision | SYNC_PENDING | Create/update review copy and register exact source commit |
+| GitHub `main` | W02 state, W03 state, CCC charter/docket, W02 dossier, run-002 plan and this register | `d7f300b45ccff2cef262a9dcbce7d255f6e3bfca` | IN_SYNC | PR #9 passed repository checks and was squash-merged; GitHub remains authoritative |
+| Base44 | W02 and W03 workstream states; W02-01 dossier; W02 Run 001/002; programme-document records | `d7f300b45ccff2cef262a9dcbce7d255f6e3bfca` | IN_SYNC | Updated and read back 2026-07-31 19:45 America/Edmonton; W02 record `6a68b954d0f432402afc3432`, dossier record `6a6d4fb389f4a186ef734299`, run-002 record `6a6d4fc53c3b9e437c4056d9` |
+| Google Drive | `QIPS Needs, Blueprint and Observership Review Pack` | `d7f300b45ccff2cef262a9dcbce7d255f6e3bfca` | IN_SYNC | Updated and read back 2026-07-31 19:47 America/Edmonton; document ID `1w5LTKrPPXrx-iAii-3laz8kCMbTlSnh855_HFQMPhEI` |
 | Supabase | No W02 operational schema approved | — | NOT_REGISTERED | Do not create authoritative W02 records until data model and access policy are approved |
 | Netlify | No W02 deployment registered | — | NOT_REGISTERED | Deploy only approved web artifacts with source commit metadata |
 | Vercel | No W02 deployment registered | — | NOT_REGISTERED | Deploy only approved app/service artifacts with source commit metadata |
 
-## 7. Change protocol
+## 7. W02 reconciliation detail
+
+The Base44 readback confirms:
+
+- W02 status is `decision_required`, health is `attention`, and progress is 60%;
+- W02-01 is `ready_for_ccc` with `pass_with_findings` and zero open blocking findings;
+- W02-RUN-001 is complete and the former draft dossier is superseded;
+- W02-RUN-002 is paused at `AWAITING_CCC`, not represented as authorized;
+- W03 no longer lists W02 as a blocker and retains Q002 as its unresolved decision dependency;
+- the formal dossier, operationalization plan, synchronization register and Drive review pack are registered programme documents.
+
+The Drive readback confirms that the review pack now states:
+
+- W02-01 is on the continuous CCC decision docket with W03-01, W05-01 and W07-01;
+- the docket has unlimited intake capacity;
+- W02 prototype execution remains pending a minuted CCC verdict;
+- Run 002 contains twelve work packages and nine quality gates;
+- GitHub is authoritative, Base44 is a mirror, Supabase is an approved-data surface only, and Netlify/Vercel are deployment surfaces.
+
+## 8. Change protocol
 
 1. Change is proposed and reviewed in GitHub.
 2. Repository checks pass and the pull request records governance impact.
@@ -86,7 +105,7 @@ A URL without an exact source commit is not considered synchronized.
 6. This register or a machine-readable companion records the target revision and validation.
 7. Any divergence is opened as a tracked defect; it is never silently accepted.
 
-## 8. Anti-drift controls
+## 9. Anti-drift controls
 
 - No approved decision exists only in chat, email, Drive comments or a platform database.
 - No mirror may strip the words DRAFT, PROPOSED, PROTOTYPE or PUBLICATION PROHIBITED.
@@ -98,7 +117,7 @@ A URL without an exact source commit is not considered synchronized.
   publication, decision or dependency state.
 - Periodic reconciliation compares GitHub against every registered live surface.
 
-## 9. Reconciliation checklist
+## 10. Reconciliation checklist
 
 For each release or governance wave confirm:
 
@@ -114,7 +133,7 @@ For each release or governance wave confirm:
 - publication claims match approved canon;
 - open drift items have owner and due date.
 
-## 10. Decision rule
+## 11. Decision rule
 
 When surfaces disagree, GitHub governs unless a signed CCC decision exists that has not yet been
 transcribed. In that exceptional case, publication pauses while the signed decision is committed,
