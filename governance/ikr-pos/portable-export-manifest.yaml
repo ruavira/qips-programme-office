@@ -1,0 +1,44 @@
+manifest:
+  id: QIPS-EXPORT-001
+  title: QIPS Portable Governance Export Manifest
+  version: 0.1
+  status: TEMPLATE_ACTIVE
+  owner: W09
+
+include:
+  - README.md
+  - AGENTS.md
+  - governance/ikr-pos/
+  - canon/
+  - ccc/
+  - workstreams/
+  - documents/register.yaml
+  - docs/
+  - contracts/
+  - engine/
+  - .github/workflows/repository-checks.yml
+
+exclude:
+  - credentials
+  - environment_files
+  - patient_data
+  - participant_personal_data
+  - private_contact_lists
+  - signed_agreements_unless_explicitly_approved
+  - legal_advice
+  - restricted_evidence_objects
+  - application_secrets
+  - database_exports_with_personal_data
+
+required_release_metadata:
+  - source_commit
+  - generated_on
+  - generated_by
+  - included_paths
+  - excluded_classes
+  - validation_result
+  - archive_hash
+  - restore_test_result
+  - approval_status
+
+restore_rule: A restored export is historical until reconciled against the current authoritative repository and explicitly promoted.
