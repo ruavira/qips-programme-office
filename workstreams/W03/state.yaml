@@ -8,4 +8,8 @@ runs: 1
 dossiers_submitted: 1
 dossiers_approved: 0
 consecutive_dry_rounds: 0
-blocked_by: ['W02']
+blocked_by: []
+dependencies:
+  decision_input_from: []
+  joint_completion_blueprint_with: ['W02']
+next_action: "Obtain the CCC verdict on W03-01, then co-produce the completion blueprint with W02 without blocking W02 prototype work."
