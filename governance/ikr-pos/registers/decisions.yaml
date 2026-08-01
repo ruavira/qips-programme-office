@@ -1,0 +1,39 @@
+register:
+  id: QIPS-DR
+  title: QIPS IKR-POS Decision Register
+  version: 1.0.0
+  owner: CCC
+  status: ACTIVE
+  scope_note: Programme facts remain in canon/facts.yaml; this register records repository-governance decisions and points to their authoritative decision evidence.
+
+decisions:
+  - id: IKR-D001
+    title: Ratify QIPS-IKR-POS v1.0.0
+    decision_requested: Ratify the installed QIPS IKR-POS profile as the programme's repository and project-governance operating system.
+    status: PENDING
+    authority: CCC
+    proposed_on: 2026-07-31
+    source:
+      - governance/ikr-pos/repository-charter.md
+      - governance/ikr-pos/installation-manifest.yaml
+    implications:
+      - GitHub-centred system-of-record map becomes formal programme policy.
+      - Required registers, agent contract, change control, and health reviews become mandatory.
+      - Existing canon and CCC authority remain unchanged.
+    exclusions:
+      - no_programme_fact_approval
+      - no_publication_authorization
+      - no_destructive_migration
+      - no_external_sharing_change
+
+  - id: IKR-D002
+    title: Approve future structured-knowledge database activation
+    decision_requested: Approve a Supabase or equivalent database project, schema, RLS, retention, and synchronization contract.
+    status: NOT_YET_SUBMITTED
+    authority: CCC
+    owner: W09
+    dependencies:
+      - Q009
+      - registered_project_identifier
+      - approved_data_model
+      - approved_access_model
