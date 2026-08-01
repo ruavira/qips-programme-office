@@ -1,0 +1,32 @@
+register:
+  id: QIPS-ML
+  title: QIPS IKR-POS Migration Log
+  version: 1.0.0
+  owner: W09
+  status: ACTIVE
+
+migration:
+  mode: NON_DESTRUCTIVE_ADAPTATION
+  started_on: 2026-07-31
+  source_profile: IKR-POS-1.0.0
+  target: ruavira/qips-programme-office
+  completed_actions:
+    - Classified existing QIPS repository layers.
+    - Preserved canon, CCC, workstream, document, engine, and contract paths.
+    - Added repository charter, system-of-record map, registers, agent contract, and validation.
+    - Registered the source IKR-POS Drive artifacts.
+  not_performed:
+    - file_deletion
+    - folder_renaming
+    - permanent_relocation
+    - approval_status_promotion
+    - public_publication
+    - restricted_data_migration
+    - database_activation
+    - deployment_activation
+  deferred_inventory:
+    - file_level_artifact_inventory_for_all_workstream_working_files
+    - duplicate_analysis_across_all_drive_folders
+    - permission_audit_of_restricted_drive_locations
+    - portable_restore_test
+  verification_status: INSTALLATION_BASELINE_COMPLETE
