@@ -161,10 +161,36 @@ def validate_facts() -> int:
     data = load_yaml("canon/facts.yaml")
     facts = data.get("facts", [])
     require_unique(facts, "id", "fact registry")
-    allowed = {"APPROVED", "PROPOSED", "SUPERSEDED"}
+    allowed = {"APPROVED", "PROPOSED", "PARAMETER", "SUPERSEDED"}
     invalid = [fact.get("id") for fact in facts if fact.get("status") not in allowed]
     if invalid:
         fail(f"fact registry contains invalid statuses: {invalid}")
+
+    # A PARAMETER is a decision to stay flexible, not an absence of one. It only means
+    # anything if it declares the range the design must hold across, and says plainly what
+    # it does and does not hold up — otherwise it is a gap wearing a better label.
+    required_parameter_keys = {
+        "range",
+        "design_valid_across_range",
+        "why",
+        "gates",
+        "does_not_gate",
+        "decide_by",
+    }
+    for fact in facts:
+        if fact.get("status") != "PARAMETER":
+            continue
+        parameter = fact.get("parameter")
+        if not isinstance(parameter, dict):
+            fail(f"{fact.get('id')} is PARAMETER but declares no parameter block")
+        missing = sorted(required_parameter_keys - set(parameter))
+        if missing:
+            fail(f"{fact.get('id')} parameter block is missing keys: {', '.join(missing)}")
+        if parameter.get("design_valid_across_range") is not True:
+            fail(
+                f"{fact.get('id')} is PARAMETER but does not assert the design is valid "
+                "across its declared range; resolve it or reclassify it as PROPOSED"
+            )
     return len(facts)
 
 
