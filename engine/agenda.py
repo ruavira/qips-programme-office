@@ -46,7 +46,7 @@ def main() -> None:
     blocking = [question for question in questions if question.get("blocking")]
 
     lines = [
-        "# CCC agenda — architecture decision sitting",
+        "# CCC agenda — continuous decision docket",
         "",
         "Generated from workstream state, submitted dossier front matter and",
         "`canon/open-questions.yaml`. This file is a view; do not edit it by hand.",
@@ -57,7 +57,7 @@ def main() -> None:
         "",
         "Before deciding a dossier, confirm the committee's membership, chair, quorum, cadence and",
         "authority under `ccc/charter.md`. Only a minuted CCC verdict may promote a proposed fact into",
-        "canon.",
+        "canon. Every decision-ready dossier remains visible on this continuous docket until decided.",
         "",
     ]
 
@@ -102,20 +102,19 @@ def main() -> None:
 
     lines.extend([
         "",
-        f"## Item {len(dossier_rows) + 2} — capacity and next cycle",
+        f"## Item {len(dossier_rows) + 2} — continuous intake and decision sequencing",
         "",
-        f"There are {len(dossier_rows)} dossiers in this sitting, which meets the charter's maximum of",
-        "three. Do not activate more than three research workstreams in the next cycle. The proposed",
-        "next formal decision wave is W01 needs assessment, W02 programme blueprint and W04",
-        "observership controls; their verified working drafts remain outside this sitting until capacity",
-        "opens and their blocking evidence is resolved or explicitly presented for decision.",
+        f"There are {len(dossier_rows)} decision-ready dossiers on the continuous docket. The agenda",
+        "has no numeric intake ceiling. Sequence decisions by readiness, dependency impact, risk, age",
+        "and time sensitivity. Operational limits on simultaneous research or prototype workstreams are",
+        "separate controls and may not be used to hide or hold a verified dossier outside this docket.",
         "",
         "## Canon promotion control",
         "",
         "After signed minutes, create one decision record per dossier, promote only the exact approved",
         "wording, update open questions and workstream states, regenerate this agenda and the control-room",
-        "export, and record the GitHub revision. No comment in Google Drive or Base44 becomes canon on its",
-        "own.",
+        "export, and record the GitHub revision. No comment in Google Drive, Base44 or another mirror",
+        "becomes canon on its own.",
         "",
     ])
 

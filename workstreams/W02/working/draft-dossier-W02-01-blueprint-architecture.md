@@ -7,10 +7,16 @@ verification: PASS WITH FINDINGS
 decision_requested: "Approve backward mapping from twelve artefacts as the prototype architecture"
 closes_questions: []
 unblocks: [W04]
-state: HELD_FOR_NEXT_AGENDA
+state: SUPERSEDED_BY_FORMAL_DOSSIER
+superseded_by: "workstreams/W02/dossiers/W02-01-blueprint-architecture.md"
+superseded_on: 2026-07-31
 ---
 
 # Draft dossier W02-01 — programme blueprint architecture
+
+> **Status notice:** This working draft has been superseded by the formal continuous-docket
+> submission at `workstreams/W02/dossiers/W02-01-blueprint-architecture.md`. Retain this file as
+> provenance; do not use it as the current decision request.
 
 ## 1. The decision requested
 Approve the v0.9 architecture for prototype design; do not approve final outcomes, rubrics or award.
