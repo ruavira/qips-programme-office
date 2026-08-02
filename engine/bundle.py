@@ -147,16 +147,26 @@ def render_gate(gate: list[str]) -> str:
     )
 
 
-def render_apply_script(branch: str, patches: list[str], title: str) -> str:
+def render_apply_script(
+    branch: str, patches: list[str], title: str, expected_tree: str, base_is_remote: bool
+) -> str:
     gate_lines = "\n".join(render_gate(gate) for gate in GATES)
     patch_lines = "\n".join(
         f'git am --keep-cr "$HERE/{name}"' for name in patches
     )
+    base_note = (
+        "cut against the CURRENT REMOTE TIP of this branch, so applying it is a "
+        "fast-forward and no force push is ever needed"
+        if base_is_remote
+        else "cut against main, because this branch does not exist on the remote yet"
+    )
     return f"""#!/usr/bin/env bash
 # {title}
 #
-# Proved before delivery: this exact script was run against a fresh clone with
-# git push stubbed, and every gate below passed. See MANIFEST.json.
+# Proved before delivery: this exact script was run TWICE against a fresh clone
+# with git push stubbed, and every gate passed both times. See MANIFEST.json.
+#
+# This bundle is {base_note}.
 #
 # Pushes a proposal/** branch. .github/workflows/proposal.yml opens the pull
 # request itself -- no gh pr create here, and none is needed.
@@ -166,22 +176,57 @@ REPO="${{1:?usage: bash $(basename "$0") /path/to/qips-programme-office}}"
 HERE="$(cd "$(dirname "${{BASH_SOURCE[0]}}")" && pwd)"
 BRANCH="{branch}"
 
+# The exact tree this bundle promises to produce. Checked after applying, so the
+# script proves it built what it said it would rather than assuming it did.
+EXPECTED_TREE="{expected_tree}"
+
 cd "$REPO"
 echo "==> repo: $(pwd)"
 git remote -v | head -1
 
 git fetch origin main
-git checkout main
-git pull --ff-only origin main
 
-if git rev-parse --verify "$BRANCH" >/dev/null 2>&1; then
-  echo "==> branch $BRANCH exists locally; recreating from main"
-  git branch -D "$BRANCH"
+echo "==> checking whether this branch already exists on the remote"
+if git ls-remote --heads origin "$BRANCH" | grep -q "refs/heads/$BRANCH$"; then
+  git fetch -q origin "$BRANCH"
+
+  # Re-running a delivered bundle must be safe. `git am` regenerates the commit
+  # with a new timestamp, so a naive re-run produces a SIBLING of what was pushed
+  # and the push is rejected as non-fast-forward -- confusing, and it looks like
+  # breakage when nothing is broken.
+  if [ "$(git rev-parse FETCH_HEAD^{{tree}})" = "$EXPECTED_TREE" ]; then
+    echo
+    echo "Already delivered. origin/$BRANCH already carries exactly this content."
+    echo "Nothing pushed, nothing changed. Re-running this script is always safe."
+    git checkout -q -B "$BRANCH" FETCH_HEAD
+    echo "Local branch realigned to the remote."
+    exit 0
+  fi
+
+  echo "==> branch exists on the remote; building on top of it (fast-forward)"
+  git checkout -q -B "$BRANCH" FETCH_HEAD
+else
+  echo "==> branch is new; building from main"
+  git checkout -q main
+  git pull --ff-only origin main
+  git checkout -q -B "$BRANCH" main
 fi
-git checkout -b "$BRANCH"
 
 echo "==> applying patch series"
 {patch_lines}
+
+echo "==> confirming the applied tree is the one this bundle promised"
+ACTUAL_TREE="$(git rev-parse HEAD^{{tree}})"
+if [ "$ACTUAL_TREE" != "$EXPECTED_TREE" ]; then
+  echo
+  echo "STOP. The applied content does not match what this bundle promised."
+  echo "  expected tree: $EXPECTED_TREE"
+  echo "  actual tree:   $ACTUAL_TREE"
+  echo "Nothing has been pushed. Re-prove the bundle before using it:"
+  echo "  python3 engine/bundle.py --verify <bundle-dir>"
+  exit 1
+fi
+echo "    ok    tree matches $EXPECTED_TREE"
 
 echo "==> verifying before push (never push a red engine)"
 {gate_lines}
@@ -223,14 +268,40 @@ def dry_run(bundle_dir: Path, script_name: str) -> dict[str, Any]:
         if not real_git:
             raise BundleError("git is not on PATH; the dry run cannot be trusted.")
         pushlog = tmp_path / "push.log"
+        # The stub is not merely a push blocker. It REMEMBERS what was pushed and
+        # reports it back through ls-remote and fetch, so a second run of the
+        # script sees the same world a human's second run would see. Without that,
+        # the dry run could never exercise the already-delivered path — and the
+        # already-delivered path is exactly where the real defect was.
         (stub / "git").write_text(
-            "#!/bin/sh\n"
-            'if [ "$1" = push ]; then\n'
-            f'  echo "$@" >> "{pushlog}"\n'
-            '  echo "[dry-run] git push $*"\n'
-            "  exit 0\n"
-            "fi\n"
-            f'exec "{real_git}" "$@"\n'
+            f"""#!/bin/sh
+REAL="{real_git}"
+STATE="{pushlog}"
+case "$1" in
+  push)
+    for a in "$@"; do last="$a"; done
+    sha=$("$REAL" rev-parse "$last" 2>/dev/null)
+    printf '%s\\trefs/heads/%s\\n' "$sha" "$last" >> "$STATE"
+    echo "[dry-run] git push $* -> $sha"
+    exit 0 ;;
+  ls-remote)
+    "$REAL" "$@"
+    if [ -f "$STATE" ]; then
+      for a in "$@"; do grep "refs/heads/$a$" "$STATE" 2>/dev/null; done
+    fi
+    exit 0 ;;
+  fetch)
+    for a in "$@"; do last="$a"; done
+    if [ -f "$STATE" ] && grep -q "refs/heads/$last$" "$STATE"; then
+      sha=$(grep "refs/heads/$last$" "$STATE" | tail -1 | cut -f1)
+      "$REAL" update-ref FETCH_HEAD "$sha"
+      echo "[dry-run] git fetch $* -> $sha"
+      exit 0
+    fi
+    exec "$REAL" "$@" ;;
+esac
+exec "$REAL" "$@"
+"""
         )
         (stub / "git").chmod(0o755)
 
@@ -240,12 +311,11 @@ def dry_run(bundle_dir: Path, script_name: str) -> dict[str, Any]:
             result["log_tail"] = out[-2000:]
             return result
 
-        code, out = _run(
-            ["bash", str(bundle_dir / script_name), str(clone)],
-            clone,
-            env={"PATH": f"{stub}:{os.environ.get('PATH', '')}"},
-        )
-        result["steps"].append({"step": "apply-script", "exit": code})
+        stub_env = {"PATH": f"{stub}:{os.environ.get('PATH', '')}"}
+
+        # RUN 1 — the first delivery.
+        code, out = _run(["bash", str(bundle_dir / script_name), str(clone)], clone, stub_env)
+        result["steps"].append({"step": "apply-script (run 1)", "exit": code})
         result["log_tail"] = out[-4000:]
         if code != 0:
             return result
@@ -256,6 +326,32 @@ def dry_run(bundle_dir: Path, script_name: str) -> dict[str, Any]:
             )
             return result
         result["pushed_ref"] = pushlog.read_text().strip()
+
+        # RUN 2 — the human re-runs the same command, as humans do. This must be
+        # safe. It was not, until a real second run rejected as non-fast-forward
+        # on 2026-08-02, which the single-run dry run had no way of catching.
+        code, out = _run(["bash", str(bundle_dir / script_name), str(clone)], clone, stub_env)
+        result["steps"].append({"step": "apply-script (run 2, idempotency)", "exit": code})
+        if code != 0:
+            result["log_tail"] = out[-4000:]
+            result["steps"].append(
+                {
+                    "step": "idempotency",
+                    "exit": 1,
+                    "note": "re-running the delivered script is not safe",
+                }
+            )
+            return result
+        if "Already delivered" not in out:
+            result["steps"].append(
+                {
+                    "step": "idempotency",
+                    "exit": 1,
+                    "note": "the second run did not recognise the branch as already delivered",
+                }
+            )
+            return result
+        result["idempotent"] = True
 
         # Re-run every gate directly in the clone, so a gate that the script
         # skipped or swallowed cannot pass unnoticed. A gate whose script does not
@@ -299,15 +395,45 @@ def build(branch: str, number: int, slug: str, out_root: Path, title: str) -> Pa
     if code != 0:
         raise BundleError(f"branch {branch} does not exist locally.")
 
-    code, base = _run(["git", "merge-base", "origin/main", branch], ROOT)
-    if code != 0:
-        raise BundleError("could not find a merge base with origin/main.")
-    base = base.strip()
+    expected_tree = _run(["git", "rev-parse", f"{branch}^{{tree}}"], ROOT)[1].strip()
+
+    # Cut against the REMOTE TIP when the branch is already published. A bundle
+    # cut against main can never fast-forward a branch that has already been
+    # pushed -- `git am` regenerates commits, so re-applying from main produces a
+    # sibling history and the push is rejected. Found on 2026-08-02 when the
+    # director re-ran a delivered script. Cutting from the remote tip means an
+    # update is always a fast-forward and a force push is never needed.
+    code, remote_out = _run(["git", "ls-remote", "--heads", "origin", branch], ROOT)
+    remote_tip = remote_out.split()[0] if code == 0 and remote_out.strip() else None
+    base_is_remote = False
+
+    if remote_tip:
+        _run(["git", "fetch", "-q", "origin", branch], ROOT)
+        remote_tree = _run(["git", "rev-parse", f"{remote_tip}^{{tree}}"], ROOT)[1].strip()
+        if remote_tree == expected_tree:
+            raise BundleError(
+                f"nothing to deliver: origin/{branch} already carries exactly this content "
+                f"({remote_tip[:12]}). There is no bundle to build."
+            )
+        code, _ = _run(["git", "merge-base", "--is-ancestor", remote_tip, branch], ROOT)
+        if code == 0:
+            base, base_is_remote = remote_tip, True
+        else:
+            raise BundleError(
+                f"origin/{branch} ({remote_tip[:12]}) is not an ancestor of the local branch, so "
+                "an update cannot fast-forward. Rebase the local branch onto the remote tip "
+                f"first:\n    git fetch origin {branch} && git rebase FETCH_HEAD {branch}"
+            )
+    else:
+        code, base = _run(["git", "merge-base", "origin/main", branch], ROOT)
+        if code != 0:
+            raise BundleError("could not find a merge base with origin/main.")
+        base = base.strip()
 
     code, changed = _run(["git", "diff", "--name-only", f"{base}..{branch}"], ROOT)
     files = [line for line in changed.splitlines() if line.strip()]
     if not files:
-        raise BundleError(f"{branch} changes nothing against origin/main.")
+        raise BundleError(f"{branch} changes nothing against its base.")
 
     bundle_dir = out_root / f"{number:02d}_{slug}"
     if bundle_dir.exists():
@@ -324,7 +450,7 @@ def build(branch: str, number: int, slug: str, out_root: Path, title: str) -> Pa
         raise BundleError("format-patch produced no patches.")
 
     script_name = f"APPLY-{number}.sh"
-    script = render_apply_script(branch, patches, title)
+    script = render_apply_script(branch, patches, title, expected_tree, base_is_remote)
 
     smells = check_script_smells(script)
     if smells:
@@ -345,6 +471,8 @@ def build(branch: str, number: int, slug: str, out_root: Path, title: str) -> Pa
         "title": title,
         "branch": branch,
         "base_commit": base,
+        "base_is_remote_tip": base_is_remote,
+        "expected_tree": expected_tree,
         "patches": patches,
         "files_changed": files,
         "gates": [shell_join(g) for g in GATES],
@@ -419,7 +547,7 @@ def self_test() -> int:
         if not check_script_smells(script):
             failures.append(f"{label!r} was not caught by check_script_smells")
 
-    clean = render_apply_script("proposal/x", ["0001-x.patch"], "test")
+    clean = render_apply_script("proposal/x", ["0001-x.patch"], "test", "deadbeef", False)
     if check_script_smells(clean):
         failures.append(f"a clean generated script was flagged: {check_script_smells(clean)}")
 
@@ -432,6 +560,14 @@ def self_test() -> int:
             failures.append(f"gate not guarded for existence: {gate_script(gate)}")
     if clean.count("SKIP") != len(GATES):
         failures.append("not every gate announces its skip")
+
+    # re-running a delivered bundle must be recognised, never forced
+    if "Already delivered" not in clean:
+        failures.append("generated script has no already-delivered path; a re-run will fail")
+    if "ls-remote" not in clean:
+        failures.append("generated script does not check the remote before pushing")
+    if "--force" in clean:
+        failures.append("generated script force-pushes; it must stop and explain instead")
     if "set -euo pipefail" not in clean:
         failures.append("generated script does not fail fast")
     if "git push -u origin" not in clean:

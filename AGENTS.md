@@ -91,7 +91,16 @@ Lane 1 takes over from there.
 Lane 2 has a hard delivery rule, and it is not optional. **Never hand a human a command that has not
 been run.** Build the bundle with `engine/bundle.py`, which runs the exact script the human will run
 against a fresh clone of this repository with `git push` stubbed, re-runs every gate in that clone,
-and refuses to emit a bundle unless all of it passes. The bundle carries a `MANIFEST.json` recording
+and refuses to emit a bundle unless all of it passes.
+
+It runs the script **twice**, because people re-run commands and a delivered script must be safe to
+re-run. A bundle for a branch that is already published is cut against the **remote tip**, never
+against main: `git am` regenerates commits, so a bundle cut from main produces a sibling history and
+the push is rejected as non-fast-forward. Cutting from the remote tip makes every update a
+fast-forward, so a force push is never needed and is never offered — if the remote is not an ancestor
+of the local branch, `bundle.py` refuses to build and prints the rebase command instead. Each script
+also carries the tree hash it promises to produce and checks the applied tree against it before
+running any gate, so it proves it built what it said rather than assuming so. The bundle carries a `MANIFEST.json` recording
 the base commit, the files touched, every gate and its exit code, and the dry-run verdict. **A bundle
 whose manifest does not say `dry_run.passed = true` must not be delivered.**
 
