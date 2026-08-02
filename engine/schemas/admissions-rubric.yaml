@@ -1,0 +1,165 @@
+# The cohort-one admissions rubric, as data rather than as prose.
+#
+# Approved as architecture by the CCC on 2026-08-01, Item 4 (minute ccc/minutes/2026-08-01.md).
+# The THRESHOLD, the cohort CAP and any country ALLOCATION are NOT approved and are not in this
+# file. Nothing here sets who gets in; it sets how evidence is turned into a comparable number.
+#
+# Read with engine/admissions.py, which enforces every rule below and refuses to run if the
+# weights do not sum to 100.
+
+rubric:
+  id: QIPS-ADM-RUBRIC
+  version: "1.0.0"
+  status: APPROVED_ARCHITECTURE_UNAPPROVED_THRESHOLD
+  approved_by: CCC sitting 2026-08-01, Item 4
+  minute: ccc/minutes/2026-08-01.md
+  dossier: W07-01
+
+  formula: "criterion points = (rating / max_rating) * weight; total = sum of criterion points"
+  max_rating: 4
+  rating_scale_note: >-
+    Ratings are 0 to 4 inclusive. The formula must be printed on every score sheet — reviewer
+    calibration found that its absence was a real source of divergence.
+
+criteria:
+  - id: C1
+    name: Relevance
+    weight: 15
+    scores: true
+    definition: >-
+      The applicant's role, setting and stated purpose are relevant to improving quality and safety
+      in a health service they can actually influence.
+
+  - id: C2
+    name: Improvement challenge
+    weight: 25
+    scores: true
+    definition: >-
+      Importance, specificity, lawful access, and feasible scope within twelve months.
+    calibration_note: >-
+      Score PAST EXECUTION nowhere in this criterion — that belongs to C3. Reviewer calibration
+      found C2 and C3 overlapping, and C2 carries the largest weight, so the confusion was
+      expensive.
+
+  - id: C3
+    name: Initiative and follow-through
+    weight: 20
+    scores: true
+    definition: >-
+      Evidence of work the applicant sustained or completed: role, constraints, actions, evidence
+      of follow-through, what changed, what did not.
+    calibration_note: >-
+      An asserted claim is not evidence. SYN-N tests exactly this and must score low.
+
+  - id: C4
+    name: Protected time and completion plan
+    weight: 15
+    scores: true
+    definition: >-
+      A credible calendar, a live-session plan, an observership route, and a responsible
+      supporting contact or a stated equivalent.
+    calibration_note: >-
+      Where a reasonable adjustment is requested, assess THE ADJUSTED PLAN. Reviewers must not
+      score an unadjusted hypothetical version of the applicant.
+
+  - id: C5
+    name: Reflection and learning readiness
+    weight: 15
+    scores: true
+    definition: >-
+      A concrete instance of using difficult feedback, and a realistic account of the capability
+      gaps the programme is expected to expose.
+
+  - id: C6
+    name: Contribution and equity impact
+    weight: 10
+    scores: true
+    definition: >-
+      A named transfer route by which learning reaches a team, a service or an underserved
+      setting. A claim with no mechanism is not a contribution.
+
+# ---------------------------------------------------------------------------
+# Fields that are COLLECTED and never SCORED.
+#
+# This section exists because the CCC promoted a fact on 2026-08-01: "Title, institutional
+# prestige, sponsorship, ability to pay and reasonable-adjustment need do not increase or reduce
+# the merit score." engine/admissions.py tests that invariant against every calibration case by
+# perturbing each of these fields and asserting the score does not move.
+# ---------------------------------------------------------------------------
+non_scoring_fields:
+  - id: NS1
+    name: Job title and grade
+    reason: Prestige is not merit. Promoted fact, CCC 2026-08-01 Item 4.
+  - id: NS2
+    name: Institution name and standing
+    reason: Prestige is not merit. Promoted fact, CCC 2026-08-01 Item 4.
+  - id: NS3
+    name: Sponsorship status and payer
+    reason: >-
+      Ability to pay is not merit. An institutional seat is transferable within the institution,
+      not guaranteed to a named nominee — W07-01 condition 6.
+  - id: NS4
+    name: Reasonable adjustment and support needs
+    reason: >-
+      W07-01 condition 8. Collected so the programme knows in December what to resource in
+      February; excluded from the rubric and from moderation. Completion evidence shows blended
+      programmes complete asymmetrically by profession, and the remedy is resourcing, not
+      selection.
+  - id: NS5
+    name: Application source (open application or institutional nomination)
+    reason: >-
+      Institutional nomination is one source under the same standard — promoted fact, CCC
+      2026-08-01 Item 4.
+
+# ---------------------------------------------------------------------------
+# Evidence gates. Recorded OUTSIDE the numerical score. A high score cannot substitute for
+# missing verification — a required revision from the first calibration round.
+# ---------------------------------------------------------------------------
+evidence_gates:
+  - id: G1
+    name: Identity verified
+    states: [verified, conditional, not_established]
+    blocks_offer_when: [not_established]
+  - id: G2
+    name: Qualification verified
+    states: [verified, conditional, not_established]
+    blocks_offer_when: [not_established]
+  - id: G3
+    name: Lawful project access
+    states: [verified, conditional, not_established]
+    blocks_offer_when: [not_established]
+    note: >-
+      Self-employment or absence of an employer letter is NOT a ground for refusal. An
+      employer-equivalent route with a named responsible contact satisfies this gate. SYN-B and
+      SYN-D test it.
+
+# ---------------------------------------------------------------------------
+# Moderation. Condition 4: "For the initial live pilot, moderation triggers at ten total points
+# or a two-level criterion difference; the CCC reviews the rule after observed data."
+# ---------------------------------------------------------------------------
+moderation:
+  status: INITIAL_PILOT_RULE_NOT_A_SETTLED_RULE
+  review_after: observed data from the first live cycle
+  triggers:
+    total_points_difference_at_or_above: 10
+    any_single_criterion_level_difference_at_or_above: 2
+  applies_to_non_scoring_fields: false
+
+# ---------------------------------------------------------------------------
+# What this file deliberately does NOT contain.
+# ---------------------------------------------------------------------------
+deliberately_absent:
+  score_threshold: >-
+    NOT APPROVED. The council refused to set a threshold from synthetic cases, and the CCC did not
+    overrule. A threshold requires observed completion data.
+  cohort_cap: >-
+    NOT APPROVED. F025 is a PARAMETER — 25 to 64, target 40, floor 24, ceiling 64 — and the target
+    is a planning figure, not an admissions cap.
+  country_allocation: >-
+    NOT APPROVED. F020 is a PARAMETER; the country set is undecided until 1 September 2026.
+  eligibility_breadth: >-
+    F018 is a PARAMETER — clinical only, clinical and non-clinical, or open with an experience
+    floor. The rubric is deliberately valid across the whole declared range, which is why
+    eligibility is a separate gate and not a criterion.
+  price: >-
+    F024 is a PARAMETER. No price appears in the application instrument until it is decided.
