@@ -1,0 +1,140 @@
+name: Proposal
+
+# Push a branch named proposal/** and this opens the pull request for you.
+#
+# Why this exists: an agent working outside the repository cannot push, and giving one a
+# write credential over a chat channel is how credentials leak. So the human pushes the
+# branch — one command, no local Python, no gh CLI, no hand-written PR body — and
+# everything else happens here, where the token never leaves GitHub.
+#
+# This does NOT relax any gate. Branch protection and CODEOWNERS still decide what merges.
+
+on:
+  push:
+    branches:
+      - 'proposal/**'
+      - 'ccc/**'
+      - 'research/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install generator dependencies
+        run: python -m pip install --disable-pip-version-check PyYAML==6.0.2
+
+      # A pull request opened with GITHUB_TOKEN does not trigger other workflows —
+      # GitHub blocks that to prevent recursion. So repository-checks.yml would NOT run
+      # on a PR created here. We therefore run the same gates inline, and record the
+      # result in the PR body. Do not remove this on the assumption CI covers it.
+      - name: Run the same gates repository-checks runs
+        id: gates
+        run: |
+          set -o pipefail
+          {
+            echo '```'
+            python engine/agenda.py
+            python engine/controlroom.py
+            python -m py_compile engine/validate_ikr_pos.py
+            python engine/validate_ikr_pos.py
+            python engine/decision_capture.py --self-test
+            echo '```'
+          } 2>&1 | tee /tmp/gates.txt
+
+          if [ -n "$(git status --porcelain -- ccc/agenda.md ccc/control-room.html)" ]; then
+            echo "Generated files are not committed. Run the generators and commit." >&2
+            git status --short -- ccc/agenda.md ccc/control-room.html >&2
+            exit 1
+          fi
+
+          if git ls-files | grep -qE '(^|/)\.env($|\.)'; then
+            echo 'Environment files must not be committed.' >&2; exit 1
+          fi
+          if git grep -I -q -E '(github_pat_[A-Za-z0-9_]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----)' -- . ':!*.lock'; then
+            echo 'Possible credential detected.' >&2; exit 1
+          fi
+
+      - name: Describe what changed
+        id: describe
+        run: |
+          BASE=origin/main
+          CANON_CHANGED=no
+          if ! git diff --quiet "$BASE"...HEAD -- canon/; then CANON_CHANGED=yes; fi
+          echo "canon_changed=$CANON_CHANGED" >> "$GITHUB_OUTPUT"
+
+          MINUTES=$(git diff --name-only "$BASE"...HEAD -- 'ccc/minutes/**' | tr '\n' ' ')
+          echo "minutes=$MINUTES" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "## What changed"
+            echo
+            echo '```'
+            git diff --stat "$BASE"...HEAD | tail -40
+            echo '```'
+            echo
+            echo "## Commits"
+            echo
+            git log --format='- %s' "$BASE"..HEAD
+            echo
+            if [ "$CANON_CHANGED" = "yes" ]; then
+              echo "## Canon changes"
+              echo
+              echo "**This pull request changes canon and requires a CODEOWNER review.**"
+              echo
+              echo '```diff'
+              git diff "$BASE"...HEAD -- canon/ | head -200
+              echo '```'
+              echo
+              if [ -n "$MINUTES" ]; then
+                echo "Minute(s) in this change: \`$MINUTES\`"
+              else
+                echo "> **No minute is included in this pull request.** Canon changed without a"
+                echo "> minute in the same change. Per \`AGENTS.md\` a canon change requires a"
+                echo "> recorded CCC verdict — confirm the minute exists before merging."
+              fi
+              echo
+            fi
+            echo "## Validation performed"
+            echo
+            cat /tmp/gates.txt
+            echo
+            echo "*Opened automatically by \`.github/workflows/proposal.yml\`. The gates above ran"
+            echo "inside this workflow, because a pull request created with \`GITHUB_TOKEN\` does not"
+            echo "trigger \`repository-checks.yml\`.*"
+          } > /tmp/body.md
+
+      - name: Open or update the pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          TITLE=$(git log --format=%s -1)
+          if EXISTING=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number') && [ -n "$EXISTING" ]; then
+            gh pr edit "$EXISTING" --body-file /tmp/body.md
+            echo "Updated pull request #$EXISTING"
+          else
+            gh pr create --base main --head "$BRANCH" --title "$TITLE" --body-file /tmp/body.md
+            echo "Opened a pull request for $BRANCH"
+          fi
+
+      - name: Label a canon change
+        if: steps.describe.outputs.canon_changed == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          NUMBER=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+          gh label create canon-change --color B60205 --description "Changes canon. CODEOWNER review required." --force || true
+          gh pr edit "$NUMBER" --add-label canon-change

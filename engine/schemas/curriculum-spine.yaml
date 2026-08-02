@@ -1,0 +1,203 @@
+# The twelve-artefact curriculum spine.
+#
+# Option B, approved at the CCC sitting of 2026-08-01, Item 1: the curriculum is designed
+# BACKWARDS from twelve learner artefacts rather than forwards from a topic list. Each month
+# exists to produce one artefact that is a usable piece of the capstone, and the learning in that
+# month exists to make that artefact possible.
+#
+# STATUS: DRAFT. Months 1 and 2 are prototyped in full; months 3 to 12 are outlined only, which is
+# exactly what Item 1 authorised and what W05-01 condition 1 as amended requires. Nothing here is
+# final outcomes, final rubrics, an award, a production lock or anything publishable.
+#
+# Validated by engine/curriculum.py against F003, F004, F006, F010 and F019, and against the
+# controlled vocabulary in canon/glossary.md.
+
+spine:
+  id: QIPS-CURRICULUM-SPINE
+  version: "0.1.0-draft"
+  status: DRAFT_PROTOTYPE_NOT_FOR_PUBLICATION
+  authorised_by: CCC sitting 2026-08-01, Item 1
+  minute: ccc/minutes/2026-08-01.md
+  detail_level:
+    months_1_2: full prototype
+    months_3_12: outline only
+
+# ---------------------------------------------------------------------------
+# The monthly cycle, from F003 and F004. Every month has exactly these four components and no
+# more. engine/curriculum.py refuses any month that adds a fifth or drops one.
+# ---------------------------------------------------------------------------
+cycle:
+  components: [elearning_release, live_session, coaching_call, artefact]
+  artefact_due_days_before_coaching_call: 4     # F004
+  coaching_group_size: 8                        # F025 rationale
+  live_session_day: Saturday                    # F023
+
+# ---------------------------------------------------------------------------
+# Time model. F019 publishes "about 4 hours a week in an ordinary week and about 228 hours in
+# total, derived from the curriculum rather than chosen for marketing." The validator recomputes
+# the total from these figures and compares it to 228. If the design drifts, the published claim
+# stops being true, and the whole point of F019 is that the number is derived.
+# ---------------------------------------------------------------------------
+time_model:
+  weeks_per_month: 4
+  months: 12
+  # DERIVED FROM F019, not chosen. 228 published total, less the 40-hour observership (F006),
+  # is 188 hours over twelve months = 15.667 per month. Less the live session (3.0) and the
+  # coaching call (1.0) leaves 11.667 for eLearning and artefact production. The split between
+  # those two is a design choice; the envelope is not.
+  #
+  # The first version of this file worked FORWARDS from plausible-looking figures and produced
+  # 178 hours — fifty short of the approved total, with an ordinary week of 1.88 against a
+  # published 4. engine/curriculum.py caught it. F019 says the number is derived from the
+  # curriculum; a derived number that nobody recomputes stops being derived.
+  per_month_hours:
+    elearning: 6.67
+    live_session: 3.0
+    coaching_call: 1.0
+    artefact_production: 5.0
+  one_off_hours:
+    observership: 40.0    # F006
+  published_total_hours: 228            # F019
+  published_ordinary_week_hours: 4      # F019
+  ordinary_week_definition: >-
+    A week in an ordinary month — that is, any month other than the observership month. Computed
+    as the monthly total divided by four. This yields 3.92 hours, which is what F019's "about 4
+    hours a week in an ordinary week" describes.
+  ordinary_week_ambiguity_flagged_to_ccc: >-
+    F019's phrase "in an ordinary week" admits a second reading: a week containing neither the
+    live session nor the coaching call. On that reading the figure is 2.92 hours, not 3.92, and
+    the weeks carrying the live session run to about 6.9. Both readings are defensible from the
+    wording. The design uses the first. W14 must not present "about 4 hours a week" as a claim
+    about EVERY week, because on either reading it is not: the live-session week is materially
+    heavier and the observership month is heavier again. Raised for the committee at the next
+    sitting.
+
+# ---------------------------------------------------------------------------
+artefacts:
+
+  - month: 1
+    id: A01
+    name: Problem definition and improvement opportunity
+    detail: full
+    performance_outcome: >-
+      The participant can state a quality or safety problem in their own service in terms that are
+      specific, bounded, evidenced and within their lawful influence — and can say what they do not
+      yet know.
+    why_this_first: >-
+      Every later artefact depends on the problem being well formed. The first calibration round
+      found that a vague challenge is the single most common weakness, and it sits on the
+      heaviest-weighted admissions criterion. Month 1 is where it is fixed or where it is not.
+    evidence_the_participant_submits:
+      - A problem statement with scope, setting and affected population
+      - What is currently known, and the source of that knowledge
+      - What is not known, stated as questions rather than gaps
+      - The team and the setting to which the participant has lawful access
+      - What is realistically changeable in twelve months, and what is not
+    connects_to_capstone: The problem this artefact defines is the problem the capstone answers.
+
+  - month: 2
+    id: A02
+    name: Process map and current-state analysis
+    detail: full
+    performance_outcome: >-
+      The participant can map how the work actually happens — not how policy says it happens — and
+      can identify where the process fails the people it serves.
+    why_second: >-
+      A problem cannot be measured before it is located. Month 2 turns a stated problem into a
+      described process with named steps, handoffs and failure points.
+    evidence_the_participant_submits:
+      - A process map of the current state, produced with people who do the work
+      - At least three named failure points with the evidence for each
+      - A short account of what surprised the participant
+      - A statement of which failure point the improvement will target, and why
+    connects_to_capstone: Locates the problem in a real process, which the measurement plan then instruments.
+
+  # ----- outline only from here. Item 1 authorised months 1-2 prototyping. -----
+  - {month: 3,  id: A03, name: Measurement plan and operational definitions, detail: outline,
+     note: "F010 places measurement at month 3. F006 places the observership start here."}
+  - {month: 4,  id: A04, name: Observership analysis, detail: outline,
+     note: "F006: observership runs month 3 to week 2 of month 4. The artefact is the participant's own analysis, not a log of attendance."}
+  - {month: 5,  id: A05, name: Driver diagram and cause analysis, detail: outline}
+  - {month: 6,  id: A06, name: Change portfolio and prioritisation, detail: outline}
+  - {month: 7,  id: A07, name: First test of change, recorded, detail: outline}
+  - {month: 8,  id: A08, name: Second test and adaptation, detail: outline}
+  - {month: 9,  id: A09, name: Annotated run chart, detail: outline,
+     note: "F010 places run charts at month 9."}
+  - {month: 10, id: A10, name: Sustainability and control plan, detail: outline}
+  - {month: 11, id: A11, name: Spread and handover case, detail: outline}
+  - {month: 12, id: A12, name: Capstone synthesis, detail: outline,
+     note: "Assembles A01-A11. The capstone is not a new piece of work; it is the argument the eleven prior artefacts already support."}
+
+# ---------------------------------------------------------------------------
+# Country adaptation, per Item 1 condition 5 AS AMENDED by the CCC on 2026-08-01:
+# "Country adaptation is designed as a parameter. The prototype is built for Nigeria and
+#  demonstrates, without building, how it adapts to any additional country within the F020
+#  declared range."
+# ---------------------------------------------------------------------------
+country_adaptation:
+  built_for: Nigeria
+  principle: >-
+    The participant applies the method to their own facility, so the method is country-agnostic by
+    construction. What varies is not the teaching but the examples, the regulatory references and
+    the host-site logistics. Those are named here as adaptation points so that adding a country is
+    a substitution exercise rather than a redesign.
+  adaptation_points:
+    - id: AP1
+      what_varies: Worked examples and non-examples
+      why: Recognition matters. A participant should see their own setting in the example.
+      how_it_adapts: Each month carries one Nigerian worked example and one deliberately
+        different-setting example. Adding a country adds an example; it does not change the outcome.
+    - id: AP2
+      what_varies: Regulatory and standards references
+      why: The standard a participant is held to differs by jurisdiction.
+      how_it_adapts: References are held in a lookup keyed by country, not written into the
+        teaching text. Nigeria uses SQHN standards; the lookup gains a row per country.
+    - id: AP3
+      what_varies: Observership host-site logistics and indemnity
+      why: F007 is a PARAMETER and Q001 is open.
+      how_it_adapts: The Host Site Standard is written from programme objectives, not from the
+        characteristics of candidate sites (F008), so it holds unchanged. Only the site list moves.
+    - id: AP4
+      what_varies: Live-session timing
+      why: W10 holds the calendar. Time zones differ across the F020 range.
+      how_it_adapts: One session time is chosen against the anchor market; the recording and the
+        low-bandwidth equivalent carry the rest. No content changes.
+  not_adapted:
+    - The twelve-artefact spine
+    - Any performance outcome
+    - The monthly cycle
+    - The assessment of the participant's own analysis
+
+# ---------------------------------------------------------------------------
+unresolved_assumptions:
+  - id: UA1
+    assumption: Four hours in an ordinary week is achievable for a working professional.
+    status: UNTESTED
+    tested_by: The months 1-2 timing log, once real participants have run it.
+    owner: W02
+  - id: UA2
+    assumption: A participant can secure lawful access to a process worth mapping by month 2.
+    status: UNTESTED
+    risk: If access fails, A02 cannot be produced and the whole spine stalls at month 2.
+    mitigation_drafted: The admissions evidence gate G3 tests access before an offer is made.
+    owner: W02 with W07
+  - id: UA3
+    assumption: Coaching groups of eight can review eight artefacts in one call.
+    status: UNTESTED
+    tested_by: The coach review timing log.
+    owner: W06
+  - id: UA4
+    assumption: Low-bandwidth equivalents preserve the learning rather than merely the content.
+    status: UNTESTED
+    note: >-
+      Sub-Saharan African online CPD evidence puts slow internet at 55% and limited access at 41%
+      as reported barriers — above cost. This is not an accessibility nicety; it is a completion
+      risk.
+    owner: W02
+  - id: UA5
+    assumption: Month 3 measurement is early enough to yield a month 9 run chart with real data.
+    status: UNTESTED
+    note: A run chart needs enough points. If measurement starts at month 3 and the chart is due
+      at month 9, that is six months of data collection, which is workable only if the measure is
+      already being collected or is cheap to collect.
+    owner: W02 with W03

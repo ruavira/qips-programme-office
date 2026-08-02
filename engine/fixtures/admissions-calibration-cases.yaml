@@ -1,0 +1,427 @@
+# Eighteen fictional admissions calibration cases.
+#
+# Required by W07-01 condition 3: "Before live scoring, reviewers calibrate on the eighteen
+# fictional cases and declare conflicts."
+#
+# EVERY CASE IS FICTIONAL. There is no real applicant data here and there never may be — these
+# fixtures live in a public repository. The profiles exist to test that the instrument behaves as
+# designed, chiefly that prestige, sponsorship, ability to pay and adjustment need do not move a
+# score. SYN-C and SYN-F carry deliberately impressive titles and funding precisely so that the
+# invariant test in engine/admissions.py has something to bite on.
+#
+# published_total_a / _b are the totals recorded in the calibration rounds of 2026-07-28
+# (workstreams/W07/working/synthetic-admissions-calibration.md and
+# run-001-extended-admissions-calibration.md). The engine reproduces them or the build fails.
+#
+# Ratings are in criterion order C1..C6: relevance, improvement challenge, initiative and
+# follow-through, protected time and completion plan, reflection, contribution.
+
+cases:
+- id: SYN-A
+  variable_tested: Ghanaian senior nurse manager; specific medication-safety challenge; strong delivery
+    evidence; protected time and observership route
+  reviewer_a:
+  - 3
+  - 4
+  - 4
+  - 4
+  - 3
+  - 4
+  reviewer_b:
+  - 3
+  - 4
+  - 3
+  - 4
+  - 3
+  - 4
+  published_total_a: 92.5
+  published_total_b: 87.5
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-B
+  variable_tested: Nigerian early-career health-data analyst; no employer letter but a named project host
+  reviewer_a:
+  - 2
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  reviewer_b:
+  - 2
+  - 3
+  - 3
+  - 2
+  - 3
+  - 4
+  published_total_a: 77.5
+  published_total_b: 70.0
+  job_title: Health Data Analyst
+  sponsorship: unfunded
+  gates:
+    G1: verified
+    G2: verified
+    G3: conditional
+- id: SYN-C
+  variable_tested: Pakistani senior physician from a prestigious institution; vague challenge, weak follow-through
+  reviewer_a:
+  - 4
+  - 1
+  - 2
+  - 1
+  - 2
+  - 1
+  reviewer_b:
+  - 4
+  - 1
+  - 1
+  - 1
+  - 2
+  - 1
+  published_total_a: 45.0
+  published_total_b: 40.0
+  job_title: Professor and Head of Department
+  institution: A nationally prominent teaching hospital
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-D
+  variable_tested: Nigerian independent quality consultant; project-access permission not yet documented
+  reviewer_a:
+  - 3
+  - 3
+  - 4
+  - 2
+  - 4
+  - 3
+  reviewer_b:
+  - 3
+  - 2
+  - 4
+  - 2
+  - 4
+  - 3
+  published_total_a: 80.0
+  published_total_b: 73.75
+  job_title: Independent consultant
+  sponsorship: self_funded
+  gates:
+    G1: verified
+    G2: verified
+    G3: conditional
+- id: SYN-E
+  variable_tested: Ghanaian hospital pharmacist; caregiving constraints and a reasonable-adjustment plan
+  reviewer_a:
+  - 3
+  - 4
+  - 3
+  - 3
+  - 4
+  - 4
+  reviewer_b:
+  - 3
+  - 4
+  - 3
+  - 3
+  - 3
+  - 4
+  published_total_a: 87.5
+  published_total_b: 83.75
+  support_needs: Caregiving constraints; requires an adjusted submission calendar
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-F
+  variable_tested: Nigerian executive with employer sponsorship and immediate ability to pay; generic
+    challenge
+  reviewer_a:
+  - 4
+  - 2
+  - 2
+  - 4
+  - 2
+  - 1
+  reviewer_b:
+  - 4
+  - 1
+  - 2
+  - 4
+  - 2
+  - 1
+  published_total_a: 62.5
+  published_total_b: 56.25
+  job_title: Executive Director
+  sponsorship: employer_sponsored
+  source: institutional_nomination
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-G
+  variable_tested: Project access verified
+  reviewer_a:
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  reviewer_b:
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  published_total_a: 75.0
+  published_total_b: 75.0
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-H
+  variable_tested: Same profile as SYN-G; project access conditional
+  reviewer_a:
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  reviewer_b:
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  published_total_a: 75.0
+  published_total_b: 75.0
+  gates:
+    G1: verified
+    G2: verified
+    G3: conditional
+- id: SYN-I
+  variable_tested: Protected-time plan specific and calendar-backed
+  reviewer_a:
+  - 3
+  - 3
+  - 3
+  - 4
+  - 3
+  - 2
+  reviewer_b:
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 2
+  published_total_a: 76.25
+  published_total_b: 72.5
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-J
+  variable_tested: Same profile as SYN-I; protected-time plan vague
+  reviewer_a:
+  - 3
+  - 3
+  - 3
+  - 1
+  - 3
+  - 2
+  reviewer_b:
+  - 3
+  - 3
+  - 3
+  - 1
+  - 3
+  - 2
+  published_total_a: 65.0
+  published_total_b: 65.0
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-K
+  variable_tested: Improvement challenge specific; reviewer interpretation differs
+  reviewer_a:
+  - 2
+  - 4
+  - 2
+  - 3
+  - 3
+  - 3
+  reviewer_b:
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  published_total_a: 72.5
+  published_total_b: 60.0
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-L
+  variable_tested: Same profile as SYN-K; challenge only partly bounded
+  reviewer_a:
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  reviewer_b:
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  published_total_a: 60.0
+  published_total_b: 60.0
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-M
+  variable_tested: Past follow-through verified with artefact evidence
+  reviewer_a:
+  - 3
+  - 3
+  - 4
+  - 2
+  - 3
+  - 2
+  reviewer_b:
+  - 3
+  - 3
+  - 3
+  - 2
+  - 3
+  - 2
+  published_total_a: 73.75
+  published_total_b: 68.75
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-N
+  variable_tested: Same profile as SYN-M; follow-through merely asserted
+  reviewer_a:
+  - 3
+  - 3
+  - 1
+  - 2
+  - 3
+  - 2
+  reviewer_b:
+  - 3
+  - 3
+  - 1
+  - 2
+  - 3
+  - 2
+  published_total_a: 58.75
+  published_total_b: 58.75
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-O
+  variable_tested: Reflection uses a concrete failure and changed practice
+  reviewer_a:
+  - 3
+  - 2
+  - 3
+  - 3
+  - 4
+  - 3
+  reviewer_b:
+  - 3
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  published_total_a: 72.5
+  published_total_b: 68.75
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-P
+  variable_tested: Same profile as SYN-O; reflection remains generic
+  reviewer_a:
+  - 3
+  - 2
+  - 3
+  - 3
+  - 1
+  - 3
+  reviewer_b:
+  - 3
+  - 2
+  - 3
+  - 3
+  - 1
+  - 3
+  published_total_a: 61.25
+  published_total_b: 61.25
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-Q
+  variable_tested: Contribution identifies an underserved setting and transfer route
+  reviewer_a:
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 4
+  reviewer_b:
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  published_total_a: 73.75
+  published_total_b: 71.25
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified
+- id: SYN-R
+  variable_tested: Same profile as SYN-Q; contribution claim has no transfer mechanism
+  reviewer_a:
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 1
+  reviewer_b:
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 1
+  published_total_a: 66.25
+  published_total_b: 66.25
+  gates:
+    G1: verified
+    G2: verified
+    G3: verified

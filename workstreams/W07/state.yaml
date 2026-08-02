@@ -18,3 +18,5 @@ next_action: W07-01 approved with four amendments at the CCC sitting of 2026-08-
   pool separate from teaching faculty) and 8 (non-scoring support-needs field). Threshold, cap, allocation and forecast
   remain unapproved. Q006 remains open.
 ccc_minute: ccc/minutes/2026-08-01.md
+conditions_implemented: [3, 4, 5_partial, 6, 8]
+conditions_outstanding: [1, 2, 5_procedures, 7_pool_not_yet_constituted]

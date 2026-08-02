@@ -1,0 +1,91 @@
+name: Decision capture
+
+# A committee member fills in the CCC decision form. This reads their verdict, checks it
+# against canon, and — if it is consistent — opens a proposal branch carrying the decision
+# record. Their answers become the change, instead of becoming prose someone else has to
+# translate into YAML. The translation step is where mistakes happen.
+#
+# It will never write canon. It writes a PROPOSAL. Canon changes when a human merges.
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  capture:
+    if: contains(join(github.event.issue.labels.*.name, ','), 'ccc-decision')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python -m pip install --disable-pip-version-check PyYAML==6.0.2
+
+      - name: Read the submitted verdict
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          printf '%s' "$ISSUE_BODY" > /tmp/issue-body.md
+          python engine/decision_capture.py \
+            --issue-body-file /tmp/issue-body.md \
+            --issue-number "${{ github.event.issue.number }}" \
+            --out-dir .decision-capture
+
+      - name: Report back on the issue
+        if: hashFiles('.decision-capture/comment.md') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue comment "${{ github.event.issue.number }}" --body-file .decision-capture/comment.md
+
+      - name: Open a proposal branch carrying the decision record
+        if: hashFiles('.decision-capture/record.yaml') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          STATUS=$(cat .decision-capture/status.txt)
+          if [ "$STATUS" != "captured" ]; then
+            echo "Verdict was not captured cleanly ($STATUS). No branch opened."
+            exit 0
+          fi
+
+          BRANCH="proposal/decision-issue-${ISSUE}"
+          DOSSIER=$(python -c "import yaml;print(yaml.safe_load(open('.decision-capture/record.yaml'))['dossier'])")
+          VERDICT=$(python -c "import yaml;print(yaml.safe_load(open('.decision-capture/record.yaml'))['verdict'])")
+
+          mkdir -p ccc/decisions
+          cp .decision-capture/record.yaml "ccc/decisions/issue-${ISSUE}-${DOSSIER}.yaml"
+          rm -rf .decision-capture
+
+          git config user.name "qips-decision-capture"
+          git config user.email "noreply@github.com"
+          git checkout -b "$BRANCH"
+          git add ccc/decisions
+          git commit -q -m "Capture CCC verdict ${VERDICT} on ${DOSSIER} from issue #${ISSUE}
+
+          Recorded from the decision form on issue #${ISSUE}. This is a PROPOSAL and is
+          not canon. It becomes canon when a human merges a change that promotes it and
+          a minute records the verdict.
+
+          Checked against canon before capture: the dossier exists, every referenced fact
+          exists and is not superseded, and a decided verdict carries a reason."
+          git push -q origin "$BRANCH"
+
+          gh pr create --base main --head "$BRANCH" \
+            --title "Captured verdict: ${VERDICT} on ${DOSSIER} (issue #${ISSUE})" \
+            --body "Captured from the decision form on issue #${ISSUE}.
+
+          **This is a proposal, not canon.** It records what the committee said. Promoting it
+          into \`canon/facts.yaml\` and writing the minute is a separate, human step.
+
+          Closes nothing automatically. Review the record, then raise the canon change."
+
+          gh issue comment "$ISSUE" --body "Proposal branch \`$BRANCH\` opened with the decision record."
