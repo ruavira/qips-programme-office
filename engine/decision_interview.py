@@ -71,8 +71,26 @@ SCHEMA_DIR = ROOT / "engine/schemas"
 # recommendation as it stands; the other three change it, and all three must carry
 # a reason, because the reason becomes a standing constraint on the rebuild. This
 # mirrors engine/decision_capture.py deliberately — one vocabulary, two surfaces.
-RESPONSES = {"ACCEPT", "AMEND", "REJECT", "DEFER"}
-REASON_REQUIRED = {"AMEND", "REJECT", "DEFER"}
+RESPONSES = {"ACCEPT", "AMEND", "REJECT", "DEFER", "NOTED", "QUESTION", "CHALLENGE"}
+REASON_REQUIRED = {"AMEND", "REJECT", "DEFER", "CHALLENGE"}
+
+# What a reviewer may do at a station where something is genuinely OPEN.
+DECISION_RESPONSES = {"ACCEPT", "AMEND", "REJECT", "DEFER"}
+
+# What a reviewer may do at a REVIEW POINT — something already settled.
+#
+# CHALLENGE is the one that matters and the reason this vocabulary exists at all.
+# The first version of the walkthrough generated stations only from things that
+# were open, which meant a committee member looking at "the observership is 40
+# hours" (F006, APPROVED) had nowhere to say "why forty?" — they would have had to
+# leave the walkthrough and email someone. Under the standing rule that no decision
+# is ever a one-way door, reopening a settled fact must be a first-class action
+# inside the review, not an escalation outside it.
+#
+# A CHALLENGE does not reopen anything by itself. It produces a reopening request
+# carrying the challenger's reason, which goes to the committee like any other
+# proposal.
+REVIEW_RESPONSES = {"NOTED", "QUESTION", "CHALLENGE"}
 
 STATION_KINDS = {
     "PARAMETER",           # a canon fact deliberately held open across a range
@@ -80,7 +98,13 @@ STATION_KINDS = {
     "ASSUMPTION",          # an unresolved assumption the design rests on
     "NOT_ESTABLISHED",     # a process step drafted but not yet constituted
     "DELIBERATELY_ABSENT", # something withheld on purpose, needing ratification
+    "REVIEW_POINT",        # a SETTLED fact, shown so it can be challenged
+    "PROPOSED_FACT",       # proposed or deferred; awaiting a verdict
 }
+
+# Kinds where something is open and a decision is being sought.
+DECISION_KINDS = {"PARAMETER", "OPEN_QUESTION", "ASSUMPTION", "NOT_ESTABLISHED",
+                  "DELIBERATELY_ABSENT", "PROPOSED_FACT"}
 
 
 class InterviewError(Exception):
@@ -184,12 +208,16 @@ def _station(
         "options": options,
         "recommendation": recommendation,
         "response": {
-            "allowed": sorted(RESPONSES),
+            "allowed": sorted(DECISION_RESPONSES if kind in DECISION_KINDS else REVIEW_RESPONSES),
             "reason_required_for": sorted(REASON_REQUIRED),
             "note": (
                 "A reason on AMEND, REJECT or DEFER is not paperwork. It is written into the "
                 "owning workstream brief as a standing constraint, and it is how the engine "
                 "stops re-proposing what the committee already refused."
+                if kind in DECISION_KINDS
+                else "This is settled. NOTED moves on, QUESTION asks without changing anything, "
+                "and CHALLENGE opens a reopening request carrying your reason. A challenge does "
+                "not reopen the fact by itself — it puts the question to the committee."
             ),
         },
     }
@@ -234,6 +262,67 @@ def build_stations() -> list[dict[str, Any]]:
                     "option — not a deadline for an answer. The build does not stall on it."
                 ),
                 owner=fact.get("owner"),
+            )
+        )
+
+    # --- proposed and deferred facts --------------------------------------
+    #
+    # A fact that is PROPOSED has been put to the committee and not yet resolved;
+    # one that was DEFERRED is the same thing with a date attached. Neither is
+    # settled and neither is a parameter, so the first version of this generator
+    # produced no station for them at all — which would have hidden F027, the
+    # go/no-go kill date, from a committee walking the whole design. Found by the
+    # journey spine anchoring an item the generator never emitted.
+    for fact_id, fact in sorted(facts.items()):
+        if fact.get("status") != "PROPOSED":
+            continue
+        stations.append(
+            _station(
+                station_id=f"ST-{fact_id}",
+                kind="PROPOSED_FACT",
+                source=f"canon/facts.yaml::{fact_id}",
+                prompt=fact.get("statement", ""),
+                built=(
+                    "Proposed, not settled. Nothing downstream treats this as true, and the "
+                    "build does not assume it."
+                ),
+                options=[],
+                recommendation=_recommendation_of(fact),
+                deferral_reason=fact.get("deferral_reason"),
+                owner=fact.get("owner"),
+                source_of_truth=fact.get("source"),
+            )
+        )
+
+    # --- settled facts, shown so they can be challenged -------------------
+    #
+    # Everything APPROVED gets a review point. A design review where the reviewer
+    # may only comment on what is already open is not a design review; it is a
+    # form. SUPERSEDED facts are excluded — the reviewer should be looking at the
+    # fact that replaced them, not at history.
+    for fact_id, fact in sorted(facts.items()):
+        if fact.get("status") != "APPROVED":
+            continue
+        stations.append(
+            _station(
+                station_id=f"ST-{fact_id}",
+                kind="REVIEW_POINT",
+                source=f"canon/facts.yaml::{fact_id}",
+                prompt=fact.get("statement", ""),
+                built=(
+                    "Settled and built. Shown here so it can be questioned or challenged, "
+                    "never so it can be rubber-stamped."
+                ),
+                options=[],
+                recommendation=_recommendation_of(fact),
+                settled_on=fact.get("ratified_on") or fact.get("established"),
+                owner=fact.get("owner"),
+                source_of_truth=fact.get("source"),
+                reopening_note=(
+                    "Standing rule of this programme: the opportunity to course correct, "
+                    "enhance or update is always open. Challenging this costs nothing and "
+                    "needs no justification beyond your reason."
+                ),
             )
         )
 
@@ -373,13 +462,23 @@ def check_coverage(stations: list[dict[str, Any]]) -> list[str]:
     covered = {s["source"] for s in stations}
 
     for fact_id, fact in load_facts().items():
-        if fact.get("status") == "PARAMETER":
-            key = f"canon/facts.yaml::{fact_id}"
-            if key not in covered:
-                problems.append(
-                    f"{fact_id} is a PARAMETER but generates no station. An open canon fact "
-                    "would be invisible to the committee."
-                )
+        key = f"canon/facts.yaml::{fact_id}"
+        if fact.get("status") == "PARAMETER" and key not in covered:
+            problems.append(
+                f"{fact_id} is a PARAMETER but generates no station. An open canon fact "
+                "would be invisible to the committee."
+            )
+        if fact.get("status") == "PROPOSED" and key not in covered:
+            problems.append(
+                f"{fact_id} is PROPOSED but generates no station. An undecided fact the "
+                "committee is never shown is a decision made by omission."
+            )
+        if fact.get("status") == "APPROVED" and key not in covered:
+            problems.append(
+                f"{fact_id} is APPROVED but generates no review point. A settled fact the "
+                "committee cannot challenge is a fact they cannot reopen, and every decision "
+                "in this programme is reopenable."
+            )
 
     for qid, question in load_questions().items():
         if question.get("status") in {"CLOSED", "ANSWERED"}:
@@ -482,10 +581,14 @@ def check_live_conflicts(
             problems.append(f"{station_id!r} is not a station in this walkthrough.")
             continue
 
-        # 2. the verdict must be one we recognise
-        if verdict not in RESPONSES:
+        # 2. the verdict must be one this KIND of station allows. A settled fact
+        #    cannot be "AMENDED" in place, and an open parameter cannot be merely
+        #    "NOTED" — the vocabularies are deliberately different.
+        allowed = set(station["response"]["allowed"])
+        if verdict not in allowed:
             problems.append(
-                f"{station_id}: response {verdict!r} is not one of {', '.join(sorted(RESPONSES))}."
+                f"{station_id} is a {station['kind']}; response {verdict!r} is not one of "
+                f"{', '.join(sorted(allowed))}."
             )
             continue
 
