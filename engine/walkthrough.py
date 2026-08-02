@@ -53,6 +53,8 @@ import hashlib
 import html
 import json
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
 import urllib.parse
@@ -670,6 +672,51 @@ function payload(final){
         chosen_option:S.answers[k].choice||null,reason:S.answers[k].reason||''}}),
     raised:S.raised};
 }
+/* What a person sees in the inbox.
+
+   The machine record has to travel — it is what the compiler reads and what
+   carries the fingerprint. But it must not be the thing anyone READS. These two
+   build the human view: one line that says who and how far, and a digest of what
+   she actually said, in the order she said it. */
+function clip(t,n){t=String(t||'').replace(/\s+/g,' ').trim();
+  return t.length>n?t.slice(0,n-1)+'…':t}
+
+function summaryLine(final){
+  const a=answered(),n=allStops().length;
+  const bits=[(DATA.submit&&DATA.submit.reviewer)||S.reviewer||'Someone unnamed',
+    a+' of '+n+' answered'];
+  if(S.raised.length)bits.push(S.raised.length+' thing'+(S.raised.length===1?'':'s')+' raised');
+  bits.push(final?'finished':'still going');
+  return bits.join(' · ');
+}
+
+function readable(){
+  const lines=[];
+  acts().forEach(function(a,ai){
+    a.stops.forEach(function(st,si){
+      const ans=S.answers[st.key];
+      if(!ans||!ans.response)return;
+      lines.push(ans.response+' — '+clip(st.prompt,140));
+      lines.push('    part '+(ai+1)+' of '+acts().length+', '+a.title+
+                 (st.needs?' · '+st.needs.label.toLowerCase():''));
+      if(ans.choice)lines.push('    chose: '+clip(ans.choice,300));
+      if(ans.reason)lines.push('    because: '+clip(ans.reason,600));
+      lines.push('');
+    });
+  });
+  if(S.raised.length){
+    lines.push('RAISED — things we had not asked about');
+    lines.push('');
+    S.raised.forEach(function(r){
+      lines.push(r.kind.replace(/_/g,' ').toLowerCase()+' — '+clip(r.title,140));
+      lines.push('    '+clip(r.detail,600));
+      lines.push('');
+    });
+  }
+  if(!lines.length)lines.push('Nothing answered yet.');
+  return lines.join('\\n');
+}
+
 function digest(o){
   const s=JSON.stringify(o);let h=0;
   for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0}
@@ -699,10 +746,13 @@ function sendNow(final){
     // URL-encoded, because Netlify Forms does not accept JSON.
     const f=new URLSearchParams();
     f.append('form-name',DATA.submit.form);
-    f.append('reviewer',body.reviewer);
+    // Order here is cosmetic; order in the static form is what Netlify reads.
+    f.append('summary',summaryLine(final));
+    f.append('responses',readable());
+    f.append('reviewer',body.reviewer||'not given');
     f.append('progress',body.answered+' of '+body.of);
     f.append('final',body.final?'yes':'no');
-    f.append('payload',JSON.stringify(body));
+    f.append('full_record_json',JSON.stringify(body));
     request=fetch(DATA.submit.url,{method:'POST',
       headers:{'Content-Type':'application/x-www-form-urlencoded'},body:f.toString()});
   }else{
@@ -1350,12 +1400,30 @@ def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commi
     # the submission arrives with empty columns.
     form = ""
     if submit and submit["mode"] == "netlify":
+        # FIELD ORDER IS LOAD-BEARING, and this is not a preference — it is how
+        # Netlify decides what a person sees. Their documentation: the submission
+        # title is "the first text <input> element that is not hidden and not an
+        # email-related field", and the body is "the first <textarea> element in
+        # the form, regardless of its name".
+        #
+        # The first version put the spam honeypot first and the JSON in the only
+        # textarea. So every submission was titled with an empty field and its
+        # body was a wall of machine-readable text. The inbox is a surface a
+        # PERSON reads — the same mistake as letting internal identifiers reach
+        # the reviewer, made one layer further out.
+        #
+        # So: a plain-language summary is the first input, a readable digest of
+        # what she actually said is the first textarea, and the machine record is
+        # a SECOND textarea, which Netlify ignores for display.
+        f = html.escape(submit["form"])
         form = (
-            f'<form name="{html.escape(submit["form"])}" data-netlify="true" '
-            f'netlify-honeypot="bot-field" hidden>\n'
-            f'  <input type="hidden" name="form-name" value="{html.escape(submit["form"])}">\n'
-            f'  <input name="bot-field"><input name="reviewer"><input name="progress">\n'
-            f'  <input name="final"><textarea name="payload"></textarea>\n'
+            f'<form name="{f}" data-netlify="true" netlify-honeypot="bot-field" hidden>\n'
+            f'  <input type="hidden" name="form-name" value="{f}">\n'
+            f'  <input name="summary">\n'
+            f'  <textarea name="responses"></textarea>\n'
+            f'  <input name="reviewer"><input name="progress"><input name="final">\n'
+            f'  <input name="bot-field">\n'
+            f'  <textarea name="full_record_json"></textarea>\n'
             f'</form>'
         )
     if hosted:
@@ -1477,8 +1545,80 @@ def write_pwa(directory: Path, acts: list[dict[str, Any]], stations: list[dict[s
 
 # ---------------------------------------------------------------------------
 
+def unterminated_string_literals(source: str) -> list[str]:
+    """Find a string literal broken across a newline. It is not legal JavaScript.
+
+    This exists because the whole page silently died once. The JavaScript is held
+    in a Python string, so a `\\n` written with one backslash instead of two
+    becomes a REAL newline inside a JS quote — and JavaScript will not have that.
+    The page rendered its shell, the script never ran, and every check in this
+    file still passed, because none of them had ever looked at the JavaScript as
+    JavaScript. It took a browser to find it.
+
+    A scanner rather than a dependency: the check has to run wherever the gates
+    run, including machines with no Node installed.
+    """
+    problems: list[str] = []
+    quote: str | None = None
+    escaped = False
+    line = 1
+    started = 1
+    index = 0
+    while index < len(source):
+        ch = source[index]
+        if ch == "\n":
+            if quote in ("'", '"'):
+                problems.append(
+                    f"a {quote} string opened on line {started} is still open at the end of "
+                    f"the line. JavaScript does not allow a newline inside one, so the whole "
+                    f"script fails to parse and nothing on the page runs."
+                )
+                quote = None
+            line += 1
+        if quote:
+            if escaped:
+                escaped = False
+            elif ch == "\\":
+                escaped = True
+            elif ch == quote:
+                quote = None
+        elif ch in "'\"`":
+            quote, started = ch, line
+        elif ch == "/" and source[index:index + 2] == "//":
+            index = source.find("\n", index)
+            if index < 0:
+                break
+            continue
+        elif ch == "/" and source[index:index + 2] == "/*":
+            end = source.find("*/", index + 2)
+            if end < 0:
+                break
+            line += source.count("\n", index, end)
+            index = end + 2
+            continue
+        index += 1
+    return problems
+
+
 def self_test() -> int:
     failures: list[str] = []
+
+    # Before anything else: the page's script must be parseable. Everything below
+    # tests what the page CONTAINS; this tests that it can run at all.
+    for problem in unterminated_string_literals(JS):
+        failures.append(f"the page's script is not valid JavaScript: {problem}")
+    node = shutil.which("node")
+    if node:
+        with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False) as handle:
+            handle.write(JS)
+            probe = handle.name
+        try:
+            checked = subprocess.run([node, "--check", probe], capture_output=True, text=True)
+            if checked.returncode:
+                first = (checked.stderr or "").strip().split("\n")
+                failures.append("node rejects the page's script: " + " / ".join(first[:4]))
+        finally:
+            Path(probe).unlink(missing_ok=True)
     stations = di.build_stations()
     journey = load_journey()
     acts, anchor_problems = anchor(stations, journey)
@@ -1648,6 +1788,30 @@ def self_test() -> int:
                 f"the page posts field(s) the form does not declare: {sorted(missing)}. "
                 f"The submission would arrive with those columns empty."
             )
+
+        # ORDER, not just names. Netlify builds what a person sees from the first
+        # non-hidden text input (the title) and the first textarea (the body).
+        # The first version put the spam honeypot first and the machine record in
+        # the only textarea, so every submission was titled with an empty field
+        # and its body was a wall of JSON. Names all agreed; the inbox was still
+        # unreadable. Found by a human looking at it, which is the argument for
+        # looking at it.
+        body_html = form.group(0)
+        visible = re.findall(r'<input (?!type="hidden")name="([\w-]+)"', body_html)
+        areas = re.findall(r'<textarea name="([\w-]+)"', body_html)
+        if not visible or visible[0] != "summary":
+            failures.append(
+                f"the first plain input is {visible[0] if visible else 'missing'!r}, so that is "
+                f"what titles every submission. It must be the human summary."
+            )
+        if not areas or areas[0] != "responses":
+            failures.append(
+                f"the first textarea is {areas[0] if areas else 'missing'!r}, so that is what "
+                f"Netlify shows as the body of every submission. It must be the readable "
+                f"digest, never the machine record."
+            )
+        if "full_record_json" in areas[:1]:
+            failures.append("the machine record is the first textarea; a person would read JSON")
 
     for marker, missing in [
         ("sendNow", "nothing sends her answers back"),
