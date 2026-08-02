@@ -66,6 +66,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FACTS_PATH = ROOT / "canon/facts.yaml"
 QUESTIONS_PATH = ROOT / "canon/open-questions.yaml"
 RECOMMENDATIONS_PATH = ROOT / "engine/schemas/recommendations.yaml"
+NEEDS_PATH = ROOT / "engine/schemas/contribution-needs.yaml"
 SCHEMA_DIR = ROOT / "engine/schemas"
 
 # The four things a committee member can do at a station. ACCEPT takes the
@@ -108,6 +109,23 @@ DECISION_KINDS = {"PARAMETER", "OPEN_QUESTION", "ASSUMPTION", "NOT_ESTABLISHED",
                   "DELIBERATELY_ABSENT", "PROPOSED_FACT"}
 
 
+# What a co-designer can RAISE that we never thought to ask.
+#
+# Every one of the generated stops comes from something the repository already
+# knows is open. That is the guarantee that nothing open is hidden — and it is
+# also the ceiling: she can only answer questions we thought to ask. The most
+# valuable thing a co-designer says is usually "you are missing a decision" or
+# "this whole section is framed wrongly", and until now there was nowhere in the
+# walkthrough to say either. The conflict checker would have caught her
+# contradicting herself; nothing would have caught us scoping it badly.
+RAISED_KINDS = {
+    "MISSING_DECISION",   # a decision nobody has identified as a decision
+    "MIS_FRAMED",         # we asked, but the question is the wrong question
+    "WRONG_ASSUMPTION",   # something treated as given that she knows is not
+    "CONCERN",            # not a decision, but it should be on the record
+}
+
+
 class InterviewError(Exception):
     """A problem a human must fix before the walkthrough can be run."""
 
@@ -145,6 +163,45 @@ def load_recommendations() -> dict[str, Any]:
         return {}
     doc = yaml.safe_load(RECOMMENDATIONS_PATH.read_text(encoding="utf-8")) or {}
     return {r["target"]: r for r in doc.get("recommendations", []) if r.get("target")}
+
+
+def load_needs() -> dict[str, Any]:
+    """What each stop needs from the person walking it.
+
+    Kept as data because the taxonomy is a judgement about how to work with a
+    colleague, not an implementation detail — it should be arguable by the people
+    it describes, and changing it must not mean changing code.
+    """
+    if not NEEDS_PATH.is_file():
+        return {}
+    return yaml.safe_load(NEEDS_PATH.read_text(encoding="utf-8")) or {}
+
+
+def _needs_of(kind: str, station_id: str, fact_id: str, has_rec: bool) -> dict[str, Any]:
+    """Derive what this stop needs, unless an override says otherwise.
+
+    Badging everything "open" is a REVIEW frame and it tells a co-designer
+    nothing about where she is actually needed. An untested assumption about
+    whether a working consultant can find four hours a week, and a question only
+    SQHN can answer, are not the same kind of thing and should not look alike.
+    """
+    doc = load_needs()
+    overrides = doc.get("overrides") or {}
+    override = overrides.get(station_id) or overrides.get(fact_id)
+    if override:
+        need = override["needs"]
+        why = override.get("why")
+    else:
+        default = (doc.get("defaults") or {}).get(kind, {})
+        need = default.get("with_recommendation" if has_rec else "without")
+        why = None
+    entry = (doc.get("taxonomy") or {}).get(need, {})
+    return {
+        "code": need,
+        "label": entry.get("label"),
+        "invitation": entry.get("invitation"),
+        "why_this_classification": why,
+    }
 
 
 def load_schemas() -> dict[str, Any]:
@@ -222,9 +279,11 @@ def _station(
 ) -> dict[str, Any]:
     if kind not in STATION_KINDS:
         raise InterviewError(f"{station_id}: unknown station kind {kind!r}")
+    fact_id = source.split("::")[-1]
     station = {
         "id": station_id,
         "kind": kind,
+        "needs": _needs_of(kind, station_id, fact_id, bool(recommendation.get("present"))),
         "source": source,          # file + key, so every station is traceable to the repo
         "prompt": prompt,
         "what_we_built": built,
@@ -653,6 +712,32 @@ def check_live_conflicts(
     return problems
 
 
+def check_raised(raised: list[dict[str, Any]]) -> list[str]:
+    """Check items the reviewer raised themselves.
+
+    Deliberately permissive about SUBSTANCE and strict about USABILITY. It is not
+    this module's place to judge whether a raised concern is well founded — that
+    is the committee's. But an item with a title and no detail cannot be acted on
+    by anyone, and would sit in the record as a reproach nobody can answer.
+    """
+    problems = []
+    for index, item in enumerate(raised, 1):
+        kind = str(item.get("kind", "")).strip().upper()
+        if kind not in RAISED_KINDS:
+            problems.append(
+                f"raised item {index}: {kind!r} is not one of "
+                f"{', '.join(sorted(RAISED_KINDS))}."
+            )
+        if not (item.get("title") or "").strip():
+            problems.append(f"raised item {index} has no title.")
+        if len((item.get("detail") or "").split()) < 8:
+            problems.append(
+                f"raised item {index} ('{item.get('title', '')[:40]}') has too little detail to "
+                f"act on. Whoever picks this up will not have been in the room."
+            )
+    return problems
+
+
 def _norm(text: Any) -> str:
     return re.sub(r"\s+", " ", str(text)).strip().lower()
 
@@ -703,6 +788,7 @@ def compile_blueprint(
     responses: list[dict[str, Any]],
     stations: list[dict[str, Any]],
     sitting: str,
+    raised: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Turn captured answers into a proposed change set plus a draft minute.
 
@@ -754,9 +840,24 @@ def compile_blueprint(
             "stations_total": len(stations),
             "coverage": f"{len(responses)}/{len(stations)}",
             "unwalked": sorted(set(by_id) - {r.get("station") for r in responses}),
+            "raised_count": len(raised or []),
         },
         "changes": changes,
         "standing_constraints": constraints,
+        # Raised items are NOT changes. They do not resolve anything and they do
+        # not touch the design; they open work. Keeping them in their own section
+        # stops a question being mistaken for an answer.
+        "raised_by_the_reviewer": [
+            {
+                "kind": str(item.get("kind", "")).strip().upper(),
+                "title": item.get("title"),
+                "detail": item.get("detail"),
+                "where": item.get("act") or item.get("where"),
+                "raised_by": item.get("by"),
+                "status": "OPENS_WORK_NOT_A_DECISION",
+            }
+            for item in (raised or [])
+        ],
     }
 
 
@@ -802,6 +903,21 @@ def render_minute(blueprint: dict[str, Any]) -> str:
                 f"{constraint['constraint']}"
             )
         lines.append("")
+
+    if blueprint.get("raised_by_the_reviewer"):
+        lines += [
+            "## Raised in the room — not answers, but work opened",
+            "",
+            "These were not on the agenda. They were raised by the person walking the design, "
+            "which means the running order missed them. Each one needs an owner.",
+            "",
+        ]
+        for item in blueprint["raised_by_the_reviewer"]:
+            where = f" (at {item['where']})" if item.get("where") else ""
+            lines.append(f"### {item['kind']}: {item['title']}{where}")
+            lines.append("")
+            lines.append(item.get("detail") or "")
+            lines.append("")
 
     lines += [
         "## Reopening",
@@ -887,6 +1003,46 @@ def self_test() -> int:
         if not any("F028" in p for p in check_live_conflicts(brand, stations)):
             failures.append("a non-SQHN brand choice was accepted while F028 stands")
 
+    # --- what a stop needs from the person walking it ---------------------
+    codes = {s["needs"]["code"] for s in stations}
+    if len(codes) < 3:
+        failures.append(f"stops collapse into too few kinds of ask: {codes}")
+    for station in stations:
+        need = station["needs"]
+        if not need.get("code") or not need.get("label") or not need.get("invitation"):
+            failures.append(f"{station['id']}: incomplete statement of what it needs")
+    # a settled fact must never be badged as needing a decision
+    for station in stations:
+        if station["kind"] == "REVIEW_POINT" and station["needs"]["code"] != "CHALLENGE_IF_WRONG":
+            failures.append(f"{station['id']}: settled, but badged {station['needs']['code']}")
+    # a question only a person can answer must not be badged as our recommendation
+    knowledge = [s for s in stations if s["needs"]["code"] == "YOUR_KNOWLEDGE"]
+    if not knowledge:
+        failures.append("nothing is marked as needing her knowledge; the taxonomy is not biting")
+
+    # --- raising something we never asked about ---------------------------
+    good = [{"kind": "MISSING_DECISION", "title": "Supervision of the observership",
+             "detail": "Nobody has decided who supervises a participant on site, or what "
+                       "happens when the host supervisor is unavailable for a week."}]
+    if check_raised(good):
+        failures.append(f"a well-formed raised item was refused: {check_raised(good)}")
+    for bad, label in [
+        ([{"kind": "NONSENSE", "title": "x", "detail": "a b c d e f g h i j"}], "unknown kind"),
+        ([{"kind": "CONCERN", "title": "", "detail": "a b c d e f g h i j"}], "no title"),
+        ([{"kind": "CONCERN", "title": "x", "detail": "too short"}], "too little detail"),
+    ]:
+        if not check_raised(bad):
+            failures.append(f"a raised item with {label} was accepted")
+
+    blueprint_with_raised = compile_blueprint(
+        [{"station": stations[0]["id"], "response": "ACCEPT"}], stations, "self-test", good)
+    if blueprint_with_raised["blueprint"]["raised_count"] != 1:
+        failures.append("a raised item did not reach the blueprint")
+    if blueprint_with_raised["raised_by_the_reviewer"][0]["status"] != "OPENS_WORK_NOT_A_DECISION":
+        failures.append("a raised item was recorded as though it decided something")
+    if "not answers" not in render_minute(blueprint_with_raised).lower():
+        failures.append("the minute does not distinguish a raised item from an answer")
+
     # --- blueprint must never claim to be canon ---------------------------
     blueprint = compile_blueprint(
         [{"station": stations[0]["id"], "response": "ACCEPT", "by": "self-test"}],
@@ -960,7 +1116,8 @@ def main() -> int:
     if args.capture:
         captured = yaml.safe_load(Path(args.capture).read_text(encoding="utf-8"))
         responses = captured.get("responses", captured if isinstance(captured, list) else [])
-        problems = check_live_conflicts(responses, stations)
+        raised = captured.get("raised", []) if isinstance(captured, dict) else []
+        problems = check_live_conflicts(responses, stations) + check_raised(raised)
 
         out_dir = Path(args.out_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -977,7 +1134,7 @@ def main() -> int:
                 print(f"  CONFLICT  {problem}", file=sys.stderr)
             return 1
 
-        blueprint = compile_blueprint(responses, stations, args.sitting)
+        blueprint = compile_blueprint(responses, stations, args.sitting, raised)
         (out_dir / "blueprint.yaml").write_text(
             yaml.dump(blueprint, sort_keys=False, allow_unicode=True, width=100)
         )

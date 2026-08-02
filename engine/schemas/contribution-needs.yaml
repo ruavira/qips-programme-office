@@ -1,0 +1,114 @@
+# What each stop needs FROM the person walking it.
+#
+# WHY THIS EXISTS
+# ---------------
+# Dr. Oyewumi is not an external reviewer being shown a finished thing. She is
+# part of the team that will design, develop and deliver this programme. The
+# objective is not approval; it is that she understands the design deeply, can
+# see where the decisions are, and can shape them.
+#
+# The first version badged every stop as either "open" or "settled". That is a
+# REVIEW frame, and it tells a co-designer nothing about where she is actually
+# needed. Thirty-two open items presented as one flat category is a wall, not an
+# invitation — and it quietly misrepresents the work, because the items are not
+# the same kind of thing at all.
+#
+# They divide by what they need from her:
+#
+#   YOUR_KNOWLEDGE     Nobody here can find this out. It lives with her, with
+#                      SQHN, or with a body we have to ask. Research cannot close
+#                      it and pretending otherwise wastes her time.
+#
+#   YOUR_JUDGEMENT     We have no view, or the view we have is untested. Her
+#                      instinct is better than any comparison we could run —
+#                      whether a working consultant can find four hours a week is
+#                      the clearest example.
+#
+#   ARGUE_WITH_US      We have a recommendation with evidence behind it, and we
+#                      want it tested rather than accepted. Agreement that costs
+#                      her nothing is worth nothing.
+#
+#   DESIGN_WITH_US     Not built yet. Not a decision to take but a thing to make,
+#                      and better made by two people than handed over finished.
+#
+#   CHALLENGE_IF_WRONG Settled and built. Shown because no decision here is a
+#                      one-way door, and because a co-designer who cannot reopen
+#                      the settled parts is only being consulted on the edges.
+#
+# The default is DERIVED from what kind of stop it is and whether a recommendation
+# exists. Overrides below are for the cases where the derivation is wrong —
+# chiefly open questions, some of which need a person and some of which need a
+# decision, and the difference matters to whoever is reading.
+
+taxonomy:
+  YOUR_KNOWLEDGE:
+    label: We cannot find this out
+    invitation: >-
+      This one is yours. It is not in any literature and no amount of research
+      here will produce it — it lives with you, with SQHN, or with a body we have
+      to go and ask.
+  YOUR_JUDGEMENT:
+    label: Your judgement beats ours
+    invitation: >-
+      We either have no view or an untested one. You know this setting and these
+      people better than any comparison we could run.
+  ARGUE_WITH_US:
+    label: We recommend this — argue with it
+    invitation: >-
+      There is a recommendation here with the evidence and the reasoning behind
+      it. It is put forward to be tested, not accepted. If it is wrong, the
+      cheapest moment to find out is now.
+  DESIGN_WITH_US:
+    label: Not built yet
+    invitation: >-
+      This has not been designed. It is a thing to make rather than a decision to
+      take, and it will be better made by two people than handed over finished.
+  CHALLENGE_IF_WRONG:
+    label: Settled — challenge it if you disagree
+    invitation: >-
+      This is decided and built. It is shown because no decision here is a
+      one-way door. Challenging it costs nothing and needs no justification
+      beyond your reason.
+
+# Default by kind. `with_recommendation` applies when a recommendation exists for
+# that stop; `without` when none does.
+defaults:
+  PARAMETER:            {with_recommendation: ARGUE_WITH_US, without: YOUR_JUDGEMENT}
+  PROPOSED_FACT:        {with_recommendation: ARGUE_WITH_US, without: YOUR_JUDGEMENT}
+  DELIBERATELY_ABSENT:  {with_recommendation: ARGUE_WITH_US, without: YOUR_JUDGEMENT}
+  ASSUMPTION:           {with_recommendation: ARGUE_WITH_US, without: YOUR_JUDGEMENT}
+  OPEN_QUESTION:        {with_recommendation: ARGUE_WITH_US, without: YOUR_KNOWLEDGE}
+  NOT_ESTABLISHED:      {with_recommendation: DESIGN_WITH_US, without: DESIGN_WITH_US}
+  REVIEW_POINT:         {with_recommendation: CHALLENGE_IF_WRONG, without: CHALLENGE_IF_WRONG}
+
+# Where the derivation gets it wrong. Each override says why, so that the reason
+# survives the person who wrote it.
+overrides:
+  Q005:
+    needs: YOUR_JUDGEMENT
+    why: >-
+      Whether to engage QAI as a partner is a strategic choice for the team, not
+      a fact anyone can look up.
+  Q009:
+    needs: DESIGN_WITH_US
+    why: >-
+      The retention period and the data-protection contact have to be decided and
+      then built into how the programme handles records. Nobody holds the answer
+      already.
+  Q010:
+    needs: DESIGN_WITH_US
+    why: >-
+      What the programme is called is a naming decision to be made together. It is
+      not knowledge sitting with somebody.
+  Q002:
+    needs: YOUR_KNOWLEDGE
+    why: >-
+      The certificate title and what recognition it carries depend on what SQHN
+      can actually award and what the regulators will accept. That is knowledge
+      held by SQHN and by the awarding bodies.
+  ST-F017:
+    needs: DESIGN_WITH_US
+    why: >-
+      Brand identity has no recommendation, but not for want of research — it is
+      blocked by the decision on naming partners. Presenting it as a judgement
+      call would misrepresent why it is open.

@@ -206,6 +206,27 @@ button.s{font:inherit;font-size:13.5px;padding:8px 17px;border-radius:6px;cursor
   border:1px solid var(--line);background:var(--card);color:var(--muted)}
 .warnbar{background:var(--warn-bg);color:var(--warn);padding:9px 24px;text-align:center;
   font-size:13.5px;border-bottom:1px solid #f0dede}
+.needs{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 9px;
+  border-radius:4px;text-transform:uppercase;white-space:nowrap}
+.n-YOUR_KNOWLEDGE{background:#f3ecfa;color:#5b3d86}
+.n-YOUR_JUDGEMENT{background:#fdf3e8;color:#b4530a}
+.n-ARGUE_WITH_US{background:#eef3f9;color:#1f4e79}
+.n-DESIGN_WITH_US{background:#fdf0f0;color:#8a2b2b}
+.n-CHALLENGE_IF_WRONG{background:#eef6f1;color:#2f6b4f}
+.invite{font-size:14.5px;color:var(--muted);margin-top:10px;padding-left:12px;
+  border-left:2px solid var(--line);font-style:italic}
+.raise{margin:22px 0 6px;padding:16px 18px;border:1px dashed var(--line);border-radius:9px;
+  background:var(--card)}
+.raise h4{font-size:14.5px;margin-bottom:5px}
+.raise p{font-size:13.5px;color:var(--muted);margin-bottom:10px}
+.raise .kinds{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+.raised-item{background:#fdf0f0;border-left:3px solid var(--warn);padding:10px 14px;
+  border-radius:0 6px 6px 0;margin:8px 0;font-size:14px}
+.raised-item b{color:var(--warn)}
+.legend{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:16px 18px;
+  margin-bottom:26px}
+.legend h3{font-size:14px;margin-bottom:9px}
+.legend div{font-size:13.5px;color:var(--muted);margin:6px 0;display:flex;gap:10px;align-items:baseline}
 @media(max-width:860px){.wrap{flex-direction:column}nav{width:100%;flex:none;position:static;
   height:auto;border-right:none;border-bottom:1px solid var(--line)}main{padding:26px 20px 130px}}
 @media print{nav,.bar,.ctl,.warnbar{display:none}.body{display:block!important}}
@@ -254,7 +275,7 @@ function save(){
   const m=missing();
   if(m.length && !confirm(m.length+' response(s) need a reason and do not have one:\\n\\n'+m.join('\\n')
      +'\\n\\nA change without a reason cannot be compiled. Export anyway as a draft?')) return;
-  const out={sitting:DATA.sitting,generated_from:DATA.commit,
+  const out={sitting:DATA.sitting,generated_from:DATA.commit,raised:RAISED,
     responses:Object.entries(S).filter(([i,v])=>v.response).map(([id,v])=>({
       station:id,response:v.response,chosen_option:v.choice||null,reason:v.reason||''}))};
   const b=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
@@ -268,6 +289,7 @@ function load(ev){
   r.onload=()=>{try{
     const d=JSON.parse(r.result);
     (d.responses||[]).forEach(x=>{S[x.station]={response:x.response,reason:x.reason||'',choice:x.chosen_option||''}});
+    RAISED.length=0; (d.raised||[]).forEach(r=>RAISED.push(r));
     render(); alert('Restored '+(d.responses||[]).length+' response(s).');
   }catch(e){alert('That file could not be read: '+e.message)}};
   r.readAsText(f);
@@ -280,8 +302,11 @@ function stopHTML(s){
   h+='<div class="head" onclick="toggle(\\''+s.id+'\\')">';
   h+='<span class="badge '+(open?'b-open':'b-set')+'">'+(open?'open':'settled')+'</span>';
   h+='<span class="q">'+esc(s.prompt)+'</span>';
+  if(s.needs&&s.needs.code) h+='<span class="needs n-'+s.needs.code+'">'+esc(s.needs.label||'')+'</span>';
   h+='<span class="tick">'+esc(st.response||'')+'</span></div>';
   h+='<div class="body">';
+  if(s.needs&&s.needs.invitation) h+='<div class="invite">'+esc(s.needs.invitation)+
+    (s.needs.why_this_classification?' '+esc(s.needs.why_this_classification):'')+'</div>';
   h+='<div class="field"><div class="k">What is built</div><div class="v">'+esc(s.what_we_built)+'</div></div>';
   if(s.why_held_open) h+='<div class="field"><div class="k">Why this is held open</div><div class="v">'+esc(s.why_held_open)+'</div></div>';
   if(s.options&&s.options.length){
@@ -335,6 +360,76 @@ function stopHTML(s){
   return h;
 }
 
+const RAISED=[];
+const RAISE_KINDS=[['MISSING_DECISION','A decision nobody has identified'],
+                   ['MIS_FRAMED','We asked, but it is the wrong question'],
+                   ['WRONG_ASSUMPTION','Something treated as given that is not'],
+                   ['CONCERN','Not a decision, but put it on the record']];
+const draft={};
+
+function raiseHTML(actId, actTitle){
+  const mine=RAISED.filter(r=>r.act===actId);
+  const d=draft[actId]||{};
+  let h='<div class="raise" id="raise-'+actId+'" data-act="'+actId+'">';
+  h+='<h4>Anything we did not ask about?</h4>';
+  h+='<p>Every question above came from something we already knew was open. If a decision is '+
+     'missing, or one of these is framed wrongly, this is where to say so. It goes into the '+
+     'record as work to open, not as an answer.</p>';
+  h+='<div class="kinds">';
+  RAISE_KINDS.forEach(k=>{
+    h+='<button class="r raise-kind'+(d.kind===k[0]?' sel':'')+'" data-kind="'+k[0]+'" title="'+
+       esc(k[1])+'">'+k[0].replace(/_/g,' ').toLowerCase()+'</button>';
+  });
+  h+='</div>';
+  h+='<textarea class="raise-title" style="min-height:34px" placeholder="In a line: what is '+
+     'missing or wrong">'+esc(d.title||'')+'</textarea>';
+  h+='<textarea class="raise-detail" style="margin-top:7px" placeholder="Enough detail that '+
+     'someone who was not in the room can pick it up">'+esc(d.detail||'')+'</textarea>';
+  h+='<div style="margin-top:9px"><button class="r raise-add">Add to the record</button></div>';
+  mine.forEach(r=>{
+    h+='<div class="raised-item"><b>'+esc(r.kind.replace(/_/g,' ').toLowerCase())+'</b> &mdash; '+
+       esc(r.title)+'<div style="color:var(--muted);margin-top:4px">'+esc(r.detail)+'</div></div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+// Delegated, deliberately. Building these controls with inline onclick handlers
+// meant hand-escaping quotes through two layers of string generation, and one
+// lost backslash produced raiseKind(''+actId+'') — a page that rendered and did
+// nothing. Data attributes plus one listener removes the whole class of error.
+document.addEventListener('click', ev=>{
+  const box=ev.target.closest('.raise'); if(!box) return;
+  const act=box.dataset.act;
+  draft[act]=draft[act]||{};
+  if(ev.target.classList.contains('raise-kind')){
+    draft[act].kind=ev.target.dataset.kind;
+    box.querySelectorAll('.raise-kind').forEach(b=>b.classList.remove('sel'));
+    ev.target.classList.add('sel');
+    return;
+  }
+  if(ev.target.classList.contains('raise-add')){
+    draft[act].title=(box.querySelector('.raise-title').value||'').trim();
+    draft[act].detail=(box.querySelector('.raise-detail').value||'').trim();
+    const d=draft[act];
+    if(!d.kind){alert('Choose what kind of thing this is first.');return}
+    if(!d.title){alert('It needs a line saying what is missing or wrong.');return}
+    if(d.detail.split(/\s+/).filter(Boolean).length<8){
+      alert('It needs more detail. Whoever picks this up will not have been in the room.');return}
+    RAISED.push({act:act,kind:d.kind,title:d.title,detail:d.detail});
+    delete draft[act];
+    render();
+    const el=document.getElementById('raise-'+act); if(el) el.scrollIntoView({block:'center'});
+  }
+});
+
+document.addEventListener('input', ev=>{
+  const box=ev.target.closest('.raise'); if(!box) return;
+  const act=box.dataset.act; draft[act]=draft[act]||{};
+  if(ev.target.classList.contains('raise-title')) draft[act].title=ev.target.value;
+  if(ev.target.classList.contains('raise-detail')) draft[act].detail=ev.target.value;
+});
+
 function render(){
   let nav='',body='';
   // The catch-all act renders only when it has caught something, so the act count
@@ -343,6 +438,15 @@ function render(){
   acts.forEach((a,i)=>{
     nav+='<a href="#'+a.id+'" id="nav-'+a.id+'">'+esc(a.title)+'<span class="n"></span></a>';
     body+='<section class="act" id="'+a.id+'">';
+    if(i===0){
+      body+='<div class="legend"><h3>What each stop is asking of you</h3>';
+      const seen={};
+      DATA.acts.forEach(x=>(x.stops||[]).forEach(s=>{if(s.needs&&s.needs.code)seen[s.needs.code]=s.needs;}));
+      ['YOUR_KNOWLEDGE','YOUR_JUDGEMENT','ARGUE_WITH_US','DESIGN_WITH_US','CHALLENGE_IF_WRONG']
+        .forEach(c=>{if(seen[c])body+='<div><span class="needs n-'+c+'">'+esc(seen[c].label)+
+          '</span><span>'+esc(seen[c].invitation)+'</span></div>';});
+      body+='</div>';
+    }
     body+='<div class="eyebrow">Act '+(i+1)+' of '+acts.length+'</div>';
     body+='<h2>'+esc(a.title)+'</h2>';
     if(a.lede)body+='<p class="lede">'+esc(a.lede)+'</p>';
@@ -353,6 +457,7 @@ function render(){
       body+='</div>';
     }
     a.stops.forEach(s=>body+=stopHTML(s));
+    body+=raiseHTML(a.id, a.title);
     body+='</section>';
   });
   document.getElementById('nav').innerHTML=nav;
