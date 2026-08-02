@@ -65,6 +65,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 FACTS_PATH = ROOT / "canon/facts.yaml"
 QUESTIONS_PATH = ROOT / "canon/open-questions.yaml"
+RECOMMENDATIONS_PATH = ROOT / "engine/schemas/recommendations.yaml"
 SCHEMA_DIR = ROOT / "engine/schemas"
 
 # The four things a committee member can do at a station. ACCEPT takes the
@@ -129,6 +130,23 @@ def load_questions() -> dict[str, Any]:
     return {q["id"]: q for q in _load_yaml(QUESTIONS_PATH)["questions"]}
 
 
+def load_recommendations() -> dict[str, Any]:
+    """Recommendations, keyed by what they are about.
+
+    Deliberately NOT in canon. A change to canon/ requires a recorded CCC verdict,
+    which would mean asking the committee to approve the research meant to inform
+    them before they could read it. It is also the wrong shape: canon holds what
+    is true, and a recommendation is by definition not yet true. Keeping them
+    apart means research can be corrected without a sitting, and a recommendation
+    can never be mistaken for a decision because it is not in the file that holds
+    decisions.
+    """
+    if not RECOMMENDATIONS_PATH.is_file():
+        return {}
+    doc = yaml.safe_load(RECOMMENDATIONS_PATH.read_text(encoding="utf-8")) or {}
+    return {r["target"]: r for r in doc.get("recommendations", []) if r.get("target")}
+
+
 def load_schemas() -> dict[str, Any]:
     out: dict[str, Any] = {}
     for path in sorted(SCHEMA_DIR.glob("*.yaml")):
@@ -154,14 +172,17 @@ def _options_from_range(range_text: str) -> list[str]:
     return [part.strip() for part in range_text.split("|") if part.strip()]
 
 
-def _recommendation_of(node: dict[str, Any]) -> dict[str, Any]:
+def _recommendation_of(node: dict[str, Any], *keys: str) -> dict[str, Any]:
     """Read a structured recommendation block, or report its absence honestly.
 
     A recommendation is research output. It is NOT a decision and this function
     never returns one that claims to be: `binding` is always False, and the status
     string says so in words that survive being copied into a slide.
     """
-    block = node.get("recommendation")
+    registry = load_recommendations()
+    block = next((registry[k] for k in keys if k in registry), None)
+    if block is None:
+        block = node.get("recommendation")
     if not isinstance(block, dict):
         return {
             "present": False,
@@ -183,7 +204,9 @@ def _recommendation_of(node: dict[str, Any]) -> dict[str, Any]:
         "comparators": block.get("comparators", []),
         "evidence": block.get("evidence", []),
         "confidence": block.get("confidence"),
+        "confidence_basis": block.get("confidence_basis"),
         "what_would_change_it": block.get("what_would_change_it"),
+        "owner": block.get("owner"),
     }
 
 
@@ -252,7 +275,7 @@ def build_stations() -> list[dict[str, Any]]:
                     )
                 ),
                 options=_options_from_range(param.get("range", "")),
-                recommendation=_recommendation_of(param),
+                recommendation=_recommendation_of(param, fact_id, f"ST-{fact_id}"),
                 why_held_open=param.get("why"),
                 what_it_gates=param.get("gates"),
                 what_it_does_not_gate=param.get("does_not_gate"),
@@ -287,7 +310,7 @@ def build_stations() -> list[dict[str, Any]]:
                     "build does not assume it."
                 ),
                 options=[],
-                recommendation=_recommendation_of(fact),
+                recommendation=_recommendation_of(fact, fact_id, f"ST-{fact_id}"),
                 deferral_reason=fact.get("deferral_reason"),
                 owner=fact.get("owner"),
                 source_of_truth=fact.get("source"),
@@ -314,7 +337,7 @@ def build_stations() -> list[dict[str, Any]]:
                     "never so it can be rubber-stamped."
                 ),
                 options=[],
-                recommendation=_recommendation_of(fact),
+                recommendation=_recommendation_of(fact, fact_id, f"ST-{fact_id}"),
                 settled_on=fact.get("ratified_on") or fact.get("established"),
                 owner=fact.get("owner"),
                 source_of_truth=fact.get("source"),
@@ -342,7 +365,7 @@ def build_stations() -> list[dict[str, Any]]:
                     "guessed."
                 ),
                 options=[],
-                recommendation=_recommendation_of(question),
+                recommendation=_recommendation_of(question, qid, f"ST-{qid}"),
                 blocking=question.get("blocking", False),
                 blocks=question.get("blocks", []),
                 due=question.get("due"),
@@ -397,7 +420,7 @@ def _stations_from_schema(filename: str, doc: Any) -> list[dict[str, Any]]:
                             "rather than presented as established."
                         ),
                         options=[],
-                        recommendation=_recommendation_of(item),
+                        recommendation=_recommendation_of(item, f"ST-{stem}-{uid}"),
                         status=item.get("status"),
                         tested_by=item.get("tested_by"),
                         risk=item.get("risk"),
@@ -422,7 +445,8 @@ def _stations_from_schema(filename: str, doc: Any) -> list[dict[str, Any]]:
                         ),
                         options=[],
                         recommendation=_recommendation_of(
-                            item if isinstance(item, dict) else {}
+                            item if isinstance(item, dict) else {},
+                            f"ST-{stem}-{_slug(parent)}-{index + 1}",
                         ),
                     )
                 )
@@ -441,7 +465,7 @@ def _stations_from_schema(filename: str, doc: Any) -> list[dict[str, Any]]:
                         ),
                         built=str(reason),
                         options=["keep absent", "set it now", "defer with a date"],
-                        recommendation=_recommendation_of({}),
+                        recommendation=_recommendation_of({}, f"ST-{stem}-ABSENT-{_slug(absent_key)}"),
                     )
                 )
 

@@ -294,7 +294,10 @@ function stopHTML(s){
     if(r.rationale)h+='<div class="v" style="margin-top:6px">'+esc(r.rationale)+'</div>';
     (r.comparators||[]).forEach(c=>h+='<div class="ev">Comparator: '+esc(c)+'</div>');
     (r.evidence||[]).forEach(e=>h+='<div class="ev">Evidence: '+esc(e)+'</div>');
-    if(r.confidence)h+='<div class="ev">Confidence: '+esc(r.confidence)+'</div>';
+    if(r.confidence)h+='<div class="ev">Confidence: '+esc(r.confidence)+
+      (r.confidence_basis?' &mdash; '+esc(r.confidence_basis):'')+'</div>';
+    if(r.what_would_change_it)h+='<div class="ev"><b>What would change this:</b> '+esc(r.what_would_change_it)+'</div>';
+    if(r.owner)h+='<div class="ev">Owner: '+esc(r.owner)+'</div>';
     h+='<div class="disc">A recommendation, not a decision. Only the committee decides.</div></div>';
   } else if(open){
     h+='<div class="rec"><div class="k">No recommendation yet</div><div class="v">'+

@@ -1,0 +1,231 @@
+# Recommendations put to the CCC — research output, NOT canon.
+#
+# WHY THIS IS A SEPARATE FILE
+# ---------------------------
+# A recommendation cannot live in canon/facts.yaml. AGENTS.md requires a recorded
+# CCC verdict for any change to canon/, which would mean asking the committee to
+# approve the very research meant to inform them before they could read it. That
+# is a deadlock, and it is also the wrong shape: canon holds what is TRUE, and a
+# recommendation is by definition not yet true.
+#
+# So recommendations live here, keyed to the thing they are about, and
+# engine/decision_interview.py joins them at read time. Consequences, all wanted:
+#
+#   - research can be improved, corrected or replaced without a committee sitting;
+#   - a recommendation can never be mistaken for a decision, because it is not in
+#     the file that holds decisions;
+#   - the committee sees the recommendation and the fact side by side without
+#     either contaminating the other.
+#
+# EVERY ENTRY MUST CARRY EVIDENCE. engine/decision_interview.py hard-fails a
+# recommendation with no evidence or no rationale — an unevidenced recommendation
+# is an opinion wearing a recommendation's clothes.
+#
+# ABSENCE IS HONEST. A target with no entry here is shown to the committee as an
+# open question rather than dressed up as a proposal, and appears in the research
+# queue. Do not add a weak entry to empty the queue; the queue is the point.
+
+recommendations:
+
+  - target: F024
+    owner: W16
+    option: >-
+      LMIC individual rung at USD 500, payable as four quarterly instalments of
+      USD 125 with progression gated on payment. Published openly as a ladder by
+      World Bank income band: institutional per seat USD 900 (−15% at 3 seats,
+      −25% at 10), international USD 1,500, hardship USD 250 at capped places.
+      Priced in USD, published in three local currencies, revised per cohort.
+    rationale: >-
+      Three markets, three currencies, three salary systems — and the committed
+      self-pay bands converge, because in each case the figure anchors to the same
+      thing: one specialist examination fee. Nigeria USD 294–661 with a ceiling
+      near USD 600 at WACP fellowship-exam parity; Ghana USD 530–970; Pakistan
+      USD 270–540. USD 500 is the only point inside all three bands and under all
+      three ceilings.
+      Not lower, because below roughly USD 400 the programme sits at IHI Open
+      School subscription level and the Decagon precedent bites: their cheaper hybrid
+      failed specifically because it was cheap and demanding, with learners
+      reluctant to choose the more affordable option. In this market, low price
+      plus high time demand reads as low value. Discount by income tier and by
+      volume, never by format.
+      Not higher, because above roughly USD 700 the programme converts from a
+      self-pay product into an institutional sale in all three markets — a
+      six-to-twelve-month cycle the January 2027 timetable does not support.
+      Instalments are the product, not a concession. GTBank caps naira-card
+      international transactions at USD 1,000 per quarter, and Ghana's average
+      mobile money transaction is about USD 33 — a single USD 500 payment sits
+      outside the normal envelope of the rails these participants actually use.
+    comparators:
+      - "West African College of Physicians: the same exam priced USD 625 / ₦812,500 / GHC 8,125 — the template for publishing one USD price in three local currencies, and from this market"
+      - "ISQua: publishes rather than buries its income-band ladder, at a 1:3 LIC-to-HIC ratio"
+      - "IHI: 15% discount at 3 seats, 19% at 10 — the observed industry band"
+      - "IHI Open School: USD 399 for 38 self-paced units of study — the floor below which this programme loses its position"
+      - "Decagon: a cheaper hybrid at ₦550,000 that failed because it was cheap and demanding"
+      - "University of Ghana MPH: 60% of it is USD 1,015 — Ghana's hard ceiling"
+    evidence:
+      - workstreams/W16/working/W16-faculty-economics-and-pricing-recommendation-2026-08-01.md
+      - workstreams/W16/working/run-001-evidence-register.md
+    confidence: HIGH
+    confidence_basis: >-
+      Three independent market anchors converge on one figure, each traced to a
+      published fee. The weakest link is the Pakistan band, which rests on fewer
+      sources than the Nigerian and Ghanaian ones.
+    what_would_change_it: >-
+      A resolved F020 that drops Pakistan removes the binding lower ceiling and
+      would permit a higher individual rung. Verified indemnity above USD 75
+      triggers F026 and changes the whole arithmetic. Evidence that employers
+      rather than individuals will carry the fee converts this to an institutional
+      sale, which is a different price and a different business.
+
+  - target: ST-admissions-rubric-ABSENT-PRICE
+    owner: W16
+    option: >-
+      Keep price absent from the admissions instrument entirely, and publish it on
+      the price page instead. Resolve it as F024, not here.
+    rationale: >-
+      A fee printed on an application form is read as a condition of applying, and
+      the merit score explicitly does not consider ability to pay — an invariant
+      enforced as a property test. Putting the two on the same instrument invites
+      exactly the inference the invariant exists to prevent. The deliberate absence
+      should be ratified, not filled.
+    comparators:
+      - "The admissions rubric already excludes sponsorship and payer from scoring, tested by perturbation on all 18 calibration cases"
+    evidence:
+      - engine/schemas/admissions-rubric.yaml
+      - engine/schemas/application-form.yaml
+    confidence: HIGH
+    what_would_change_it: >-
+      A decision to charge an application fee, which would be a new fact and a
+      separate decision with its own equity analysis.
+
+  - target: F025
+    owner: W16
+    option: >-
+      Hold the target at 40, floor 24, ceiling 64, and plan only in multiples of
+      eight.
+    rationale: >-
+      Coaching runs in groups of eight and each group is a stepped cost rather
+      than a smooth one, so the economically clean sizes are 24, 32, 40, 48, 56
+      and 64. A cohort off a multiple of eight pays for a coaching group it does
+      not fill. The published break-even evidence puts the fixed-cost floor far
+      below this range, so the risk sits in the allowance-and-travel-heavy
+      variable block rather than the fixed block — which means size is a delivery
+      and quality question more than a survival one.
+    comparators:
+      - "The only published health-professional break-even analysis found: 7 participants web-delivered"
+      - "The only published institutional viability rule found: 15 participants"
+    evidence:
+      - workstreams/W16/working/W16-faculty-economics-and-pricing-recommendation-2026-08-01.md
+      - workstreams/W16/working/W16-self-sustainability-mechanics-2026-08-01.md
+    confidence: MEDIUM_HIGH
+    confidence_basis: >-
+      The multiple-of-eight arithmetic is certain. The target of 40 is a judgement
+      about deliverability in a first cohort, not a figure the evidence forces.
+    what_would_change_it: >-
+      Observed coach review time. UA3 assumes eight artefacts can be reviewed
+      meaningfully in one call and is untested; if it fails, group size falls and
+      every clean cohort size moves with it.
+
+  - target: F029
+    owner: W05
+    option: >-
+      In-kind only for cohort 1, with the package designed deliberately rather
+      than left as whatever is convenient — and the position revisited before
+      cohort 2 on observed attrition.
+    rationale: >-
+      Money is a weak lever for faculty retention, and that finding is measured
+      rather than asserted. Where the attrition actually sits is in time cost, and
+      first-year faculty are the most fragile group. This design has a specific
+      and rising time cost: from month 2 onward the live session requires reading
+      the whole cohort's prior artefacts, which is roughly four hours a month that
+      no honorarium at a plausible rate would compensate.
+      So the lever that matters is protecting faculty time and making the
+      non-monetary package real — which is also the only option that does not
+      depend on a price decision that has not been taken.
+    comparators:
+      - "Published faculty-retention evidence: time, not payment, is the largest single driver of teaching-faculty attrition"
+    evidence:
+      - workstreams/W16/working/W16-faculty-economics-and-pricing-recommendation-2026-08-01.md
+      - workstreams/W05/working/faculty-appointment-and-consent-pack.md
+    confidence: MEDIUM
+    confidence_basis: >-
+      The direction is well evidenced. Whether in-kind alone will recruit twelve
+      consenting faculty plus backups in this specific market is untested, and
+      W05-01 condition 3 already flags that twelve consented gives zero backups.
+    what_would_change_it: >-
+      Failure to fill coverage slots by the appointment deadline. A named faculty
+      member declining specifically on remuneration grounds would be the strongest
+      single signal, and should be recorded as such rather than absorbed.
+
+  - target: F007
+    owner: W04
+    option: >-
+      Own country rather than own city for cohort 1 — a qualified site anywhere in
+      the participant's own country, with travel and accommodation met by the
+      participant or their sponsor and stated plainly before application.
+    rationale: >-
+      This is not an administrative parameter. In the closest African
+      blended-training costing study the in-person component was 67–87% of total
+      implementation cost, and per diems, accommodation and travel were 30–40% of
+      implementer direct cost. It is the largest single determinant of whether the
+      economics work.
+      Own-city is the cheapest but will not yield enough qualified sites against a
+      Host Site Standard written from programme objectives. Cross-border adds
+      visa, indemnity-jurisdiction and cost exposure that no part of the design
+      needs. Own-country is the only option that keeps the standard intact without
+      importing the cost and legal surface of international travel.
+    comparators:
+      - "Closest African blended-training costing study: in-person 67–87% of implementation cost; per diems, accommodation and travel 30–40% of implementer direct cost"
+    evidence:
+      - workstreams/W16/working/W16-self-sustainability-mechanics-2026-08-01.md
+    confidence: MEDIUM
+    confidence_basis: >-
+      The cost evidence is strong and the direction follows from it. What is NOT
+      established is how many sites in each country actually meet the Host Site
+      Standard — and if that number is too small, own-country becomes own-city by
+      accident.
+    what_would_change_it: >-
+      A site census against the Host Site Standard. Q001 indemnity quotes, which
+      are the one zero left in the financial model, could also make cross-border
+      untenable outright rather than merely expensive.
+
+  - target: F020
+    owner: W01
+    option: >-
+      Nigeria only for cohort 1, with Ghana designed for and admitted in cohort 2.
+    rationale: >-
+      Country-agnostic in design is not country-agnostic in recognition, and the
+      recognition differences are commercial and structural rather than
+      administrative. Ghana's CPD technical committees sit only three times a year,
+      which puts the last usable sitting before a January 2027 start in October
+      2026 and leaves almost no margin. Ghana's allied-health regulator takes a
+      share of gross proceeds that is not priced into F024. Pakistan has no
+      operating national CPD scheme and nothing awarded for asynchronous
+      e-learning, so it cannot carry recognition for cohort 1 at all.
+      Nigeria-only also relaxes the country deadline from 1 September to 9 October,
+      which buys five weeks on the most time-pressured decision in the programme.
+      The design does not change — the adaptation points are already parameters, so
+      adding Ghana later is a substitution rather than a redesign.
+    comparators:
+      - "Ghana Pharmacy Council CPD Technical Committee: sits in February, June and October only"
+      - "Ghana AHPC: 25–50% of gross proceeds"
+      - "Nigeria NMCN: 5% of total income"
+      - "Pakistan CPSP Joint Providership: limited to institutes of the country, and awards nothing for asynchronous e-learning"
+      - "No Nigerian body currently accredits CPD for health managers or non-clinical quality professionals — a core part of the intended audience"
+    evidence:
+      - workstreams/W03/working/W03-cpd-lead-times-synthesis-2026-08-02.md
+      - workstreams/W03/working/W03-cpd-lead-times-nigeria-2026-08-02.md
+      - workstreams/W03/working/W03-cpd-lead-times-ghana-2026-08-02.md
+      - workstreams/W03/working/W03-cpd-lead-times-pakistan-2026-08-02.md
+    confidence: MEDIUM
+    confidence_basis: >-
+      The regulatory findings are solid and each carries a live source. The
+      recommendation itself trades reach for deliverability, and that trade is a
+      committee judgement rather than a research finding — a committee willing to
+      accept a thinner Ghanaian recognition route could reasonably choose
+      otherwise.
+    what_would_change_it: >-
+      A written ruling from a Ghanaian regulator that live synchronous sessions
+      sit outside the online cap would materially improve Ghana's case. So would a
+      decision that cohort 1 need not carry formal CPD recognition at all, which
+      would remove the binding constraint entirely.
