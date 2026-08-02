@@ -265,6 +265,7 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
 .doc .stopwrap{border-top:1px solid var(--line);padding-top:22px;margin-top:22px}
 .warnbar{background:var(--open-soft);color:var(--open);padding:9px 24px;text-align:center;
   font-size:13px}
+.warnbar.nosave{background:var(--warn-soft);color:var(--warn);font-weight:600}
 /* Mobile is not a smaller desktop. Two things broke there and both were only
    visible in a narrow viewport: the needs badge sat beside the heading and ran
    off the right edge, and the navigation wrapped so that Back and Next landed on
@@ -299,17 +300,45 @@ function answered(){return Object.values(S.answers).filter(v=>v&&v.response).len
    the reviewer download a file. That was the wrong call once pausing and coming
    back became a requirement: losing an hour of someone's thinking costs far more
    than the tidiness of avoiding browser storage. Autosave is primary now; the
-   file export stays, because storage is per-browser and she may want to send it. */
+   file export stays, because storage is per-browser and she may want to send it.
+
+   Storage is not always available. Private windows, "block all cookies", and some
+   browsers' handling of pages opened straight from disk all refuse it. The first
+   version of this caught the exception and carried on, which is the worst
+   possible behaviour: the opening page PROMISED that answers save themselves, and
+   then an hour of work disappeared on reload with nothing having gone visibly
+   wrong. A page that cannot keep a promise must stop making it. */
+function storageWorks(){
+  try{
+    const probe='__qips_probe__';
+    localStorage.setItem(probe,'1');
+    const back=localStorage.getItem(probe);
+    localStorage.removeItem(probe);
+    return back==='1';
+  }catch(e){return false}
+}
+let CAN_SAVE=storageWorks();
+
+function announceNoAutosave(){
+  const bar=document.getElementById('nosave');
+  if(bar)bar.style.display='block';
+}
 function persist(){
+  if(!CAN_SAVE)return;
   try{
     localStorage.setItem(KEY,JSON.stringify({answers:S.answers,raised:S.raised,
       act:S.act,stop:S.stop,mode:S.mode,at:new Date().toISOString()}));
     const el=document.getElementById('saved');
     if(el){el.classList.add('on');clearTimeout(window._st);
       window._st=setTimeout(function(){el.classList.remove('on')},1400);}
-  }catch(e){}
+  }catch(e){
+    // Storage worked at startup and has stopped — a full quota, most likely.
+    // Silence here would be the same failure as before, one hour later.
+    CAN_SAVE=false;announceNoAutosave();render();
+  }
 }
 function restore(){
+  if(!CAN_SAVE)return null;
   try{const raw=localStorage.getItem(KEY);return raw?JSON.parse(raw):null}catch(e){return null}
 }
 
@@ -391,7 +420,10 @@ function screenWelcome(){
   h+='</div></div>';
   h+='<div class="card"><h3>How this works</h3><ul class="opts">'+
      '<li>'+n+' stops across '+acts().length+' parts. Most people take it in more than one sitting.</li>'+
-     '<li>Your answers save themselves. Close the tab and come back &mdash; it resumes where you stopped.</li>'+
+     (CAN_SAVE
+       ?'<li>Your answers save themselves. Close the tab and come back &mdash; it resumes where you stopped.</li>'
+       :'<li><b>This browser will not let the page save on its own.</b> Use <b>Save a copy</b> '+
+        'before you close the tab, and <b>Load a copy</b> to pick it up again. Everything else works normally.</li>')+
      '<li>You can go back and change anything, at any point.</li>'+
      '<li>Prefer to talk? Every box has a microphone.</li>'+
      '<li>Nothing you do here changes the programme by itself. It becomes a proposal a person reviews.</li>'+
@@ -708,6 +740,7 @@ document.addEventListener('keydown',function(ev){
 });
 
 (function(){
+  if(!CAN_SAVE)announceNoAutosave();
   const saved=restore();
   if(saved&&(Object.keys(saved.answers||{}).length+(saved.raised||[]).length)>0){
     S.answers=saved.answers||{};S.raised=saved.raised||[];
@@ -1165,6 +1198,8 @@ part by part, stopping wherever a decision is still open.">
 {head_extra}
 <style>{CSS}{SHELL_CSS}</style></head><body>
 <div class="warnbar">A draft for discussion. Nothing here is decided, published or final.</div>
+<div class="warnbar nosave" id="nosave" style="display:none">This browser will not let the page
+save your progress on its own. Use <b>Save a copy</b> before you close the tab.</div>
 <div class="top"><div class="inner">
   <div class="brand">{TITLE}<span>Cohort 1 &middot; SQHN and Partners</span></div>
   <div class="bar"><i id="prog"></i></div>
@@ -1289,6 +1324,25 @@ def self_test() -> int:
     # copy — so the export must survive alongside it.
     if "journey_fingerprint" not in html_out:
         failures.append("responses can be exported without the fingerprint that makes them readable")
+
+    # Storage is not always available: private windows, "block all cookies", and
+    # some browsers' handling of a page opened straight from disk all refuse it.
+    # The first version caught the exception and carried on, which is the worst
+    # possible behaviour — the opening page promised that answers save themselves
+    # and then an hour of work vanished on reload with nothing visibly wrong.
+    # A page that cannot keep the promise must stop making it, visibly.
+    for marker, missing in [
+        ("storageWorks", "the page never checks whether it can actually save"),
+        ("CAN_SAVE", "nothing carries the answer to that check into what the page says"),
+        ("id=\"nosave\"", "there is nowhere to tell her autosave is not working"),
+    ]:
+        if marker not in html_out:
+            failures.append(f"silent data loss: {missing}")
+    if re.search(r"catch\(e\)\{\}", JS):
+        failures.append(
+            "a swallowed exception remains in the page. Every failure here is one the "
+            "reviewer needs told about, because she cannot see that it happened."
+        )
 
     # Every station must still REACH the page — but not by its identifier, which
     # is now deliberately withheld. Counting the rendered stops proves presence
