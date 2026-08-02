@@ -340,8 +340,9 @@ def build_stations() -> list[dict[str, Any]]:
                 what_it_does_not_gate=param.get("does_not_gate"),
                 decide_by=param.get("decide_by"),
                 decide_by_meaning=(
-                    "The date beyond which this CHOICE becomes expensive or closes off an "
-                    "option — not a deadline for an answer. Work does not stall waiting for it."
+                    "The date beyond which the choice gets expensive or an option closes "
+                    "off. It is not a deadline for an answer: nothing stalls waiting for it, "
+                    "and the design keeps working whichever way it goes."
                 ),
                 owner=fact.get("owner"),
             )
