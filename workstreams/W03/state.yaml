@@ -22,3 +22,4 @@ state_recut: '2026-08-01: re-derived from what actually blocks this workstream, 
   Only genuine external dependencies now read as blocked.'
 decision_status: APPROVED_WITH_AMENDMENT_2026-08-01
 ccc_minute: ccc/minutes/2026-08-01.md
+condition_6_status: DISCHARGED_2026-08-02

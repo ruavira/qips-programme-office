@@ -203,18 +203,25 @@ facts:
   owner: W01
   source: Programme positioning, decisions-log · reclassified to PARAMETER 2026-08-01 by programme director, for
     CCC ratification · PARAMETER status and declared range ratified by the CCC on 2026-08-01, Item 6 (minute ccc/minutes/2026-08-01.md)
+    · decide_by reset 2026-08-02 by W03 under W03-01 condition 6
   established: 2026-07-28
   parameter:
     range: '[Nigeria] | [Nigeria, Ghana] | [Nigeria, Ghana, Pakistan]'
     design_valid_across_range: true
-    why: The curriculum teaches improvement methods applied in the participant's own facility, so it is country-agnostic
-      by construction.
+    why: 'The curriculum teaches improvement methods applied in the participant''s own facility, so it is country-agnostic
+      by construction. Note added 2026-08-02: country-agnostic in DESIGN is not country-agnostic in RECOGNITION.
+      W03 research found that CPD recognition differs sharply by country and that the differences are commercial
+      and structural, not administrative — see workstreams/W03/working/W03-cpd-lead-times-synthesis-2026-08-02.md.'
     gates: CPD recognition routes (W03) · payment rails (W16) · calendar collisions (W10) · marketing reach (W14)
+      · regulator application packs (W03, W14)
     does_not_gate: Curriculum, assessment design and observership design do not depend on this.
-    decide_by: 'The earlier of (a) the date W03 records as the latest start for lodging CPD regulator applications,
-      to be established by 31 August 2026 under W03-01 condition 6, or (b) before applications open. Amended by
-      the CCC on 2026-08-01, Item 2: CPD applications are scoped by the country set and have lead times, so a decide_by
-      of ''before applications open'' in October could fall after the work it gates has had to begin.'
+    decide_by: '1 September 2026. Established by W03 on 2026-08-02 under W03-01 condition 6, superseding the earlier
+      ''before applications open''. Derivation: the Ghana Pharmacy Council CPD Technical Committee sits only in
+      February, June and October; the October 2026 sitting is the last that could decide before cohort 1, and the
+      February 2027 sitting falls after the programme starts. Practical lodgement 30 September 2026, less four weeks
+      to assemble regulator-ready packs across four Ghanaian and four Nigerian bodies. If the CCC resolves F020
+      to Nigeria only, this relaxes to 9 October 2026, set by MDCN''s published three-month maximum — so narrowing
+      the country set also buys five weeks.'
   ratified_on: '2026-08-01'
 
 - id: F021
