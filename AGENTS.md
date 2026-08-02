@@ -88,6 +88,25 @@ not be given one over a chat channel — this repository's own secret scan exist
 mistake. Produce a patch and a one-command apply script instead, and let a human push the branch.
 Lane 1 takes over from there.
 
+Lane 2 has a hard delivery rule, and it is not optional. **Never hand a human a command that has not
+been run.** Build the bundle with `engine/bundle.py`, which runs the exact script the human will run
+against a fresh clone of this repository with `git push` stubbed, re-runs every gate in that clone,
+and refuses to emit a bundle unless all of it passes. The bundle carries a `MANIFEST.json` recording
+the base commit, the files touched, every gate and its exit code, and the dry-run verdict. **A bundle
+whose manifest does not say `dry_run.passed = true` must not be delivered.**
+
+Three delivered commands have failed in this project, and all three failed the same way — an agent
+asserted instead of checking. A path under `~/Downloads` that had never been written, because
+delivering a file to a chat is not the same as writing it to a disk. Backticks inside a
+double-quoted `--body`, so bash performed command substitution and mangled the pull-request text.
+A fix script aimed at a branch that had already merged, which would have pushed to a dead ref and
+*appeared* to succeed. `engine/bundle.py` statically refuses all three patterns and then proves the
+rest by running it. When a new way of breaking a delivered script is found, add it to `SCRIPT_SMELLS`
+and add a case to the self-test, so it can never be found the same way twice.
+
+Bundles go stale — a branch merges, a base moves. Re-prove one before re-delivering it with
+`python3 engine/bundle.py --verify <bundle-dir>`.
+
 **Lane 3 — a committee decision.** Open an issue with the `CCC decision` form. When a verdict other
 than `PENDING` is saved, `.github/workflows/decision-capture.yml` checks it against canon and, if it
 is consistent, opens a proposal branch carrying the decision record. The committee's answers become
