@@ -31,6 +31,10 @@ jobs:
         run: |
           python -m py_compile engine/admissions.py
           python engine/admissions.py --self-test
+      - name: Curriculum spine and controlled vocabulary (W02, F002, F019)
+        run: |
+          python -m py_compile engine/curriculum.py
+          python engine/curriculum.py --self-test
       - name: Verify generated files are committed
         run: git diff --exit-code -- ccc/agenda.md ccc/control-room.html
       - name: Reject accidentally committed secrets and environment files

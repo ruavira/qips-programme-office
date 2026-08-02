@@ -28,7 +28,7 @@ form:
       review time from canon, NOT a hardcoded dropdown of three countries.
     eligibility_floor: >-
       F018 is a PARAMETER — clinical only, clinical and non-clinical, or open with an experience
-      floor. The eligibility rules are held in `eligibility_policy` below and swapped as a unit
+      floor. The eligibility rules are held in `eligibility_policy` below and swapped as one block
       when F018 resolves. The rest of the form is unaffected by which option is chosen.
     partner_names: F028. No partner organisation is named anywhere in this instrument.
     cohort_size: F025 is a PARAMETER. The form states no number of places.
