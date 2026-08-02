@@ -59,7 +59,7 @@ recommendations:
       - "West African College of Physicians: the same exam priced USD 625 / ₦812,500 / GHC 8,125 — the template for publishing one USD price in three local currencies, and from this market"
       - "ISQua: publishes rather than buries its income-band ladder, at a 1:3 LIC-to-HIC ratio"
       - "IHI: 15% discount at 3 seats, 19% at 10 — the observed industry band"
-      - "IHI Open School: USD 399 for 38 self-paced units of study — the floor below which this programme loses its position"
+      - "IHI Open School: USD 399 for 38 self-paced online offerings — the floor below which this programme loses its position"
       - "Decagon: a cheaper hybrid at ₦550,000 that failed because it was cheap and demanding"
       - "University of Ghana MPH: 60% of it is USD 1,015 — Ghana's hard ceiling"
     evidence:
@@ -229,3 +229,300 @@ recommendations:
       sit outside the online cap would materially improve Ghana's case. So would a
       decision that cohort 1 need not carry formal CPD recognition at all, which
       would remove the binding constraint entirely.
+
+  # ---------------------------------------------------------------------------
+  # Added 2026-08-02 from fresh comparative research across selection, cohort
+  # sizing, country allocation and eligibility. Every source below was read
+  # directly and carries a live URL and an accessed date. Where the research
+  # found nothing, that is recorded as a gap rather than filled with a guess.
+  #
+  # `internal_refs` exists so the prose can stay in the reviewer's language.
+  # A committee member has no access to the repository, so a recommendation that
+  # says "see F018" is unreadable to them. Identifiers live in that field, and
+  # the reviewer-facing surface omits it.
+  # ---------------------------------------------------------------------------
+
+  - target: ST-admissions-rubric-ABSENT-SCORE-THRESHOLD
+    owner: W07
+    option: >-
+      Do not set a pass mark now. Adopt a two-part rule instead: a low
+      non-negotiable quality floor expressed as minimum standards on individual
+      criteria rather than on the total, and then straightforward ranking to the
+      number of places available, with a waiting list. Publish the RULE for
+      cohort 1, not a number. If the committee wants a number pre-committed, ask
+      it for four judgements now — the lowest score it would ever accept, the
+      highest it would insist on, the smallest proportion of applicants it would
+      be comfortable turning away, and the largest — and compute the mark from
+      the real applications after they close.
+    rationale: >-
+      No comparable programme was found that publishes an absolute pass mark as
+      its admissions rule. The ones that publish an exact figure — UK specialty
+      medical recruitment, UK public health training — all use it as a minimum
+      quality bar, with the actual decision made by ranking against the places
+      available. The closest content comparators do not select at all; they take
+      payment and admit.
+      A pass mark chosen now would be a guess about a distribution of scores that
+      does not yet exist, because this scoring approach has never been run on a
+      real applicant. The strongest evidence found on the risk is an eight-year
+      study of absolute standards where the failure rate swung between 2% and 47%
+      across sittings of the same test. Set the mark too high and a cohort does
+      not fill; set it too low and far more people qualify than there are places,
+      at which point the mark has decided nothing and ranking is doing the work
+      anyway — but a public number now exists that has to be defended.
+      The methods used to set pass marks in professional examinations are built
+      to answer "is this person minimally competent?" That question has a real
+      answer. "Is this applicant minimally admissible?" does not, when what is
+      being judged is motivation, the quality of an improvement problem, and
+      whether an employer will protect the time. The compromise method that does
+      fit — bounding both the score and the rejection rate, then resolving
+      against the actual applications — cannot be computed until the applications
+      exist, which is precisely why it is the right one.
+      Cohort 1 is the calibration study. Recording application scores against who
+      actually completes is what earns the right to publish a threshold later.
+    comparators:
+      - "UK medical specialty recruitment: 'Appointments to training programmes or posts will be offered in rank order, based on selection scores', with a separately published minimum score for appointability — https://medical.hee.nhs.uk/medical-training-recruitment/medical-specialty-training/overview-of-specialty-training/offers-feedback-and-upgrades (accessed 2026-08-02)"
+      - "University of Sheffield medicine: threshold set from the previous three years' observed data, and meeting it 'does not mean an interview will be forthcoming' — https://sheffield.ac.uk/media/69386/download (accessed 2026-08-02)"
+      - "Chevening: applications scored, then 'the number of applications that are longlisted will vary, depending on the number of awards available' — https://www.chevening.org/news/longlists-shortlists-references-and-interviews/ (accessed 2026-08-02)"
+      - "Mandela Washington Fellowship: 'a merit-based open competition', no published threshold — https://www.mandelawashingtonfellowship.org/apply/ (accessed 2026-08-02)"
+      - "NAHQ CPHQ publishes a hard pass mark of 600 on a 200-800 scale — but that is a minimum-competence decision independent of other candidates, not a contest for a fixed number of places — https://cdn.nahq.org/wp-content/uploads/2024/11/CPHQ-Scaled-Score-Explained-FINAL.pdf (accessed 2026-08-02)"
+      - "Institute for Healthcare Improvement and ISQua run open enrolment by payment, so neither selects competitively at all"
+    evidence:
+      - "Muijtjens et al. (1998), Advances in Health Sciences Education: across eight years of progress tests the failure rate was roughly constant under a relative standard but ranged from 2% to 47% under an absolute one; 'an absolute standard is precarious' — https://doi.org/10.1023/A:1009728423412 (accessed 2026-08-02)"
+      - "Sridharan & Sivaramakrishnan (2025), BMC Medical Education, systematic review and meta-analysis of 91 studies: the variant where judges review actual candidate performance data achieved the strongest reliability (r=0.917); an uninformed choice of method 'can lead to unintended pass rates' — https://doi.org/10.1186/s12909-025-08300-6 (accessed 2026-08-02)"
+      - "Norcini (2003), Medical Education: a standard should be 'consistent with the purpose of the test... informed by data', and pass rates should bear sensible relationships to other markers — https://doi.org/10.1046/j.1365-2923.2003.01495.x (accessed 2026-08-02)"
+      - "Hofstee compromise method, requiring minimum and maximum acceptable scores and minimum and maximum acceptable failure rates, resolved against the observed distribution — https://pmc.ncbi.nlm.nih.gov/articles/PMC8561612/ (accessed 2026-08-02)"
+      - "Ottawa consensus statements on selection (Prideaux 2011; Patterson 2018) make recommendations on principles and methods but none on setting a cut score — https://doi.org/10.3109/0142159X.2011.551560 and https://doi.org/10.1080/0142159X.2018.1498589 (accessed 2026-08-02)"
+    confidence: HIGH
+    confidence_basis: >-
+      The direction is supported by consistent practice across every comparator
+      found and by quantified evidence on the instability of absolute standards.
+      One honest gap: no study was found specifically on marks derived from
+      synthetic or calibration data, because that appears not to have been
+      studied. The argument rests on the general instability finding plus the
+      absence of any comparator doing it.
+    what_would_change_it: >-
+      Two or three cohorts of observed data linking application scores to
+      completion. That is what every comparator publishing a fixed figure has
+      behind it.
+    internal_refs: [W07-01 condition 4, F025]
+
+  - target: ST-admissions-rubric-ABSENT-COHORT-CAP
+    owner: W07
+    option: >-
+      Set the cap at 64 and publish it together with the reason: eight coaching
+      groups of eight. Treat eight as the ceiling of a coaching group rather than
+      its target, holding one place per group in reserve, so that a late
+      admission does not push a group to nine.
+    rationale: >-
+      The cap should be a delivery number, not a demand number or a marketing
+      one. The best-documented comparable programme does exactly this: it does
+      not choose a total and divide, it fixes a residential group at roughly 25
+      and multiplies by the number of groups it can run. Building 64 as eight
+      groups of eight is the same construction.
+      Publishing the reason would put this programme ahead of every comparator
+      examined. Several publish a number — one publishes 60 seats per cohort,
+      another 18 fellows, another around 10 places — and not one publishes why.
+      A cap that can be explained is worth more than a larger cap that cannot.
+      Eight sits at the top of the only sourced comfort band for small-group
+      learning rather than in the middle of it, which is why the reserve place
+      matters: a group of eight that absorbs two late admissions is a group of
+      ten, and the guidance is explicit that beyond twelve a group needs
+      deliberate leadership to function.
+      One caution the research makes unavoidable: no study was found anywhere
+      relating cohort size to completion. Any claim that a particular size
+      protects completion would be invented. What the evidence does support is
+      that facilitation, deadlines and in-person contact drive completion — which
+      argues for treating the coaching group as the retention instrument and
+      funding it as such, rather than as an added refinement.
+    comparators:
+      - "ISQua IPQS Foundation Programme, the closest structural twin found — 24 weeks, hybrid, fees tiered by World Bank income band: 'Only 60 seats are available per cohort', with no rationale published — https://isqua.org/introducing-the-ipqs-foundation-programme/ (accessed 2026-08-02)"
+      - "Mandela Washington Fellowship: 'up to 700 young leaders', built as approximately 28 institutes of approximately 25 fellows each — https://apply07.grants.gov/grantsws/rest/opportunity/att/download/304575 (accessed 2026-08-02)"
+      - "Health Foundation GenerationQ: 18 fellows per cohort, no rationale published — https://www.health.org.uk/funding-and-partnerships/fellowships/generationq (accessed 2026-08-02)"
+      - "Oxford PGCert in Patient Safety and Quality Improvement: about 10 places against about 12 applications a year — a capacity number demand never tests — https://www.ox.ac.uk/admissions/graduate/courses/pgcert-patient-safety (accessed 2026-08-02)"
+      - "Africa CDC Kofi Annan Fellowship: actual cohorts of 20, 21, 21, 26, 26 published, with no cap at all — https://africacdc.org/kofi-annan-fellowship-in-global-health-leadership/ (accessed 2026-08-02)"
+      - "Institute for Healthcare Improvement publishes no cohort size for any of its professional development programmes"
+    evidence:
+      - "Edmunds & Brown (2010), AMEE Guide No. 48: 'In the UK, 6-8 is often regarded as a small group for learning purposes'; as size rises the opportunity for interaction falls; beyond 12 well-defined leadership is needed, beyond 20 strong leadership — https://education.aaaai.org/sites/default/files/amee_guide_small_group.pdf (accessed 2026-08-02)"
+      - "Noerholk et al. (2022), Medical Education, randomised study of group size: outcomes held up to groups of four, but time spent on passive and non-learning activity rose significantly with group size — https://doi.org/10.1111/medu.14791 (accessed 2026-08-02)"
+      - "Nieder et al. (2022), Frontiers in Public Health, scoping review of 39 studies across 90+ low- and middle-income countries: completion ranged 1-100%, mean 32.6%; blended delivery, deadlines, reminders and local facilitators were the named facilitators of completion — https://doi.org/10.3389/fpubh.2022.891987 (accessed 2026-08-02)"
+      - "Real-world evaluation across 16 sub-Saharan African countries including Nigeria and Ghana: about 60% completion in person, about 49% online — https://journals.plos.org/globalpublichealth/article?id=10.1371%2Fjournal.pgph.0001654 (accessed 2026-08-02)"
+      - "University of Southampton quality handbook, the clearest published statement of the logic that a floor is a financial question and a ceiling a delivery one — https://www.southampton.ac.uk/quality/programmes_and_modules/curriculum%20complexity/cohortsize.page (accessed 2026-08-02)"
+    confidence: MEDIUM_HIGH
+    confidence_basis: >-
+      The construction is sound and the small-group guidance is authoritative.
+      What is NOT established anywhere is a link between cohort size and
+      completion — the scoping review names this as a gap in the literature. So
+      the cap is defensible as a delivery decision and must not be argued as a
+      quality-of-completion decision.
+    what_would_change_it: >-
+      Evidence that coaching groups of eight cannot review eight pieces of work
+      meaningfully in one call. That assumption is untested and load-bearing: if
+      the group falls to six, every clean cohort size moves with it.
+    internal_refs: [F025, UA3, W06]
+
+  - target: ST-admissions-rubric-ABSENT-COUNTRY-ALLOCATION
+    owner: W07
+    option: >-
+      Set no country allocation for cohort 1. On the recommended country
+      decision — Nigeria alone for the first cohort — there is nothing to
+      allocate, and inventing a rule for a situation that does not arise would be
+      a decision made for its own sake.
+      If the committee widens the country set, do not compare applicants across
+      countries. Assess merit within each country's pool against one common
+      standard, publish the number of places each country carries, and justify
+      that number on delivery grounds — host sites, coaching capacity, a
+      recognition route that actually exists — rather than on fairness grounds.
+    rationale: >-
+      This is the one question where the research changes its own shape. Given
+      the recommendation that cohort 1 runs in a single country, an allocation
+      rule has no work to do. The honest recommendation is therefore to ratify
+      the absence rather than fill it, and to record the rule that would apply if
+      the country set widens.
+      For that contingency the evidence is genuinely mixed and should not be
+      presented as settled. Large programmes split three ways: fixed quotas per
+      country; open merit across the whole pool with a stated aspiration to cover
+      every country; and a hybrid where selection is administered country by
+      country but the standard is common. The hybrid is what most large
+      programmes actually run.
+      No study was found that compares quota allocation against merit-blind
+      selection across countries, or that quantifies the distortion caused by
+      differing pool sizes. So neither approach can be claimed as evidence-based.
+      What IS documented is that raw attainment tracks prior opportunity — the UK
+      regulator's finding that the most educationally advantaged are 5.7 times
+      more likely to reach a higher-tariff institution, and that applicants
+      admitted a grade below standard offers do as well or better. That is a
+      within-country finding, but the mechanism is the same one that operates
+      across countries whose systems and pool sizes differ.
+      Hence the structural move rather than the fairness claim: assess within a
+      pool, not across pools. It requires no assertion the evidence cannot yet
+      support, and it fails safe.
+    comparators:
+      - "Rhodes Scholarships: fixed numbers per constituency, selected 'on merit alone' within each, so applicants are never compared across constituencies — https://www.rhodeshouse.ox.ac.uk/scholarships/constituency-information/ (accessed 2026-08-02)"
+      - "Erasmus Mundus: 'no more than 10% of the total number of scholarships awarded... should be awarded to candidates from the same nationality' — https://erasmus-plus.ec.europa.eu/programme-guide/part-b/key-action-2/erasmus-mundus-action (accessed 2026-08-02)"
+      - "Fulbright: country numbers set bilaterally by binational commissions 'based on input from local institutions' — driven by local co-funding, not a central formula — https://fulbrightscholars.org/program-administration (accessed 2026-08-02)"
+      - "Mandela Washington Fellowship: no quota; 'aims to include Fellows from all countries in Sub-Saharan Africa', with explicit priority for non-elite, rural and gender-diverse applicants — https://apply07.grants.gov/grantsws/rest/opportunity/att/download/304575 (accessed 2026-08-02)"
+      - "Commonwealth Scholarship Commission: country-level nomination feeding a central merit decision, with income-group targeting in place of country quotas — 96% of 2023-24 awards went to least-developed and lower-middle-income countries — https://www.gov.uk/government/publications/commonwealth-scholarship-commission-annual-report-2024/commonwealth-scholarships-annual-report-for-the-year-ending-september-2024-one-resilient-common-future-transforming-our-commonwealth (accessed 2026-08-02)"
+    evidence:
+      - "Office for Students, contextual admissions: 'the most educationally advantaged students are 5.7 times more likely to attend a higher-tariff provider than the most disadvantaged'; students admitted one grade below standard requirements 'do just as well as, if not better than' those admitted on standard offers — https://www.officeforstudents.org.uk/publications/contextual-admissions-promoting-fairness-and-rethinking-merit/ (accessed 2026-08-02)"
+      - "Journal of Behavioral and Experimental Economics (2025) on regional admission quotas: the strong party has an incentive to resist the allocation, and an equal-quota system 'may be counterproductive for its intended beneficiaries' — https://ideas.repec.org/a/eee/soceco/v115y2025ics2214804325000163.html (accessed 2026-08-02)"
+      - "NOT FOUND: any empirical comparison of country-quota against merit-blind selection in a fellowship or scholarship setting, or any quantification of pool-size distortion. Searches recorded in the W07 research note of 2026-08-02."
+    confidence: MEDIUM
+    confidence_basis: >-
+      HIGH that no allocation is needed for a single-country cohort — that
+      follows from the country recommendation rather than from contested
+      evidence. MEDIUM on the contingency rule, because the comparison that would
+      settle it has not been done by anyone.
+    what_would_change_it: >-
+      A country decision that admits a second country for cohort 1. That converts
+      this from a question with no work to do into a live design decision, and
+      the delivery-grounded allocation would then need real numbers behind it.
+    internal_refs: [F020, F025, W03]
+
+  - target: F018
+    owner: W07
+    option: >-
+      Open to both clinical and non-clinical applicants, with the gate expressed
+      as role and sponsorship rather than as profession and years. Concretely: no
+      profession or licence requirement; a floor of two years working in health
+      or in providing services to the health sector; a current or intended
+      improvement responsibility evidenced by a real problem the applicant brings
+      with them; and a named senior sponsor in the applicant's organisation who
+      commits to protecting the time. A first degree as the default, with an
+      experience route for applicants who came up without one.
+    rationale: >-
+      Restricting entry to licensed clinicians has essentially no precedent among
+      comparable qualifications. Every healthcare quality credential examined
+      admits non-clinical staff, either explicitly or by publishing no profession
+      bar at all — including SQHN's own membership rule and its own existing
+      introductory qualification, which is open to anyone with an interest in the
+      field. The single clinician-only example found is a postgraduate medical
+      training post, restricted because of what it is rather than because anyone
+      concluded non-clinicians cannot do improvement work.
+      The demand evidence points the same way and is closer to home. A federal
+      needs assessment across 30 Nigerian states found that about one third of
+      the quality-of-care workforce surveyed were managers and administrators
+      rather than frontline clinicians. Nigeria's own national quality strategy
+      calls for improvement curricula 'for all cadres of staff'. A clinician-only
+      door would exclude roughly a third of the people the federal government has
+      identified as needing exactly this, and would put the programme out of step
+      with the national strategy it should be supporting.
+      Be careful about what the evidence does NOT show. No study was found
+      comparing mixed cohorts against clinician-only cohorts on completion or
+      outcomes. Three studies point in the pro-mixing direction — non-clinical
+      learners gaining more knowledge, performing slightly better, and
+      non-clinical improvement specialists roughly doubling the quality of
+      project documents — but each is single-site and none concerns a twelve-month
+      programme. They are enough to defeat the assumption that non-clinical
+      participants would weaken a cohort. They are not enough to claim mixing
+      improves outcomes, and the committee paper should not claim it.
+      The real risk of a mixed cohort is not capability, it is hierarchy: the
+      best study on the question found positive outcomes alongside genuine power
+      dynamics between professional groups. The failure mode is that a
+      doctor-heavy cohort quietly ranks itself and the records officers stop
+      speaking by the third month. That is a facilitation problem with known
+      remedies — deliberately mixed project groups, coaches briefed on the risk,
+      assessment anchored on the improvement work rather than on clinical
+      content — not an admissions problem.
+      Fully open entry with only an experience floor is the weakest option and no
+      comparator does it. Every open-entry programme found binds admission to
+      something else as well: a setting, a relationship to improvement work, or an
+      employer sponsor. Sponsorship is the highest-value requirement available
+      here, because it converts individual enthusiasm into protected time, and a
+      twelve-month programme with a practicum lives or dies on that.
+    comparators:
+      - "NAHQ CPHQ: 'There are no formal eligibility requirements to sit for the exam'; two years' experience recommended, not required — https://nahq.org/credentials/cphq-certified-professional-in-healthcare-quality/ (accessed 2026-08-02)"
+      - "IHI Certified Professional in Patient Safety, the only hard floor found: bachelor's plus 3 years, or associate degree plus 5 years, of experience 'in a health care setting or with a provider of services to the health care industry' — no licence required — https://forms.ihi.org/hubfs/CPPS%20Candidate%20Handbook%202024-1.pdf (accessed 2026-08-02)"
+      - "Health Foundation GenerationQ: for senior leaders 'in clinical and non-clinical roles', with mandatory sponsorship by 'an appropriate senior member of their organisation' — https://www.health.org.uk/funding-and-partnerships/fellowships/generationq (accessed 2026-08-02)"
+      - "Q Community: open to anyone 'working within or interested in improvement', explicitly including patients and researchers — https://q.thenhsalliance.org/get-involved/join-q (accessed 2026-08-02)"
+      - "SQHN's own membership rule: open to 'those persons who are involved in or have an interest in quality improvement/risk management in healthcare' — https://sqhn.org/membership/membership-categories/ (accessed 2026-08-02)"
+      - "SQHN Institute of Quality's existing introductory qualification is open to 'those with an interest in Healthcare Quality & Patient Safety' and awards CPD points — https://sqhn.org/institute-of-quality/ (accessed 2026-08-02)"
+      - "Royal College of Physicians Chief Registrar, the one clinician-only example: restricted because it is a postgraduate medical training post with protected training time — https://rcp.ac.uk/events-and-education/education-and-learning/clinicians-as-leaders/chief-registrar-programme (accessed 2026-08-02)"
+    evidence:
+      - "Federal Ministry of Health / MCGL needs assessment across 30 Nigerian states, 751 respondents: 'approximately two-thirds were frontline health care professionals and one-third were facility managers and administrators' — https://nationalqoc.fmohconnect.gov.ng/wp-content/uploads/2023/10/MCGL-Nigeria-Needs-Assessment-Report-Final10032023.pdf (accessed 2026-08-02)"
+      - "Nigeria National Quality Policy and Strategy situation analysis: partner with academic institutions to develop improvement curricula 'for pre-service, in-service and post-graduate training for all cadres of staff' — https://nationalqoc.fmohconnect.gov.ng/wp-content/uploads/2024/04/QoC-SITAN-Report_Final-Draft-v_2.0_4-disemination-.pdf (accessed 2026-08-02)"
+      - "NAHQ workforce report 2022, 2,523 respondents: 'Most people working in quality and safety have come from other professions and work in quality and safety as a second career' — https://nahq.org/wp-content/uploads/2022/09/NAHQ-Workforce-Report-2022.pdf (accessed 2026-08-02)"
+      - "Goldman et al. (2020), Advances in Health Sciences Education, 58 interviews and 135 hours of observation across three longitudinal improvement programmes: both mixed and single-profession approaches showed positive outcomes, alongside 'power dynamics between professional groups' requiring explicit attention — https://doi.org/10.1007/s10459-020-10004-z (accessed 2026-08-02)"
+      - "Levy et al. (2023), Journal of Graduate Medical Education: embedding non-clinical improvement specialists raised mean project-document scores from 29.0 to 47.0 out of 69 — https://doi.org/10.4300/JGME-D-22-00456.1 (accessed 2026-08-02)"
+      - "Stephenson et al. (2023), Harm Reduction Journal, 310 participants: administrative and non-clinical support staff gained significantly more knowledge than providers (p<0.001) — https://doi.org/10.1186/s12954-023-00803-z (accessed 2026-08-02)"
+      - "NOT FOUND: any study comparing mixed clinical and non-clinical improvement cohorts against clinician-only cohorts on completion or outcomes. Searches recorded in the W07 research note of 2026-08-02."
+      - "NOT FOUND: any published figure for the proportion of Nigerian hospital quality officers holding a clinical qualification. If the committee wants to decide on that number, a short SQHN member survey would generate it in about two weeks."
+    confidence: HIGH
+    confidence_basis: >-
+      HIGH that clinician-only is the wrong answer — the precedent is one-sided
+      and the Nigerian demand evidence is federal and specific. MEDIUM on the
+      exact shape of the floor: two years is the modal published figure among
+      comparators rather than a number the evidence forces.
+    what_would_change_it: >-
+      A finding that the recognition route available to graduates is closed to
+      non-clinical participants. Clinical CPD in Nigeria attaches to licence
+      renewal, so a non-clinical graduate may get nothing from those channels.
+      Which body sits behind the CPD points SQHN's existing qualification already
+      awards, and whether it can cover non-clinical graduates, needs pinning down
+      — otherwise open eligibility carries a silent asterisk on what the
+      certificate is worth.
+    internal_refs: [F018, F007, Q006, W03, W07-01]
+
+  - target: ST-admissions-rubric-ABSENT-ELIGIBILITY-BREADTH
+    owner: W07
+    option: >-
+      Keep eligibility out of the scoring approach entirely and resolve it as the
+      separate admissions-criteria decision. Eligibility is a gate, not a
+      criterion: an applicant either meets it or does not, and turning it into
+      points would let a strong score compensate for not qualifying.
+    rationale: >-
+      The scoring approach was deliberately built to remain valid whichever way
+      eligibility is decided, which is what allows the two to be settled
+      independently. Folding eligibility in as a scored criterion would break
+      that and would also introduce exactly the compensation problem the evidence
+      gates exist to prevent — a high score standing in for a requirement that has
+      not been met.
+    comparators:
+      - "Comparable programmes that publish both consistently separate them: entry requirements are stated as requirements, and assessment criteria are applied only to applicants who already meet them — see the IHI patient safety credential and Health Foundation GenerationQ entries under the admissions-criteria recommendation"
+    evidence:
+      - engine/schemas/admissions-rubric.yaml
+      - engine/schemas/application-form.yaml
+    confidence: HIGH
+    what_would_change_it: >-
+      A decision to admit applicants conditionally against a partially-met
+      requirement, which would need its own rule and its own equity analysis.
+    internal_refs: [F018, W07-01]
