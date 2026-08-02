@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -362,7 +363,183 @@ render();
 """
 
 
+
+# ---------------------------------------------------------------------------
+# The reviewer's language
+# ---------------------------------------------------------------------------
+
+LANGUAGE_PATH = ROOT / "engine/schemas/reviewer-language.yaml"
+
+_URL_RE = re.compile(r"https?://\S+")
+
+
+def load_language() -> dict[str, Any]:
+    if not LANGUAGE_PATH.is_file():
+        raise WalkthroughError(f"{LANGUAGE_PATH.relative_to(ROOT)} does not exist.")
+    return yaml.safe_load(LANGUAGE_PATH.read_text(encoding="utf-8"))
+
+
+_REPO_PATH_RE = re.compile(r"\b(?:canon|engine|workstreams|governance|documents)/[\w./-]+")
+
+# "Marketing copy (W14)" -> "Marketing copy". The human label already carries the
+# meaning; translating the parenthetical only duplicates it.
+_PARENTHETICAL_ID_RE = re.compile(r"\s*\((?:(?:[FQW]\d{2,3}(?:-\d{2})?)|UA\d+)\)")
+
+# Facts, questions, workstreams and dossiers all share a shape; assumptions do
+# not. UA3 slipped through the first version of this pattern and was caught only
+# by the leak check — which is the argument for having the leak check.
+_ID_RE = re.compile(r"\b((?:[FQW]\d{2,3}(?:-\d{2})?)|UA\d+)\b")
+
+# Words that carry no content when deciding whether the text after an identifier
+# already says what the identifier's name would say.
+_STOPWORDS = {
+    "a", "an", "and", "as", "at", "by", "for", "from", "in", "is", "it", "its",
+    "of", "on", "or", "that", "the", "this", "to", "under", "was", "with", "will",
+}
+
+
+def translate(text: str, lang: dict[str, Any]) -> str:
+    """Replace internal identifiers with plain-language names.
+
+    Order matters, and each step exists because the obvious version produced
+    something worse than the identifier it replaced.
+
+    URLs are masked first: a path inside a link the reviewer can follow is not an
+    instruction to open a file they cannot. Repository paths go next, WHOLE,
+    before any identifier inside them is translated — otherwise
+    "workstreams/W16/working/x.md" becomes the nonsense
+    "workstreams/commercial and pricing/working/x.md".
+
+    Compound forms next, because "W07-01 condition 6" translated in two pieces
+    yields "the admissions decision condition 6".
+
+    Then parentheticals, because "Marketing copy (W14)" translated in place gives
+    "Marketing copy (marketing)".
+
+    Finally the bare identifiers, and this is the subtle one. Where an identifier
+    is immediately followed by the words that describe it — "F026 indemnity
+    trigger" — translating gives "the indemnity trigger indemnity trigger", so the
+    identifier is dropped and the words kept. But that test has to be about
+    MEANING, not word shape: a first attempt dropped any identifier followed by a
+    lowercase word, which turned "Established by W03 on 2026-08-02" into
+    "Established by on 2026-08-02". So the following words are compared against
+    the identifier's own name, ignoring stopwords, and the identifier is dropped
+    only when they genuinely say the same thing.
+    """
+    masked: list[str] = []
+
+    def _mask(match: re.Match) -> str:
+        masked.append(match.group(0))
+        return f"\x00{len(masked) - 1}\x00"
+
+    text = _URL_RE.sub(_mask, text)
+    text = _REPO_PATH_RE.sub(lang.get("path_replacement", "the research record"), text)
+
+    for pattern, replacement in (lang.get("compound_translations") or {}).items():
+        text = re.sub(pattern, replacement, text)
+
+    # Longest phrase first, so "approved canon" is not eaten by "canon".
+    phrases = lang.get("phrase_translations") or {}
+    for phrase in sorted(phrases, key=len, reverse=True):
+        text = re.sub(rf"\b{re.escape(phrase)}\b", phrases[phrase], text, flags=re.IGNORECASE)
+
+    if lang.get("drop_parenthetical_identifiers"):
+        text = _PARENTHETICAL_ID_RE.sub("", text)
+
+    names = lang.get("translations") or {}
+
+    def _replace(match: re.Match) -> str:
+        key = match.group(1)
+        name = names.get(key)
+        if not name:
+            return key                      # unknown identifier: leave it to the leak check
+        tail = text[match.end():match.end() + 70]
+        following = re.match(r"\s+([A-Za-z][\w'-]*(?:\s+[A-Za-z][\w'-]*){0,2})", tail)
+        if following and lang.get("drop_identifier_prefixes"):
+            words = [w.lower() for w in following.group(1).split()
+                     if w.lower() not in _STOPWORDS]
+            if words and all(w in name.lower() for w in words):
+                return ""                   # the words after it already say this
+        return name
+
+    text = _ID_RE.sub(_replace, text)
+
+    # Dropping an identifier leaves the space that preceded it.
+    text = re.sub(r"[ \t]{2,}", " ", text).replace(" ,", ",").replace(" .", ".")
+
+    for index, original in enumerate(masked):
+        text = text.replace(f"\x00{index}\x00", original)
+    return text
+
+
+def reviewer_view(node: Any, lang: dict[str, Any], key: str | None = None) -> Any:
+    """Strip plumbing, translate prose, keep only citations a reviewer can open.
+
+    A committee member has no access to this repository, so an untranslated
+    identifier does not merely read as jargon — it points at something they
+    cannot open, and signals the document was written for somebody else.
+    """
+    omit = set(lang.get("omit_fields") or [])
+
+    if isinstance(node, dict):
+        out = {}
+        for k, v in node.items():
+            if k in omit:
+                continue
+            # Station ids go; act ids stay, because they are the page's anchors.
+            if k == "id" and isinstance(v, str) and v.startswith("ST-"):
+                continue
+            if k == "evidence" and lang.get("evidence_must_be_reachable"):
+                # A repository path is provenance for the programme office and a
+                # dead end for a reviewer. Keep only what they can actually follow
+                # — but never go silent: a recommendation showing no evidence line
+                # reads as unevidenced when it is not.
+                reachable = [e for e in v if isinstance(e, str) and "http" in e]
+                if len(reachable) < len(v) and lang.get("evidence_unreachable_note"):
+                    reachable.append(lang["evidence_unreachable_note"])
+                v = reachable
+                if not v:
+                    continue
+            out[k] = reviewer_view(v, lang, k)
+        return out
+    if isinstance(node, list):
+        return [reviewer_view(v, lang, key) for v in node]
+    if isinstance(node, str):
+        return translate(node, lang)
+    return node
+
+
+def check_no_internal_leaks(rendered: str, lang: dict[str, Any]) -> list[str]:
+    """Fail the build if an internal reference survived into the page.
+
+    URLs are excluded before checking: a live citation is a link the reviewer can
+    follow, and a path inside it is not an instruction to open a file they cannot
+    see. This mirrors the controlled-vocabulary check, which learned the same
+    lesson — a rule that cannot distinguish a citation from an instruction ends up
+    either too loud to obey or quietly switched off.
+    """
+    stripped = _URL_RE.sub(" ", rendered)
+    problems = []
+    for rule in lang.get("leak_patterns") or []:
+        found = sorted(set(re.findall(rule["pattern"], stripped)))
+        found = [f for f in found if f]
+        if found:
+            problems.append(
+                f"{rule['name']} leaked into reviewer-facing text: "
+                f"{', '.join(found[:8])}{' ...' if len(found) > 8 else ''}"
+            )
+    return problems
+
+
 def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commit: str) -> str:
+    lang = load_language()
+    # Drop an empty catch-all BEFORE redaction, while the flag still exists. The
+    # JS used to do this, but `catch_all` is redacted away, so the page rendered a
+    # blank final act — a regression the stop-count test could not see because the
+    # act had no stops to count.
+    acts = [a for a in acts if not (a.get("catch_all") and not a.get("stops"))]
+    # Everything below this line is what a committee member will actually read.
+    acts = reviewer_view(acts, lang)
     data = {
         "acts": acts,
         "sitting": "CCC design walkthrough",
@@ -371,6 +548,12 @@ def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commi
         "decisionKinds": sorted(di.DECISION_KINDS),
     }
     payload = json.dumps(data, default=str)
+    leaks = check_no_internal_leaks(payload, lang)
+    if leaks:
+        raise WalkthroughError(
+            "the page carries internal references a reviewer cannot resolve:\n  - "
+            + "\n  - ".join(leaks)
+        )
     total = len(stations)
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -426,7 +609,13 @@ def self_test() -> int:
         if station["kind"] in di.DECISION_KINDS and "ACCEPT" not in station["response"]["allowed"]:
             failures.append(f"{station['id']}: open item offers no way to accept it")
 
-    html_out = build_html(acts, stations, "self-test")
+    try:
+        html_out = build_html(acts, stations, "self-test")
+    except WalkthroughError as exc:
+        # A leak is a legitimate hard failure, but it should read as a stated
+        # defect rather than as a crash — the message is what the next person sees.
+        print(f"  FAIL  page refused to build: {exc}", file=sys.stderr)
+        return 1
 
     # the page must be genuinely self-contained and storage-free
     for forbidden in ("localStorage", "sessionStorage", "indexedDB"):
@@ -436,15 +625,107 @@ def self_test() -> int:
         if external in html_out:
             failures.append(f"page loads an external resource ({external}); it must be self-contained")
 
-    # every station id must actually appear in the payload
-    for station in stations:
-        if station["id"] not in html_out:
-            failures.append(f"{station['id']} is missing from the rendered page")
+    # Every station must still REACH the page — but not by its identifier, which
+    # is now deliberately withheld. Counting the rendered stops proves presence
+    # without reintroducing the leak this design exists to close.
+    try:
+        payload = json.loads(re.search(r"const DATA=(\{.*\});</script>", html_out, re.S).group(1))
+        rendered = sum(len(act.get("stops", [])) for act in payload["acts"])
+    except Exception as exc:
+        failures.append(f"could not parse the page payload to count stops: {exc}")
+    else:
+        if rendered != len(stations):
+            failures.append(
+                f"{len(stations)} stations generated but {rendered} reached the page"
+            )
 
     # the reason hint must be uniquely addressable — a decide_by hint used to
     # steal the "reason required" message because both carried the same class
     if "reason-hint" not in html_out:
         failures.append("the reason hint is not uniquely addressable; another hint can steal it")
+
+    # --- reviewer language -------------------------------------------------
+    lang = load_language()
+
+    # the leak check must actually bite, on every pattern it claims to cover
+    for probe, label in [
+        ("this depends on F024", "fact identifier"),
+        ("see Q001 for detail", "question identifier"),
+        ("owned by W16", "workstream identifier"),
+        ("rests on UA3", "assumption identifier"),
+        ("generated by ST-F020", "station identifier"),
+        ("see workstreams/W16/working/x.md", "repository path"),
+        ("run engine/walkthrough.py", "engine filename"),
+        ("under condition 6", "bare condition"),
+    ]:
+        if not check_no_internal_leaks(probe, lang):
+            failures.append(f"leak check does not catch a {label}: {probe!r}")
+
+    # a live citation must NOT be treated as a leak
+    citation = "see https://example.test/workstreams/W16/thing.yaml for the source"
+    if check_no_internal_leaks(citation, lang):
+        failures.append("leak check flags a live citation; a link is not an instruction")
+
+    # translation must not produce something worse than the identifier
+    for before, must_not_contain in [
+        ("Marketing copy (W14)", "("),
+        ("F026 indemnity trigger", "trigger trigger"),
+    ]:
+        after = translate(before, lang)
+        if must_not_contain in after:
+            failures.append(f"translation of {before!r} produced {after!r}")
+    # and must not swallow a workstream that is genuinely being named
+    if "by  on" in translate("Established by W03 on 2026-08-02", lang):
+        failures.append("translation dropped an identifier that was not duplicated")
+
+    # the rendered page itself must be clean
+    for problem in check_no_internal_leaks(html_out, lang):
+        failures.append(f"rendered page: {problem}")
+
+    # Navigation must actually resolve. Omitting `id` wholesale once stripped it
+    # from acts as well as stations, leaving every nav link pointing at
+    # "#undefined" — a page that looked correct and could not be navigated.
+    view = reviewer_view(acts, lang)
+    for act in view:
+        if not act.get("id"):
+            failures.append(f"an act lost its id; its navigation link cannot resolve")
+        for stop in act.get("stops", []):
+            if "id" in stop:
+                failures.append("a station id survived into the reviewer's view")
+
+    # No act may render empty. An empty act is either a spine defect or a
+    # redaction defect, and both look identical to a reviewer: a heading with
+    # nothing under it.
+    try:
+        shown = json.loads(re.search(r"const DATA=(\{.*\});</script>", html_out, re.S).group(1))
+        for act in shown["acts"]:
+            if not act.get("stops") and not act.get("narrative"):
+                failures.append(f"act {act.get('id')} renders with nothing in it")
+    except Exception:
+        pass  # the payload-parse failure is already reported above
+
+    # Insider vocabulary is a SECOND kind of leak, invisible to the identifier
+    # check: "Canon is the only thing that is true" contains no identifier and is
+    # still unreadable to anyone outside this repository. It was found by looking
+    # at a screenshot, which is the argument for looking at screenshots.
+    #
+    # Note what this check does and does not do, because it looks weaker than it
+    # is. It runs on the TRANSLATED text, so a term that has an entry in
+    # phrase_translations never reaches it — the translation is the fix, and
+    # writing "canon" in a narrative is therefore harmless. What this catches is
+    # jargon with NO translation, which would otherwise reach the reviewer intact.
+    # The two mechanisms divide cleanly: translate what has a plain equivalent,
+    # refuse to ship what does not.
+    JARGON = ["canon", "validator", "property test", "invariant", "promoted fact",
+              "dossier", "proposal branch", "pull request", "repository",
+              "self-test", "hardcoded", "payload", "schema"]
+    body = json.dumps(reviewer_view(acts, lang), default=str).lower()
+    for term in JARGON:
+        if re.search(rf"\b{re.escape(term)}\b", body):
+            failures.append(
+                f"insider vocabulary reaching the reviewer: {term!r} — a committee member "
+                "has no way to resolve it"
+            )
 
     # the page must never claim to be a decision
     low = html_out.lower()

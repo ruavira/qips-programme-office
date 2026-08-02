@@ -43,8 +43,8 @@ acts:
       A twelve-month hybrid professional programme in healthcare quality and
       patient safety, convened by SQHN and Partners, with cohort 1 running January
       to December 2027. The vocabulary of teaching-and-consumption is banned
-      outright and the ban is enforced by a validator rather than by good
-      intentions — see F002, which lists the forbidden words. That language sets an
+      outright, and the ban is checked automatically on every change rather than
+      left to good intentions. That language sets an
       expectation of attending and receiving, and this programme asks for
       production instead. Every participant leaves having improved something real
       in their own service, evidenced across twelve artefacts.
@@ -65,8 +65,9 @@ acts:
       capstone is not a new piece of work. Measurement starts at month 3 so a run
       chart at month 9 has real data behind it.
       The published time commitment is derived from the curriculum, not chosen for
-      marketing — and a validator recomputes it on every push, because a derived
-      number that nobody recomputes stops being derived.
+      marketing — and it is recomputed automatically every time the design changes,
+      because a figure nobody rechecks stops being derived and quietly becomes a
+      claim.
     show:
       - curriculum_spine: engine/schemas/curriculum-spine.yaml
       - time_model: derived, recomputed against F019
@@ -79,7 +80,7 @@ acts:
     narrative: >-
       One eLearning release, one live faculty session, one small-group coaching
       call, one artefact. A month that adds a fifth component or drops one is
-      refused by the validator. Artefacts are due four days before the coaching
+      rejected automatically. Artefacts are due four days before the coaching
       call so the coach arrives having read them — that four-day gap is arithmetic
       in the engine, not a promise in a document.
       Month 1 is prototyped in full and is openable here, including the live
@@ -112,8 +113,8 @@ acts:
       to one hundred, the heaviest weight on the improvement challenge itself.
       Title, institutional standing, sponsorship, ability to pay and any request
       for reasonable adjustment do not move the score — and that is not a policy
-      statement, it is a property test: every calibration case is re-scored with
-      each of those fields perturbed and the score must not move.
+      statement. It is checked: every practice case is re-scored with each of those
+      details altered, and the score must not move.
       Several things are deliberately absent from the rubric — no pass mark, no
       cohort cap, no country allocation. Each absence is a decision the committee
       has not yet taken, and each one is a stop on this walk.
@@ -190,16 +191,16 @@ acts:
     lede: >-
       Why you are being asked rather than told, and what happens to what you say.
     narrative: >-
-      Canon is the only thing that is true, and only a human committee decision
-      writes to it. Every parameter here is deliberately open and the build is
-      valid across its whole declared range — nothing is hardwired waiting for you
-      to rubber-stamp it.
-      What you say in this walkthrough compiles into a proposal: a structured
-      change set plus a draft minute, which passes every validator and then waits
-      for a human to merge it. Your reasons are kept, not just your verdicts,
-      because a reason becomes a standing constraint that stops the engine
-      re-proposing what you already refused.
-      And every decision is reopenable. Nothing here is a one-way door.
+      One approved record holds what has actually been decided, and only a
+      decision of this committee can change it. Nothing you see here has been
+      quietly settled in advance and dressed up for approval: where something is
+      still open, the design has been built to work whichever way you resolve it.
+      What you say here is turned directly into a proposed change, together with a
+      draft record of the decision, which is checked for consistency and then put
+      in front of a person to approve. Your reasons are kept, not only your
+      verdicts — a reason becomes a standing constraint, which is what stops the
+      same proposal coming back to you unchanged.
+      And every decision can be reopened later. Nothing here is a one-way door.
     anchors: [F016, ST-F017, ST-Q008, ST-Q009, ST-Q010]
 
   - id: ACT10
@@ -209,6 +210,7 @@ acts:
       the spine, not in the item — but they are shown, because an item you never
       reach is an item you were never shown.
     narrative: >-
-      This act should be empty. engine/walkthrough.py reports whatever lands here.
+      This act should be empty. Anything appearing here is reported to the programme
+      office as a defect in the running order, not as a defect in the item itself.
     catch_all: true
     anchors: []

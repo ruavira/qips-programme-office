@@ -234,13 +234,13 @@ def _station(
             "allowed": sorted(DECISION_RESPONSES if kind in DECISION_KINDS else REVIEW_RESPONSES),
             "reason_required_for": sorted(REASON_REQUIRED),
             "note": (
-                "A reason on AMEND, REJECT or DEFER is not paperwork. It is written into the "
-                "owning workstream brief as a standing constraint, and it is how the engine "
-                "stops re-proposing what the committee already refused."
+                "A reason on AMEND, REJECT or DEFER is not paperwork. It is recorded as a "
+                "standing constraint on the team that owns this, and it is how the same "
+                "proposal stops coming back to you unchanged."
                 if kind in DECISION_KINDS
                 else "This is settled. NOTED moves on, QUESTION asks without changing anything, "
-                "and CHALLENGE opens a reopening request carrying your reason. A challenge does "
-                "not reopen the fact by itself — it puts the question to the committee."
+                "and CHALLENGE opens a request to reopen it, carrying your reason. A challenge "
+                "does not reopen anything by itself — it puts the question to the committee."
             ),
         },
     }
@@ -269,9 +269,9 @@ def build_stations() -> list[dict[str, Any]]:
                 built=(
                     param.get("built_across_range")
                     or (
-                        "Built valid across the whole declared range; no value is hardcoded."
+                        "Built to work across the whole declared range; no single value is fixed into it."
                         if param.get("design_valid_across_range")
-                        else "BUILD POSTURE NOT DECLARED — see check_build_posture."
+                        else "NOT YET STATED — what is built while this stays open has not been recorded."
                     )
                 ),
                 options=_options_from_range(param.get("range", "")),
@@ -281,8 +281,8 @@ def build_stations() -> list[dict[str, Any]]:
                 what_it_does_not_gate=param.get("does_not_gate"),
                 decide_by=param.get("decide_by"),
                 decide_by_meaning=(
-                    "The date beyond which this CHOICE becomes expensive or forecloses an "
-                    "option — not a deadline for an answer. The build does not stall on it."
+                    "The date beyond which this CHOICE becomes expensive or closes off an "
+                    "option — not a deadline for an answer. Work does not stall waiting for it."
                 ),
                 owner=fact.get("owner"),
             )
@@ -306,8 +306,8 @@ def build_stations() -> list[dict[str, Any]]:
                 source=f"canon/facts.yaml::{fact_id}",
                 prompt=fact.get("statement", ""),
                 built=(
-                    "Proposed, not settled. Nothing downstream treats this as true, and the "
-                    "build does not assume it."
+                    "Proposed, not settled. Nothing else treats this as true, and the design "
+                    "does not assume it."
                 ),
                 options=[],
                 recommendation=_recommendation_of(fact, fact_id, f"ST-{fact_id}"),
@@ -360,9 +360,8 @@ def build_stations() -> list[dict[str, Any]]:
                 source=f"canon/open-questions.yaml::{qid}",
                 prompt=question.get("question", ""),
                 built=(
-                    "Nothing in the build depends on an answer being invented here. Where this "
-                    "question gates a figure, the figure is held as a parameter rather than "
-                    "guessed."
+                    "Nothing in the design depends on an answer being invented here. Where this "
+                    "question decides a figure, the figure is left open rather than guessed."
                 ),
                 options=[],
                 recommendation=_recommendation_of(question, qid, f"ST-{qid}"),
@@ -460,8 +459,8 @@ def _stations_from_schema(filename: str, doc: Any) -> list[dict[str, Any]]:
                         kind="DELIBERATELY_ABSENT",
                         source=f"engine/schemas/{filename}::{dotted}.{absent_key}",
                         prompt=(
-                            f"'{absent_key}' is deliberately absent from the build. Does the "
-                            "committee ratify that it stays absent for cohort 1?"
+                            f"No {absent_key.replace('_', ' ')} is set anywhere in the design. "
+                            "Does the committee agree it stays unset for cohort 1?"
                         ),
                         built=str(reason),
                         options=["keep absent", "set it now", "defer with a date"],
