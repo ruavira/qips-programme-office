@@ -179,6 +179,9 @@ button{cursor:pointer}
 .count{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .saved{font-size:12px;color:var(--ok);opacity:0;transition:opacity .3s}
 .saved.on{opacity:1}
+.sendstate{font-size:12px;color:var(--faint);white-space:nowrap}
+.sendstate.sent,.sendstate.final{color:var(--ok)}
+.sendstate.failed{color:var(--warn);font-weight:600}
 
 main{max-width:820px;margin:0 auto;padding:38px 24px 150px}
 
@@ -289,7 +292,7 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
 
 JS = """
 const KEY='qips-ccc-walkthrough-v1';
-let S={answers:{},raised:[],act:0,stop:-1,mode:'welcome',_draft:{}};
+let S={answers:{},raised:[],act:0,stop:-1,mode:'welcome',reviewer:'',_draft:{}};
 
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
 function acts(){return DATA.acts.filter(a=>a.stops&&a.stops.length)}
@@ -327,7 +330,8 @@ function persist(){
   if(!CAN_SAVE)return;
   try{
     localStorage.setItem(KEY,JSON.stringify({answers:S.answers,raised:S.raised,
-      act:S.act,stop:S.stop,mode:S.mode,at:new Date().toISOString()}));
+      act:S.act,stop:S.stop,mode:S.mode,reviewer:S.reviewer||'',
+      at:new Date().toISOString()}));
     const el=document.getElementById('saved');
     if(el){el.classList.add('on');clearTimeout(window._st);
       window._st=setTimeout(function(){el.classList.remove('on')},1400);}
@@ -426,8 +430,18 @@ function screenWelcome(){
         'before you close the tab, and <b>Load a copy</b> to pick it up again. Everything else works normally.</li>')+
      '<li>You can go back and change anything, at any point.</li>'+
      '<li>Prefer to talk? Every box has a microphone.</li>'+
+     (DATA.submit
+       ?'<li>Your answers go back to the programme office as you work, part by part. '+
+        'There is no final step to remember, and nothing to email.</li>'
+       :'<li>When you are done, <b>Save a copy</b> downloads a file to send to the '+
+        'programme office. Nothing leaves this browser on its own.</li>')+
      '<li>Nothing you do here changes the programme by itself. It becomes a proposal a person reviews.</li>'+
      '</ul></div>';
+  if(DATA.submit&&!(DATA.submit.reviewer||S.reviewer)){
+    h+='<div class="card"><h3>Who is walking this?</h3>'+
+       '<p class="quiet">So your answers arrive with your name on them. Nothing else is collected.</p>'+
+       box('who','Your name',S.reviewer,'40px')+'</div>';
+  }
   return h;
 }
 
@@ -542,9 +556,22 @@ function screenFinish(){
      'skipped stays open, and the design continues to work either way.</p>';
   if(a<n)h+='<p class="quiet">'+(n-a)+' stop'+(n-a===1?'':'s')+' unanswered. That is a legitimate '+
      'outcome rather than an omission, and you can go back to any of them.</p>';
-  h+='<div class="btns" style="margin-top:20px">'+
-     '<button class="p" data-act="export">Send my responses back</button>'+
-     '<button class="s" data-act="doc">Read the whole thing as one document</button></div></div>';
+  h+='<div class="btns" style="margin-top:20px">';
+  if(DATA.submit){
+    h+='<button class="p" data-act="finalsend">Send my responses</button>'+
+       '<button class="s" data-act="export">Also keep a copy</button>';
+  }else{
+    h+='<button class="p" data-act="export">Save my responses to a file</button>';
+  }
+  h+='<button class="s" data-act="doc">Read the whole thing as one document</button></div>';
+  if(DATA.submit){
+    h+='<p class="quiet" style="margin-top:14px">Your answers have been going back as you '+
+       'worked, so nothing is lost either way. This marks the pass finished.</p>';
+  }else{
+    h+='<p class="quiet" style="margin-top:14px">This downloads a file. Send it to the '+
+       'programme office however suits you &mdash; it is the only copy outside this browser.</p>';
+  }
+  h+='</div>';
   if(S.raised.length){
     h+='<div class="card"><h3>What you raised</h3>';
     S.raised.forEach(function(r){
@@ -606,11 +633,88 @@ function stepIndex(){
 function goto2(i){
   const all=steps();i=Math.max(0,Math.min(all.length-1,i));
   const x=all[i];
+  // A part boundary is the natural save point: she has finished a train of
+  // thought, and if she stops here the programme office still has it.
+  if(x.t==='actintro'||x.t==='raise'||x.t==='finish')sendNow(false);
   S.mode=x.t==='welcome'?'welcome':(x.t==='finish'?'finish':'walk');
   if(x.t==='actintro'){S.act=x.a;S.stop=-1}
   if(x.t==='stop'){S.act=x.a;S.stop=x.s}
   if(x.t==='raise'){S.act=x.a;S.stop=-2}
   persist();render();window.scrollTo({top:0});
+}
+
+/* Sending her answers back.
+
+   The burden this removes: without it she must press Save a copy, find the file
+   in Downloads, and attach it to an email — three steps at the end, when she is
+   tired, and the one place where failure loses everything she did.
+
+   Sending happens at each part boundary rather than only at the end, because the
+   end is exactly the moment a tired person closes a tab. An interrupted pass is
+   still a useful pass. It is also idempotent: the same answers are sent again
+   rather than a diff, so the newest submission is always the whole picture and a
+   lost one costs nothing.
+
+   Nothing here is silent. A send that fails says so and retries; a send that has
+   never succeeded says that too. She is never left believing her work travelled
+   when it did not — the same rule as the autosave. */
+let sentHash=null,sendState='idle',sendAt=null;
+
+function payload(final){
+  return {sitting:DATA.sitting,generated_from:DATA.commit,
+    journey_fingerprint:DATA.journey_fingerprint,
+    reviewer:(DATA.submit&&DATA.submit.reviewer)||S.reviewer||'',
+    answered:answered(),of:allStops().length,final:!!final,
+    responses:Object.keys(S.answers).filter(function(k){return S.answers[k].response})
+      .map(function(k){return {station:k,response:S.answers[k].response,
+        chosen_option:S.answers[k].choice||null,reason:S.answers[k].reason||''}}),
+    raised:S.raised};
+}
+function digest(o){
+  const s=JSON.stringify(o);let h=0;
+  for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0}
+  return h;
+}
+function sendStatus(){
+  const el=document.getElementById('sendstate');
+  if(!el)return;
+  if(!DATA.submit){el.style.display='none';return}
+  el.style.display='';
+  el.className='sendstate '+sendState;
+  el.textContent=sendState==='sending'?'sending…'
+    :sendState==='sent'?'sent to the programme office'
+    :sendState==='failed'?'not sent yet — will try again'
+    :sendState==='final'?'sent — thank you'
+    :'';
+}
+function sendNow(final){
+  if(!DATA.submit)return Promise.resolve(false);
+  const body=payload(final);
+  if(!body.responses.length&&!body.raised.length&&!final)return Promise.resolve(false);
+  const h=digest(body);
+  if(h===sentHash&&!final)return Promise.resolve(false);   // nothing has changed
+  sendState='sending';sendStatus();
+  let request;
+  if(DATA.submit.mode==='netlify'){
+    // URL-encoded, because Netlify Forms does not accept JSON.
+    const f=new URLSearchParams();
+    f.append('form-name',DATA.submit.form);
+    f.append('reviewer',body.reviewer);
+    f.append('progress',body.answered+' of '+body.of);
+    f.append('final',body.final?'yes':'no');
+    f.append('payload',JSON.stringify(body));
+    request=fetch(DATA.submit.url,{method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},body:f.toString()});
+  }else{
+    request=fetch(DATA.submit.url,{method:'POST',
+      headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  }
+  return request.then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    sentHash=h;sendAt=new Date();sendState=final?'final':'sent';sendStatus();return true;
+  }).catch(function(){
+    sendState='failed';sendStatus();return false;
+  });
 }
 
 function exportFile(){
@@ -687,6 +791,13 @@ document.addEventListener('click',function(ev){
   if(t.id==='back'){goto2(stepIndex()-1);return}
   if(t.id==='fwd'){goto2(stepIndex()+1);return}
   if(t.dataset&&t.dataset.act==='export'){exportFile();return}
+  if(t.dataset&&t.dataset.act==='finalsend'){
+    sendNow(true).then(function(ok){
+      if(!ok)alert('That could not be sent just now — you may be offline. It will keep '+
+        'trying, and "Also keep a copy" downloads a file you can send instead.');
+    });
+    return;
+  }
   if(t.dataset&&t.dataset.act==='doc'){S.mode='doc';render();window.scrollTo({top:0});return}
   if(t.dataset&&t.dataset.act==='guided'){S.mode='walk';render();window.scrollTo({top:0});return}
   if(t.classList.contains('ans')){
@@ -724,6 +835,9 @@ document.addEventListener('input',function(ev){
     if(t.classList.contains('rtitle'))S._draft[bx.dataset.raise].title=t.value;
     if(t.classList.contains('rdetail'))S._draft[bx.dataset.raise].detail=t.value;
     return}
+  if(t.classList&&t.classList.contains('who')){
+    S.reviewer=t.value;clearTimeout(window._pt);window._pt=setTimeout(persist,600);return;
+  }
   const x=steps()[stepIndex()];
   if(x.t!=='stop')return;
   const s=acts()[x.a].stops[x.s];
@@ -745,9 +859,17 @@ document.addEventListener('keydown',function(ev){
   if(saved&&(Object.keys(saved.answers||{}).length+(saved.raised||[]).length)>0){
     S.answers=saved.answers||{};S.raised=saved.raised||[];
     S.act=saved.act||0;S.stop=saved.stop==null?-1:saved.stop;S.mode=saved.mode||'walk';
+    S.reviewer=saved.reviewer||'';
     const el=document.getElementById('resumed');if(el)el.style.display='block';
   }
-  render();
+  render();sendStatus();
+  // A send that failed while she was offline retries when the page next runs and
+  // when the connection returns, so an unsent pass repairs itself.
+  window.addEventListener('online',function(){if(sendState==='failed')sendNow(false)});
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden')sendNow(false);
+  });
+  if(DATA.submit&&(answered()||S.raised.length))sendNow(false);
 })();
 """
 
@@ -975,6 +1097,55 @@ RAISE_KINDS = [
     ["CONCERN", "Something that worries you and does not fit the other three."],
 ]
 
+# ---------------------------------------------------------------------------
+# The return path
+# ---------------------------------------------------------------------------
+#
+# Without this, getting her answers back means: press Save a copy, find the file
+# in Downloads, attach it to an email. Three steps, at the end, when she is
+# tired — and the one place where failure costs everything she did. She could
+# walk all 52 stops and the programme office would receive nothing.
+#
+# So a hosted build posts her answers as she goes. Not only at the end: the end
+# is precisely the moment a tired person closes a tab. Sending at each part
+# boundary means an interrupted pass is still a useful pass.
+#
+# The endpoint is configured at build time and the page does not care what is
+# behind it. Netlify's form handling is what it points at first, because the
+# programme needs a host anyway and this comes with it; the mode below is the
+# seam that keeps that from becoming a commitment.
+#
+#   Netlify's requirements, from their documentation (accessed 2 August 2026):
+#   the form must exist in the deployed HTML carrying data-netlify="true" and a
+#   name; submissions are POSTed URL-encoded, because "Netlify Forms does not
+#   support JSON form data at this time"; and form detection must be turned on
+#   by hand in the UI before any of it works.
+#   https://docs.netlify.com/manage/forms/setup/
+
+SUBMIT_MODES = ("netlify", "json")
+DEFAULT_FORM_NAME = "qips-walkthrough-responses"
+
+
+def submit_config(mode: str | None, url: str | None, form: str | None,
+                  reviewer: str | None) -> dict[str, Any] | None:
+    """What the page needs to know to send. None means it cannot, and says so."""
+    if not mode:
+        return None
+    if mode not in SUBMIT_MODES:
+        raise WalkthroughError(f"unknown submit mode {mode!r}; expected one of {SUBMIT_MODES}")
+    if mode == "netlify":
+        # Same-origin POST to the site root. Netlify routes it by the form name.
+        url = url or "/"
+    elif not url:
+        raise WalkthroughError("--submit-mode json needs --submit-url")
+    return {
+        "mode": mode,
+        "url": url,
+        "form": form or DEFAULT_FORM_NAME,
+        "reviewer": reviewer or "",
+    }
+
+
 ICON_SVG = (
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
     '<rect width="32" height="32" rx="7" fill="#1f4e79"/>'
@@ -1131,7 +1302,7 @@ def resolve_responses(payload: dict[str, Any], acts: list[dict[str, Any]]) -> di
 
 
 def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commit: str,
-               hosted: bool = False) -> str:
+               hosted: bool = False, submit: dict[str, Any] | None = None) -> str:
     lang = load_language()
     # Filtering happens BEFORE redaction, while `catch_all` still exists — the JS
     # used to do it, and `catch_all` is redacted away, so the page rendered a
@@ -1159,6 +1330,7 @@ def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commi
         "journey_fingerprint": fingerprint,
         "welcome": WELCOME,
         "raiseKinds": RAISE_KINDS,
+        "submit": submit,
         "reasonRequired": sorted(di.REASON_REQUIRED),
         "decisionKinds": sorted(di.DECISION_KINDS),
     }
@@ -1172,6 +1344,20 @@ def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commi
 
     total = sum(len(act["stops"]) for act in view)
     icon = urllib.parse.quote(ICON_SVG, safe="")
+    # Netlify scans the deployed HTML for forms. A form the page constructs in
+    # JavaScript is invisible to that scan, so the form is written out here,
+    # hidden, with the fields the send actually uses. Their names must match or
+    # the submission arrives with empty columns.
+    form = ""
+    if submit and submit["mode"] == "netlify":
+        form = (
+            f'<form name="{html.escape(submit["form"])}" data-netlify="true" '
+            f'netlify-honeypot="bot-field" hidden>\n'
+            f'  <input type="hidden" name="form-name" value="{html.escape(submit["form"])}">\n'
+            f'  <input name="bot-field"><input name="reviewer"><input name="progress">\n'
+            f'  <input name="final"><textarea name="payload"></textarea>\n'
+            f'</form>'
+        )
     if hosted:
         # Served from an origin: the manifest and the worker are real files, and
         # the browser will offer to install the page as an application.
@@ -1180,6 +1366,14 @@ def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commi
                     "window.addEventListener('load',function(){"
                     "navigator.serviceWorker.register('sw.js').catch(function(){})});</script>")
     else:
+        if submit:
+            raise WalkthroughError(
+                "a submit endpoint was configured for the single-file build. A page opened "
+                "from disk has no origin to post from, so the send would fail every time "
+                "and she would be told her answers had not travelled — which would be true. "
+                "Configure the endpoint on the hosted build (--pwa) instead."
+            )
+        form = ""
         # Opened from a file: a worker cannot register, so none is attempted. The
         # manifest still travels inside the page, which costs nothing and means a
         # hosted copy of this exact file is installable without a rebuild.
@@ -1205,7 +1399,9 @@ save your progress on its own. Use <b>Save a copy</b> before you close the tab.<
   <div class="bar"><i id="prog"></i></div>
   <div class="count" id="count">0 of {total}</div>
   <div class="saved" id="saved">saved</div>
+  <div class="sendstate" id="sendstate" style="display:none"></div>
 </div></div>
+{form}
 <main id="body"></main>
 <div class="nav" id="nav"><div class="inner">
   <button class="s" id="back">Back</button>
@@ -1235,15 +1431,26 @@ def to_capture(payload: dict[str, Any], acts: list[dict[str, Any]]) -> dict[str,
     the fingerprint can be checked, so it is checked here.
     """
     resolved = resolve_responses(payload, acts)
+    # The compiler records who took each decision under `by`. Carrying the name
+    # through here means attribution survives into the minute without her having
+    # typed it 52 times.
+    who = (payload.get("reviewer") or "").strip()
+    responses = []
+    for station, body in resolved.items():
+        item = dict(body, station=station)
+        if who:
+            item.setdefault("by", who)
+        responses.append(item)
     return {
         "sitting": payload.get("sitting") or SITTING,
-        "responses": [dict(body, station=station) for station, body in resolved.items()],
+        "reviewer": who or None,
+        "responses": responses,
         "raised": payload.get("raised") or [],
     }
 
 
 def write_pwa(directory: Path, acts: list[dict[str, Any]], stations: list[dict[str, Any]],
-              commit: str) -> list[Path]:
+              commit: str, submit: dict[str, Any] | None = None) -> list[Path]:
     """Write the hosted form: the same page, plus what makes it installable.
 
     Four files, all static, no build step and no server code — it can go on any
@@ -1252,7 +1459,7 @@ def write_pwa(directory: Path, acts: list[dict[str, Any]], stations: list[dict[s
     what turns it into something with an icon on her dock.
     """
     directory.mkdir(parents=True, exist_ok=True)
-    page = build_html(acts, stations, commit, hosted=True)
+    page = build_html(acts, stations, commit, hosted=True, submit=submit)
     version = hashlib.sha256(page.encode("utf-8")).hexdigest()[:12]
     files = {
         "index.html": page,
@@ -1411,6 +1618,56 @@ def self_test() -> int:
             failures.append(
                 f"{len(stations)} answers went in and {len(capture['responses'])} came out"
             )
+
+    # --- the return path ---------------------------------------------------
+    # Without an endpoint the page must still tell her how to get her answers
+    # back, or she finishes and has nowhere to put them.
+    if "Save a copy" not in html_out:
+        failures.append("with no endpoint configured, the page offers no way to return answers")
+
+    cfg = submit_config("netlify", None, None, "A Reviewer")
+    hosted_submit = build_html(acts, stations, "self-test", hosted=True, submit=cfg)
+
+    form = re.search(r"<form [^>]*data-netlify[^>]*>.*?</form>", hosted_submit, re.S)
+    if not form:
+        failures.append(
+            "the hosted build carries no static form. Netlify scans the deployed HTML, so a "
+            "form built in JavaScript is invisible to it and every submission is dropped."
+        )
+    else:
+        if f'name="{cfg["form"]}"' not in form.group(0):
+            failures.append("the static form's name does not match the name the page posts under")
+        # The failure this catches is quiet and total: a submission arrives, and
+        # every column is empty, because the field names did not agree.
+        declared = set(re.findall(r'<(?:input|textarea) name="([\w-]+)"', form.group(0)))
+        declared |= set(re.findall(r'<input type="hidden" name="([\w-]+)"', form.group(0)))
+        sent = set(re.findall(r"f\.append\('([\w-]+)'", JS))
+        missing = sent - declared
+        if missing:
+            failures.append(
+                f"the page posts field(s) the form does not declare: {sorted(missing)}. "
+                f"The submission would arrive with those columns empty."
+            )
+
+    for marker, missing in [
+        ("sendNow", "nothing sends her answers back"),
+        ("visibilitychange", "a pass abandoned mid-part is never sent"),
+        ("addEventListener('online'", "a send that failed offline never retries"),
+        ("id=\"sendstate\"", "she cannot see whether her answers travelled"),
+    ]:
+        if marker not in hosted_submit:
+            failures.append(f"return path: {missing}")
+
+    # Configuring an endpoint on the single-file build must be refused, not
+    # accepted and then quietly broken: a page opened from disk has no origin to
+    # post from, so every send would fail and she would be told so, correctly and
+    # uselessly, for the whole pass.
+    try:
+        build_html(acts, stations, "self-test", hosted=False, submit=cfg)
+    except WalkthroughError:
+        pass
+    else:
+        failures.append("a submit endpoint was accepted on the single-file build, where it cannot work")
 
     # --- the guided walk ---------------------------------------------------
     # She must not need anyone to explain the page to her. Each of these is a
@@ -1581,6 +1838,11 @@ def main() -> int:
     parser.add_argument("--out", help="write the single self-contained file")
     parser.add_argument("--pwa", metavar="DIR",
                         help="write the hosted form: page, manifest, icon and worker")
+    parser.add_argument("--submit-mode", choices=SUBMIT_MODES,
+                        help="how the hosted page returns her answers")
+    parser.add_argument("--submit-url", help="where to post; defaults to the site root for netlify")
+    parser.add_argument("--submit-form", help=f"form name; defaults to {DEFAULT_FORM_NAME}")
+    parser.add_argument("--reviewer", help="name the responses arrive under, if not asked on the page")
     parser.add_argument("--responses", metavar="FILE",
                         help="a file saved from the page; converts it for the blueprint compiler")
     parser.add_argument("--capture-out", metavar="FILE", default="capture.yaml")
@@ -1638,11 +1900,20 @@ def main() -> int:
         Path(args.out).write_text(build_html(acts, stations, args.commit), encoding="utf-8")
         print(f"wrote {args.out}")
     if args.pwa:
-        for path in write_pwa(Path(args.pwa), acts, stations, args.commit):
+        submit = submit_config(args.submit_mode, args.submit_url, args.submit_form, args.reviewer)
+        for path in write_pwa(Path(args.pwa), acts, stations, args.commit, submit):
             print(f"wrote {path}")
         print("\nServe that directory over http(s) and the browser will offer to install it.\n"
               "Opened straight from disk it still works, offline — it just cannot install,\n"
               "because installing needs a service worker and a worker needs an origin.")
+        if submit and submit["mode"] == "netlify":
+            print(f"\nResponses post to '{submit['url']}' as form '{submit['form']}'.\n"
+                  f"Netlify will not accept them until form detection is switched on by hand:\n"
+                  f"  Netlify UI -> Forms -> Enable form detection, then redeploy.\n"
+                  f"Until that is done every send fails, and the page says so rather than\n"
+                  f"pretending otherwise.")
+        elif not submit:
+            print("\nNo submit endpoint configured: she downloads a file and sends it herself.")
     return 0
 
 
