@@ -68,6 +68,9 @@ facts:
   established: 2026-07-28
   parameter:
     range: own city | own country | any qualified site within the cohort country set
+    built_across_range: The observership is built for any site that meets the published Host Site Standard, and
+      that standard is written from what the programme needs rather than from the sites we happen to have. Changing
+      the geography changes which sites qualify; it changes nothing about the instruments, the hours, or the assessment.
     design_valid_across_range: true
     why: 'The 40 contact hours, the structured instruments, the portfolio and the assessment of the participant''s
       own analysis are identical at any qualified site. Note for whoever decides this: it is not an administrative
@@ -163,6 +166,8 @@ facts:
     range: SQHN-led (the only option available for public-facing material while F028 stands) | RCI-led | co-branded
       — the latter two are reachable only after a CCC decision releases partner naming. A mixed RCI and SQHN asset
       set remains the internal working position.
+    built_across_range: Brand assets are referenced from one place rather than embedded through the material, so
+      settling the identity is a substitution. No wording, sequence or assessment depends on which identity is chosen.
     design_valid_across_range: true
     why: No element of programme design depends on the visual identity.
     gates: Collateral production (W14) · naming architecture (W13) · partner-naming release (F028)
@@ -180,6 +185,10 @@ facts:
   established: 2026-07-28
   parameter:
     range: clinical only | clinical and non-clinical | open with experience floor
+    built_across_range: The eligibility rules sit in the application instrument as a single block, written so the
+      whole block is swapped when the decision is taken. Every other part of the form, and the whole of the scoring
+      approach, is deliberately valid across all three options — which is why eligibility is a gate and never a
+      scored criterion.
     design_valid_across_range: true
     why: The programme is designed for a mixed clinical and managerial cohort; narrowing eligibility removes participants,
       not content.
@@ -207,6 +216,10 @@ facts:
   established: 2026-07-28
   parameter:
     range: '[Nigeria] | [Nigeria, Ghana] | [Nigeria, Ghana, Pakistan]'
+    built_across_range: Country is a free-entry field with eligibility resolved at review time against whatever
+      the country set then is, never a fixed list. Four adaptation points are named — worked examples, regulatory
+      references, host-site logistics and session timing — so adding a country is a substitution exercise rather
+      than a redesign.
     design_valid_across_range: true
     why: 'The curriculum teaches improvement methods applied in the participant''s own facility, so it is country-agnostic
       by construction. Note added 2026-08-02: country-agnostic in DESIGN is not country-agnostic in RECOGNITION.
@@ -266,6 +279,9 @@ facts:
       USD 294-661, ceiling ~USD 600 at WACP fellowship-exam parity; Ghana USD 530-970; Pakistan USD 270-540). The
       former USD 700-900 band sits above Pakistan's ceiling and at or above Nigeria's, and moves to the institutional
       rung.
+    built_across_range: No price appears in any instrument an applicant sees. What is built is the STRUCTURE — a
+      ladder by income band, instalments, and local-currency publication — with the level left open. Setting the
+      level fills in a structure that already exists.
     design_valid_across_range: true
     why: 'No hour of curriculum, assessment or observership depends on the price. Recommended ladder, published
       openly on World Bank income bands after the ISQua precedent: individual LMIC USD 500; institutional per seat
@@ -290,6 +306,9 @@ facts:
     range: 25 to 64 participants. Target 40, floor 24, ceiling 64 — set by the CCC on 2026-08-01, Item 6. Coaching
       runs in groups of eight and each group is a stepped cost, not a smooth one, so the economically clean sizes
       are 24, 32, 40, 48, 56 and 64. A cohort off a multiple of eight pays for a coaching group it does not fill.
+    built_across_range: Coaching runs in groups of eight and the design adds or removes whole groups, so cohort
+      size changes the number of groups and the host-site places required, and nothing else. No instrument states
+      a number of places.
     design_valid_across_range: true
     why: The monthly cycle, coaching group size of 8 and assessment model hold across the whole range; only the
       number of coaching groups and host-site places change. Published break-even evidence puts the fixed-cost floor
@@ -356,6 +375,9 @@ facts:
   parameter:
     range: in-kind only (CPD credit, faculty development, sponsored fellowship) | in-kind plus a session honorarium
       | full honorarium at published benchmark rates
+    built_across_range: The coverage-slot model, the appointment gates, conflict clearance and the consent architecture
+      are built identically whether a slot holder is paid, paid in kind, or unpaid. Settling remuneration changes
+      the appointment letter, not the operating model.
     design_valid_across_range: true
     why: The coverage-slot model, appointment gates, conflict clearance and consent architecture approved at W05-01
       are identical whether a slot holder is paid, paid in kind, or unpaid.
