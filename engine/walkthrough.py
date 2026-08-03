@@ -505,6 +505,8 @@ function stopBody(s){
       '<b>Where that reasoning is weak.</b> '+esc(u.what_is_genuinely_weak)+'</div>';
     if(u.what_reopening_would_take)h+='<div class="v" style="margin-top:10px">'+
       '<b>What changing it would take.</b> '+esc(u.what_reopening_would_take)+'</div>';
+    if(u.what_the_research_found)h+='<div class="v" style="margin-top:10px">'+
+      '<b>What we went and found out.</b> '+esc(u.what_the_research_found)+'</div>';
     (u.the_competing_positions||[]).forEach(function(pos,i){
       h+='<div class="position"><div class="k">Position '+(i+1)+' &mdash; '+esc(pos.name)+'</div>';
       if(pos.ladder)h+='<div class="v"><b>'+esc(pos.ladder)+'</b></div>';

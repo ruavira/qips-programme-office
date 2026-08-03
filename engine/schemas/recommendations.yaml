@@ -126,39 +126,81 @@ recommendations:
         - name: Priced to what this market can self-pay
           ladder: >-
             Individual USD 500, institutional USD 900 per seat, international
-            USD 1,500, hardship USD 250.
+            USD 1,500, hardship USD 250. This is the figure as ratified.
           case_for: >-
             Every figure traces to an observed local ceiling. Three countries
-            anchor independently on one specialist examination fee, and USD 500 is
-            the only point inside all three bands. It keeps this a self-pay
-            product, which can be sold on a nine-week runway. Above roughly USD
-            700 it becomes an institutional sale on a six-to-twelve-month cycle
-            that a January 2027 start cannot absorb.
+            anchor independently on one specialist examination fee, and USD 500
+            is the only point inside all three bands. It keeps this a self-pay
+            product, sellable on a short runway.
           case_against: >-
-            It prices by what buyers can afford rather than by what the programme
-            delivers, and it sets the international anchor from the local floor
-            rather than from the international market.
+            Two problems, one of which has since been measured. It prices by what
+            buyers can afford rather than by what the programme delivers. And the
+            international rate is not merely low but below the floor of the whole
+            market: the cheapest credible comparable programme anywhere charges
+            about USD 2,650 for nine months, virtual, with no in-person component
+            and no small-group coaching. An international reader comparing us
+            against the field sees a twelve-month coached programme with an
+            observership priced below the cheapest thing on the shelf.
         - name: Priced to what the structure is worth, with funded access
           ladder: >-
-            An international rate derived from comparable programmes, a published
-            income-band ladder beneath it, and a sponsorship and scholarship route
-            carrying those who cannot self-pay.
+            An international rate near comparable programmes, an income-band
+            ladder beneath it, and sponsorship or scholarship carrying those who
+            cannot self-pay.
           case_for: >-
-            The two closest international comparators charge USD 13,500 for eleven
-            months delivered entirely online with a project, and USD 25,000 for
-            fourteen months asking roughly five hours a month plus two three-day
-            residentials. This programme asks for more contact and more production
-            than either. A ladder anchored to that reality makes the local rate
-            read as deliberate subsidy rather than as our own valuation of the
-            work.
+            The structure justifies it. Thirteen comparable programmes were
+            priced from their published pages: the closest structural twin
+            charges USD 15,350 for ten months, and it carries no small-group
+            coaching, which this programme does. The nearest professional-body
+            precedent, a national college delivering ten months hybrid with team
+            coaching and a workplace project, charges about USD 5,800.
           case_against: >-
-            At those levels almost nobody in the launch markets self-pays, which
-            turns the programme into a scholarship-administration operation. Its
-            survival then depends on precisely the funding that must never carry
-            an operating cost: one comparable national programme lost 60% of its
-            external funding to a reclassification it did not cause. And if the
-            published price is one figure while everyone pays another through
-            scholarship, the published figure is fiction — which is discoverable.
+            The funding it depends on does not exist in a form that could reach
+            these participants. Twenty named funders were searched and not one
+            operates a scheme that would pay an individual's fee to attend an
+            independent, non-degree programme run by someone else: the money is
+            tied to the funder's own product, or to a degree at a partner
+            university reached through a multi-year cycle, or paid to
+            institutions rather than people, or restricted to countries that are
+            not ours. The only published funded-to-self-pay ratio obtainable
+            anywhere is about one in a hundred. At an international price the
+            self-pay market does not shrink, it disappears — the figure is more
+            than fifteen times the evidenced local ceiling — so this is not
+            pricing higher and funding the gap, it is funding the whole cohort
+            from money that has not been found.
+        - name: Reprice the international rate only, and lift the local rate within its approved band
+          ladder: >-
+            The local individual rate at the top of the range already approved,
+            the international rate derived from comparable programmes instead of
+            from a multiple of the local rate, and the whole ladder published
+            openly beside the comparison that produced it.
+          case_for: >-
+            It is the only option the arithmetic supports. At the current figure
+            the group of forty runs at a small shortfall against its own costs;
+            at the top of the approved band it covers them and returns a little.
+            Nothing about the international rate is budgeted as income, so
+            raising it changes no forecast — it changes only what the programme
+            appears to think it is worth, which is the thing actually at issue.
+            It needs no reopening of the approved band, so it can be done now.
+          case_against: >-
+            It does not answer the deeper question, which is whether this should
+            be a self-pay product at all. It leaves the local rate anchored to
+            what a market can bear rather than to what the work is worth, and it
+            treats an unresolved argument about the programme's own positioning
+            as though careful pricing could settle it.
+      what_the_research_found: >-
+        Commissioned after this was reopened, reporting 3 August 2026. Thirteen
+        comparable programmes priced from their own published pages; twenty
+        funders searched; the cost of running the first group derived two
+        independent ways that agree within three per cent. Three things came back
+        that nobody had. The defensible range for a programme of this shape is
+        roughly USD 5,800 to 15,400, and the international rate currently sits
+        well below the bottom of it. Portable scholarship funding for this kind of
+        programme could not be found at all. And two claims in the programme's own
+        record turned out to be wrong, one of which had been treated as the
+        strongest argument for selling to institutions: the accrediting body's own
+        standard does not in fact require a hospital to employ someone qualified
+        in quality — it says management may appoint such a person, depending on
+        complexity, with no qualification attached.
       what_is_being_done: >-
         Both positions are being worked up properly and put to an advisory panel
         together for a verdict, rather than one being defended against the other.
