@@ -58,6 +58,7 @@ import subprocess
 import sys
 import tempfile
 import urllib.parse
+import warnings
 from pathlib import Path
 from typing import Any
 
@@ -292,7 +293,7 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
 @media print{.top,.nav,.mic,.warnbar{display:none}.card{box-shadow:none;page-break-inside:avoid}}
 """
 
-JS = """
+JS = r"""
 const KEY='qips-ccc-walkthrough-v1';
 let S={answers:{},raised:[],act:0,stop:-1,mode:'welcome',reviewer:'',_draft:{}};
 
@@ -714,7 +715,7 @@ function readable(){
     });
   }
   if(!lines.length)lines.push('Nothing answered yet.');
-  return lines.join('\\n');
+  return lines.join('\n');
 }
 
 function digest(o){
@@ -871,7 +872,7 @@ document.addEventListener('click',function(ev){
     d.detail=(bx.querySelector('.rdetail').value||'').trim();
     if(!d.kind){alert('Choose what kind of thing this is first.');return}
     if(!d.title){alert('It needs a line saying what is missing or wrong.');return}
-    if(d.detail.split(/\\s+/).filter(Boolean).length<8){
+    if(d.detail.split(/\s+/).filter(Boolean).length<8){
       alert('It needs a little more detail. Whoever picks this up will not have been in the room.');return}
     S.raised.push({act:act,kind:d.kind,title:d.title,detail:d.detail});
     delete S._draft[act];persist();render();return;
@@ -1602,6 +1603,25 @@ def unterminated_string_literals(source: str) -> list[str]:
 
 def self_test() -> int:
     failures: list[str] = []
+
+    # This file is mostly not Python. The style sheet and the script are held in
+    # Python strings, and the translation between the two languages is where the
+    # damage happens: a backslash Python does not recognise is kept with a
+    # warning, one Python DOES recognise is silently transformed, and either way
+    # the browser gets something other than what is written here.
+    #
+    # The script block is a raw string so there is no translation at all. This
+    # check is what keeps it that way, and it fires on the warning Python was
+    # already printing on every run and nobody was reading.
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        compile(Path(__file__).read_text(encoding="utf-8"), __file__, "exec")
+    for warning in caught:
+        failures.append(
+            f"line {warning.lineno}: {warning.message}. In a block of JavaScript this is "
+            f"never harmless — it means the browser receives different characters from the "
+            f"ones written here. Use a raw string, or double the backslash deliberately."
+        )
 
     # Before anything else: the page's script must be parseable. Everything below
     # tests what the page CONTAINS; this tests that it can run at all.
