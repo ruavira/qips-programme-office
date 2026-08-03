@@ -209,6 +209,19 @@ p{margin-bottom:14px}
   border-radius:0 8px 8px 0;margin-top:16px}
 .rec .k{color:var(--accent)}
 .rec .disc{font-size:12.5px;color:var(--muted);margin-top:9px;font-style:italic}
+.rec.stale{background:var(--bg);border-left-color:var(--faint);opacity:.85}
+.rec.stale .k{color:var(--faint)}
+.contested{background:var(--make-soft);border-left:3px solid var(--make);padding:16px 19px;
+  border-radius:0 8px 8px 0;margin:16px 0}
+.contested>.k{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--make);
+  font-weight:650;margin-bottom:8px}
+.contested .v{font-size:15.5px}
+.position{background:var(--card);border:1px solid var(--line);border-radius:9px;
+  padding:13px 15px;margin:12px 0}
+.position .k{font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:6px;
+  letter-spacing:0;text-transform:none}
+.position .v.against{margin-top:7px;color:var(--muted);font-size:14.5px}
+.want{margin-top:14px;padding-top:12px;border-top:1px dashed var(--make);font-size:15px}
 .ev{font-size:13px;color:var(--muted);margin:4px 0 4px 18px}
 .opts li{margin:5px 0 5px 20px;font-size:15.5px}
 .notlist{background:var(--warn-soft);border-left:3px solid var(--warn);padding:13px 17px;
@@ -231,6 +244,7 @@ p{margin-bottom:14px}
 .n-ARGUE_WITH_US{background:var(--accent-soft);color:var(--accent)}
 .n-DESIGN_WITH_US{background:var(--make-soft);color:var(--make)}
 .n-CHALLENGE_IF_WRONG{background:var(--ok-soft);color:var(--ok)}
+.n-HELP_US_SETTLE_IT{background:var(--make-soft);color:var(--make)}
 .invite{font-size:15px;color:var(--muted);margin:12px 0 4px;padding-left:14px;
   border-left:2px solid var(--line);font-style:italic}
 
@@ -480,8 +494,33 @@ function stopBody(s){
   if(s.options&&s.options.length){h+='<div class="field"><div class="k">The range</div><ul class="opts">';
     s.options.forEach(function(o){h+='<li>'+esc(o)+'</li>'});h+='</ul></div>'}
   const r=s.recommendation||{};
+  const u=r.under_review;
+  if(u){
+    h+='<div class="contested"><div class="k">This one is being reconsidered</div>';
+    h+='<div class="v">'+esc(u.why)+'</div>';
+    if(u.on_sustainability)h+='<div class="v" style="margin-top:10px">'+esc(u.on_sustainability)+'</div>';
+    if(u.what_the_record_actually_shows)h+='<div class="v" style="margin-top:10px">'+
+      '<b>How the figure was actually reached.</b> '+esc(u.what_the_record_actually_shows)+'</div>';
+    if(u.what_is_genuinely_weak)h+='<div class="v" style="margin-top:10px">'+
+      '<b>Where that reasoning is weak.</b> '+esc(u.what_is_genuinely_weak)+'</div>';
+    if(u.what_reopening_would_take)h+='<div class="v" style="margin-top:10px">'+
+      '<b>What changing it would take.</b> '+esc(u.what_reopening_would_take)+'</div>';
+    (u.the_competing_positions||[]).forEach(function(pos,i){
+      h+='<div class="position"><div class="k">Position '+(i+1)+' &mdash; '+esc(pos.name)+'</div>';
+      if(pos.ladder)h+='<div class="v"><b>'+esc(pos.ladder)+'</b></div>';
+      if(pos.case_for)h+='<div class="v" style="margin-top:7px">'+esc(pos.case_for)+'</div>';
+      if(pos.case_against)h+='<div class="v against"><b>Against:</b> '+esc(pos.case_against)+'</div>';
+      h+='</div>';
+    });
+    if(u.what_is_being_done)h+='<div class="v" style="margin-top:12px">'+esc(u.what_is_being_done)+'</div>';
+    if(u.what_we_want_from_you)h+='<div class="want"><b>What would help most here.</b> '+
+      esc(u.what_we_want_from_you)+'</div>';
+    h+='</div>';
+  }
   if(r.present){
-    h+='<div class="rec"><div class="k">Our recommendation</div>';
+    h+='<div class="rec'+(u?' stale':'')+'"><div class="k">'+
+       (u?'The figure now under review — shown so you can see what it rested on'
+         :'Our recommendation')+'</div>';
     if(r.option)h+='<div class="v"><b>'+esc(r.option)+'</b></div>';
     if(r.rationale)h+='<div class="v" style="margin-top:8px">'+esc(r.rationale)+'</div>';
     (r.comparators||[]).forEach(function(c){h+='<div class="ev">Comparator: '+esc(c)+'</div>'});
@@ -489,7 +528,10 @@ function stopBody(s){
     if(r.confidence)h+='<div class="ev">Confidence: '+esc(r.confidence)+
       (r.confidence_basis?' &mdash; '+esc(r.confidence_basis):'')+'</div>';
     if(r.what_would_change_it)h+='<div class="ev"><b>What would change this:</b> '+esc(r.what_would_change_it)+'</div>';
-    h+='<div class="disc">A recommendation, not a decision. Only the committee decides.</div></div>';
+    h+='<div class="disc">'+(u
+      ?'This is no longer put forward as our position. It is shown in full because the '+
+       'reasoning is what you would need in order to disagree with it usefully.'
+      :'A recommendation, not a decision. Only the committee decides.')+'</div></div>';
   }
   if(s.what_it_gates)h+='<div class="field"><div class="k">What this affects</div><div class="v">'+esc(s.what_it_gates)+'</div></div>';
   if(s.what_it_does_not_gate)h+='<div class="field"><div class="k">What it does not affect</div><div class="v">'+esc(s.what_it_does_not_gate)+'</div></div>';
@@ -1896,6 +1938,37 @@ def self_test() -> int:
                 if needed not in cached:
                     failures.append(f"the worker does not cache {needed}; offline use would break")
 
+
+    # A contested recommendation must never reach her wearing a confident face.
+    # This is the one failure in this file that would actively mislead rather
+    # than merely confuse: she would calibrate how hard to push against a
+    # confidence the programme office does not have.
+    if payload:
+        contested = [stop for act in payload["acts"] for stop in act["stops"]
+                     if (stop.get("recommendation") or {}).get("under_review")]
+        for stop in contested:
+            rec = stop["recommendation"]
+            if (stop.get("needs") or {}).get("code") != "HELP_US_SETTLE_IT":
+                failures.append(
+                    "a stop whose recommendation is under review still says 'we recommend "
+                    "this — argue with it'. We do not recommend it; we do not agree."
+                )
+            if rec.get("status") != "UNDER_REVIEW_NOT_A_RECOMMENDATION":
+                failures.append("a contested recommendation still reports itself as standing")
+            positions = (rec.get("under_review") or {}).get("the_competing_positions") or []
+            if len(positions) < 2:
+                failures.append(
+                    "a recommendation is marked under review but fewer than two positions are "
+                    "shown. 'Under review' with one option is just a recommendation hedged."
+                )
+            for position in positions:
+                if not position.get("case_against"):
+                    failures.append(
+                        f"position {position.get('name')!r} is shown with no case against it. "
+                        f"A choice presented without its cost is not a choice."
+                    )
+        if contested and "contested" not in html_out:
+            failures.append("nothing in the page renders the contested block")
 
     # Every stop must say what it needs FROM her. A stop with no badge is a stop
     # she has to guess the purpose of.

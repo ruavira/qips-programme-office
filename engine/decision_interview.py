@@ -177,15 +177,30 @@ def load_needs() -> dict[str, Any]:
     return yaml.safe_load(NEEDS_PATH.read_text(encoding="utf-8")) or {}
 
 
-def _needs_of(kind: str, station_id: str, fact_id: str, has_rec: bool) -> dict[str, Any]:
+def _needs_of(kind: str, station_id: str, fact_id: str, has_rec: bool,
+              contested: bool = False) -> dict[str, Any]:
     """Derive what this stop needs, unless an override says otherwise.
 
     Badging everything "open" is a REVIEW frame and it tells a co-designer
     nothing about where she is actually needed. An untested assumption about
     whether a working consultant can find four hours a week, and a question only
     SQHN can answer, are not the same kind of thing and should not look alike.
+
+    A contested recommendation outranks every other rule here, including the
+    explicit overrides. "We recommend this — argue with it" is a false statement
+    when we do not agree with ourselves, and it is false in the direction that
+    costs most: it invites her to push against a position, when what is actually
+    wanted is her help choosing between two.
     """
     doc = load_needs()
+    if contested:
+        entry = (doc.get("taxonomy") or {}).get("HELP_US_SETTLE_IT", {})
+        return {
+            "code": "HELP_US_SETTLE_IT",
+            "label": entry.get("label"),
+            "invitation": entry.get("invitation"),
+            "why_this_classification": None,
+        }
     overrides = doc.get("overrides") or {}
     override = overrides.get(station_id) or overrides.get(fact_id)
     if override:
@@ -252,10 +267,19 @@ def _recommendation_of(node: dict[str, Any], *keys: str) -> dict[str, Any]:
                 "support a recommendation is outstanding."
             ),
         }
+    # A recommendation can be CONTESTED — not absent, and not standing either.
+    # The honest state is that two positions exist with evidence behind each and
+    # the programme office has not settled between them. Presenting one of them
+    # as "our recommendation" at HIGH confidence would be the single most
+    # misleading thing this engine could do, because the reviewer would calibrate
+    # her disagreement against a confidence we do not have.
+    review = block.get("under_review")
     return {
         "present": True,
-        "status": "RECOMMENDATION_NOT_A_DECISION",
+        "status": "UNDER_REVIEW_NOT_A_RECOMMENDATION" if review
+                  else "RECOMMENDATION_NOT_A_DECISION",
         "binding": False,
+        "under_review": review,
         "option": block.get("option"),
         "rationale": block.get("rationale"),
         "comparators": block.get("comparators", []),
@@ -283,7 +307,9 @@ def _station(
     station = {
         "id": station_id,
         "kind": kind,
-        "needs": _needs_of(kind, station_id, fact_id, bool(recommendation.get("present"))),
+        "needs": _needs_of(kind, station_id, fact_id,
+                           bool(recommendation.get("present")),
+                           bool(recommendation.get("under_review"))),
         "source": source,          # file + key, so every station is traceable to the repo
         "prompt": prompt,
         "what_we_built": built,

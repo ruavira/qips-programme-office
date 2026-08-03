@@ -31,6 +31,13 @@
 #   DESIGN_WITH_US     Not built yet. Not a decision to take but a thing to make,
 #                      and better made by two people than handed over finished.
 #
+#   HELP_US_SETTLE_IT  Two positions, evidence behind each, and no agreement
+#                      between them. This one is not derived from the kind of
+#                      stop it is — it is set by the recommendation declaring
+#                      itself under review, and it overrides everything else,
+#                      because "we recommend this" is a false statement when we
+#                      do not agree with ourselves.
+#
 #   CHALLENGE_IF_WRONG Settled and built. Shown because no decision here is a
 #                      one-way door, and because a co-designer who cannot reopen
 #                      the settled parts is only being consulted on the edges.
@@ -63,6 +70,13 @@ taxonomy:
     invitation: >-
       This has not been designed. It is a thing to make rather than a decision to
       take, and it will be better made by two people than handed over finished.
+  HELP_US_SETTLE_IT:
+    label: We are not agreed — help us settle it
+    invitation: >-
+      There are two positions here, each with evidence behind it, and the
+      programme office has not settled between them. You are not being asked to
+      approve a recommendation; you are being asked to help choose. Both cases
+      are set out below, including the one we no longer think we can defend.
   CHALLENGE_IF_WRONG:
     label: Settled — challenge it if you disagree
     invitation: >-
