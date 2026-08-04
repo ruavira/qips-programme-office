@@ -150,7 +150,47 @@ So asking a host site to take QIPS participants for nothing is not asking them t
 - JCI QPS.01.00 requires that "a qualified individual(s) guides" the quality programme.
 - Punjab Healthcare Commission Indicator 95 requires a designated quality-improvement individual with a job description "defining requisite qualifications."
 - Sindh Healthcare Commission 4.5.16–4.5.18 carries equivalent requirements.
-- **SQHN's own standard HR.4.5** does the same.
+> **CORRECTION, 3 August 2026 — the SQHN line above is struck.**
+>
+> ~~**SQHN's own standard HR.4.5** does the same.~~
+>
+> This was wrong, and it was the load-bearing claim in the argument that follows.
+> Checked against SQHN's own published Second Edition standards on 3 August 2026:
+>
+> **HR.4.5 is "The Delivery of Health Care is Supported by Qualified Personnel."** Its
+> intent is that "healthcare personnel engaged to provide the designated services at the
+> organisation should be appropriately credentialed within the defined competencies and
+> professional standards of practice". It is about credentialing CLINICAL staff. It does
+> not address quality-improvement personnel at all.
+>
+> **QI 5.1 is the standard that touches this, and it is permissive.** Its intent reads:
+> "Depending on the complexity of services rendered by the organisation, Management **may**
+> appoint an individual to oversee the quality improvement programme of the hospital." The
+> only mandatory element is a standing multi-disciplinary committee. There is no
+> qualification, training or credential requirement anywhere in it.
+>
+> Ghana is a verified negative too: HeFRA mandates master's degrees for six director roles
+> and has no quality post among them.
+>
+> **What survives.** The JCI, Punjab and Sindh requirements above are unaffected — they were
+> checked separately and they hold. What does not survive is the claim that a Nigerian or
+> Ghanaian facility is REQUIRED by its own regulator to employ someone qualified in quality.
+> No Nigerian or Ghanaian regulator requires it. The sentence below — "selling a qualified
+> individual to a facility that is required to have one" — is therefore true of Pakistan and
+> of JCI-accredited facilities, and false of the launch market.
+>
+> **What it changes.** This was recorded as "the strongest single lever available" for the
+> institutional sale. It is not a lever in Nigeria or Ghana today. It becomes one only if
+> SQHN amends QI 5.1 from "may appoint" to a scored criterion with a qualification floor —
+> which is entirely within SQHN's gift, costs nothing, and is now the highest-value action
+> identified anywhere in this dossier. W04 reached the same conclusion independently and
+> added the governance caveat this correction must carry with it: SQHN is both the
+> accrediting body and the programme sponsor, so any such amendment has to be published
+> transparently and justified on evidence, or it reads as self-dealing and imperils SQHN's
+> own ISQua standing.
+>
+> Source: SQHN Second Edition Accreditation Standards, retrieved 3 August 2026 from
+> https://sqhn.org/wp-content/uploads/2025/08/SQHN-SECOND-EDITION-STANDARDS-_NEW-AND-REVISED-STANDARDS.pdf
 
 That changes what the programme is selling. It is not selling professional development to an individual; it is selling **a qualified individual to a facility that is required to have one**. The Ghana SafeCare evaluation shows what happens without that consequence — facilities resisted the moment assessments became self-financed. The difference between resistance and purchase is whether non-purchase costs the buyer something.
 
@@ -369,7 +409,7 @@ Price is not the lever. Four things are.
 
 **Lever 1 — Pay faculty in CPD credit, not cash.** MDCN provider recognition costs roughly ₦300,000 (~USD 220) for the entire faculty body in year one and ~₦100,000 a year thereafter. Paying twelve faculty a modest honorarium for twelve sessions, plus coaches for sixty coaching calls at a forty-person cohort, would cost several thousand dollars a year at even the most conservative published rates. **The regulator has created a currency that costs the programme almost nothing to mint and that faculty are legally required to acquire.** This is the highest-leverage single move identified in the research, and it should be started immediately because provider recognition takes time.
 
-**Lever 2 — Sell to institutions against the accreditation requirement, not to individuals against professional development.** JCI QPS.01.00, Punjab Healthcare Commission Indicator 95, Sindh Healthcare Commission 4.5.16–4.5.18 and **SQHN's own HR.4.5** all require a *qualified* individual to guide quality. The purchase is compliance, not discretion. Ghana's SafeCare evaluation shows what happens without that consequence: facilities resist the moment they are asked to pay. Add the ITF reimbursement route in Nigeria — subject to the primary verification flagged above — and the institutional sale becomes "recover money you have already paid to a levy you cannot avoid."
+**Lever 2 — Sell to institutions against the accreditation requirement, not to individuals against professional development.** ~~JCI QPS.01.00, Punjab Healthcare Commission Indicator 95, Sindh Healthcare Commission 4.5.16–4.5.18 and **SQHN's own HR.4.5** all require a *qualified* individual to guide quality.~~ **CORRECTED 3 August 2026 — see the correction in section 5.** JCI QPS.01.00, Punjab Healthcare Commission Indicator 95 and Sindh Healthcare Commission 4.5.16–4.5.18 do require a qualified individual. SQHN's HR.4.5 does not, and no Nigerian or Ghanaian regulator does. In the launch market this lever does not yet exist; it exists in Pakistan, which has been deferred to cohort 2. The lever must therefore be MADE — by SQHN amending QI 5.1 — before it can be sold against. The purchase is compliance, not discretion. Ghana's SafeCare evaluation shows what happens without that consequence: facilities resist the moment they are asked to pay. Add the ITF reimbursement route in Nigeria — subject to the primary verification flagged above — and the institutional sale becomes "recover money you have already paid to a levy you cannot avoid."
 
 **Lever 3 — Build the credential-maintenance annuity from cohort 1.** At an ISQua-pattern USD 150 a year and an 84% steady-state renewal rate, this is the only revenue that compounds. It must be designed now — the obligation has to be in the cohort-1 promise, not retrofitted onto graduates who were told they were buying a one-off certificate.
 
