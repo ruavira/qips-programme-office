@@ -159,3 +159,28 @@ questions:
     SQHN is the national accreditation body, already publishes facility standards,
     and cohort 1 will generate forty improvement projects with baselines in Nigerian
     hospitals. Due date set to the go/no-go gate so it is revisited rather than lost.
+- id: Q014
+  question: Who authors months 3 to 12 of the curriculum, on what schedule, and against
+    what review?
+  owner: W02
+  blocking: true
+  blocks:
+  - W05
+  - W06
+  - W09
+  - W10
+  - W11
+  - W14
+  due: 2026-09-30
+  note: Raised 2026-08-06 by the programme director, and it should have been here from
+    the beginning. Ten of the twelve months do not exist. The sitting of 1 August authorised
+    months 1 and 2 as a prototype only; everything from month 3 is an artefact name and
+    a line of outline. The design that has been reviewed, priced, staffed and scheduled
+    all year rests on content nobody has written. Cohort 1 begins 9 January 2027 and
+    applications open in October, so the programme will be describing this curriculum
+    in public before most of it exists. Every other blocking item in this register is
+    a fact to go and find out; this one is the largest piece of unbuilt work in the
+    programme, and it was invisible here because a register of questions does not
+    naturally hold a body of work. The question is deliberately not "write the curriculum"
+    — it is who owns it, by when, and who checks it, because that is the decision that
+    stops it being forgotten again.

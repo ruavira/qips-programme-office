@@ -76,7 +76,7 @@ acts:
       - time_model: derived, recomputed against F019
       - programme_objectives: workstreams/W02/working/W02-programme-objectives-and-competency-spine-2026-08-06.md
       - competency_evidence: workstreams/W02/working/W02-competency-evidence-base-2026-08-06.md
-    anchors: [F003, F010, F011, F019, F023, ST-curriculum-spine-UA1, ST-curriculum-spine-UA5, "ST-Q011", "ST-Q012"]
+    anchors: [F003, F010, F011, F019, F023, ST-curriculum-spine-UA1, ST-curriculum-spine-UA5, "ST-Q011", "ST-Q012", "ST-Q014"]
 
   - id: ACT3
     title: Inside a single month
