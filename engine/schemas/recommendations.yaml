@@ -660,3 +660,83 @@ recommendations:
       A decision to admit applicants conditionally against a partially-met
       requirement, which would need its own rule and its own equity analysis.
     internal_refs: [F018, W07-01]
+
+  - target: Q011
+    owner: W02
+    option: A graduate can take a quality or safety problem in their own service from a vague complaint
+      to a measured, evidenced improvement that survives them; can read a service against a published
+      standard and say where it falls short; and can teach a colleague to do both. Twelve performance
+      outcomes, one per artefact, carry the claim. The tier is declared openly as foundational, with
+      demonstrated evidenced practice in improvement method, in a bounded slice of measurement and
+      data, and in reading a service against a standard.
+    rationale: 'Two of those three clauses were put there by evidence rather than by preference. Across
+      eighteen real quality-role adverts in six countries, the most common duty asked of a quality
+      professional was neither audit nor root cause analysis nor data — it was training and mentoring
+      other staff, in ten of the eighteen. The programme already builds toward that: artefact 11 is
+      a spread and handover case, and coaching capability is built internally rather than bought in.
+      It had simply never been stated as an outcome. Reading a service against a standard is included
+      because accreditation systems are what employers name when they name anything, and because SQHN
+      is the accreditation body and the host-site standard already exists, so it costs no schedule
+      time to add. The tier is declared foundational because 228 hours cannot produce more than that
+      across a whole field, and an informed buyer benchmarking against the field''s published framework
+      would catch a larger claim.'
+    comparators:
+    - 'ISQua Fellowship: twelve months, about 60 to 70 study hours, no supervised practice, quizzes
+      and reflections rather than an examination, EUR 225 in the lower-middle-income band — https://isqua.org/fellowship/'
+    - 'Certified Professional in Healthcare Quality: an examination only, no teaching, 125 scored
+      items across seven sections, USD 649 to 799 for a candidate outside the United States, written
+      for someone with two years in the profession — https://nahq.org/credentials/cphq-certified-professional-in-healthcare-quality/'
+    - 'Certified Professional in Patient Safety: an examination only, four domains, a degree plus
+      three years required, USD 649 internationally — https://www.ihi.org/learn/certifications/cpps/frequently-asked-questions'
+    evidence:
+    - Eighteen quality-role adverts across Nigeria, Ghana, Kenya, South Africa, Pakistan and India;
+      exactly one names a personal quality credential, and it is dated 2022, the employer is anonymous,
+      and it was posted on the quality society's own site rather than any job board — https://sqhn.org/careers/
+    - 'The strongest quality-specific education requirement found anywhere in Nigeria asks for a degree,
+      not a credential: "A postgraduate qualification in quality management, patient safety or healthcare
+      leadership is required" — https://www.myjobmag.com/job/director-of-clinical-governance-garki-hospital-abuja-gha'
+    confidence: MEDIUM
+    confidence_basis: The employer evidence is strong and was gathered from primary adverts. The twelve
+      performance outcomes are a first draft by the programme office; only months one and two carry
+      text the committee has already authorised. Nobody outside the programme office has yet read
+      the claim.
+    what_would_change_it: Evidence that employers in the launch market value breadth of coverage over
+      demonstrated practice, or a finding that teaching a colleague cannot be assessed within the
+      artefact set and should therefore not be promised.
+  - target: Q012
+    owner: W02
+    option: Seven of the field's eight domains are touched and one is deliberately excluded. Improvement
+      method is demonstrated deeply, across nine of the twelve artefacts. Measurement and data are
+      demonstrated within a stated bound. Reading a service against a standard is taught in one release
+      and demonstrated in the observership analysis. Leadership, accountability and professional engagement
+      are partly demonstrated through the spread case and the capstone. Patient safety is taught but
+      not demonstrated, unless the participant's own project happens to be a safety project. Population
+      health and care transitions is excluded.
+    rationale: 'The budget is the constraint and it is fixed: each month is 15.67 hours, of which
+      only the eLearning release is free content — 80 hours across the year, since the live session,
+      the coaching call and artefact production are all tied to the participant''s own project. No
+      release has been written yet, so allocating one to reading a service against a standard is an
+      allocation rather than a deletion. That domain earns its place twice over: SQHN is the accreditation
+      body, so the material and the published host-site standard already exist, and it is the domain
+      employers name most often. Population health and care transitions is excluded because demonstrating
+      it would require the improvement project to cross a care boundary, which cannot be mandated,
+      and teaching it without demonstrating it produces exactly the taught-but-not-practised coverage
+      that makes the comparator credentials thin. No advert in the eighteen named it. Nine of the
+      twelve artefacts sit in improvement method, and that depth is the only thing in the comparator
+      set nobody else offers at this price; every hour moved into breadth is an hour moved onto ground
+      where the competition is stronger.'
+    comparators:
+    - The field's published framework holds eight domains and twenty-eight competencies, and its own
+      guidance is that professionals should reach the foundational level in all eight while "It is
+      not necessary to be an Advanced level in all areas" — https://nahq.org/why-nahq/healthcare-quality-competency-framework/
+    evidence:
+    - The examination for the field's dominant credential covers seven sections including population
+      health and care transitions, which this programme deliberately does not teach — https://cdn.nahq.org/wp-content/uploads/2024/11/2024-CPHQ_Outline_R2b.pdf
+    confidence: MEDIUM
+    confidence_basis: 'The hours arithmetic is exact and reproduces the published total. Which domain
+      sits at which depth is the programme office''s own assessment and is the most arguable part
+      of it. An earlier version of this assessment reported three uncovered domains and was wrong:
+      it treated three very different costs as one.'
+    what_would_change_it: A finding that population health matters to buyers in the launch market
+      after all, or a committee view that patient safety being taught rather than demonstrated is
+      not acceptable in a programme carrying patient safety in its name.

@@ -110,3 +110,52 @@ questions:
   - W14
   - W03
   due: 2026-08-31
+- id: Q011
+  question: What must a graduate be able to do at the end of twelve months, and what
+    will the programme claim about that in public?
+  owner: W02
+  blocking: true
+  blocks:
+  - W03
+  - W13
+  - W14
+  due: 2026-09-30
+  note: Discovered 2026-08-06 while preparing the design walkthrough. The programme
+    has never written this down. Twelve artefacts exist; the objectives they serve
+    do not. Host sites are already described as qualified against a standard derived
+    from programme objectives, and no document contains those objectives. Meanwhile
+    published marketing text already promises capabilities the design does not define
+    and no check tests. Blocking because nothing may be published until it is settled,
+    not because delivery cannot start without it.
+- id: Q012
+  question: Which domains of healthcare quality does the programme cover, at what depth,
+    and which does it deliberately leave out?
+  owner: W02
+  blocking: false
+  blocks:
+  - W03
+  - W14
+  due: 2026-09-30
+  note: Discovered 2026-08-06. Two hundred and twenty-eight hours cannot cover the
+    whole field, and an informed buyer will benchmark the programme against the field's
+    published framework whether or not the programme does. Saying which parts are
+    covered, and which are not, is what makes the claim believable. Depends on the question of
+    what a graduate must be able to do.
+- id: Q013
+  question: PARKED — should SQHN author a competency framework for healthcare quality
+    professionals grounded in this region, with cohort 1 as its evidence base?
+  owner: W12
+  blocking: false
+  blocks: []
+  due: 2026-11-20
+  status: PARKED
+  note: Raised 2026-08-06 by the programme office, parked immediately because it is
+    larger than this programme and is SQHN's decision rather than the programme office's.
+    No competency framework for healthcare quality professionals authored anywhere
+    in Africa could be found. A 2026 scoping review in the International Journal for
+    Quality in Health Care screened 14144 records and included 118 articles; its table
+    of publication regions does not contain Africa at all. A second 2026 review names
+    evaluation from a low- and middle-income perspective as the field's priority gap.
+    SQHN is the national accreditation body, already publishes facility standards,
+    and cohort 1 will generate forty improvement projects with baselines in Nigerian
+    hospitals. Due date set to the go/no-go gate so it is revisited rather than lost.

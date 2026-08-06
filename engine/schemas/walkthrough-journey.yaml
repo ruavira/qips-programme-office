@@ -64,6 +64,9 @@ acts:
       assembles the argument the previous eleven artefacts already support. The
       capstone is not a new piece of work. Measurement starts at month 3 so a run
       chart at month 9 has real data behind it.
+      What those twelve artefacts are FOR — what a graduate should be able to do at
+      the end of them — was never written down until August 2026. Two stops in this
+      part put the first draft of it in front of you.
       The published time commitment is derived from the curriculum, not chosen for
       marketing — and it is recomputed automatically every time the design changes,
       because a figure nobody rechecks stops being derived and quietly becomes a
@@ -71,7 +74,9 @@ acts:
     show:
       - curriculum_spine: engine/schemas/curriculum-spine.yaml
       - time_model: derived, recomputed against F019
-    anchors: [F003, F010, F011, F019, F023, ST-curriculum-spine-UA1, ST-curriculum-spine-UA5]
+      - programme_objectives: workstreams/W02/working/W02-programme-objectives-and-competency-spine-2026-08-06.md
+      - competency_evidence: workstreams/W02/working/W02-competency-evidence-base-2026-08-06.md
+    anchors: [F003, F010, F011, F019, F023, ST-curriculum-spine-UA1, ST-curriculum-spine-UA5, "ST-Q011", "ST-Q012"]
 
   - id: ACT3
     title: Inside a single month
@@ -201,7 +206,7 @@ acts:
       verdicts — a reason becomes a standing constraint, which is what stops the
       same proposal coming back to you unchanged.
       And every decision can be reopened later. Nothing here is a one-way door.
-    anchors: [F016, ST-F017, ST-Q008, ST-Q009, ST-Q010]
+    anchors: [F016, ST-F017, ST-Q008, ST-Q009, ST-Q010, "ST-Q013"]
 
   - id: ACT10
     title: Anything not yet placed

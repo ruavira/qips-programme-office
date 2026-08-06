@@ -1577,7 +1577,8 @@ VISION = {
     "outcomes": [
         "Forty health professionals who have each improved something real in their own "
         "service — not attended a programme, produced one — with twelve pieces of "
-        "evidence apiece to show for it.",
+        "evidence apiece to show for it, and who can now do it again without us and "
+        "teach a colleague to do the same.",
         "Nine hospitals qualified against a published standard to host and teach, which "
         "makes the next cohort possible without starting again.",
         "Twelve faculty teaching this here, rather than the country importing it.",
@@ -1585,7 +1586,8 @@ VISION = {
         "quality in Nigerian hospitals that nobody currently holds.",
     ],
     "closing": "That is what is being designed. What follows is how, and where it is "
-               "still undecided.",
+               "still undecided — including what exactly a graduate should be able to "
+               "do, which is a question the design has only just written down.",
 }
 
 WELCOME = {
