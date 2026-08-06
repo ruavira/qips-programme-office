@@ -168,7 +168,12 @@ CSS = """
 }
 html{-webkit-text-size-adjust:100%}
 body{font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
-  color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+  color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;
+  /* Every surface here renders text she typed or pasted, and a pasted URL is a
+     single unbreakable word. Without this, one long link pushed the layout
+     52,000 pixels wide and everything ran off the side of the screen. Set on
+     the body so it inherits everywhere rather than being remembered per card. */
+  overflow-wrap:anywhere}
 button,textarea,input{font:inherit;color:inherit}
 button{cursor:pointer}
 
@@ -184,6 +189,9 @@ button{cursor:pointer}
 .saved.on{opacity:1}
 .sendstate{font-size:12px;color:var(--faint);white-space:nowrap}
 .sendstate.sent,.sendstate.final{color:var(--ok)}
+/* Not green. It went, but nothing confirmed it, and a green tick would be the
+   page asserting something it does not know. */
+.sendstate.unconfirmed{color:var(--open)}
 .sendstate.failed{color:var(--warn);font-weight:600}
 
 main{max-width:820px;margin:0 auto;padding:38px 24px 150px}
@@ -191,6 +199,10 @@ main{max-width:820px;margin:0 auto;padding:38px 24px 150px}
 h1{font-size:34px;line-height:1.15;letter-spacing:-.022em;margin-bottom:14px}
 h2{font-size:27px;line-height:1.2;letter-spacing:-.018em;margin-bottom:10px}
 h3{font-size:17px;margin-bottom:8px}
+/* A section inside a card is a level-two heading — it sits directly under the
+   page's h1 — but it should not LOOK like the 27px h2 that titles a part. A
+   screen reader reads the level; a sighted reader reads the size. */
+.sec{font-size:17px;line-height:1.35;letter-spacing:0;margin-bottom:8px}
 p{margin-bottom:14px}
 .lede{font-size:19px;line-height:1.5;color:var(--muted);margin-bottom:20px}
 .eyebrow{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
@@ -284,7 +296,7 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
    page and was invisible to every check in this file, because nothing here
    renders CSS. A screenshot found it. */
 .legend>div{font-size:14px;color:var(--muted);margin:12px 0;display:grid;
-  grid-template-columns:minmax(0,215px) 1fr;gap:14px;align-items:start}
+  grid-template-columns:minmax(0,215px) minmax(0,1fr);gap:14px;align-items:start}
 /* The badge is nowrap everywhere else, because beside a heading it should stay on
    one line. In this column it must wrap, or "we are not agreed — help us settle
    it" runs straight over the sentence next to it. */
@@ -349,7 +361,8 @@ input.line:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)
    off the right edge, and the navigation wrapped so that Back and Next landed on
    different rows. */
 @media(max-width:640px){
-  main{padding:24px 15px 128px} h1{font-size:26px} h2{font-size:21px}
+  main{padding:24px 15px 186px} h1{font-size:26px} h2{font-size:21px}
+  .sec{font-size:16.5px}
   .card{padding:19px 17px;border-radius:12px} .top .inner{padding:9px 14px;gap:11px}
   .brand span{display:none} .count{font-size:11.5px}
   .needs{white-space:normal}
@@ -363,6 +376,10 @@ input.line:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)
   .nav .spacer{display:none}
   #back{grid-area:1/1} #fwd{grid-area:1/2}
   .nav [data-act="export"]{grid-area:2/1} .nav label.s{grid-area:2/2}
+  /* Install is display:none until the browser offers it. When it does appear
+     it was auto-placed onto a third row that main's bottom padding did not
+     allow for, hiding the end of the page behind the navigation. */
+  #install{grid-area:3/1/auto/3}
   .nav button,.nav label.s{padding:11px 8px;justify-content:center;text-align:center;font-size:14px}
 }
 @media print{.top,.nav,.mic,.warnbar{display:none}.card{box-shadow:none;page-break-inside:avoid}}
@@ -428,9 +445,49 @@ function announceNoAutosave(){
   const bar=document.getElementById('nosave');
   if(bar)bar.style.display='block';
 }
+/* Two tabs.
+
+   Storage is shared across every tab of the same browser, and each tab holds its
+   own copy of the answers in memory. Writing that copy out wholesale means the
+   last tab to save wins and the other one's work is gone — proved: three answers
+   in one tab, one answer in a second, one answer left in storage. No error, no
+   warning, no way for her to know. She opens the emailed link a second time
+   without thinking about it and an hour disappears.
+
+   So a save is a MERGE rather than a replacement. It re-reads what is on disk
+   and unions it with what is in memory. That is safe here because nothing in
+   this page ever deletes: an answer is set or changed, notes and raised items
+   are only ever appended. Where both tabs touched the same stop, the tab doing
+   the saving wins, which is the one she is actually looking at.
+
+   Position — which part, which stop, which length — is deliberately NOT merged.
+   That is per-tab and belongs to whichever tab last moved. */
+function mergeSaved(prev){
+  if(!prev||typeof prev!=='object')return {answers:S.answers,raised:S.raised,notes:S.notes||[]};
+  const answers={};
+  const prior=(prev.answers&&typeof prev.answers==='object'&&!Array.isArray(prev.answers))
+    ?prev.answers:{};
+  Object.keys(prior).forEach(function(k){if(prior[k]&&typeof prior[k]==='object')answers[k]=prior[k]});
+  Object.keys(S.answers).forEach(function(k){answers[k]=S.answers[k]});   // this tab wins on collision
+  const seen={},list=[];
+  function add(arr,key){(Array.isArray(arr)?arr:[]).forEach(function(x){
+    if(!x||typeof x!=='object')return;
+    const id=key(x); if(seen[id])return; seen[id]=1; list.push(x)})}
+  const rk=function(r){return [r.act,r.kind,r.title,r.detail].join('')};
+  add(prev.raised,rk); add(S.raised,rk);
+  const raised=list.slice();
+  const seen2={},notes=[];
+  (Array.isArray(prev.notes)?prev.notes:[]).concat(S.notes||[]).forEach(function(n){
+    if(!n||typeof n!=='object')return;
+    const id=[n.text,n.where].join(''); if(seen2[id])return; seen2[id]=1; notes.push(n)});
+  return {answers:answers,raised:raised,notes:notes};
+}
+
 function persist(){
   if(!CAN_SAVE)return;
   try{
+    const merged=mergeSaved(restore());
+    S.answers=merged.answers;S.raised=merged.raised;S.notes=merged.notes;
     localStorage.setItem(KEY,JSON.stringify({answers:S.answers,raised:S.raised,
       notes:S.notes||[],path:S.path||null,
       act:S.act,stop:S.stop,mode:S.mode,reviewer:S.reviewer||'',
@@ -487,11 +544,16 @@ function dictate(btn){
   rec.onend=function(){micIdle(btn);rec=null};
   try{rec.start()}catch(err){micIdle(btn);rec=null}
 }
+/* The microphone is an icon and nothing else, so without a name of its own a
+   screen reader announces it as "button" and there is no way to know what it
+   does. aria-label rather than title alone: a title is a mouse-hover tooltip
+   that assistive technology is not obliged to read. */
 function box(cls,ph,val,min){
+  const label=SR?'Speak instead of typing':'Dictation needs Chrome, Edge or Safari';
   return '<div class="ta"><textarea class="'+cls+'" placeholder="'+esc(ph)+'"'+
     (min?' style="min-height:'+min+'"':'')+'>'+esc(val||'')+'</textarea>'+
-    '<button class="mic" data-mic="1"'+
-    (SR?' title="Speak instead of typing"':' disabled title="Dictation needs Chrome, Edge or Safari"')+
+    '<button class="mic" data-mic="1" aria-label="'+esc(label)+'" title="'+esc(label)+'"'+
+    (SR?'':' disabled')+
     '>'+MIC+'</button></div>';
 }
 
@@ -546,14 +608,14 @@ function screenWelcome(){
     h+='</div>';
   }
   h+='</div>';
-  h+='<div class="card"><h3>What this is</h3>';
+  h+='<div class="card"><h2 class="sec">What this is</h2>';
   h+='<p class="lede">'+esc(DATA.welcome.lede)+'</p>';
   DATA.welcome.paragraphs.forEach(function(t){h+='<p class="prose">'+esc(t)+'</p>'});
   h+='</div>';
 
   // The length: already chosen, changeable in one click, in either direction.
   const cur=(DATA.paths||[]).find(function(p){return p.key===S.path});
-  h+='<div class="card"><h3>How long it is</h3>'+
+  h+='<div class="card"><h2 class="sec">How long it is</h2>'+
      '<p class="quiet">You are set to the shortest walk &mdash; the stops only you can answer. '+
      'Change it here whenever you like, in either direction. Nothing you have already answered '+
      'is ever lost, and the whole design stays readable either way.</p>'+
@@ -575,7 +637,7 @@ function screenWelcome(){
   // Everything else, out of the way of starting.
   h+='<details class="more"'+(S._moreOpen?' open':'')+
      '><summary>More about how this works</summary><div class="morebody">';
-  h+='<h3>What is being asked of you</h3>'+
+  h+='<h2 class="sec">What is being asked of you</h2>'+
      '<p class="quiet">Not one kind of thing. The questions differ in what they need from you, '+
      'and each says which it is where you meet it, so this is reference rather than '+
      'something to learn now.</p><div class="legend">';
@@ -587,7 +649,7 @@ function screenWelcome(){
          esc(ex.needs.invitation)+' <b>('+(k[c]||0)+')</b>'+standing(c)+'</span></div>';
     });
   h+='</div>';
-  h+='<h3 style="margin-top:24px">The rest of it</h3><ul class="opts">'+
+  h+='<h2 class="sec" style="margin-top:24px">The rest of it</h2><ul class="opts">'+
      '<li>You can go back and change anything, at any point.</li>'+
      '<li>Prefer to talk? Every box has a microphone.</li>'+
      '<li>At the foot of every page there is a box for anything else on your mind. '+
@@ -603,7 +665,7 @@ function screenWelcome(){
     // A name is one short line. It had a microphone and a resizable box, which
     // is the furniture of an essay answer and made the last thing before Begin
     // look like work. Build with --reviewer and she is never asked at all.
-    h+='<div class="card"><h3>Who is walking this?</h3>'+
+    h+='<div class="card"><h2 class="sec">Who is walking this?</h2>'+
        '<p class="quiet">So your answers arrive with your name on them. Nothing else is collected.</p>'+
        '<input class="who line" placeholder="Your name" value="'+esc(S.reviewer||'')+'">'+
        '</div>';
@@ -817,20 +879,30 @@ function screenFinish(){
   if(DATA.submit){
     h+='<p class="quiet" style="margin-top:14px">Your answers have been going back as you '+
        'worked, so nothing is lost either way. This marks the pass finished.</p>';
+    // Said here rather than only in the status line, because this is the last
+    // moment she is looking at the page and the only moment the doubt is cheap
+    // to settle. Never phrased as an alarm — most of the time it has arrived.
+    if((sendState==='sent'||sendState==='final')&&!sendConfirmed){
+      h+='<p class="quiet" style="margin-top:10px"><b>One thing worth doing.</b> The site '+
+         'accepted everything you sent, but did not acknowledge it the way a fully configured '+
+         'form does. It has most likely arrived. If you would rather not rely on that, '+
+         '<b>Also keep a copy</b> downloads the same record as a file &mdash; thirty seconds, '+
+         'and the doubt is gone.</p>';
+    }
   }else{
     h+='<p class="quiet" style="margin-top:14px">This downloads a file. Send it to the '+
        'programme office however suits you &mdash; it is the only copy outside this browser.</p>';
   }
   h+='</div>';
   if(nn){
-    h+='<div class="card"><h3>What was on your mind</h3>'+
+    h+='<div class="card"><h2 class="sec">What was on your mind</h2>'+
        '<p class="quiet">Written where no question asked for it. These travel with everything else.</p>';
     S.notes.forEach(function(nt){
       h+='<div class="note-item">'+esc(nt.text)+'<div class="w">'+esc(nt.where)+'</div></div>'});
     h+='</div>';
   }
   if(S.raised.length){
-    h+='<div class="card"><h3>What you raised</h3>';
+    h+='<div class="card"><h2 class="sec">What you raised</h2>';
     S.raised.forEach(function(r){
       h+='<div class="raised-item"><b>'+esc(r.kind.replace(/_/g,' ').toLowerCase())+'</b> &mdash; '+
          esc(r.title)+'<div class="quiet" style="margin-top:5px">'+esc(r.detail)+'</div></div>'});
@@ -917,7 +989,25 @@ function goto2(i){
    Nothing here is silent. A send that fails says so and retries; a send that has
    never succeeded says that too. She is never left believing her work travelled
    when it did not — the same rule as the autosave. */
-let sentHash=null,sendState='idle',sendAt=null;
+/* One more thing this page cannot know, and therefore must not claim.
+
+   Netlify returns no machine-readable receipt. A form it processed redirects to
+   a success page; a POST to the same path when the form is NOT detected is
+   served the page itself. Both arrive here as 200, so status alone cannot tell
+   delivery from silence — and "form detection is off" is the single likeliest
+   misconfiguration, the one the deploy runbook devotes a whole section to.
+
+   Under the old code that case read as "sent to the programme office". She could
+   work for an hour, be told at every part boundary that her answers had gone
+   back, finish, close the tab, and have sent nothing at all. That is the exact
+   failure the rest of this file is built to prevent, hiding behind a 2xx.
+
+   The redirect is the only signal that distinguishes them, and it is not a
+   documented contract. So it is treated as corroboration rather than proof:
+   confirmed when it happened, honestly hedged when it did not. Being wrong in
+   the hedging direction costs a redundant nudge to keep a copy. Being wrong the
+   other way costs everything she wrote. */
+let sentHash=null,sendState='idle',sendAt=null,sendConfirmed=false;
 
 function payload(final){
   return {sitting:DATA.sitting,generated_from:DATA.commit,
@@ -999,12 +1089,16 @@ function sendStatus(){
   if(!el)return;
   if(!DATA.submit){el.style.display='none';return}
   el.style.display='';
-  el.className='sendstate '+sendState;
+  el.className='sendstate '+sendState+((sendState==='sent'||sendState==='final')&&!sendConfirmed
+    ?' unconfirmed':'');
   el.textContent=sendState==='sending'?'sending…'
-    :sendState==='sent'?'sent to the programme office'
+    :sendState==='sent'?(sendConfirmed?'sent to the programme office':'sent — not yet acknowledged')
     :sendState==='failed'?'not sent yet — will try again'
-    :sendState==='final'?'sent — thank you'
+    :sendState==='final'?(sendConfirmed?'sent — thank you':'sent — not yet acknowledged')
     :'';
+  el.title=(sendState==='sent'||sendState==='final')&&!sendConfirmed
+    ?'The site accepted it but did not acknowledge it the way a processed form does. '+
+     'It has most likely arrived; keeping a copy costs nothing and removes the doubt.':'';
 }
 function sendNow(final){
   if(!DATA.submit)return Promise.resolve(false);
@@ -1033,9 +1127,13 @@ function sendNow(final){
   }
   return request.then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status);
+    // r.redirected is true only if the server sent the browser somewhere else,
+    // which is what a form Netlify actually handled does. A POST it ignored is
+    // answered with the static file at that path and no redirect.
+    sendConfirmed=!!r.redirected;
     sentHash=h;sendAt=new Date();sendState=final?'final':'sent';sendStatus();return true;
   }).catch(function(){
-    sendState='failed';sendStatus();return false;
+    sendState='failed';sendConfirmed=false;sendStatus();return false;
   });
 }
 
@@ -1255,6 +1353,16 @@ document.addEventListener('keydown',function(ev){
   // A send that failed while she was offline retries when the page next runs and
   // when the connection returns, so an unsent pass repairs itself.
   window.addEventListener('online',function(){if(sendState==='failed')sendNow(false)});
+  // The other half of the two-tab problem. Merging on save stops work being
+  // erased; this stops the tabs DIVERGING in the meantime, so what she is
+  // looking at is what is actually stored rather than a snapshot from before
+  // the other tab wrote. Position is left alone — she is not moved.
+  window.addEventListener('storage',function(e){
+    if(e.key!==KEY)return;
+    const merged=mergeSaved(restore());
+    S.answers=merged.answers;S.raised=merged.raised;S.notes=merged.notes;
+    render();
+  });
   document.addEventListener('visibilitychange',function(){
     if(document.visibilityState==='hidden')sendNow(false);
   });
@@ -1896,11 +2004,25 @@ def to_capture(payload: dict[str, Any], acts: list[dict[str, Any]]) -> dict[str,
         if who:
             item.setdefault("by", who)
         responses.append(item)
+    # Notes travel too. The free-text box is the ONLY route by which something
+    # nobody thought to ask about can reach the programme office, and it was
+    # reaching the inbox and dying here — visible to whoever read the email,
+    # invisible to the record. That is the one loss the box exists to prevent.
+    notes = []
+    for note in payload.get("notes") or []:
+        text = (note.get("text") or "").strip()
+        if not text:
+            continue
+        item = {"text": text, "where": note.get("where") or None}
+        if who:
+            item["by"] = who
+        notes.append(item)
     return {
         "sitting": payload.get("sitting") or SITTING,
         "reviewer": who or None,
         "responses": responses,
         "raised": payload.get("raised") or [],
+        "notes": notes,
     }
 
 
@@ -2422,6 +2544,151 @@ def self_test() -> int:
         failures.append(
             "the legend badge cannot wrap, so a long label runs over the sentence beside it"
         )
+    # --- the page must not claim a delivery it cannot verify ---------------
+    # Netlify answers a processed form with a redirect and an ignored POST with
+    # the static file at that path. Both are 200. Treating 2xx as delivery meant
+    # the likeliest misconfiguration in the whole deployment — form detection
+    # left off, which the runbook warns about at length — displayed as "sent to
+    # the programme office" at every part boundary while nothing arrived.
+    if submit_cfg := submit_config("netlify", None, DEFAULT_FORM_NAME, None):
+        hosted_netlify = build_html(acts, stations, "self-test", hosted=True, submit=submit_cfg)
+        # Matched as an ASSIGNMENT, not as an identifier. The first version of
+        # this gate asked whether "r.redirected" appeared anywhere in the page —
+        # and it does, in the comment three lines above the code. Replacing the
+        # real check with `sendConfirmed=true` left the gate green. A gate that
+        # can be satisfied by prose is not a gate.
+        if not re.search(r"sendConfirmed\s*=\s*!!\s*r\.redirected", hosted_netlify):
+            failures.append(
+                "the send treats any 2xx as delivered. A POST Netlify never processed answers "
+                "200 with the page itself, so an unconfigured form would read as sent and she "
+                "would finish believing an hour of work had travelled"
+            )
+        # Likewise checked by the words she would actually read, not by whether
+        # the variable is mentioned somewhere in the function.
+        status_fn = JS.split("function sendStatus(", 1)[-1].split("\nfunction ", 1)[0]
+        if "not yet acknowledged" not in status_fn:
+            failures.append(
+                "the status line reads the same whether or not the send was acknowledged"
+            )
+        if not re.search(r"sendConfirmed\s*\?", status_fn):
+            failures.append("the status line does not branch on whether the send was acknowledged")
+        finish_fn = JS.split("function screenFinish(", 1)[-1].split("\nfunction ", 1)[0]
+        # Read the BRANCH, not the function. "keep a copy" appears on this screen
+        # either way — it is a button label — so checking the whole function
+        # would pass with the branch gutted. Everything asserted below has to
+        # come from inside the unacknowledged case itself.
+        if "!sendConfirmed){" not in finish_fn:
+            failures.append(
+                "the closing screen says the same thing whether or not delivery was "
+                "acknowledged — the last moment the doubt is cheap to settle"
+            )
+        else:
+            branch = finish_fn.split("!sendConfirmed){", 1)[1].split("\n  }", 1)[0]
+            if "did not acknowledge" not in branch:
+                failures.append("the closing screen does not say what is actually unknown")
+            if "keep a copy" not in branch.lower():
+                failures.append(
+                    "the closing screen raises a doubt without naming the thirty-second fix; "
+                    "a warning with no remedy is just anxiety"
+                )
+
+    # --- reachable by someone not using a mouse -----------------------------
+    # None of this was tested until a stress pass went looking. A heading that
+    # skips a level is how a screen-reader user loses the shape of the page,
+    # and a control with no accessible name is read out as "button".
+    if re.search(r"<h1[^>]*>.*?<h3", JS.replace("\\n", ""), re.S) and "sec" not in CSS:
+        failures.append("section headings jump from h1 to h3, so the page has no level 2")
+    if 'lang="en"' not in html_out:
+        failures.append("reachability: the document does not declare its language")
+    # Checked on the BUTTON's own markup. Asking whether the phrase "Speak
+    # instead of typing" appears anywhere passed with the attribute deleted,
+    # because the same phrase is also assigned at runtime further up the file.
+    # An icon-only control with no name is announced as "button".
+    box_fn = JS.split("function box(", 1)[-1].split("\nfunction ", 1)[0]
+    if "data-mic" not in box_fn:
+        failures.append("reachability: the dictation control has moved; this check is stale")
+    elif "aria-label" not in box_fn.split("data-mic", 1)[1].split(">'+MIC", 1)[0]:
+        failures.append(
+            "reachability: the microphone is an icon with no accessible name, so a screen "
+            "reader announces it as 'button' and nothing else"
+        )
+    # The install control is hidden until the browser offers it. When it appears
+    # it was auto-placed onto a third row of the mobile navigation that the page
+    # padding did not allow for, hiding the end of the page behind it.
+    if "#install{grid-area" not in CSS.replace(" ", ""):
+        failures.append(
+            "the install control has no place in the mobile navigation, so it pushes a row "
+            "the page does not make room for"
+        )
+    mobile_pad = re.search(r"main\{padding:24px 15px (\d+)px\}", CSS)
+    if not mobile_pad or int(mobile_pad.group(1)) < 180:
+        failures.append(
+            "the mobile page does not leave room for the navigation at its tallest; the last "
+            "thing on the page sits behind it"
+        )
+
+    # --- two tabs -----------------------------------------------------------
+    # Storage is shared per browser and each tab holds its own copy in memory, so
+    # a save that writes memory out wholesale erases whatever the other tab did.
+    # Measured before the fix: three answers in one tab, one in a second, one
+    # left. Silent, and she opens an emailed link twice without thinking.
+    persist_fn = JS.split("function persist(", 1)[-1].split("\nfunction ", 1)[0]
+    if "mergeSaved(restore())" not in persist_fn.replace(" ", ""):
+        failures.append(
+            "a save overwrites what is stored instead of merging with it; a second tab "
+            "erases the first tab's work with no error and no warning"
+        )
+    if "function mergeSaved(" not in JS:
+        failures.append("nothing merges a save with what another tab already wrote")
+    else:
+        # Checked as a READ FROM WHAT IS STORED — prev.<field> — not as the bare
+        # word appearing somewhere in the function. Reading `prev` is the entire
+        # difference between a merge and an overwrite, and a gate that accepts
+        # the word "notes" is satisfied by a local variable of that name.
+        merge_fn = JS.split("function mergeSaved(", 1)[1].split("\nfunction ", 1)[0]
+        for field, why in [
+            ("answers", "answers from the other tab would be dropped"),
+            ("raised", "a raised item from the other tab would be dropped"),
+            ("notes", "a note from the other tab would be dropped"),
+        ]:
+            if f"prev.{field}" not in merge_fn:
+                failures.append(f"the merge never reads the stored {field}; {why}")
+    if "addEventListener('storage'" not in JS.replace('"', "'"):
+        failures.append(
+            "a tab never learns that another tab wrote, so the two drift apart and what she "
+            "sees stops matching what is saved"
+        )
+
+    # The last boundary, and the one her free text was actually dying at. It
+    # reached the inbox — a human reading the email saw it — and then to_capture
+    # dropped it, so it never entered the compiled record at all. Proved by
+    # round-tripping a real note rather than by reading the code.
+    probe_stop = stations[0]["id"] if stations else None
+    if probe_stop:
+        probe = {
+            "sitting": SITTING, "generated_from": "self-test",
+            "journey_fingerprint": journey_fingerprint(acts),
+            "reviewer": "Self Test",
+            "responses": [{"station": stop_key(0, 0), "response": "ACCEPT", "reason": ""}],
+            "raised": [],
+            "notes": [{"text": "a thought no question asked for", "where": "part 1"}],
+        }
+        try:
+            carried = to_capture(probe, acts).get("notes") or []
+        except Exception as exc:  # noqa: BLE001
+            carried = []
+            failures.append(f"the conversion refused a valid record carrying a note: {exc}")
+        if not carried:
+            failures.append(
+                "her free text does not survive into the record the compiler reads. It would "
+                "reach the inbox and stop there — the one loss the free-text box exists to "
+                "prevent"
+            )
+        elif carried[0].get("text") != "a thought no question asked for":
+            failures.append("a note is altered on its way into the record")
+        elif not carried[0].get("where"):
+            failures.append("a note reaches the record without where she was when she wrote it")
+
     if "where:currentWhere()" not in JS.replace(" ", ""):
         failures.append(
             "a note is stored without where she was; the same sentence means different "
@@ -2615,8 +2882,12 @@ def main() -> int:
             return 1
         Path(args.capture_out).write_text(
             yaml.dump(capture, sort_keys=False, allow_unicode=True, width=100), encoding="utf-8")
-        print(f"read {len(capture['responses'])} response(s) and "
-              f"{len(capture['raised'])} raised item(s) -> {args.capture_out}")
+        # Notes are counted out loud. They were being dropped here silently, and
+        # a count that omits them is how nobody noticed: the command reported
+        # success and the operator had no way to tell what had not come through.
+        print(f"read {len(capture['responses'])} response(s), "
+              f"{len(capture['raised'])} raised item(s) and "
+              f"{len(capture['notes'])} note(s) -> {args.capture_out}")
         print(f"\nnext: python3 engine/decision_interview.py --capture {args.capture_out} "
               f"--sitting <date>")
         return 0

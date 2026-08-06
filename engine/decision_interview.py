@@ -816,6 +816,7 @@ def compile_blueprint(
     stations: list[dict[str, Any]],
     sitting: str,
     raised: list[dict[str, Any]] | None = None,
+    notes: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Turn captured answers into a proposed change set plus a draft minute.
 
@@ -868,6 +869,7 @@ def compile_blueprint(
             "coverage": f"{len(responses)}/{len(stations)}",
             "unwalked": sorted(set(by_id) - {r.get("station") for r in responses}),
             "raised_count": len(raised or []),
+            "note_count": len(notes or []),
         },
         "changes": changes,
         "standing_constraints": constraints,
@@ -884,6 +886,23 @@ def compile_blueprint(
                 "status": "OPENS_WORK_NOT_A_DECISION",
             }
             for item in (raised or [])
+        ],
+        # Notes are weaker than raised items and must stay weaker. A raised item
+        # is a claim that something is missing or wrong; a note is whatever was
+        # on her mind at the time, and may be a half-thought. Filing them
+        # together would either inflate a passing remark into work owed, or
+        # deflate a real objection into a remark. They are kept apart and carried
+        # verbatim, because the value of an unprompted thought is entirely in
+        # what she actually said.
+        "on_the_reviewers_mind": [
+            {
+                "text": item.get("text"),
+                "where": item.get("where"),
+                "written_by": item.get("by"),
+                "status": "SAID_IN_PASSING_NOT_A_DECISION_OR_A_TASK",
+            }
+            for item in (notes or [])
+            if (item.get("text") or "").strip()
         ],
     }
 
@@ -945,6 +964,22 @@ def render_minute(blueprint: dict[str, Any]) -> str:
             lines.append("")
             lines.append(item.get("detail") or "")
             lines.append("")
+
+    if blueprint.get("on_the_reviewers_mind"):
+        lines += [
+            "## Said in passing",
+            "",
+            "Written where no question asked for it, so none of it is a verdict and none of it "
+            "is a task. It is here because the questions we thought to ask are not the whole of "
+            "what she has to say, and a remark made in passing is often the earliest sign of "
+            "something the running order has not reached yet. Read it; decide separately "
+            "whether any of it should become work.",
+            "",
+        ]
+        for item in blueprint["on_the_reviewers_mind"]:
+            where = f" — *at {item['where']}*" if item.get("where") else ""
+            lines.append(f"- {item['text']}{where}")
+        lines.append("")
 
     lines += [
         "## Reopening",
@@ -1070,6 +1105,78 @@ def self_test() -> int:
     if "not answers" not in render_minute(blueprint_with_raised).lower():
         failures.append("the minute does not distinguish a raised item from an answer")
 
+    # --- what she wrote where nothing asked -------------------------------
+    # A note is weaker than a raised item and must stay weaker: a raised item
+    # claims something is missing, a note is whatever was on her mind and may be
+    # half a thought. Filing them together would either inflate a remark into
+    # work owed or deflate an objection into a remark. But it must ARRIVE — the
+    # free text is the only route by which something nobody thought to ask about
+    # can reach this record at all.
+    note = [{"text": "The coaching side feels thin to me and I cannot say why yet.",
+             "where": "Inside a single month", "by": "self-test"}]
+    with_note = compile_blueprint(
+        [{"station": stations[0]["id"], "response": "ACCEPT"}], stations, "self-test", [], note)
+    if with_note["blueprint"].get("note_count") != 1:
+        failures.append("a note did not reach the blueprint; her free text stops at the inbox")
+    carried = with_note.get("on_the_reviewers_mind") or []
+    if not carried:
+        failures.append("the blueprint has nowhere to put what she wrote unprompted")
+    else:
+        if carried[0]["text"] != note[0]["text"]:
+            failures.append("a note was altered on its way into the blueprint")
+        if not carried[0].get("where"):
+            failures.append("a note reached the blueprint without where she was")
+        if "NOT_A_DECISION" not in str(carried[0].get("status", "")):
+            failures.append("a passing remark is recorded as though it decided something")
+    # Isolated deliberately: the blueprint above also carries an ACCEPT, and that
+    # response is entitled to produce a change. Only a note alone proves a note
+    # alone changes nothing.
+    note_only = compile_blueprint([], stations, "self-test", [], note)
+    if note_only["changes"]:
+        failures.append("a note by itself produced a proposed change; a remark is not a verdict")
+    if note_only["blueprint"].get("note_count") != 1:
+        failures.append("a note is dropped when it arrives without any answers beside it")
+
+    # Everything above tests compile_blueprint directly, which is not the code
+    # that runs. The command line reads the capture file and decides what to pass
+    # on, and that wiring had no test at all: deleting the notes argument from
+    # the call in main() left every check above green while notes silently
+    # stopped reaching the record in actual use. Found by trying it. So this runs
+    # the real command, on a real file, and reads what it wrote.
+    import subprocess  # noqa: PLC0415 — only the self-test needs it
+    import tempfile    # noqa: PLC0415
+    with tempfile.TemporaryDirectory() as tmp:
+        cap = Path(tmp) / "capture.yaml"
+        cap.write_text(yaml.dump({
+            "sitting": "self-test", "reviewer": "Self Test",
+            "responses": [{"station": stations[0]["id"], "response": "ACCEPT"}],
+            "raised": [],
+            "notes": [{"text": "carried through the command line, not just the function.",
+                       "where": "a stop somewhere"}],
+        }, allow_unicode=True), encoding="utf-8")
+        out = Path(tmp) / "out"
+        run = subprocess.run(
+            [sys.executable, str(Path(__file__).resolve()), "--capture", str(cap),
+             "--sitting", "self-test", "--out-dir", str(out)],
+            capture_output=True, text=True)
+        if run.returncode != 0:
+            failures.append(f"the capture command failed on a valid file: {run.stderr.strip()[:200]}")
+        else:
+            written = yaml.safe_load((out / "blueprint.yaml").read_text(encoding="utf-8"))
+            if written["blueprint"].get("note_count") != 1:
+                failures.append(
+                    "the command line drops her free text even though the compiler keeps it; "
+                    "the wiring between them is where it would be lost in practice"
+                )
+            if "carried through the command line" not in (out / "draft-minute.md").read_text(
+                    encoding="utf-8"):
+                failures.append("the draft minute written by the command does not carry her note")
+    minute = render_minute(with_note)
+    if note[0]["text"] not in minute:
+        failures.append("the draft minute drops what she wrote unprompted")
+    if "said in passing" not in minute.lower():
+        failures.append("the minute does not mark a passing remark as one")
+
     # --- blueprint must never claim to be canon ---------------------------
     blueprint = compile_blueprint(
         [{"station": stations[0]["id"], "response": "ACCEPT", "by": "self-test"}],
@@ -1144,6 +1251,7 @@ def main() -> int:
         captured = yaml.safe_load(Path(args.capture).read_text(encoding="utf-8"))
         responses = captured.get("responses", captured if isinstance(captured, list) else [])
         raised = captured.get("raised", []) if isinstance(captured, dict) else []
+        notes = captured.get("notes", []) if isinstance(captured, dict) else []
         problems = check_live_conflicts(responses, stations) + check_raised(raised)
 
         out_dir = Path(args.out_dir)
@@ -1161,7 +1269,7 @@ def main() -> int:
                 print(f"  CONFLICT  {problem}", file=sys.stderr)
             return 1
 
-        blueprint = compile_blueprint(responses, stations, args.sitting, raised)
+        blueprint = compile_blueprint(responses, stations, args.sitting, raised, notes)
         (out_dir / "blueprint.yaml").write_text(
             yaml.dump(blueprint, sort_keys=False, allow_unicode=True, width=100)
         )
