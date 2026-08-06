@@ -278,7 +278,58 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
 .nav .inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;gap:10px;align-items:center}
 .nav .spacer{flex:1}
 
-.legend div{font-size:14px;color:var(--muted);margin:9px 0;display:flex;gap:12px;align-items:baseline}
+/* Note the direct-child selector. Written as `.legend div` it also matched the
+   standing note NESTED inside each row, turning that note into its own flex
+   container and stacking "What is built." one word per line. It read as a broken
+   page and was invisible to every check in this file, because nothing here
+   renders CSS. A screenshot found it. */
+.legend>div{font-size:14px;color:var(--muted);margin:12px 0;display:grid;
+  grid-template-columns:minmax(0,215px) 1fr;gap:14px;align-items:start}
+/* The badge is nowrap everywhere else, because beside a heading it should stay on
+   one line. In this column it must wrap, or "we are not agreed — help us settle
+   it" runs straight over the sentence next to it. */
+.legend>div>.needs{justify-self:start;white-space:normal;line-height:1.45}
+.legend .standingnote{margin-top:7px}
+.legend .standingnote b{color:var(--ink)}
+
+/* The opening page carries three things the rest of the walk does not: what
+   success looks like, how much she is being asked to take on, and a way to say
+   something that no question here asks for. Each gets its own shape so none of
+   them reads as more of the same. */
+.vision{background:var(--accent-soft);border:1px solid #d8e3f0;border-radius:12px;
+  padding:20px 23px;margin:18px 0 4px}
+.vision .k{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);
+  font-weight:650;margin-bottom:9px}
+.vision ol{margin:0;padding:0;list-style:none;counter-reset:v}
+.vision li{counter-increment:v;position:relative;padding-left:36px;margin:12px 0;font-size:15.5px}
+.vision li:before{content:counter(v);position:absolute;left:0;top:1px;width:24px;height:24px;
+  border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.vision .close{margin:16px 0 0;font-size:14.5px;color:var(--muted);font-style:italic}
+
+.paths{display:grid;gap:10px;margin-top:15px}
+.pathbtn{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:11px;
+  padding:14px 17px;transition:border-color .12s,background .12s}
+.pathbtn:hover{border-color:var(--muted)}
+.pathbtn.sel{border-color:var(--accent);background:var(--accent-soft);
+  box-shadow:inset 0 0 0 1px var(--accent)}
+.pathbtn b{display:block;font-size:15.5px;color:var(--ink)}
+.pathbtn .n{display:block;font-size:12.5px;color:var(--accent);font-weight:650;margin-top:2px}
+.pathbtn .b{display:block;font-size:14px;color:var(--muted);margin-top:6px;line-height:1.5}
+.pathnote{font-size:13.5px;color:var(--faint);margin-top:11px}
+
+.notestrip{border:1px dashed var(--line);border-radius:12px;padding:13px 17px;margin:2px 0 20px;
+  background:var(--card)}
+.notestrip.open{border-style:solid;border-color:var(--know);background:var(--know-soft)}
+.notestrip .k{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--know);
+  font-weight:650;margin-bottom:6px}
+.notetoggle{border:0;background:none;padding:0;font-size:14.5px;color:var(--know);font-weight:600;
+  text-align:left}
+.notetoggle:hover{text-decoration:underline}
+.notecount{margin-left:10px;font-size:13px}
+.note-item{background:var(--card);border-left:3px solid var(--know);padding:11px 15px;
+  border-radius:0 7px 7px 0;margin:10px 0;font-size:14.5px;white-space:pre-wrap}
+.note-item .w{color:var(--faint);font-size:12.5px;margin-top:6px;white-space:normal}
 .raised-item{background:var(--make-soft);border-left:3px solid var(--make);padding:11px 15px;
   border-radius:0 7px 7px 0;margin:9px 0;font-size:14.5px}
 .raised-item b{color:var(--make)}
@@ -295,6 +346,9 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
   .card{padding:19px 17px;border-radius:12px} .top .inner{padding:9px 14px;gap:11px}
   .brand span{display:none} .count{font-size:11.5px}
   .needs{white-space:normal}
+  .legend>div{grid-template-columns:1fr;gap:8px}
+  .vision{padding:16px 15px} .vision li{padding-left:31px}
+  .pathbtn{padding:13px 15px}
   .stophead{flex-direction:column-reverse;gap:9px}
   .stophead .needs{margin-top:0;align-self:flex-start}
   #resumed{display:none}
@@ -309,12 +363,36 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
 
 JS = r"""
 const KEY='qips-ccc-walkthrough-v1';
-let S={answers:{},raised:[],act:0,stop:-1,mode:'welcome',reviewer:'',_draft:{}};
+let S={answers:{},raised:[],notes:[],path:null,act:0,stop:-1,mode:'welcome',reviewer:'',_draft:{}};
 
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
-function acts(){return DATA.acts.filter(a=>a.stops&&a.stops.length)}
+/* The path filter. S.path null means nothing chosen yet, which is only true on the
+   opening screen — every other screen is reached through a choice. */
+function pathCodes(){
+  const p=(DATA.paths||[]).find(function(x){return x.key===S.path});
+  return p?p.codes:null;                       // null = no filter, show everything
+}
+function visible(stop){
+  const codes=pathCodes();
+  if(!codes)return true;
+  return codes.indexOf((stop.needs||{}).code)>=0;
+}
+function acts(){
+  return DATA.acts.map(function(a){return Object.assign({},a,{stops:(a.stops||[]).filter(visible)})})
+                  .filter(function(a){return a.stops.length});
+}
 function allStops(){return acts().flatMap(a=>a.stops)}
-function answered(){return Object.values(S.answers).filter(v=>v&&v.response).length}
+function everyStop(){return DATA.acts.flatMap(function(a){return a.stops||[]})}
+/* Counted against the chosen path, not against everything she has ever answered.
+   If she walks the whole design and then narrows, "40 of 22" is nonsense; and if
+   she widens, the answers she already gave still count. Nothing is discarded
+   either way — the record sent back carries every answer regardless of which
+   path is selected when it goes. */
+function answered(){
+  const on={};allStops().forEach(function(s){on[s.key]=1});
+  return Object.keys(S.answers).filter(function(k){
+    return on[k]&&S.answers[k]&&S.answers[k].response}).length;
+}
 
 /* Persistence. An earlier version deliberately held everything in memory and made
    the reviewer download a file. That was the wrong call once pausing and coming
@@ -347,6 +425,7 @@ function persist(){
   if(!CAN_SAVE)return;
   try{
     localStorage.setItem(KEY,JSON.stringify({answers:S.answers,raised:S.raised,
+      notes:S.notes||[],path:S.path||null,
       act:S.act,stop:S.stop,mode:S.mode,reviewer:S.reviewer||'',
       at:new Date().toISOString()}));
     const el=document.getElementById('saved');
@@ -416,37 +495,80 @@ function standing(code){
   const b=(DATA.boilerplate||{})[code];if(!b)return '';
   let h='';
   Object.keys(b).forEach(function(f){
-    h+='<div style="margin-top:6px"><b>'+esc(DATA.fieldLabels[f]||f)+'.</b> '+esc(b[f])+'</div>'});
+    h+='<div class="standingnote"><b>'+esc(DATA.fieldLabels[f]||f)+'.</b> '+esc(b[f])+'</div>'});
   return h;
 }
 
+/* How many stops a given path contains. Counted from the WHOLE journey, not from
+   the filtered one, or each button would report the length of the path already
+   chosen rather than its own. */
+function countFor(codes){
+  return everyStop().filter(function(s){
+    return !codes||codes.indexOf((s.needs||{}).code)>=0}).length;
+}
+
+/* The opening page answers four questions in the order somebody actually asks
+   them: what is this for, what is it, what do you want from me, and how much of
+   my time does it take. The last one is a choice rather than an announcement —
+   52 stops handed to a busy person with no way to scale it is a demand, and the
+   demand was the thing most likely to stop this being read at all. */
 function screenWelcome(){
-  const n=allStops().length,k={};
-  allStops().forEach(function(s){if(s.needs)k[s.needs.code]=(k[s.needs.code]||0)+1});
+  const every=everyStop(),k={};
+  every.forEach(function(s){if(s.needs)k[s.needs.code]=(k[s.needs.code]||0)+1});
   let h='<div class="card"><div class="eyebrow">'+esc(DATA.sitting)+'</div>';
   h+='<h1>'+esc(DATA.title)+'</h1>';
+  const v=DATA.vision;
+  if(v){
+    h+='<div class="vision"><div class="k">'+esc(v.heading)+'</div>';
+    h+='<p class="quiet" style="font-size:15.5px;margin-bottom:2px">'+esc(v.lede)+'</p><ol>';
+    (v.outcomes||[]).forEach(function(o){h+='<li>'+esc(o)+'</li>'});
+    h+='</ol>';
+    if(v.closing)h+='<p class="close">'+esc(v.closing)+'</p>';
+    h+='</div>';
+  }
+  h+='</div>';
+  h+='<div class="card"><h3>What this is</h3>';
   h+='<p class="lede">'+esc(DATA.welcome.lede)+'</p>';
   DATA.welcome.paragraphs.forEach(function(t){h+='<p class="prose">'+esc(t)+'</p>'});
   h+='</div>';
-  h+='<div class="card"><h3>What you will be asked for</h3>'+
+  h+='<div class="card"><h3>What is being asked of you</h3>'+
      '<p class="quiet">Not one kind of thing. The questions differ in what they need from you, '+
      'and each says which it is.</p><div class="legend">';
-  ['YOUR_KNOWLEDGE','YOUR_JUDGEMENT','ARGUE_WITH_US','DESIGN_WITH_US','CHALLENGE_IF_WRONG']
-    .forEach(function(c){
-      const ex=allStops().find(function(s){return s.needs&&s.needs.code===c});
+  ['YOUR_KNOWLEDGE','YOUR_JUDGEMENT','HELP_US_SETTLE_IT','DESIGN_WITH_US','ARGUE_WITH_US',
+   'CHALLENGE_IF_WRONG'].forEach(function(c){
+      const ex=every.find(function(s){return s.needs&&s.needs.code===c});
       if(!ex)return;
       h+='<div><span class="needs n-'+c+'">'+esc(ex.needs.label)+'</span><span>'+
          esc(ex.needs.invitation)+' <b>('+(k[c]||0)+')</b>'+standing(c)+'</span></div>';
     });
   h+='</div></div>';
+  h+='<div class="card"><h3>How much would you like to take on?</h3>'+
+     '<p class="quiet">All three cover the same design. They differ only in how much of it '+
+     'stops to ask you something.</p><div class="paths">';
+  (DATA.paths||[]).forEach(function(p){
+    const c=countFor(p.codes);
+    h+='<button class="pathbtn'+(S.path===p.key?' sel':'')+'" data-path="'+esc(p.key)+'">'+
+       '<b>'+esc(p.label)+'</b><span class="n">'+c+' stop'+(c===1?'':'s')+'</span>'+
+       '<span class="b">'+esc(p.blurb)+'</span></button>';
+  });
+  h+='</div><p class="pathnote">'+(S.path
+    ?'Change this whenever you like &mdash; come back here with Back. Widening it keeps every '+
+     'answer you have already given.'
+    :'Choose one, and the button below will start you off.')+'</p></div>';
+  const n=allStops().length;
   h+='<div class="card"><h3>How this works</h3><ul class="opts">'+
-     '<li>'+n+' stops across '+acts().length+' parts. Most people take it in more than one sitting.</li>'+
+     (S.path
+       ?'<li>'+n+' stop'+(n===1?'':'s')+' across '+acts().length+' part'+(acts().length===1?'':'s')+
+        '. Most people take it in more than one sitting.</li>'
+       :'')+
      (CAN_SAVE
        ?'<li>Your answers save themselves. Close the tab and come back &mdash; it resumes where you stopped.</li>'
        :'<li><b>This browser will not let the page save on its own.</b> Use <b>Save a copy</b> '+
         'before you close the tab, and <b>Load a copy</b> to pick it up again. Everything else works normally.</li>')+
      '<li>You can go back and change anything, at any point.</li>'+
      '<li>Prefer to talk? Every box has a microphone.</li>'+
+     '<li>At the foot of every page there is a box for anything else on your mind. '+
+     'It does not have to be about the question in front of you.</li>'+
      (DATA.submit
        ?'<li>Your answers go back to the programme office as you work, part by part. '+
         'There is no final step to remember, and nothing to email.</li>'
@@ -460,6 +582,51 @@ function screenWelcome(){
        box('who','Your name',S.reviewer,'40px')+'</div>';
   }
   return h;
+}
+
+/* Free text, everywhere.
+
+   Every other input on this page is attached to a question we thought to ask,
+   which means the page can only hear what it already anticipated. This one is
+   attached to nothing. A thought she has at stop 14 does not have to wait for a
+   stop that fits it, and does not have to be a decision, or finished, or about
+   the thing in front of her.
+
+   It records where she was when she wrote it, because "the coaching side is too
+   thin" means something different on part 3 than on part 6, and she should not
+   have to say which. */
+function currentWhere(){
+  const x=steps()[stepIndex()];
+  if(!x)return 'Somewhere in the walk';
+  if(x.t==='welcome')return 'The opening page';
+  if(x.t==='finish')return 'The last page';
+  const a=acts()[x.a];
+  if(!a)return 'Somewhere in the walk';
+  if(x.t==='actintro')return a.title;
+  if(x.t==='raise')return a.title+' — the open question at the end';
+  const s=a.stops[x.s];
+  return a.title+' — ' +clip(s?s.prompt:'',90);
+}
+function noteStrip(){
+  const mine=S.notes||[];
+  let h='<div class="notestrip'+(S._noteOpen?' open':'')+'">';
+  if(!S._noteOpen){
+    h+='<button class="notetoggle" data-act="note">Something else on your mind? Say it here</button>';
+    if(mine.length)h+='<span class="quiet notecount">'+mine.length+' kept so far</span>';
+  }else{
+    h+='<div class="k">Anything at all</div>'+
+       '<p class="quiet" style="margin-bottom:12px">It does not have to be about this page, '+
+       'or be a decision, or be finished. It comes back to us with where you were when you '+
+       'wrote it, so we can put it in context.</p>'+
+       box('notetext','What is on your mind?',S._noteDraft||'')+
+       '<div class="btns" style="margin-top:11px">'+
+       '<button class="p noteadd">Keep this</button>'+
+       '<button class="s" data-act="noteback">Not now</button></div>';
+    mine.slice().reverse().forEach(function(nt){
+      h+='<div class="note-item">'+esc(nt.text)+
+         '<div class="w">'+esc(nt.where)+'</div></div>'});
+  }
+  return h+'</div>';
 }
 
 function screenActIntro(a,i){
@@ -595,14 +762,23 @@ function screenRaise(a){
 
 function screenFinish(){
   const n=allStops().length,a=answered();
-  let h='<div class="card"><h1>That is the whole design</h1>';
-  h+='<p class="lede">You answered '+a+' of '+n+' stops and raised '+S.raised.length+
-     ' thing'+(S.raised.length===1?'':'s')+' we had not asked about.</p>';
+  const nn=(S.notes||[]).length;
+  let h='<div class="card"><h1>That is the end of the walk</h1>';
+  h+='<p class="lede">You answered '+a+' of '+n+' stops, raised '+S.raised.length+
+     ' thing'+(S.raised.length===1?'':'s')+' we had not asked about'+
+     (nn?', and left '+nn+' note'+(nn===1?'':'s'):'')+'.</p>';
   h+='<p class="prose">Nothing here has changed the programme. Your answers become a proposal with '+
      'your reasons attached, which a person reviews before anything is adopted. Anything you '+
      'skipped stays open, and the design continues to work either way.</p>';
   if(a<n)h+='<p class="quiet">'+(n-a)+' stop'+(n-a===1?'':'s')+' unanswered. That is a legitimate '+
      'outcome rather than an omission, and you can go back to any of them.</p>';
+  if(S.path&&S.path!=='all'){
+    const more=everyStop().length-n;
+    if(more>0)h+='<p class="quiet">You took the shorter walk. There '+(more===1?'is':'are')+' '+
+      more+' further stop'+(more===1?'':'s')+' you have not been shown, all of them already '+
+      'settled or already recommended. If you have the appetite, go back to the opening page and '+
+      'widen it &mdash; everything you have answered is kept.</p>';
+  }
   h+='<div class="btns" style="margin-top:20px">';
   if(DATA.submit){
     h+='<button class="p" data-act="finalsend">Send my responses</button>'+
@@ -619,6 +795,13 @@ function screenFinish(){
        'programme office however suits you &mdash; it is the only copy outside this browser.</p>';
   }
   h+='</div>';
+  if(nn){
+    h+='<div class="card"><h3>What was on your mind</h3>'+
+       '<p class="quiet">Written where no question asked for it. These travel with everything else.</p>';
+    S.notes.forEach(function(nt){
+      h+='<div class="note-item">'+esc(nt.text)+'<div class="w">'+esc(nt.where)+'</div></div>'});
+    h+='</div>';
+  }
   if(S.raised.length){
     h+='<div class="card"><h3>What you raised</h3>';
     S.raised.forEach(function(r){
@@ -631,8 +814,10 @@ function screenFinish(){
 
 function screenDoc(){
   let h='<div class="card"><h1>'+esc(DATA.title)+'</h1><p class="lede">'+esc(DATA.welcome.lede)+
-        '</p><button class="s" data-act="guided">Back to the guided walk</button></div>';
-  acts().forEach(function(a,i){
+        '</p><p class="quiet">This is everything, whichever path you chose. Nothing here is '+
+        'hidden by that choice &mdash; it only decides what stops to ask you something.</p>'+
+        '<button class="s" data-act="guided">Back to the guided walk</button></div>';
+  DATA.acts.forEach(function(a,i){
     h+='<div class="card doc"><div class="eyebrow">Part '+(i+1)+'</div><h2>'+esc(a.title)+'</h2>';
     if(a.lede)h+='<p class="lede">'+esc(a.lede)+'</p>';
     if(a.narrative)h+='<p class="prose">'+esc(a.narrative)+'</p>';
@@ -711,10 +896,12 @@ function payload(final){
   return {sitting:DATA.sitting,generated_from:DATA.commit,
     journey_fingerprint:DATA.journey_fingerprint,
     reviewer:(DATA.submit&&DATA.submit.reviewer)||S.reviewer||'',
+    path:S.path||'',
     answered:answered(),of:allStops().length,final:!!final,
     responses:Object.keys(S.answers).filter(function(k){return S.answers[k].response})
       .map(function(k){return {station:k,response:S.answers[k].response,
         chosen_option:S.answers[k].choice||null,reason:S.answers[k].reason||''}}),
+    notes:S.notes||[],
     raised:S.raised};
 }
 /* What a person sees in the inbox.
@@ -730,6 +917,7 @@ function summaryLine(final){
   const a=answered(),n=allStops().length;
   const bits=[(DATA.submit&&DATA.submit.reviewer)||S.reviewer||'Someone unnamed',
     a+' of '+n+' answered'];
+  if((S.notes||[]).length)bits.push(S.notes.length+' note'+(S.notes.length===1?'':'s'));
   if(S.raised.length)bits.push(S.raised.length+' thing'+(S.raised.length===1?'':'s')+' raised');
   bits.push(final?'finished':'still going');
   return bits.join(' · ');
@@ -737,18 +925,30 @@ function summaryLine(final){
 
 function readable(){
   const lines=[];
-  acts().forEach(function(a,ai){
-    a.stops.forEach(function(st,si){
+  // Over the WHOLE journey, not the filtered one. If she answered something and
+  // then narrowed her path, the answer still exists and still has to be read.
+  const every=DATA.acts;
+  every.forEach(function(a,ai){
+    (a.stops||[]).forEach(function(st,si){
       const ans=S.answers[st.key];
       if(!ans||!ans.response)return;
       lines.push(ans.response+' — '+clip(st.prompt,140));
-      lines.push('    part '+(ai+1)+' of '+acts().length+', '+a.title+
+      lines.push('    part '+(ai+1)+' of '+every.length+', '+a.title+
                  (st.needs?' · '+st.needs.label.toLowerCase():''));
       if(ans.choice)lines.push('    chose: '+clip(ans.choice,300));
       if(ans.reason)lines.push('    because: '+clip(ans.reason,600));
       lines.push('');
     });
   });
+  if((S.notes||[]).length){
+    lines.push('ON HER MIND — written where no question asked for it');
+    lines.push('');
+    S.notes.forEach(function(nt){
+      lines.push(clip(nt.text,900));
+      lines.push('    at: '+clip(nt.where,140));
+      lines.push('');
+    });
+  }
   if(S.raised.length){
     lines.push('RAISED — things we had not asked about');
     lines.push('');
@@ -818,6 +1018,7 @@ function exportFile(){
     responses:Object.keys(S.answers).filter(function(k){return S.answers[k].response})
       .map(function(k){return {station:k,response:S.answers[k].response,
         chosen_option:S.answers[k].choice||null,reason:S.answers[k].reason||''}}),
+    notes:S.notes||[],
     raised:S.raised};
   const b=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
@@ -830,7 +1031,9 @@ function importFile(ev){
     const d=JSON.parse(r.result);
     (d.responses||[]).forEach(function(x){S.answers[x.station]={response:x.response,
       reason:x.reason||'',choice:x.chosen_option||''}});
-    S.raised=d.raised||[];persist();render();
+    S.raised=d.raised||[];S.notes=d.notes||[];
+    if(!S.path)S.path='all';
+    persist();render();
     alert('Restored '+(d.responses||[]).length+' response(s).');
   }catch(e){alert('That file could not be read: '+e.message)}};
   r.readAsText(f);
@@ -845,19 +1048,26 @@ function render(){
   else if(x.t==='actintro')body=screenActIntro(acts()[x.a],x.a);
   else if(x.t==='raise')body=screenRaise(acts()[x.a]);
   else body=screenStop(acts()[x.a],acts()[x.a].stops[x.s],x.s,acts()[x.a].stops.length);
+  // The free-text box sits under every screen of the walk, which is what makes it
+  // always available without adding a control to the navigation she has to learn.
+  if(S.mode!=='doc')body+=noteStrip();
   document.getElementById('body').innerHTML=body;
 
-  const n=allStops().length;
-  document.getElementById('prog').style.width=(100*answered()/n)+'%';
-  document.getElementById('count').textContent=answered()+' of '+n;
+  const n=allStops().length||1;
+  document.getElementById('prog').style.width=(100*Math.min(answered(),n)/n)+'%';
+  document.getElementById('count').textContent=answered()+' of '+allStops().length;
 
   const nav=document.getElementById('nav');
   if(S.mode==='doc'){nav.style.display='none';return}
   nav.style.display='block';
   document.getElementById('back').disabled=i<=0;
   const f=document.getElementById('fwd');
-  f.disabled=i>=all.length-1;
-  f.textContent=x.t==='welcome'?'Begin':(i<all.length-1?'Next':'Done');
+  // Nothing to begin until she has said how much she wants to take on. The button
+  // says why rather than sitting there greyed out with no explanation.
+  const needsPath=(x.t==='welcome'&&!S.path);
+  f.disabled=i>=all.length-1||needsPath;
+  f.textContent=x.t==='welcome'?(needsPath?'Choose one above':'Begin')
+    :(i<all.length-1?'Next':'Done');
 }
 
 /* Installing as an application. A page opened from a file cannot be installed —
@@ -883,6 +1093,35 @@ document.addEventListener('click',function(ev){
   }
   const mic=t.closest?t.closest('[data-mic]'):null;
   if(mic){dictate(mic);return}
+  // The path buttons carry child elements, so the click lands on a <b> or a
+  // <span> as often as on the button itself.
+  const pb=t.closest?t.closest('[data-path]'):null;
+  if(pb){
+    S.path=pb.dataset.path;
+    // Changing the path must never strand her mid-walk on a stop the new path
+    // filters out. She is on the opening page when she chooses, so reset there.
+    S.mode='welcome';S.act=0;S.stop=-1;
+    persist();render();return;
+  }
+  if(t.dataset&&t.dataset.act==='note'){
+    S._noteOpen=true;render();
+    const b=document.querySelector('.notestrip textarea');if(b)b.focus();
+    return;
+  }
+  if(t.dataset&&t.dataset.act==='noteback'){S._noteOpen=false;render();return}
+  if(t.classList&&t.classList.contains('noteadd')){
+    const ta=document.querySelector('.notestrip textarea');
+    const text=((ta&&ta.value)||S._noteDraft||'').trim();
+    if(!text){alert('There is nothing written in the box yet.');return}
+    S.notes=S.notes||[];
+    S.notes.push({text:text,where:currentWhere()});
+    S._noteDraft='';
+    persist();render();
+    // It travels at once rather than waiting for the next part boundary. A note
+    // is often the most perishable thing she writes.
+    sendNow(false);
+    return;
+  }
   if(t.id==='back'){goto2(stepIndex()-1);return}
   if(t.id==='fwd'){goto2(stepIndex()+1);return}
   if(t.dataset&&t.dataset.act==='export'){exportFile();return}
@@ -930,6 +1169,7 @@ document.addEventListener('input',function(ev){
     if(t.classList.contains('rtitle'))S._draft[bx.dataset.raise].title=t.value;
     if(t.classList.contains('rdetail'))S._draft[bx.dataset.raise].detail=t.value;
     return}
+  if(t.classList&&t.classList.contains('notetext')){S._noteDraft=t.value;return}
   if(t.classList&&t.classList.contains('who')){
     S.reviewer=t.value;clearTimeout(window._pt);window._pt=setTimeout(persist,600);return;
   }
@@ -951,11 +1191,21 @@ document.addEventListener('keydown',function(ev){
 (function(){
   if(!CAN_SAVE)announceNoAutosave();
   const saved=restore();
-  if(saved&&(Object.keys(saved.answers||{}).length+(saved.raised||[]).length)>0){
-    S.answers=saved.answers||{};S.raised=saved.raised||[];
-    S.act=saved.act||0;S.stop=saved.stop==null?-1:saved.stop;S.mode=saved.mode||'walk';
+  if(saved){
+    S.path=saved.path||null;
     S.reviewer=saved.reviewer||'';
-    const el=document.getElementById('resumed');if(el)el.style.display='block';
+    S.notes=saved.notes||[];
+    const content=Object.keys(saved.answers||{}).length+(saved.raised||[]).length+
+                  (saved.notes||[]).length;
+    if(content>0){
+      S.answers=saved.answers||{};S.raised=saved.raised||[];
+      S.act=saved.act||0;S.stop=saved.stop==null?-1:saved.stop;S.mode=saved.mode||'walk';
+      // A saved pass from before the paths existed walked all of it. Reading that
+      // as "no path chosen" would put her back on the opening page and make her
+      // choose before she could reach her own work.
+      if(!S.path)S.path='all';
+      const el=document.getElementById('resumed');if(el)el.style.display='block';
+    }
   }
   render();sendStatus();
   // A send that failed while she was offline retries when the page next runs and
@@ -1163,10 +1413,33 @@ def check_no_internal_leaks(rendered: str, lang: dict[str, Any]) -> list[str]:
 TITLE = "QIPS Professional Programme"
 SITTING = "Design walkthrough"
 
+# What she meets first is not the walkthrough. It is what the walkthrough is for.
+# The earlier version opened by explaining itself — 52 stops, how the badges work,
+# how to save. All true, all secondary. Somebody who has agreed to give an hour to
+# a design deserves to see what the design is FOR before being told how the tool
+# works. Everything here is drawn from the approved record; none of it is invention.
+VISION = {
+    "heading": "What success looks like",
+    "lede": "Twelve months from the first session, if this works, four things exist "
+            "that do not exist today.",
+    "outcomes": [
+        "Forty health professionals who have each improved something real in their own "
+        "service — not attended a programme, produced one — with twelve pieces of "
+        "evidence apiece to show for it.",
+        "Nine hospitals qualified against a published standard to host and teach, which "
+        "makes the next cohort possible without starting again.",
+        "Twelve faculty teaching this here, rather than the country importing it.",
+        "Forty improvement projects with baselines and outcomes — a body of evidence on "
+        "quality in Nigerian hospitals that nobody currently holds.",
+    ],
+    "closing": "That is what is being designed. What follows is how, and where it is "
+               "still undecided.",
+}
+
 WELCOME = {
-    "lede": "This is the whole design of the programme, laid out as a guided walk. "
-            "It takes you through it part by part, and stops wherever a decision is "
-            "still open or where what we have built needs testing against what you know.",
+    "lede": "You are looking at the design itself, not a summary of it. It is laid out "
+            "as a guided walk that stops wherever a decision is still open, or where "
+            "what has been built needs testing against what you know.",
     "paragraphs": [
         "You are not being shown a finished thing for approval. Roughly two thirds of "
         "what follows is settled and built; the rest is deliberately unresolved, and "
@@ -1184,6 +1457,31 @@ FIELD_LABELS = {
     "what_we_built": "What is built",
     "reopening_note": "Reopening",
 }
+
+# How much she takes on. The walk was 52 stops and only one length, which is a
+# demanding thing to hand somebody. The stops are not equal: 22 of them can only be
+# answered by her, 10 carry a recommendation to argue with, and 20 are settled and
+# shown so they can be challenged. Letting her choose the depth at the door turns an
+# hour-long obligation into a twenty-minute one she can extend if she wants to.
+PATHS = [
+    {"key": "essential",
+     "label": "Only where I am needed",
+     "codes": ["YOUR_KNOWLEDGE", "YOUR_JUDGEMENT", "DESIGN_WITH_US", "HELP_US_SETTLE_IT"],
+     "blurb": "The decisions nobody else can make. Things only you or SQHN know, "
+              "judgement calls where we have no view, parts not yet designed, and the "
+              "one we cannot agree on."},
+    {"key": "recommended",
+     "label": "Add what we recommend",
+     "codes": ["YOUR_KNOWLEDGE", "YOUR_JUDGEMENT", "DESIGN_WITH_US", "HELP_US_SETTLE_IT",
+               "ARGUE_WITH_US"],
+     "blurb": "The above, plus every place we have put forward a recommendation with "
+              "the evidence behind it and would rather have it argued with than accepted."},
+    {"key": "all",
+     "label": "The whole design",
+     "codes": None,
+     "blurb": "Everything, including what is already settled and built. Shown because "
+              "no decision here is a one-way door."},
+]
 
 RAISE_KINDS = [
     ["MISSING_DECISION", "A decision that has to be taken and is not on this list at all."],
@@ -1424,6 +1722,8 @@ def build_html(acts: list[dict[str, Any]], stations: list[dict[str, Any]], commi
         "commit": commit,
         "journey_fingerprint": fingerprint,
         "welcome": WELCOME,
+        "vision": VISION,
+        "paths": PATHS,
         "raiseKinds": RAISE_KINDS,
         "submit": submit,
         "reasonRequired": sorted(di.REASON_REQUIRED),
@@ -1939,6 +2239,120 @@ def self_test() -> int:
             for needed in ("index.html", "manifest.webmanifest", "icon.svg"):
                 if needed not in cached:
                     failures.append(f"the worker does not cache {needed}; offline use would break")
+            # Installing the application must not sever the return path. A worker
+            # that handled every request would answer the POST from its cache, the
+            # send would appear to succeed, and her answers would go nowhere — the
+            # worst available failure, because it is silent. The worker must
+            # decline anything that is not a GET.
+            fetch_handler = cached.split("'fetch'", 1)[-1]
+            if "method!=='GET'" not in fetch_handler.replace(" ", ""):
+                failures.append(
+                    "the worker intercepts more than GETs, so an installed application "
+                    "could answer her submission from cache and lose it silently"
+                )
+
+    # --- the opening page --------------------------------------------------
+    # Order is the whole argument here. Somebody opening a link asks what this is
+    # FOR before asking what it is, and asks how long it will take before
+    # agreeing to start. A page that leads with mechanics gets closed.
+    welcome_src = JS.split("function screenWelcome(", 1)[-1].split("\nfunction ", 1)[0]
+    order = [("DATA.vision", "what success looks like"),
+             ("DATA.welcome.lede", "what this is"),
+             ("What is being asked of you", "what is wanted from her"),
+             ("DATA.paths", "how much she takes on"),
+             ("How this works", "the mechanics")]
+    found = [(welcome_src.find(needle), label) for needle, label in order]
+    if any(i < 0 for i, _ in found):
+        failures.append(
+            "the opening page is missing one of: "
+            + ", ".join(label for i, label in found if i < 0)
+        )
+    elif [i for i, _ in found] != sorted(i for i, _ in found):
+        failures.append(
+            "the opening page states its mechanics before its purpose: got "
+            + " then ".join(label for _, label in sorted(found))
+        )
+
+    # --- how much she is asked to take on ----------------------------------
+    # Handing a busy reviewer 52 stops with no way to scale it is a demand, and a
+    # demand is the likeliest reason this never gets read. The paths must nest —
+    # a wider one may only ADD — or "widen it, nothing is lost" becomes untrue.
+    by_code: dict[str, int] = {}
+    for act in payload["acts"] if payload else []:
+        for stop in act["stops"]:
+            code = (stop.get("needs") or {}).get("code")
+            if code:
+                by_code[code] = by_code.get(code, 0) + 1
+    sets = []
+    for path in PATHS:
+        codes = path["codes"]
+        size = sum(by_code.values()) if codes is None else sum(by_code.get(c, 0) for c in codes)
+        sets.append((path["key"], set(by_code) if codes is None else set(codes), size))
+        if size == 0:
+            failures.append(f"path {path['key']!r} would offer her nothing to do")
+        for unknown in (codes or []):
+            if unknown not in by_code:
+                failures.append(
+                    f"path {path['key']!r} names {unknown!r}, which no stop carries; "
+                    "its count would be a promise the walk cannot keep"
+                )
+    for (ka, sa, na), (kb, sb, nb) in zip(sets, sets[1:]):
+        if not sa <= sb:
+            failures.append(
+                f"path {ka!r} is not contained in {kb!r}; widening would drop stops she "
+                "had already been shown"
+            )
+        if not na < nb:
+            failures.append(f"path {ka!r} is not shorter than {kb!r}, so the choice is empty")
+    if sets and sets[-1][2] != len(stations):
+        failures.append(
+            f"the widest path shows {sets[-1][2]} of {len(stations)} stops; it is offered "
+            "as the whole design"
+        )
+
+    # --- what she says where nothing asked ---------------------------------
+    # The free text is the only input on the page not attached to a question we
+    # thought to ask, which makes it the only route by which something we did not
+    # anticipate can reach us. Every place her work is stored, sent or written
+    # out has to carry it, or it becomes the one thing she said that we lose.
+    for where, marker, missing in [
+        ("the record that is sent", "function payload(", "notes:S.notes"),
+        ("the downloaded copy", "function exportFile(", "notes:S.notes"),
+        ("what is saved in her browser", "function persist(", "notes:S.notes"),
+        ("what is read back", "function restore(", None),
+        ("the human digest", "function readable(", "S.notes"),
+    ]:
+        if marker not in JS:
+            failures.append(f"{where}: {marker} has gone")
+            continue
+        if missing and missing not in JS.split(marker, 1)[1].split("\nfunction ", 1)[0]:
+            failures.append(
+                f"her free text never reaches {where}; she would write it and we would "
+                "never see it"
+            )
+    if "S.mode!=='doc')body+=noteStrip()" not in JS.replace(" ", ""):
+        failures.append(
+            "the free-text box is not appended to every screen of the walk, so what she "
+            "can say depends on where she happens to be"
+        )
+    # Nothing here renders CSS, so a layout defect is invisible to every other
+    # check in this file. This one is pinned by name because it already shipped
+    # once: written as a descendant selector it also caught the standing note
+    # nested inside each row and stacked it one word per line.
+    if re.search(r"^\.legend\s+div\s*\{", CSS, re.M):
+        failures.append(
+            "the legend styles every nested div, not just its own rows; the standing "
+            "note inside a row becomes a second grid and breaks one word per line"
+        )
+    if "white-space:normal" not in CSS.split(".legend>div>.needs{", 1)[-1].split("}", 1)[0]:
+        failures.append(
+            "the legend badge cannot wrap, so a long label runs over the sentence beside it"
+        )
+    if "where:currentWhere()" not in JS.replace(" ", ""):
+        failures.append(
+            "a note is stored without where she was; the same sentence means different "
+            "things on different parts and she should not have to say which"
+        )
 
 
     # A contested recommendation must never reach her wearing a confident face.
