@@ -307,16 +307,23 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
   display:flex;align-items:center;justify-content:center}
 .vision .close{margin:16px 0 0;font-size:14.5px;color:var(--muted);font-style:italic}
 
-.paths{display:grid;gap:10px;margin-top:15px}
-.pathbtn{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:11px;
-  padding:14px 17px;transition:border-color .12s,background .12s}
-.pathbtn:hover{border-color:var(--muted)}
-.pathbtn.sel{border-color:var(--accent);background:var(--accent-soft);
-  box-shadow:inset 0 0 0 1px var(--accent)}
-.pathbtn b{display:block;font-size:15.5px;color:var(--ink)}
-.pathbtn .n{display:block;font-size:12.5px;color:var(--accent);font-weight:650;margin-top:2px}
-.pathbtn .b{display:block;font-size:14px;color:var(--muted);margin-top:6px;line-height:1.5}
-.pathnote{font-size:13.5px;color:var(--faint);margin-top:11px}
+/* Everything that is not needed in order to begin lives behind this. It is a
+   native <details>, so it works with no script, keyboard-reachable, and readable
+   by a screen reader as the disclosure it is. */
+details.more{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);margin-bottom:18px}
+details.more>summary{list-style:none;cursor:pointer;padding:18px 28px;font-size:15px;
+  font-weight:650;color:var(--accent);display:flex;align-items:center;gap:10px}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::marker{content:''}
+details.more>summary:before{content:'+';font-size:19px;font-weight:400;line-height:1;
+  width:14px;text-align:center}
+details.more[open]>summary:before{content:'\2212'}
+details.more>summary:hover{text-decoration:underline}
+.morebody{padding:0 28px 24px}
+input.line{width:100%;max-width:340px;font-size:15.5px;padding:11px 14px;margin-top:12px;
+  border:1px solid var(--line);border-radius:9px;background:var(--card)}
+input.line:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
 
 .notestrip{border:1px dashed var(--line);border-radius:12px;padding:13px 17px;margin:2px 0 20px;
   background:var(--card)}
@@ -348,7 +355,7 @@ textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
   .needs{white-space:normal}
   .legend>div{grid-template-columns:1fr;gap:8px}
   .vision{padding:16px 15px} .vision li{padding-left:31px}
-  .pathbtn{padding:13px 15px}
+  details.more>summary{padding:15px 17px} .morebody{padding:0 17px 19px}
   .stophead{flex-direction:column-reverse;gap:9px}
   .stophead .needs{margin-top:0;align-self:flex-start}
   #resumed{display:none}
@@ -512,6 +519,18 @@ function countFor(codes){
    my time does it take. The last one is a choice rather than an announcement —
    52 stops handed to a busy person with no way to scale it is a demand, and the
    demand was the thing most likely to stop this being read at all. */
+/* The opening page.
+
+   The first version of this put a decision in front of the Begin button and
+   greyed the button out until it was made — which is the same demand the paths
+   were introduced to remove, wearing a different hat. Measured, it was 887 words
+   and 3.7 phone screens before she could start, a third of it a legend
+   explaining six question types she had not met yet.
+
+   So: a default she can change rather than a gate she has to clear, and only
+   what she needs in order to begin. Everything else is one disclosure away, and
+   the legend is explained again in context at the top of every part, where she
+   actually meets the badges. */
 function screenWelcome(){
   const every=everyStop(),k={};
   every.forEach(function(s){if(s.needs)k[s.needs.code]=(k[s.needs.code]||0)+1});
@@ -531,9 +550,35 @@ function screenWelcome(){
   h+='<p class="lede">'+esc(DATA.welcome.lede)+'</p>';
   DATA.welcome.paragraphs.forEach(function(t){h+='<p class="prose">'+esc(t)+'</p>'});
   h+='</div>';
-  h+='<div class="card"><h3>What is being asked of you</h3>'+
+
+  // The length: already chosen, changeable in one click, in either direction.
+  const cur=(DATA.paths||[]).find(function(p){return p.key===S.path});
+  h+='<div class="card"><h3>How long it is</h3>'+
+     '<p class="quiet">You are set to the shortest walk &mdash; the stops only you can answer. '+
+     'Change it here whenever you like, in either direction. Nothing you have already answered '+
+     'is ever lost, and the whole design stays readable either way.</p>'+
+     '<div class="btns" style="margin-top:13px">';
+  (DATA.paths||[]).forEach(function(p){
+    const c=countFor(p.codes);
+    h+='<button class="r'+(S.path===p.key?' sel':'')+'" data-path="'+esc(p.key)+'">'+
+       esc(p.label)+' &middot; '+c+'</button>';
+  });
+  h+='</div>';
+  if(cur)h+='<p class="quiet" style="margin-top:11px">'+esc(cur.blurb)+'</p>';
+  h+='<p class="quiet" style="margin-top:13px">'+(CAN_SAVE
+      ?'It saves as you go, so you can stop anywhere and come back to it. '
+      :'<b>This browser will not let the page save on its own</b>, so use <b>Save a copy</b> '+
+       'before you close the tab. ')+
+     'Nothing you do here changes the programme by itself &mdash; your answers become a '+
+     'proposal that a person reviews.</p></div>';
+
+  // Everything else, out of the way of starting.
+  h+='<details class="more"'+(S._moreOpen?' open':'')+
+     '><summary>More about how this works</summary><div class="morebody">';
+  h+='<h3>What is being asked of you</h3>'+
      '<p class="quiet">Not one kind of thing. The questions differ in what they need from you, '+
-     'and each says which it is.</p><div class="legend">';
+     'and each says which it is where you meet it, so this is reference rather than '+
+     'something to learn now.</p><div class="legend">';
   ['YOUR_KNOWLEDGE','YOUR_JUDGEMENT','HELP_US_SETTLE_IT','DESIGN_WITH_US','ARGUE_WITH_US',
    'CHALLENGE_IF_WRONG'].forEach(function(c){
       const ex=every.find(function(s){return s.needs&&s.needs.code===c});
@@ -541,30 +586,8 @@ function screenWelcome(){
       h+='<div><span class="needs n-'+c+'">'+esc(ex.needs.label)+'</span><span>'+
          esc(ex.needs.invitation)+' <b>('+(k[c]||0)+')</b>'+standing(c)+'</span></div>';
     });
-  h+='</div></div>';
-  h+='<div class="card"><h3>How much would you like to take on?</h3>'+
-     '<p class="quiet">All three cover the same design. They differ only in how much of it '+
-     'stops to ask you something.</p><div class="paths">';
-  (DATA.paths||[]).forEach(function(p){
-    const c=countFor(p.codes);
-    h+='<button class="pathbtn'+(S.path===p.key?' sel':'')+'" data-path="'+esc(p.key)+'">'+
-       '<b>'+esc(p.label)+'</b><span class="n">'+c+' stop'+(c===1?'':'s')+'</span>'+
-       '<span class="b">'+esc(p.blurb)+'</span></button>';
-  });
-  h+='</div><p class="pathnote">'+(S.path
-    ?'Change this whenever you like &mdash; come back here with Back. Widening it keeps every '+
-     'answer you have already given.'
-    :'Choose one, and the button below will start you off.')+'</p></div>';
-  const n=allStops().length;
-  h+='<div class="card"><h3>How this works</h3><ul class="opts">'+
-     (S.path
-       ?'<li>'+n+' stop'+(n===1?'':'s')+' across '+acts().length+' part'+(acts().length===1?'':'s')+
-        '. Most people take it in more than one sitting.</li>'
-       :'')+
-     (CAN_SAVE
-       ?'<li>Your answers save themselves. Close the tab and come back &mdash; it resumes where you stopped.</li>'
-       :'<li><b>This browser will not let the page save on its own.</b> Use <b>Save a copy</b> '+
-        'before you close the tab, and <b>Load a copy</b> to pick it up again. Everything else works normally.</li>')+
+  h+='</div>';
+  h+='<h3 style="margin-top:24px">The rest of it</h3><ul class="opts">'+
      '<li>You can go back and change anything, at any point.</li>'+
      '<li>Prefer to talk? Every box has a microphone.</li>'+
      '<li>At the foot of every page there is a box for anything else on your mind. '+
@@ -574,12 +597,16 @@ function screenWelcome(){
         'There is no final step to remember, and nothing to email.</li>'
        :'<li>When you are done, <b>Save a copy</b> downloads a file to send to the '+
         'programme office. Nothing leaves this browser on its own.</li>')+
-     '<li>Nothing you do here changes the programme by itself. It becomes a proposal a person reviews.</li>'+
-     '</ul></div>';
+     '<li>The last page reads the whole design straight through, whichever length you are on.</li>'+
+     '</ul></div></details>';
   if(DATA.submit&&!(DATA.submit.reviewer||S.reviewer)){
+    // A name is one short line. It had a microphone and a resizable box, which
+    // is the furniture of an essay answer and made the last thing before Begin
+    // look like work. Build with --reviewer and she is never asked at all.
     h+='<div class="card"><h3>Who is walking this?</h3>'+
        '<p class="quiet">So your answers arrive with your name on them. Nothing else is collected.</p>'+
-       box('who','Your name',S.reviewer,'40px')+'</div>';
+       '<input class="who line" placeholder="Your name" value="'+esc(S.reviewer||'')+'">'+
+       '</div>';
   }
   return h;
 }
@@ -1062,11 +1089,12 @@ function render(){
   nav.style.display='block';
   document.getElementById('back').disabled=i<=0;
   const f=document.getElementById('fwd');
-  // Nothing to begin until she has said how much she wants to take on. The button
-  // says why rather than sitting there greyed out with no explanation.
-  const needsPath=(x.t==='welcome'&&!S.path);
-  f.disabled=i>=all.length-1||needsPath;
-  f.textContent=x.t==='welcome'?(needsPath?'Choose one above':'Begin')
+  // Never gated on the length. A default she can change is an offer; a disabled
+  // button is a demand, and the demand was the thing this was meant to remove.
+  // The count rides on the button so she knows what she is agreeing to at the
+  // moment she agrees to it.
+  f.disabled=i>=all.length-1;
+  f.textContent=x.t==='welcome'?('Begin · '+allStops().length+' stops')
     :(i<all.length-1?'Next':'Done');
 }
 
@@ -1098,10 +1126,22 @@ document.addEventListener('click',function(ev){
   const pb=t.closest?t.closest('[data-path]'):null;
   if(pb){
     S.path=pb.dataset.path;
-    // Changing the path must never strand her mid-walk on a stop the new path
-    // filters out. She is on the opening page when she chooses, so reset there.
+    // Changing the length must never strand her mid-walk on a stop the new one
+    // filters out. The control lives on the opening page, so return there.
     S.mode='welcome';S.act=0;S.stop=-1;
-    persist();render();return;
+    persist();render();
+    // Keep the control she just used under her thumb rather than throwing her
+    // back to the top of the page.
+    const el=document.querySelector('[data-path].sel');
+    if(el)el.scrollIntoView({block:'center'});
+    return;
+  }
+  // A native <details> loses its open state when render() rewrites the body, so
+  // it is remembered. Read after the browser has toggled it, not before.
+  if(t.closest&&t.closest('details.more>summary')){
+    setTimeout(function(){const d=document.querySelector('details.more');
+      S._moreOpen=!!(d&&d.open)},0);
+    return;
   }
   if(t.dataset&&t.dataset.act==='note'){
     S._noteOpen=true;render();
@@ -1207,6 +1247,10 @@ document.addEventListener('keydown',function(ev){
       const el=document.getElementById('resumed');if(el)el.style.display='block';
     }
   }
+  // The default length, set for her rather than demanded of her. First entry in
+  // PATHS is the shortest, which is the one that makes finishing likeliest; the
+  // closing page offers to widen it once she has something to show for the pass.
+  if(!S.path)S.path=((DATA.paths||[])[0]||{}).key||null;
   render();sendStatus();
   // A send that failed while she was offline retries when the page next runs and
   // when the connection returns, so an unsent pass repairs itself.
@@ -1445,11 +1489,9 @@ WELCOME = {
         "what follows is settled and built; the rest is deliberately unresolved, and "
         "each of those is here because it is better decided with you than presented to "
         "you. Where we have a view, you will see the view and the evidence under it.",
-        "Nothing you do here changes the programme by itself. Your answers, with your "
-        "reasons attached, become a proposal that a person reviews. A disagreement is "
-        "as useful as an agreement — more useful, if it is early.",
-        "It is long. It is meant to be taken in more than one sitting, and it saves "
-        "itself as you go.",
+        "A disagreement is as useful to us as an agreement — more useful, if it comes "
+        "early. Skipping something is a legitimate answer too: it stays open, and the "
+        "design goes on working either way.",
     ],
 }
 
@@ -2258,9 +2300,8 @@ def self_test() -> int:
     welcome_src = JS.split("function screenWelcome(", 1)[-1].split("\nfunction ", 1)[0]
     order = [("DATA.vision", "what success looks like"),
              ("DATA.welcome.lede", "what this is"),
-             ("What is being asked of you", "what is wanted from her"),
-             ("DATA.paths", "how much she takes on"),
-             ("How this works", "the mechanics")]
+             ("DATA.paths", "how long it is"),
+             ('details class="more"', "everything else, behind a disclosure")]
     found = [(welcome_src.find(needle), label) for needle, label in order]
     if any(i < 0 for i, _ in found):
         failures.append(
@@ -2271,6 +2312,39 @@ def self_test() -> int:
         failures.append(
             "the opening page states its mechanics before its purpose: got "
             + " then ".join(label for _, label in sorted(found))
+        )
+    # The legend explains six question types she has not met yet. In front of the
+    # Begin button it was a third of the opening page and 1.5 phone screens of
+    # scrolling between her and starting. It belongs behind the disclosure.
+    if 'details class="more"' in welcome_src:
+        before, _after = welcome_src.split('details class="more"', 1)
+        if 'class="legend"' in before:
+            failures.append(
+                "the legend sits in front of the Begin button again; it is reference for "
+                "badges she meets in context and pushes the start off the screen"
+            )
+
+    # --- starting must not require a decision ------------------------------
+    # The paths exist to remove a demand. Gating Begin on choosing one puts the
+    # demand back: she cannot start until she has ruled on something she has no
+    # basis to rule on yet. A default she can change is an offer.
+    if re.search(r"f\.disabled\s*=[^;]*S\.path", JS):
+        failures.append(
+            "Begin is disabled until she picks a length; that is the demand the lengths "
+            "were introduced to remove"
+        )
+    if "S.path=((DATA.paths||[])[0]||{}).key" not in JS.replace(" ", ""):
+        failures.append(
+            "no length is chosen for her at startup, so the walk cannot begin until she "
+            "decides something she has no basis to decide yet"
+        )
+    # The default is what most reviewers will actually walk, so it has to be the
+    # one they can finish. The nesting check below proves the first entry is the
+    # shortest; this proves it is bounded at all.
+    if PATHS[0]["codes"] is None:
+        failures.append(
+            "the default length is the whole design, which is the demand this was "
+            "meant to remove"
         )
 
     # --- how much she is asked to take on ----------------------------------
