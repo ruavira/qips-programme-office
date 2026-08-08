@@ -1,0 +1,221 @@
+# The journey a CCC member walks.
+#
+# WHY THIS FILE EXISTS
+# --------------------
+# engine/decision_interview.py generates stations from wherever the repository is
+# open. That guarantees nothing is hidden, but a list of governance items is not a
+# design review. A reviewer given thirty-one parameters in a register can ANSWER
+# things without ever UNDERSTANDING anything.
+#
+# So the walkthrough is a journey, and the stations hang off it in the place where
+# the decision actually bites. The price question is met while looking at the
+# application form. The observership question is met while looking at month three.
+#
+# This file is the narrative spine. It is DATA, deliberately: an act can be
+# reordered, rewritten or split without touching the generator, and the CCC can
+# challenge the spine itself.
+#
+# ANCHORING RULE, enforced by engine/walkthrough.py:
+# every station and every review point must appear in exactly one act. Anything
+# unanchored lands in the final act and is reported loudly. An item the reviewer
+# never reaches is an item they were never shown.
+
+journey:
+  id: QIPS-CCC-WALKTHROUGH
+  version: "0.1.0-draft"
+  status: DRAFT_FOR_CCC_REVIEW
+  audience: >-
+    The Central Coordinating Committee. Cohort 1 of the QIPS Professional
+    Programme, convened by SQHN and Partners.
+  how_to_use: >-
+    Walk it in order the first time. Everything is openable, everything is
+    challengeable, and nothing you say here changes the programme by itself — your
+    answers compile into a proposal that a human merges after you have seen it.
+
+acts:
+
+  - id: ACT1
+    title: What this is
+    lede: >-
+      Before any detail: what is being built, for whom, and what it deliberately
+      is not.
+    narrative: >-
+      A twelve-month hybrid professional programme in healthcare quality and
+      patient safety, convened by SQHN and Partners, with cohort 1 running January
+      to December 2027. The vocabulary of teaching-and-consumption is banned
+      outright, and the ban is checked automatically on every change rather than
+      left to good intentions. That language sets an
+      expectation of attending and receiving, and this programme asks for
+      production instead. Every participant leaves having improved something real
+      in their own service, evidenced across twelve artefacts.
+    what_it_is_not:
+      - Not something a participant attends and consumes; everyone produces.
+      - Not institutionally accredited by ISQua — individual faculty involvement only.
+      - Not published under any partner's name for cohort 1.
+    anchors: [F001, F002, F013, F014, F021, F022, F028]
+
+  - id: ACT2
+    title: The year they will live
+    lede: >-
+      Twelve months, twelve artefacts, one improvement carried the whole way.
+    narrative: >-
+      The curriculum is designed backwards from twelve learner artefacts rather
+      than forwards from a topic list. Month 1 defines a problem; month 12
+      assembles the argument the previous eleven artefacts already support. The
+      capstone is not a new piece of work. Measurement starts at month 3 so a run
+      chart at month 9 has real data behind it.
+      What those twelve artefacts are FOR — what a graduate should be able to do at
+      the end of them — was never written down until August 2026. Two stops in this
+      part put the first draft of it in front of you.
+      The published time commitment is derived from the curriculum, not chosen for
+      marketing — and it is recomputed automatically every time the design changes,
+      because a figure nobody rechecks stops being derived and quietly becomes a
+      claim.
+    show:
+      - curriculum_spine: engine/schemas/curriculum-spine.yaml
+      - time_model: derived, recomputed against F019
+      - programme_objectives: workstreams/W02/working/W02-programme-objectives-and-competency-spine-2026-08-06.md
+      - competency_evidence: workstreams/W02/working/W02-competency-evidence-base-2026-08-06.md
+    anchors: [F003, F010, F011, F019, F023, ST-curriculum-spine-UA1, ST-curriculum-spine-UA5, "ST-Q011", "ST-Q012", "ST-Q014"]
+
+  - id: ACT3
+    title: Inside a single month
+    lede: >-
+      The same four components every month, and nothing else.
+    narrative: >-
+      One eLearning release, one live faculty session, one small-group coaching
+      call, one artefact. A month that adds a fifth component or drops one is
+      rejected automatically. Artefacts are due four days before the coaching
+      call so the coach arrives having read them — that four-day gap is arithmetic
+      in the engine, not a promise in a document.
+      Month 1 is prototyped in full and is openable here, including the live
+      session plan minute by minute.
+    show:
+      - month_1_prototype: workstreams/W02/working/W02-months-1-2-prototype-2026-08-02.md
+    anchors: [F004, F005, ST-curriculum-spine-UA3, ST-curriculum-spine-UA4]
+
+  - id: ACT4
+    title: The observership
+    lede: >-
+      Forty hours in a real service that is not their own.
+    narrative: >-
+      From month 3 to week 2 of month 4, at a site qualified against a published
+      Host Site Standard. The standard is written from programme objectives rather
+      than from the characteristics of sites we happen to have — so a site either
+      meets it or does not, and the list of candidate sites cannot quietly define
+      the bar. The artefact is the participant's own analysis, never a log of
+      attendance.
+      This is also the most expensive and most legally exposed part of the design,
+      and the walkthrough does not soften that.
+    anchors: [F006, F008, F026, ST-F007, ST-Q001, ST-curriculum-spine-UA2]
+
+  - id: ACT5
+    title: Getting in
+    lede: >-
+      Who applies, how they are judged, and what is deliberately not being judged.
+    narrative: >-
+      Applications open October 2026 and close 31 December. Six criteria summing
+      to one hundred, the heaviest weight on the improvement challenge itself.
+      Title, institutional standing, sponsorship, ability to pay and any request
+      for reasonable adjustment do not move the score — and that is not a policy
+      statement. It is checked: every practice case is re-scored with each of those
+      details altered, and the score must not move.
+      Several things are deliberately absent from the rubric — no pass mark, no
+      cohort cap, no country allocation. Each absence is a decision the committee
+      has not yet taken, and each one is a stop on this walk.
+    show:
+      - rubric: engine/schemas/admissions-rubric.yaml
+      - application_form: engine/schemas/application-form.yaml
+    anchors:
+      - F012
+      - ST-F018
+      - ST-F025
+      - ST-admissions-rubric-ABSENT-SCORE-THRESHOLD
+      - ST-admissions-rubric-ABSENT-COHORT-CAP
+      - ST-admissions-rubric-ABSENT-COUNTRY-ALLOCATION
+      - ST-admissions-rubric-ABSENT-ELIGIBILITY-BREADTH
+      - ST-application-form-PROCESS-REASONABLE-ADJUSTMENT-ROUTE-1
+      - ST-application-form-PROCESS-REASONABLE-ADJUSTMENT-ROUTE-2
+      - ST-application-form-PROCESS-RECONSIDERATION-1
+      - ST-application-form-PROCESS-RECONSIDERATION-2
+      - ST-Q006
+
+  - id: ACT6
+    title: The people who teach and coach
+    lede: >-
+      Coverage slots rather than named heroes, and coaching built rather than bought.
+    narrative: >-
+      Faculty are appointed to coverage slots with consent, conflict clearance and
+      a named backup, so the programme does not depend on any individual staying
+      available for twelve months. Coaching capability is built internally rather
+      than bought in, because a coaching relationship that ends when a contract
+      ends is not a coaching relationship.
+      Faculty preparation cost is real and rises from month 2 onward, when the
+      session requires reading the whole cohort's prior artefacts. That cost is
+      recorded here rather than discovered in February.
+    anchors: [F009, ST-F029, ST-Q005]
+
+  - id: ACT7
+    title: Where the country question really bites
+    lede: >-
+      Country-agnostic in design is not country-agnostic in recognition.
+    narrative: >-
+      The curriculum teaches improvement applied in the participant's own facility,
+      so the teaching is country-agnostic by construction — only worked examples,
+      regulatory references, host-site logistics and session timing vary.
+      Recognition is a different matter entirely, and the research found the
+      differences are commercial and structural rather than administrative: Ghana's
+      CPD technical committees sit only three times a year, Ghana's allied-health
+      regulator takes a share of gross proceeds, and no Nigerian body currently
+      accredits CPD for non-clinical quality professionals — who are a core part of
+      the intended audience.
+    anchors: [ST-F020, ST-Q002, ST-Q003]
+
+  - id: ACT8
+    title: What it costs and whether it survives
+    lede: >-
+      The money, stated openly, with the evidence and the ceilings.
+    narrative: >-
+      Nothing about the programme's design depends on the price — not one hour of
+      curriculum, assessment or observership. That is why price is held open rather
+      than guessed. What the research does provide is a recommended structure: a
+      ladder published openly by World Bank income band, after the ISQua
+      precedent, payable in instalments and quoted in local currencies after the
+      West African College of Physicians precedent.
+      The viability question and the go/no-go gate sit here too, including the one
+      figure in the model that is still a zero.
+    anchors:
+      - ST-F024
+      - ST-admissions-rubric-ABSENT-PRICE
+      - F027
+      - ST-Q004
+      - ST-Q007
+
+  - id: ACT9
+    title: How this is governed, including this conversation
+    lede: >-
+      Why you are being asked rather than told, and what happens to what you say.
+    narrative: >-
+      One approved record holds what has actually been decided, and only a
+      decision of this committee can change it. Nothing you see here has been
+      quietly settled in advance and dressed up for approval: where something is
+      still open, the design has been built to work whichever way you resolve it.
+      What you say here is turned directly into a proposed change, together with a
+      draft record of the decision, which is checked for consistency and then put
+      in front of a person to approve. Your reasons are kept, not only your
+      verdicts — a reason becomes a standing constraint, which is what stops the
+      same proposal coming back to you unchanged.
+      And every decision can be reopened later. Nothing here is a one-way door.
+    anchors: [F016, ST-F017, ST-Q008, ST-Q009, ST-Q010, "ST-Q013"]
+
+  - id: ACT10
+    title: Anything not yet placed
+    lede: >-
+      Items the spine has not found a home for. Their presence here is a defect in
+      the spine, not in the item — but they are shown, because an item you never
+      reach is an item you were never shown.
+    narrative: >-
+      This act should be empty. Anything appearing here is reported to the programme
+      office as a defect in the running order, not as a defect in the item itself.
+    catch_all: true
+    anchors: []

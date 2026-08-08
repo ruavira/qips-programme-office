@@ -81,6 +81,8 @@ implication.
 | Q006 | How many contactable names does SQHN hold, and what did the existing 3-hour course convert at? | W14 | 2026-09-15 | W07, W16 |
 | Q009 | What is the data retention period and who is the data-protection contact? | W17 | 2026-09-30 | W09, W14 |
 | Q010 | What is the programme called? | W13 | 2026-08-31 | W14, W03 |
+| Q011 | What must a graduate be able to do at the end of twelve months, and what will the programme claim about that in public? | W02 | 2026-09-30 | W03, W13, W14 |
+| Q014 | Who authors months 3 to 12 of the curriculum, on what schedule, and against what review? | W02 | 2026-09-30 | W05, W06, W09, W10, W11, W14 |
 
 ## Item 6 — continuous intake and decision sequencing
 

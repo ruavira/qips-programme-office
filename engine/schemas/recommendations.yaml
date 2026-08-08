@@ -1,0 +1,742 @@
+# Recommendations put to the CCC — research output, NOT canon.
+#
+# WHY THIS IS A SEPARATE FILE
+# ---------------------------
+# A recommendation cannot live in canon/facts.yaml. AGENTS.md requires a recorded
+# CCC verdict for any change to canon/, which would mean asking the committee to
+# approve the very research meant to inform them before they could read it. That
+# is a deadlock, and it is also the wrong shape: canon holds what is TRUE, and a
+# recommendation is by definition not yet true.
+#
+# So recommendations live here, keyed to the thing they are about, and
+# engine/decision_interview.py joins them at read time. Consequences, all wanted:
+#
+#   - research can be improved, corrected or replaced without a committee sitting;
+#   - a recommendation can never be mistaken for a decision, because it is not in
+#     the file that holds decisions;
+#   - the committee sees the recommendation and the fact side by side without
+#     either contaminating the other.
+#
+# EVERY ENTRY MUST CARRY EVIDENCE. engine/decision_interview.py hard-fails a
+# recommendation with no evidence or no rationale — an unevidenced recommendation
+# is an opinion wearing a recommendation's clothes.
+#
+# ABSENCE IS HONEST. A target with no entry here is shown to the committee as an
+# open question rather than dressed up as a proposal, and appears in the research
+# queue. Do not add a weak entry to empty the queue; the queue is the point.
+
+recommendations:
+
+  - target: F024
+    owner: W16
+    option: >-
+      LMIC individual rung at USD 500, payable as four quarterly instalments of
+      USD 125 with progression gated on payment. Published openly as a ladder by
+      World Bank income band: institutional per seat USD 900 (−15% at 3 seats,
+      −25% at 10), international USD 1,500, hardship USD 250 at capped places.
+      Priced in USD, published in three local currencies, revised per cohort.
+    rationale: >-
+      Three markets, three currencies, three salary systems — and the committed
+      self-pay bands converge, because in each case the figure anchors to the same
+      thing: one specialist examination fee. Nigeria USD 294–661 with a ceiling
+      near USD 600 at WACP fellowship-exam parity; Ghana USD 530–970; Pakistan
+      USD 270–540. USD 500 is the only point inside all three bands and under all
+      three ceilings.
+      Not lower, because below roughly USD 400 the programme sits at IHI Open
+      School subscription level and the Decagon precedent bites: their cheaper hybrid
+      failed specifically because it was cheap and demanding, with learners
+      reluctant to choose the more affordable option. In this market, low price
+      plus high time demand reads as low value. Discount by income tier and by
+      volume, never by format.
+      Not higher, because above roughly USD 700 the programme converts from a
+      self-pay product into an institutional sale in all three markets — a
+      six-to-twelve-month cycle the January 2027 timetable does not support.
+      Instalments are the product, not a concession. GTBank caps naira-card
+      international transactions at USD 1,000 per quarter, and Ghana's average
+      mobile money transaction is about USD 33 — a single USD 500 payment sits
+      outside the normal envelope of the rails these participants actually use.
+    comparators:
+      - "West African College of Physicians: the same exam priced USD 625 / ₦812,500 / GHC 8,125 — the template for publishing one USD price in three local currencies, and from this market"
+      - "ISQua: publishes rather than buries its income-band ladder, at a 1:3 LIC-to-HIC ratio"
+      - "IHI: 15% discount at 3 seats, 19% at 10 — the observed industry band"
+      - "IHI Open School: USD 399 for 38 self-paced online offerings — the floor below which this programme loses its position"
+      - "Decagon: a cheaper hybrid at ₦550,000 that failed because it was cheap and demanding"
+      - "University of Ghana MPH: 60% of it is USD 1,015 — Ghana's hard ceiling"
+    evidence:
+      - workstreams/W16/working/W16-faculty-economics-and-pricing-recommendation-2026-08-01.md
+      - workstreams/W16/working/run-001-evidence-register.md
+    confidence: HIGH
+    confidence_basis: >-
+      Three independent market anchors converge on one figure, each traced to a
+      published fee. The weakest link is the Pakistan band, which rests on fewer
+      sources than the Nigerian and Ghanaian ones.
+    what_would_change_it: >-
+      A resolved F020 that drops Pakistan removes the binding lower ceiling and
+      would permit a higher individual rung. Verified indemnity above USD 75
+      triggers F026 and changes the whole arithmetic. Evidence that employers
+      rather than individuals will carry the fee converts this to an institutional
+      sale, which is a different price and a different business.
+    under_review:
+      since: 3 August 2026
+      raised_by: the programme director
+      why: >-
+        The figure below answers one question — what can this market pay — and
+        never answers the other, which is what the programme is worth. Those are
+        different questions and only one of them was put. Pricing a twelve-month
+        coached programme carrying an in-person component at the level of a single
+        examination fee risks the very thing the price is meant to protect: a
+        reader concluding the programme is cheap because it is slight. That risk
+        is not hypothetical here. The closest local precedent, a cheaper hybrid
+        offering, failed specifically because it was inexpensive and demanding, with
+        learners choosing the costlier option instead.
+      on_sustainability: >-
+        Tuition at this level does not make the programme self-funding, and no
+        figure in the plausible range does. Depending on whether coaching and
+        host-site time are donated, it needs between 59 and 227 participants to
+        cover its costs, against a delivery ceiling of 64. So the argument for a
+        higher price cannot rest on sustainability. It has to rest on what the
+        programme is worth, and on who it is meant for.
+      what_the_record_actually_shows: >-
+        An advisory panel recommended USD 600 on 28 July, with an international
+        rate of USD 3,000, reasoning that a visible top rung makes the individual
+        rate read as deliberate access rather than as the programme's own
+        valuation. That recommendation was advisory and was never approved. On 1
+        August the committee itself considered fresh market evidence and narrowed
+        the declared range from USD 400-900 to USD 450-600 with a working figure
+        of USD 500, giving its reasons in the minute. So USD 500 is not drift from
+        the panel's 600: it is a figure the committee ratified, on evidence, three
+        days later.
+      what_is_genuinely_weak: >-
+        Two things, neither of which the committee had in front of it. First, the
+        international rate was set at three times the local rate to match a
+        published ratio — deriving the anchor from our own floor rather than from
+        what international buyers pay. That is backwards for the one instrument
+        whose whole job is to signal value. Second, the comparison set used to
+        reach USD 500 contained no current figure for the closest international
+        equivalents. Those turn out to charge USD 13,500 for eleven months
+        delivered entirely online with a project, and USD 25,000 for fourteen
+        months asking about five hours a month plus two three-day residentials.
+        This programme asks for more contact and more production than either.
+      what_reopening_would_take: >-
+        Moving outside USD 450-600 is not a change of recommendation. The range
+        itself is ratified, so it takes a committee verdict, and the reopening
+        clause allows exactly that where evidence moves the range. Producing that
+        evidence, or failing to, is the work now under way.
+      the_competing_positions:
+        - name: Priced to what this market can self-pay
+          ladder: >-
+            Individual USD 500, institutional USD 900 per seat, international
+            USD 1,500, hardship USD 250. This is the figure as ratified.
+          case_for: >-
+            Every figure traces to an observed local ceiling. Three countries
+            anchor independently on one specialist examination fee, and USD 500
+            is the only point inside all three bands. It keeps this a self-pay
+            product, sellable on a short runway.
+          case_against: >-
+            Two problems, one of which has since been measured. It prices by what
+            buyers can afford rather than by what the programme delivers. And the
+            international rate is not merely low but below the floor of the whole
+            market: the cheapest credible comparable programme anywhere charges
+            about USD 2,650 for nine months, virtual, with no in-person component
+            and no small-group coaching. An international reader comparing us
+            against the field sees a twelve-month coached programme with an
+            observership priced below the cheapest thing on the shelf.
+        - name: Priced to what the structure is worth, with funded access
+          ladder: >-
+            An international rate near comparable programmes, an income-band
+            ladder beneath it, and sponsorship or scholarship carrying those who
+            cannot self-pay.
+          case_for: >-
+            The structure justifies it. Thirteen comparable programmes were
+            priced from their published pages: the closest structural twin
+            charges USD 15,350 for ten months, and it carries no small-group
+            coaching, which this programme does. The nearest professional-body
+            precedent, a national college delivering ten months hybrid with team
+            coaching and a workplace project, charges about USD 5,800.
+          case_against: >-
+            The funding it depends on does not exist in a form that could reach
+            these participants. Twenty named funders were searched and not one
+            operates a scheme that would pay an individual's fee to attend an
+            independent, non-degree programme run by someone else: the money is
+            tied to the funder's own product, or to a degree at a partner
+            university reached through a multi-year cycle, or paid to
+            institutions rather than people, or restricted to countries that are
+            not ours. The only published funded-to-self-pay ratio obtainable
+            anywhere is about one in a hundred. At an international price the
+            self-pay market does not shrink, it disappears — the figure is more
+            than fifteen times the evidenced local ceiling — so this is not
+            pricing higher and funding the gap, it is funding the whole cohort
+            from money that has not been found.
+        - name: Reprice the international rate only, and lift the local rate within its approved band
+          ladder: >-
+            The local individual rate at the top of the range already approved,
+            the international rate derived from comparable programmes instead of
+            from a multiple of the local rate, and the whole ladder published
+            openly beside the comparison that produced it.
+          case_for: >-
+            It is the only option the arithmetic supports. At the current figure
+            the group of forty runs at a small shortfall against its own costs;
+            at the top of the approved band it covers them and returns a little.
+            Nothing about the international rate is budgeted as income, so
+            raising it changes no forecast — it changes only what the programme
+            appears to think it is worth, which is the thing actually at issue.
+            It needs no reopening of the approved band, so it can be done now.
+          case_against: >-
+            It does not answer the deeper question, which is whether this should
+            be a self-pay product at all. It leaves the local rate anchored to
+            what a market can bear rather than to what the work is worth, and it
+            treats an unresolved argument about the programme's own positioning
+            as though careful pricing could settle it.
+      what_the_research_found: >-
+        Commissioned after this was reopened, reporting 3 August 2026. Thirteen
+        comparable programmes priced from their own published pages; twenty
+        funders searched; the cost of running the first group derived two
+        independent ways that agree within three per cent. Three things came back
+        that nobody had. The defensible range for a programme of this shape is
+        roughly USD 5,800 to 15,400, and the international rate currently sits
+        well below the bottom of it. Portable scholarship funding for this kind of
+        programme could not be found at all. And two claims in the programme's own
+        record turned out to be wrong, one of which had been treated as the
+        strongest argument for selling to institutions: the accrediting body's own
+        standard does not in fact require a hospital to employ someone qualified
+        in quality — it says management may appoint such a person, depending on
+        complexity, with no qualification attached.
+      what_is_being_done: >-
+        Both positions are being worked up properly and put to an advisory panel
+        together for a verdict, rather than one being defended against the other.
+        Nothing is committed and no price is published until that concludes.
+      what_we_want_from_you: >-
+        Two things no comparison can supply. Whether a consultant, pharmacist or
+        senior nurse in this market reads a low price on a demanding programme as
+        access or as a warning. And whether the institutions you know would fund a
+        seat at a level reflecting what the programme actually asks of someone.
+
+  - target: ST-admissions-rubric-ABSENT-PRICE
+    owner: W16
+    option: >-
+      Keep price absent from the admissions instrument entirely, and publish it on
+      the price page instead. Resolve it as F024, not here.
+    rationale: >-
+      A fee printed on an application form is read as a condition of applying, and
+      the merit score explicitly does not consider ability to pay — an invariant
+      enforced as a property test. Putting the two on the same instrument invites
+      exactly the inference the invariant exists to prevent. The deliberate absence
+      should be ratified, not filled.
+    comparators:
+      - "The admissions rubric already excludes sponsorship and payer from scoring, tested by perturbation on all 18 calibration cases"
+    evidence:
+      - engine/schemas/admissions-rubric.yaml
+      - engine/schemas/application-form.yaml
+    confidence: HIGH
+    what_would_change_it: >-
+      A decision to charge an application fee, which would be a new fact and a
+      separate decision with its own equity analysis.
+
+  - target: F025
+    owner: W16
+    option: >-
+      Hold the target at 40, floor 24, ceiling 64, and plan only in multiples of
+      eight.
+    rationale: >-
+      Coaching runs in groups of eight and each group is a stepped cost rather
+      than a smooth one, so the economically clean sizes are 24, 32, 40, 48, 56
+      and 64. A cohort off a multiple of eight pays for a coaching group it does
+      not fill. The published break-even evidence puts the fixed-cost floor far
+      below this range, so the risk sits in the allowance-and-travel-heavy
+      variable block rather than the fixed block — which means size is a delivery
+      and quality question more than a survival one.
+    comparators:
+      - "The only published health-professional break-even analysis found: 7 participants web-delivered"
+      - "The only published institutional viability rule found: 15 participants"
+    evidence:
+      - workstreams/W16/working/W16-faculty-economics-and-pricing-recommendation-2026-08-01.md
+      - workstreams/W16/working/W16-self-sustainability-mechanics-2026-08-01.md
+    confidence: MEDIUM_HIGH
+    confidence_basis: >-
+      The multiple-of-eight arithmetic is certain. The target of 40 is a judgement
+      about deliverability in a first cohort, not a figure the evidence forces.
+    what_would_change_it: >-
+      Observed coach review time. UA3 assumes eight artefacts can be reviewed
+      meaningfully in one call and is untested; if it fails, group size falls and
+      every clean cohort size moves with it.
+
+  - target: F029
+    owner: W05
+    option: >-
+      In-kind only for cohort 1, with the package designed deliberately rather
+      than left as whatever is convenient — and the position revisited before
+      cohort 2 on observed attrition.
+    rationale: >-
+      Money is a weak lever for faculty retention, and that finding is measured
+      rather than asserted. Where the attrition actually sits is in time cost, and
+      first-year faculty are the most fragile group. This design has a specific
+      and rising time cost: from month 2 onward the live session requires reading
+      the whole cohort's prior artefacts, which is roughly four hours a month that
+      no honorarium at a plausible rate would compensate.
+      So the lever that matters is protecting faculty time and making the
+      non-monetary package real — which is also the only option that does not
+      depend on a price decision that has not been taken.
+    comparators:
+      - "Published faculty-retention evidence: time, not payment, is the largest single driver of teaching-faculty attrition"
+    evidence:
+      - workstreams/W16/working/W16-faculty-economics-and-pricing-recommendation-2026-08-01.md
+      - workstreams/W05/working/faculty-appointment-and-consent-pack.md
+    confidence: MEDIUM
+    confidence_basis: >-
+      The direction is well evidenced. Whether in-kind alone will recruit twelve
+      consenting faculty plus backups in this specific market is untested, and
+      W05-01 condition 3 already flags that twelve consented gives zero backups.
+    what_would_change_it: >-
+      Failure to fill coverage slots by the appointment deadline. A named faculty
+      member declining specifically on remuneration grounds would be the strongest
+      single signal, and should be recorded as such rather than absorbed.
+
+  - target: F007
+    owner: W04
+    option: >-
+      Own country rather than own city for cohort 1 — a qualified site anywhere in
+      the participant's own country, with travel and accommodation met by the
+      participant or their sponsor and stated plainly before application.
+    rationale: >-
+      This is not an administrative parameter. In the closest African
+      blended-training costing study the in-person component was 67–87% of total
+      implementation cost, and per diems, accommodation and travel were 30–40% of
+      implementer direct cost. It is the largest single determinant of whether the
+      economics work.
+      Own-city is the cheapest but will not yield enough qualified sites against a
+      Host Site Standard written from programme objectives. Cross-border adds
+      visa, indemnity-jurisdiction and cost exposure that no part of the design
+      needs. Own-country is the only option that keeps the standard intact without
+      importing the cost and legal surface of international travel.
+    comparators:
+      - "Closest African blended-training costing study: in-person 67–87% of implementation cost; per diems, accommodation and travel 30–40% of implementer direct cost"
+    evidence:
+      - workstreams/W16/working/W16-self-sustainability-mechanics-2026-08-01.md
+    confidence: MEDIUM
+    confidence_basis: >-
+      The cost evidence is strong and the direction follows from it. What is NOT
+      established is how many sites in each country actually meet the Host Site
+      Standard — and if that number is too small, own-country becomes own-city by
+      accident.
+    what_would_change_it: >-
+      A site census against the Host Site Standard. Indemnity quotes (Q001), which
+      are the one zero left in the financial model, could also make cross-border
+      untenable outright rather than merely expensive.
+
+  - target: F020
+    owner: W01
+    option: >-
+      Nigeria only for cohort 1, with Ghana designed for and admitted in cohort 2.
+    rationale: >-
+      Country-agnostic in design is not country-agnostic in recognition, and the
+      recognition differences are commercial and structural rather than
+      administrative. Ghana's CPD technical committees sit only three times a year,
+      which puts the last usable sitting before a January 2027 start in October
+      2026 and leaves almost no margin. Ghana's allied-health regulator takes a
+      share of gross proceeds that is not priced into F024. Pakistan has no
+      operating national CPD scheme and nothing awarded for asynchronous
+      e-learning, so it cannot carry recognition for cohort 1 at all.
+      Nigeria-only also relaxes the country deadline from 1 September to 9 October,
+      which buys five weeks on the most time-pressured decision in the programme.
+      The design does not change — the adaptation points are already parameters, so
+      adding Ghana later is a substitution rather than a redesign.
+    comparators:
+      - "Ghana Pharmacy Council CPD Technical Committee: sits in February, June and October only"
+      - "Ghana AHPC: 25–50% of gross proceeds"
+      - "Nigeria NMCN: 5% of total income"
+      - "Pakistan CPSP Joint Providership: limited to institutes of the country, and awards nothing for asynchronous e-learning"
+      - "No Nigerian body currently accredits CPD for health managers or non-clinical quality professionals — a core part of the intended audience"
+    evidence:
+      - workstreams/W03/working/W03-cpd-lead-times-synthesis-2026-08-02.md
+      - workstreams/W03/working/W03-cpd-lead-times-nigeria-2026-08-02.md
+      - workstreams/W03/working/W03-cpd-lead-times-ghana-2026-08-02.md
+      - workstreams/W03/working/W03-cpd-lead-times-pakistan-2026-08-02.md
+    confidence: MEDIUM
+    confidence_basis: >-
+      The regulatory findings are solid and each carries a live source. The
+      recommendation itself trades reach for deliverability, and that trade is a
+      committee judgement rather than a research finding — a committee willing to
+      accept a thinner Ghanaian recognition route could reasonably choose
+      otherwise.
+    what_would_change_it: >-
+      A written ruling from a Ghanaian regulator that live synchronous sessions
+      sit outside the online cap would materially improve Ghana's case. So would a
+      decision that cohort 1 need not carry formal CPD recognition at all, which
+      would remove the binding constraint entirely.
+
+  # ---------------------------------------------------------------------------
+  # Added 2026-08-02 from fresh comparative research across selection, cohort
+  # sizing, country allocation and eligibility. Every source below was read
+  # directly and carries a live URL and an accessed date. Where the research
+  # found nothing, that is recorded as a gap rather than filled with a guess.
+  #
+  # `internal_refs` exists so the prose can stay in the reviewer's language.
+  # A committee member has no access to the repository, so a recommendation that
+  # says "see F018" is unreadable to them. Identifiers live in that field, and
+  # the reviewer-facing surface omits it.
+  # ---------------------------------------------------------------------------
+
+  - target: ST-admissions-rubric-ABSENT-SCORE-THRESHOLD
+    owner: W07
+    option: >-
+      Do not set a pass mark now. Adopt a two-part rule instead: a low
+      non-negotiable quality floor expressed as minimum standards on individual
+      criteria rather than on the total, and then straightforward ranking to the
+      number of places available, with a waiting list. Publish the RULE for
+      cohort 1, not a number. If the committee wants a number pre-committed, ask
+      it for four judgements now — the lowest score it would ever accept, the
+      highest it would insist on, the smallest proportion of applicants it would
+      be comfortable turning away, and the largest — and compute the mark from
+      the real applications after they close.
+    rationale: >-
+      No comparable programme was found that publishes an absolute pass mark as
+      its admissions rule. The ones that publish an exact figure — UK specialty
+      medical recruitment, UK public health training — all use it as a minimum
+      quality bar, with the actual decision made by ranking against the places
+      available. The closest content comparators do not select at all; they take
+      payment and admit.
+      A pass mark chosen now would be a guess about a distribution of scores that
+      does not yet exist, because this scoring approach has never been run on a
+      real applicant. The strongest evidence found on the risk is an eight-year
+      study of absolute standards where the failure rate swung between 2% and 47%
+      across sittings of the same test. Set the mark too high and a cohort does
+      not fill; set it too low and far more people qualify than there are places,
+      at which point the mark has decided nothing and ranking is doing the work
+      anyway — but a public number now exists that has to be defended.
+      The methods used to set pass marks in professional examinations are built
+      to answer "is this person minimally competent?" That question has a real
+      answer. "Is this applicant minimally admissible?" does not, when what is
+      being judged is motivation, the quality of an improvement problem, and
+      whether an employer will protect the time. The compromise method that does
+      fit — bounding both the score and the rejection rate, then resolving
+      against the actual applications — cannot be computed until the applications
+      exist, which is precisely why it is the right one.
+      Cohort 1 is the calibration study. Recording application scores against who
+      actually completes is what earns the right to publish a threshold later.
+    comparators:
+      - "UK medical specialty recruitment: 'Appointments to training programmes or posts will be offered in rank order, based on selection scores', with a separately published minimum score for appointability — https://medical.hee.nhs.uk/medical-training-recruitment/medical-specialty-training/overview-of-specialty-training/offers-feedback-and-upgrades (accessed 2026-08-02)"
+      - "University of Sheffield medicine: threshold set from the previous three years' observed data, and meeting it 'does not mean an interview will be forthcoming' — https://sheffield.ac.uk/media/69386/download (accessed 2026-08-02)"
+      - "Chevening: applications scored, then 'the number of applications that are longlisted will vary, depending on the number of awards available' — https://www.chevening.org/news/longlists-shortlists-references-and-interviews/ (accessed 2026-08-02)"
+      - "Mandela Washington Fellowship: 'a merit-based open competition', no published threshold — https://www.mandelawashingtonfellowship.org/apply/ (accessed 2026-08-02)"
+      - "NAHQ CPHQ publishes a hard pass mark of 600 on a 200-800 scale — but that is a minimum-competence decision independent of other candidates, not a contest for a fixed number of places — https://cdn.nahq.org/wp-content/uploads/2024/11/CPHQ-Scaled-Score-Explained-FINAL.pdf (accessed 2026-08-02)"
+      - "Institute for Healthcare Improvement and ISQua run open enrolment by payment, so neither selects competitively at all"
+    evidence:
+      - "Muijtjens et al. (1998), Advances in Health Sciences Education: across eight years of progress tests the failure rate was roughly constant under a relative standard but ranged from 2% to 47% under an absolute one; 'an absolute standard is precarious' — https://doi.org/10.1023/A:1009728423412 (accessed 2026-08-02)"
+      - "Sridharan & Sivaramakrishnan (2025), BMC Medical Education, systematic review and meta-analysis of 91 studies: the variant where judges review actual candidate performance data achieved the strongest reliability (r=0.917); an uninformed choice of method 'can lead to unintended pass rates' — https://doi.org/10.1186/s12909-025-08300-6 (accessed 2026-08-02)"
+      - "Norcini (2003), Medical Education: a standard should be 'consistent with the purpose of the test... informed by data', and pass rates should bear sensible relationships to other markers — https://doi.org/10.1046/j.1365-2923.2003.01495.x (accessed 2026-08-02)"
+      - "Hofstee compromise method, requiring minimum and maximum acceptable scores and minimum and maximum acceptable failure rates, resolved against the observed distribution — https://pmc.ncbi.nlm.nih.gov/articles/PMC8561612/ (accessed 2026-08-02)"
+      - "Ottawa consensus statements on selection (Prideaux 2011; Patterson 2018) make recommendations on principles and methods but none on setting a cut score — https://doi.org/10.3109/0142159X.2011.551560 and https://doi.org/10.1080/0142159X.2018.1498589 (accessed 2026-08-02)"
+    confidence: HIGH
+    confidence_basis: >-
+      The direction is supported by consistent practice across every comparator
+      found and by quantified evidence on the instability of absolute standards.
+      One honest gap: no study was found specifically on marks derived from
+      synthetic or calibration data, because that appears not to have been
+      studied. The argument rests on the general instability finding plus the
+      absence of any comparator doing it.
+    what_would_change_it: >-
+      Two or three cohorts of observed data linking application scores to
+      completion. That is what every comparator publishing a fixed figure has
+      behind it.
+    internal_refs: [W07-01 condition 4, F025]
+
+  - target: ST-admissions-rubric-ABSENT-COHORT-CAP
+    owner: W07
+    option: >-
+      Set the cap at 64 and publish it together with the reason: eight coaching
+      groups of eight. Treat eight as the ceiling of a coaching group rather than
+      its target, holding one place per group in reserve, so that a late
+      admission does not push a group to nine.
+    rationale: >-
+      The cap should be a delivery number, not a demand number or a marketing
+      one. The best-documented comparable programme does exactly this: it does
+      not choose a total and divide, it fixes a residential group at roughly 25
+      and multiplies by the number of groups it can run. Building 64 as eight
+      groups of eight is the same construction.
+      Publishing the reason would put this programme ahead of every comparator
+      examined. Several publish a number — one publishes 60 seats per cohort,
+      another 18 fellows, another around 10 places — and not one publishes why.
+      A cap that can be explained is worth more than a larger cap that cannot.
+      Eight sits at the top of the only sourced comfort band for small-group
+      learning rather than in the middle of it, which is why the reserve place
+      matters: a group of eight that absorbs two late admissions is a group of
+      ten, and the guidance is explicit that beyond twelve a group needs
+      deliberate leadership to function.
+      One caution the research makes unavoidable: no study was found anywhere
+      relating cohort size to completion. Any claim that a particular size
+      protects completion would be invented. What the evidence does support is
+      that facilitation, deadlines and in-person contact drive completion — which
+      argues for treating the coaching group as the retention instrument and
+      funding it as such, rather than as an added refinement.
+    comparators:
+      - "ISQua IPQS Foundation Programme, the closest structural twin found — 24 weeks, hybrid, fees tiered by World Bank income band: 'Only 60 seats are available per cohort', with no rationale published — https://isqua.org/introducing-the-ipqs-foundation-programme/ (accessed 2026-08-02)"
+      - "Mandela Washington Fellowship: 'up to 700 young leaders', built as approximately 28 institutes of approximately 25 fellows each — https://apply07.grants.gov/grantsws/rest/opportunity/att/download/304575 (accessed 2026-08-02)"
+      - "Health Foundation GenerationQ: 18 fellows per cohort, no rationale published — https://www.health.org.uk/funding-and-partnerships/fellowships/generationq (accessed 2026-08-02)"
+      - "Oxford PGCert in Patient Safety and Quality Improvement: about 10 places against about 12 applications a year — a capacity number demand never tests — https://www.ox.ac.uk/admissions/graduate/courses/pgcert-patient-safety (accessed 2026-08-02)"
+      - "Africa CDC Kofi Annan Fellowship: actual cohorts of 20, 21, 21, 26, 26 published, with no cap at all — https://africacdc.org/kofi-annan-fellowship-in-global-health-leadership/ (accessed 2026-08-02)"
+      - "Institute for Healthcare Improvement publishes no cohort size for any of its professional development programmes"
+    evidence:
+      - "Edmunds & Brown (2010), AMEE Guide No. 48: 'In the UK, 6-8 is often regarded as a small group for learning purposes'; as size rises the opportunity for interaction falls; beyond 12 well-defined leadership is needed, beyond 20 strong leadership — https://education.aaaai.org/sites/default/files/amee_guide_small_group.pdf (accessed 2026-08-02)"
+      - "Noerholk et al. (2022), Medical Education, randomised study of group size: outcomes held up to groups of four, but time spent on passive and non-learning activity rose significantly with group size — https://doi.org/10.1111/medu.14791 (accessed 2026-08-02)"
+      - "Nieder et al. (2022), Frontiers in Public Health, scoping review of 39 studies across 90+ low- and middle-income countries: completion ranged 1-100%, mean 32.6%; blended delivery, deadlines, reminders and local facilitators were the named facilitators of completion — https://doi.org/10.3389/fpubh.2022.891987 (accessed 2026-08-02)"
+      - "Real-world evaluation across 16 sub-Saharan African countries including Nigeria and Ghana: about 60% completion in person, about 49% online — https://journals.plos.org/globalpublichealth/article?id=10.1371%2Fjournal.pgph.0001654 (accessed 2026-08-02)"
+      - "University of Southampton quality handbook, the clearest published statement of the logic that a floor is a financial question and a ceiling a delivery one — https://www.southampton.ac.uk/quality/programmes_and_modules/curriculum%20complexity/cohortsize.page (accessed 2026-08-02)"
+    confidence: MEDIUM_HIGH
+    confidence_basis: >-
+      The construction is sound and the small-group guidance is authoritative.
+      What is NOT established anywhere is a link between cohort size and
+      completion — the scoping review names this as a gap in the literature. So
+      the cap is defensible as a delivery decision and must not be argued as a
+      quality-of-completion decision.
+    what_would_change_it: >-
+      Evidence that coaching groups of eight cannot review eight pieces of work
+      meaningfully in one call. That assumption is untested and load-bearing: if
+      the group falls to six, every clean cohort size moves with it.
+    internal_refs: [F025, UA3, W06]
+
+  - target: ST-admissions-rubric-ABSENT-COUNTRY-ALLOCATION
+    owner: W07
+    option: >-
+      Set no country allocation for cohort 1. On the recommended country
+      decision — Nigeria alone for the first cohort — there is nothing to
+      allocate, and inventing a rule for a situation that does not arise would be
+      a decision made for its own sake.
+      If the committee widens the country set, do not compare applicants across
+      countries. Assess merit within each country's pool against one common
+      standard, publish the number of places each country carries, and justify
+      that number on delivery grounds — host sites, coaching capacity, a
+      recognition route that actually exists — rather than on fairness grounds.
+    rationale: >-
+      This is the one question where the research changes its own shape. Given
+      the recommendation that cohort 1 runs in a single country, an allocation
+      rule has no work to do. The honest recommendation is therefore to ratify
+      the absence rather than fill it, and to record the rule that would apply if
+      the country set widens.
+      For that contingency the evidence is genuinely mixed and should not be
+      presented as settled. Large programmes split three ways: fixed quotas per
+      country; open merit across the whole pool with a stated aspiration to cover
+      every country; and a hybrid where selection is administered country by
+      country but the standard is common. The hybrid is what most large
+      programmes actually run.
+      No study was found that compares quota allocation against merit-blind
+      selection across countries, or that quantifies the distortion caused by
+      differing pool sizes. So neither approach can be claimed as evidence-based.
+      What IS documented is that raw attainment tracks prior opportunity — the UK
+      regulator's finding that the most educationally advantaged are 5.7 times
+      more likely to reach a higher-tariff institution, and that applicants
+      admitted a grade below standard offers do as well or better. That is a
+      within-country finding, but the mechanism is the same one that operates
+      across countries whose systems and pool sizes differ.
+      Hence the structural move rather than the fairness claim: assess within a
+      pool, not across pools. It requires no assertion the evidence cannot yet
+      support, and it fails safe.
+    comparators:
+      - "Rhodes Scholarships: fixed numbers per constituency, selected 'on merit alone' within each, so applicants are never compared across constituencies — https://www.rhodeshouse.ox.ac.uk/scholarships/constituency-information/ (accessed 2026-08-02)"
+      - "Erasmus Mundus: 'no more than 10% of the total number of scholarships awarded... should be awarded to candidates from the same nationality' — https://erasmus-plus.ec.europa.eu/programme-guide/part-b/key-action-2/erasmus-mundus-action (accessed 2026-08-02)"
+      - "Fulbright: country numbers set bilaterally by binational commissions 'based on input from local institutions' — driven by local co-funding, not a central formula — https://fulbrightscholars.org/program-administration (accessed 2026-08-02)"
+      - "Mandela Washington Fellowship: no quota; 'aims to include Fellows from all countries in Sub-Saharan Africa', with explicit priority for non-elite, rural and gender-diverse applicants — https://apply07.grants.gov/grantsws/rest/opportunity/att/download/304575 (accessed 2026-08-02)"
+      - "Commonwealth Scholarship Commission: country-level nomination feeding a central merit decision, with income-group targeting in place of country quotas — 96% of 2023-24 awards went to least-developed and lower-middle-income countries — https://www.gov.uk/government/publications/commonwealth-scholarship-commission-annual-report-2024/commonwealth-scholarships-annual-report-for-the-year-ending-september-2024-one-resilient-common-future-transforming-our-commonwealth (accessed 2026-08-02)"
+    evidence:
+      - "Office for Students, contextual admissions: 'the most educationally advantaged students are 5.7 times more likely to attend a higher-tariff provider than the most disadvantaged'; students admitted one grade below standard requirements 'do just as well as, if not better than' those admitted on standard offers — https://www.officeforstudents.org.uk/publications/contextual-admissions-promoting-fairness-and-rethinking-merit/ (accessed 2026-08-02)"
+      - "Journal of Behavioral and Experimental Economics (2025) on regional admission quotas: the strong party has an incentive to resist the allocation, and an equal-quota system 'may be counterproductive for its intended beneficiaries' — https://ideas.repec.org/a/eee/soceco/v115y2025ics2214804325000163.html (accessed 2026-08-02)"
+      - "NOT FOUND: any empirical comparison of country-quota against merit-blind selection in a fellowship or scholarship setting, or any quantification of pool-size distortion. Searches recorded in the W07 research note of 2026-08-02."
+    confidence: MEDIUM
+    confidence_basis: >-
+      HIGH that no allocation is needed for a single-country cohort — that
+      follows from the country recommendation rather than from contested
+      evidence. MEDIUM on the contingency rule, because the comparison that would
+      settle it has not been done by anyone.
+    what_would_change_it: >-
+      A country decision that admits a second country for cohort 1. That converts
+      this from a question with no work to do into a live design decision, and
+      the delivery-grounded allocation would then need real numbers behind it.
+    internal_refs: [F020, F025, W03]
+
+  - target: F018
+    owner: W07
+    option: >-
+      Open to both clinical and non-clinical applicants, with the gate expressed
+      as role and sponsorship rather than as profession and years. Concretely: no
+      profession or licence requirement; a floor of two years working in health
+      or in providing services to the health sector; a current or intended
+      improvement responsibility evidenced by a real problem the applicant brings
+      with them; and a named senior sponsor in the applicant's organisation who
+      commits to protecting the time. A first degree as the default, with an
+      experience route for applicants who came up without one.
+    rationale: >-
+      Restricting entry to licensed clinicians has essentially no precedent among
+      comparable qualifications. Every healthcare quality credential examined
+      admits non-clinical staff, either explicitly or by publishing no profession
+      bar at all — including SQHN's own membership rule and its own existing
+      introductory qualification, which is open to anyone with an interest in the
+      field. The single clinician-only example found is a postgraduate medical
+      training post, restricted because of what it is rather than because anyone
+      concluded non-clinicians cannot do improvement work.
+      The demand evidence points the same way and is closer to home. A federal
+      needs assessment across 30 Nigerian states found that about one third of
+      the quality-of-care workforce surveyed were managers and administrators
+      rather than frontline clinicians. Nigeria's own national quality strategy
+      calls for improvement curricula 'for all cadres of staff'. A clinician-only
+      door would exclude roughly a third of the people the federal government has
+      identified as needing exactly this, and would put the programme out of step
+      with the national strategy it should be supporting.
+      Be careful about what the evidence does NOT show. No study was found
+      comparing mixed cohorts against clinician-only cohorts on completion or
+      outcomes. Three studies point in the pro-mixing direction — non-clinical
+      learners gaining more knowledge, performing slightly better, and
+      non-clinical improvement specialists roughly doubling the quality of
+      project documents — but each is single-site and none concerns a twelve-month
+      programme. They are enough to defeat the assumption that non-clinical
+      participants would weaken a cohort. They are not enough to claim mixing
+      improves outcomes, and the committee paper should not claim it.
+      The real risk of a mixed cohort is not capability, it is hierarchy: the
+      best study on the question found positive outcomes alongside genuine power
+      dynamics between professional groups. The failure mode is that a
+      doctor-heavy cohort quietly ranks itself and the records officers stop
+      speaking by the third month. That is a facilitation problem with known
+      remedies — deliberately mixed project groups, coaches briefed on the risk,
+      assessment anchored on the improvement work rather than on clinical
+      content — not an admissions problem.
+      Fully open entry with only an experience floor is the weakest option and no
+      comparator does it. Every open-entry programme found binds admission to
+      something else as well: a setting, a relationship to improvement work, or an
+      employer sponsor. Sponsorship is the highest-value requirement available
+      here, because it converts individual enthusiasm into protected time, and a
+      twelve-month programme with a practicum lives or dies on that.
+    comparators:
+      - "NAHQ CPHQ: 'There are no formal eligibility requirements to sit for the exam'; two years' experience recommended, not required — https://nahq.org/credentials/cphq-certified-professional-in-healthcare-quality/ (accessed 2026-08-02)"
+      - "IHI Certified Professional in Patient Safety, the only hard floor found: bachelor's plus 3 years, or associate degree plus 5 years, of experience 'in a health care setting or with a provider of services to the health care industry' — no licence required — https://forms.ihi.org/hubfs/CPPS%20Candidate%20Handbook%202024-1.pdf (accessed 2026-08-02)"
+      - "Health Foundation GenerationQ: for senior leaders 'in clinical and non-clinical roles', with mandatory sponsorship by 'an appropriate senior member of their organisation' — https://www.health.org.uk/funding-and-partnerships/fellowships/generationq (accessed 2026-08-02)"
+      - "Q Community: open to anyone 'working within or interested in improvement', explicitly including patients and researchers — https://q.thenhsalliance.org/get-involved/join-q (accessed 2026-08-02)"
+      - "SQHN's own membership rule: open to 'those persons who are involved in or have an interest in quality improvement/risk management in healthcare' — https://sqhn.org/membership/membership-categories/ (accessed 2026-08-02)"
+      - "SQHN Institute of Quality's existing introductory qualification is open to 'those with an interest in Healthcare Quality & Patient Safety' and awards CPD points — https://sqhn.org/institute-of-quality/ (accessed 2026-08-02)"
+      - "Royal College of Physicians Chief Registrar, the one clinician-only example: restricted because it is a postgraduate medical training post with protected training time — https://rcp.ac.uk/events-and-education/education-and-learning/clinicians-as-leaders/chief-registrar-programme (accessed 2026-08-02)"
+    evidence:
+      - "Federal Ministry of Health / MCGL needs assessment across 30 Nigerian states, 751 respondents: 'approximately two-thirds were frontline health care professionals and one-third were facility managers and administrators' — https://nationalqoc.fmohconnect.gov.ng/wp-content/uploads/2023/10/MCGL-Nigeria-Needs-Assessment-Report-Final10032023.pdf (accessed 2026-08-02)"
+      - "Nigeria National Quality Policy and Strategy situation analysis: partner with academic institutions to develop improvement curricula 'for pre-service, in-service and post-graduate training for all cadres of staff' — https://nationalqoc.fmohconnect.gov.ng/wp-content/uploads/2024/04/QoC-SITAN-Report_Final-Draft-v_2.0_4-disemination-.pdf (accessed 2026-08-02)"
+      - "NAHQ workforce report 2022, 2,523 respondents: 'Most people working in quality and safety have come from other professions and work in quality and safety as a second career' — https://nahq.org/wp-content/uploads/2022/09/NAHQ-Workforce-Report-2022.pdf (accessed 2026-08-02)"
+      - "Goldman et al. (2020), Advances in Health Sciences Education, 58 interviews and 135 hours of observation across three longitudinal improvement programmes: both mixed and single-profession approaches showed positive outcomes, alongside 'power dynamics between professional groups' requiring explicit attention — https://doi.org/10.1007/s10459-020-10004-z (accessed 2026-08-02)"
+      - "Levy et al. (2023), Journal of Graduate Medical Education: embedding non-clinical improvement specialists raised mean project-document scores from 29.0 to 47.0 out of 69 — https://doi.org/10.4300/JGME-D-22-00456.1 (accessed 2026-08-02)"
+      - "Stephenson et al. (2023), Harm Reduction Journal, 310 participants: administrative and non-clinical support staff gained significantly more knowledge than providers (p<0.001) — https://doi.org/10.1186/s12954-023-00803-z (accessed 2026-08-02)"
+      - "NOT FOUND: any study comparing mixed clinical and non-clinical improvement cohorts against clinician-only cohorts on completion or outcomes. Searches recorded in the W07 research note of 2026-08-02."
+      - "NOT FOUND: any published figure for the proportion of Nigerian hospital quality officers holding a clinical qualification. If the committee wants to decide on that number, a short SQHN member survey would generate it in about two weeks."
+    confidence: HIGH
+    confidence_basis: >-
+      HIGH that clinician-only is the wrong answer — the precedent is one-sided
+      and the Nigerian demand evidence is federal and specific. MEDIUM on the
+      exact shape of the floor: two years is the modal published figure among
+      comparators rather than a number the evidence forces.
+    what_would_change_it: >-
+      A finding that the recognition route available to graduates is closed to
+      non-clinical participants. Clinical CPD in Nigeria attaches to licence
+      renewal, so a non-clinical graduate may get nothing from those channels.
+      Which body sits behind the CPD points SQHN's existing qualification already
+      awards, and whether it can cover non-clinical graduates, needs pinning down
+      — otherwise open eligibility carries a silent asterisk on what the
+      certificate is worth.
+    internal_refs: [F018, F007, Q006, W03, W07-01]
+
+  - target: ST-admissions-rubric-ABSENT-ELIGIBILITY-BREADTH
+    owner: W07
+    option: >-
+      Keep eligibility out of the scoring approach entirely and resolve it as the
+      separate admissions-criteria decision. Eligibility is a gate, not a
+      criterion: an applicant either meets it or does not, and turning it into
+      points would let a strong score compensate for not qualifying.
+    rationale: >-
+      The scoring approach was deliberately built to remain valid whichever way
+      eligibility is decided, which is what allows the two to be settled
+      independently. Folding eligibility in as a scored criterion would break
+      that and would also introduce exactly the compensation problem the evidence
+      gates exist to prevent — a high score standing in for a requirement that has
+      not been met.
+    comparators:
+      - "Comparable programmes that publish both consistently separate them: entry requirements are stated as requirements, and assessment criteria are applied only to applicants who already meet them — see the IHI patient safety credential and Health Foundation GenerationQ entries under the admissions-criteria recommendation"
+    evidence:
+      - engine/schemas/admissions-rubric.yaml
+      - engine/schemas/application-form.yaml
+    confidence: HIGH
+    what_would_change_it: >-
+      A decision to admit applicants conditionally against a partially-met
+      requirement, which would need its own rule and its own equity analysis.
+    internal_refs: [F018, W07-01]
+
+  - target: Q011
+    owner: W02
+    option: A graduate can take a quality or safety problem in their own service from a vague complaint
+      to a measured, evidenced improvement that survives them; can read a service against a published
+      standard and say where it falls short; and can teach a colleague to do both. Twelve performance
+      outcomes, one per artefact, carry the claim. The tier is declared openly as foundational, with
+      demonstrated evidenced practice in improvement method, in a bounded slice of measurement and
+      data, and in reading a service against a standard.
+    rationale: 'Two of those three clauses were put there by evidence rather than by preference. Across
+      eighteen real quality-role adverts in six countries, the most common duty asked of a quality
+      professional was neither audit nor root cause analysis nor data — it was training and mentoring
+      other staff, in ten of the eighteen. The programme already builds toward that: artefact 11 is
+      a spread and handover case, and coaching capability is built internally rather than bought in.
+      It had simply never been stated as an outcome. Reading a service against a standard is included
+      because accreditation systems are what employers name when they name anything, and because SQHN
+      is the accreditation body and the host-site standard already exists, so it costs no schedule
+      time to add. The tier is declared foundational because 228 hours cannot produce more than that
+      across a whole field, and an informed buyer benchmarking against the field''s published framework
+      would catch a larger claim.'
+    comparators:
+    - 'ISQua Fellowship: twelve months, about 60 to 70 study hours, no supervised practice, quizzes
+      and reflections rather than an examination, EUR 225 in the lower-middle-income band — https://isqua.org/fellowship/'
+    - 'Certified Professional in Healthcare Quality: an examination only, no teaching, 125 scored
+      items across seven sections, USD 649 to 799 for a candidate outside the United States, written
+      for someone with two years in the profession — https://nahq.org/credentials/cphq-certified-professional-in-healthcare-quality/'
+    - 'Certified Professional in Patient Safety: an examination only, four domains, a degree plus
+      three years required, USD 649 internationally — https://www.ihi.org/learn/certifications/cpps/frequently-asked-questions'
+    evidence:
+    - Eighteen quality-role adverts across Nigeria, Ghana, Kenya, South Africa, Pakistan and India;
+      exactly one names a personal quality credential, and it is dated 2022, the employer is anonymous,
+      and it was posted on the quality society's own site rather than any job board — https://sqhn.org/careers/
+    - 'The strongest quality-specific education requirement found anywhere in Nigeria asks for a degree,
+      not a credential: "A postgraduate qualification in quality management, patient safety or healthcare
+      leadership is required" — https://www.myjobmag.com/job/director-of-clinical-governance-garki-hospital-abuja-gha'
+    confidence: MEDIUM
+    confidence_basis: The employer evidence is strong and was gathered from primary adverts. The twelve
+      performance outcomes are a first draft by the programme office; only months one and two carry
+      text the committee has already authorised. Nobody outside the programme office has yet read
+      the claim.
+    what_would_change_it: Evidence that employers in the launch market value breadth of coverage over
+      demonstrated practice, or a finding that teaching a colleague cannot be assessed within the
+      artefact set and should therefore not be promised.
+  - target: Q012
+    owner: W02
+    option: Seven of the field's eight domains are touched and one is deliberately excluded. Improvement
+      method is demonstrated deeply, across nine of the twelve artefacts. Measurement and data are
+      demonstrated within a stated bound. Reading a service against a standard is taught in one release
+      and demonstrated in the observership analysis. Leadership, accountability and professional engagement
+      are partly demonstrated through the spread case and the capstone. Patient safety is taught but
+      not demonstrated, unless the participant's own project happens to be a safety project. Population
+      health and care transitions is excluded.
+    rationale: 'The budget is the constraint and it is fixed: each month is 15.67 hours, of which
+      only the eLearning release is free content — 80 hours across the year, since the live session,
+      the coaching call and artefact production are all tied to the participant''s own project. No
+      release has been written yet, so allocating one to reading a service against a standard is an
+      allocation rather than a deletion. That domain earns its place twice over: SQHN is the accreditation
+      body, so the material and the published host-site standard already exist, and it is the domain
+      employers name most often. Population health and care transitions is excluded because demonstrating
+      it would require the improvement project to cross a care boundary, which cannot be mandated,
+      and teaching it without demonstrating it produces exactly the taught-but-not-practised coverage
+      that makes the comparator credentials thin. No advert in the eighteen named it. Nine of the
+      twelve artefacts sit in improvement method, and that depth is the only thing in the comparator
+      set nobody else offers at this price; every hour moved into breadth is an hour moved onto ground
+      where the competition is stronger.'
+    comparators:
+    - The field's published framework holds eight domains and twenty-eight competencies, and its own
+      guidance is that professionals should reach the foundational level in all eight while "It is
+      not necessary to be an Advanced level in all areas" — https://nahq.org/why-nahq/healthcare-quality-competency-framework/
+    evidence:
+    - The examination for the field's dominant credential covers seven sections including population
+      health and care transitions, which this programme deliberately does not teach — https://cdn.nahq.org/wp-content/uploads/2024/11/2024-CPHQ_Outline_R2b.pdf
+    confidence: MEDIUM
+    confidence_basis: 'The hours arithmetic is exact and reproduces the published total. Which domain
+      sits at which depth is the programme office''s own assessment and is the most arguable part
+      of it. An earlier version of this assessment reported three uncovered domains and was wrong:
+      it treated three very different costs as one.'
+    what_would_change_it: A finding that population health matters to buyers in the launch market
+      after all, or a committee view that patient safety being taught rather than demonstrated is
+      not acceptable in a programme carrying patient safety in its name.
