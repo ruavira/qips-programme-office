@@ -80,6 +80,38 @@ himself — see §8.
 
 ## 5 · STATE — append-log, newest first
 
+**8 August 2026, later (Claude/Cowork → next agent):**
+
+- **DONE — the register reframed: open decisions, never blockers.** The director ruled that
+  every decision not yet made is articulated as an open decision, never a block. Built on branch
+  `proposal/decisions-gate-not-block` (off `proposal/decision-interview`): every question in
+  `canon/open-questions.yaml` now carries `gates` (the specific acts of publishing, promising,
+  signing or spending that wait — four of the fourteen gate nothing at all), `while_open` (the
+  default the build continues under), and `decide_by` (when deferring stops being free),
+  replacing `blocking`/`blocks`/`due`. This is the same model canon already ratified for
+  PARAMETER facts, extended to questions. The glossary bans "blocker"/"blocking";
+  `decision_interview.py --check` refuses the legacy fields — **proved to fire on four restored
+  defects** (legacy field back, `while_open` deleted, `gates` deleted, `decide_by` deleted),
+  each going red before being restored. Content of every gates/while_open entry is drawn from
+  recorded material only (question notes, minutes, HANDOFF §6, the parameter facts).
+- **DONE — every surface speaks the new language.** Agenda ("open decisions, none of them a
+  blocker" — all fourteen, gating first), control room (yaml-parsed now: the old regex parser
+  required quoted values almost none had, so question cells rendered empty and nothing noticed),
+  the control-room JSON export (new fields plus deprecated aliases until the Base44 mirror
+  confirms migration), workstream standing notes (the stale "SQHN, RCI, QAI and TAC" corrected
+  to the three real parties per Q004), the run-engine schema, and the walkthrough. **The rebuilt
+  page was driven in real Chromium per §8:** all 14 question stops render "What this affects" /
+  "When the choice gets expensive" / "open, not in the way", zero console errors, the word
+  "blocking" appears nowhere in the DOM. Change registered as IKR-CR-002 (PROPOSED_AWAITING_CCC).
+- **Explicitly out of scope, flagged not folded in:** `canon/dependencies.yaml` (finalisation
+  sequencing between workstreams, a different sense of the word), dossier verification metadata
+  (`blocking_findings_open`), and `engine/scaffold.py` (day-one bootstrap history).
+- **IN-FLIGHT — two proposals now await the owner:** this reframe (canon change — needs a CCC
+  verdict and minute reference at adoption) and the months 3–12 spine definitions (below). The
+  deployed walkthrough still carries the old wording until the owner reruns the §5 rebuild
+  command against this branch and redeploys.
+- **NOT STARTED:** unchanged from the blocks below.
+
 **8 August 2026 (Claude/Cowork → next agent):**
 
 - **DONE — baton received and verified before any work.** All eleven §8 checks green at
@@ -176,7 +208,7 @@ himself — see §8.
 the previous agent generated more open decisions than the owner could close, and separating them is
 part of the handoff.
 
-### A · Only he or SQHN can decide, and things are blocked until he does
+### A · Only he or SQHN can decide, and named acts stay gated until he does — the build itself never waits
 
 1. **The start date — DEFERRED 6 Aug, and now blocked on one answer.** The owner will not take the
    verdict until SQHN finance confirms whether the USD 15,210 is an incremental cheque or salaried
@@ -187,22 +219,22 @@ part of the handoff.
    The underlying recommendation: a six-advisor council recommended Option B — April 2027, redesigned to ten
    coaching groups and eighty seats — because cohort 1 **cannot break even inside a ceiling of 64
    seats at any price**. Best case needs 70; eighty seats is the first configuration that returns
-   (+2,340). Fixed cost is USD 40,780. Accept, or overturn with a reason. *Blocks: the whole
-   calendar, marketing, admissions.*
+   (+2,340). Fixed cost is USD 40,780. Accept, or overturn with a reason. *Gates: publishing the calendar, marketing dates,
+   opening admissions. The design work behind all three continues.*
 2. **Whether SQHN amends QI 5.1** from *"may appoint"* to a scored criterion with a qualification
    floor. Two independent pieces of work have arrived at this as the highest-value action
    available: it costs nothing, is entirely within SQHN's gift, and would create the employer
-   demand the programme is otherwise trying to manufacture. *Blocks: the institutional sale.*
+   demand the programme is otherwise trying to manufacture. *Gates: the institutional sale.*
 3. **Ask SQHN finance, in writing,** whether the USD 15,210 is incremental cash or salaried staff
-   time. The council named this the one thing to do first. *Blocks: the financial model's meaning.*
+   time. The council named this the one thing to do first. *Gates: the financial model's meaning.*
 4. **The programme's name** (Q010, due 31 Aug) and **the certificate title and awarding authority**
    (Q002, due 31 Aug). Both need SQHN, not analysis.
 14. *(added 8 Aug — numbered out of sequence so older references to items 5–13 stay true)*
    **Route the months 3–12 spine definitions to the committee.** The draft is in
    `workstreams/W02/working/W02-months-3-12-spine-definitions-2026-08-08.md`, written to be
    argued with. Nothing enters the spine without a minute; until then the ten months remain
-   outline in every published surface. *Blocks: the mechanical merge, and full value of the
-   unblocking this gives W05, W06, W09, W10, W11 and W14.*
+   outline in every published surface. *Gates: the mechanical merge into the spine. The six
+   workstreams it feeds can already work from the draft.*
 
 ### B · Defaults — FOUR ACCEPTED 6 Aug, ONE PULLED BACK. Do not re-litigate the accepted four.
 
@@ -255,6 +287,12 @@ faculty. All three at once, or cohort 1 does not run.
   confidence. Where it cannot know, it says so.
 - **No decision is a one-way door.** The opportunity to course-correct, enhance or update stays
   open, and the reviewer is told so explicitly.
+- **An open decision is never a blocker.** Every open question carries what staying open gates —
+  specific acts of publishing, promising, signing or spending, possibly none — the default the
+  build continues under (`while_open`), and the date deferring stops being free (`decide_by`).
+  Building never stops for an undecided thing. `engine/decision_interview.py --check` refuses the
+  legacy blocking vocabulary, so this cannot silently regress. (Director's ruling, 8 August 2026;
+  canon change awaiting CCC ratification as IKR-CR-002.)
 - **Changes reach the owner as a proved patch bundle he runs himself**, never as a push from an
   agent session. See §8.
 

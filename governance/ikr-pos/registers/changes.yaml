@@ -64,3 +64,55 @@ changes:
         document_url: https://docs.google.com/document/d/1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
         readback_status: VERIFIED
     unresolved_decision: IKR-D001
+
+  - id: IKR-CR-002
+    title: Open decisions articulated as gates, never as blockers
+    requested_on: 2026-08-08
+    requested_by: Programme director (Ayodeji Esamuels), in session, 8 August 2026
+    owner: W09
+    status: PROPOSED_AWAITING_CCC
+    change_type: GOVERNANCE_VOCABULARY
+    scope:
+      - canon/open-questions.yaml
+      - canon/glossary.md
+      - engine/decision_interview.py
+      - engine/agenda.py
+      - engine/controlroom.py
+      - engine/export_control_room.py
+      - engine/workstreams.py
+      - engine/workstream-engine.js
+      - engine/schemas/reviewer-language.yaml
+      - workstreams/W13/questions.yaml
+      - workstreams/W14/questions.yaml
+      - workstreams/W16/questions.yaml
+      - ccc/agenda.md
+      - ccc/control-room.html
+    rationale: >-
+      The director's ruling: every decision not yet made is articulated as an open decision,
+      never as a blocker. The question register adopts the model canon already uses for
+      PARAMETER facts — each open question carries gates (the specific acts of publishing,
+      promising, signing or spending that wait; possibly none), while_open (the default the
+      build continues under), and decide_by (the date deferring stops being free) — replacing
+      the blocking flag, blocks list and due date. The glossary bans "blocker" and "blocking";
+      engine/decision_interview.py refuses the legacy fields so the register cannot drift back.
+    explicitly_out_of_scope: >-
+      canon/dependencies.yaml (the workstream finalisation-sequencing graph) and dossier
+      verification metadata (blocking_findings_open) use the word in a different sense —
+      neither describes an undecided decision — and engine/scaffold.py preserves the day-one
+      bootstrap snapshot as history. Flagged for the committee rather than silently included.
+    destructive_actions: []
+    programme_facts_changed: []
+    open_questions_changed:
+      - Q001 through Q014 restated in the new schema; no question closed, none added
+    human_gates_triggered:
+      - CCC_CANON_RATIFICATION
+    validation:
+      - engine/decision_interview.py --check refuses legacy blocking/blocks/due fields (proved by restoring each defect and watching it fail)
+      - engine/decision_interview.py --check requires gates, while_open and decide_by on every open question (proved the same way)
+      - full section-8 suite green
+      - rebuilt walkthrough driven in headless Chromium; 14 of 14 question stops render the open-decision framing, zero console errors, the word "blocking" appears nowhere in the DOM
+    synchronization_required:
+      - Netlify (walkthrough redeploy, owner-run)
+      - Base44 (control-room export carries new fields plus deprecated aliases until the mirror confirms migration)
+    synchronization_status: PENDING
+    unresolved_decision: CCC ratification of the canon change; minute reference to be added at adoption

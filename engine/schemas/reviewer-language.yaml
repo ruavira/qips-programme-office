@@ -42,7 +42,6 @@ omit_fields:
   - internal_refs      # identifiers kept deliberately for the programme office
   - owner              # workstream code
   - show               # repository paths to underlying files
-  - blocks             # workstream codes a question blocks
   - catch_all
   - source_of_truth
   - settled_on

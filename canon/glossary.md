@@ -18,6 +18,7 @@ the verification stage of every workstream run.
 | capstone | final project, dissertation | |
 | SQHN and Partners | consortium, the consortium | SQHN is the lead sponsor; everyone else is a partner. Retired 28 July 2026. |
 | faculty affiliated with ISQua | ISQua-accredited, ISQua-certified, in partnership with ISQua | Involvement is at individual faculty level. Anything stronger is a claim the programme cannot support. |
+| open decision | blocker, blocking | The programme director's ruling, 8 August 2026: an undecided thing is an open decision with named gates, a standing default and a decide-by date. Building never stops for one; specific acts of publishing, promising, signing or spending can wait for one. |
 
 ## Claims that may never be made
 - Any guarantee of employment, promotion or income.

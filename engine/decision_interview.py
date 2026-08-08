@@ -436,9 +436,18 @@ def build_stations() -> list[dict[str, Any]]:
         )
 
     # --- open questions --------------------------------------------------
+    #
+    # An open question is an open decision, never a blocker (director's ruling,
+    # 8 August 2026). Canon carries, for each one: what staying open GATES —
+    # specific acts of publishing, promising, signing or spending, possibly
+    # nothing at all — the default the build continues under while it stays
+    # open, and the decide-by date after which deferring stops being free.
+    # The station uses the same field names the PARAMETER stations already
+    # carry, so the page speaks one language for everything undecided.
     for qid, question in sorted(questions.items()):
         if question.get("status") in {"CLOSED", "ANSWERED"}:
             continue
+        gates = question.get("gates") or []
         stations.append(
             _station(
                 station_id=f"ST-{qid}",
@@ -446,14 +455,24 @@ def build_stations() -> list[dict[str, Any]]:
                 source=f"canon/open-questions.yaml::{qid}",
                 prompt=question.get("question", ""),
                 built=(
-                    "Nothing in the design depends on an answer being invented here. Where this "
-                    "question decides a figure, the figure is left open rather than guessed."
+                    question.get("while_open")
+                    or "NOT DECLARED — what the build continues under while this stays "
+                       "open has not been recorded."
                 ),
                 options=[],
                 recommendation=_recommendation_of(question, qid, f"ST-{qid}"),
-                blocking=question.get("blocking", False),
-                blocks=question.get("blocks", []),
-                due=question.get("due"),
+                what_it_gates=(
+                    " · ".join(gates)
+                    if gates
+                    else "Nothing waits for this answer. It is open, not in the way."
+                ),
+                what_it_does_not_gate=question.get("does_not_gate"),
+                decide_by=question.get("decide_by"),
+                decide_by_meaning=(
+                    "The date beyond which deferring stops being free — an option closes "
+                    "off or the choice gets expensive. It is not a deadline for an answer, "
+                    "and nothing stalls waiting for it."
+                ),
                 owner=question.get("owner"),
                 note=question.get("note"),
             )
@@ -656,6 +675,41 @@ def check_build_posture(stations: list[dict[str, Any]]) -> list[str]:
         for s in stations
         if s["kind"] == "PARAMETER" and "NOT DECLARED" in str(s.get("what_we_built", ""))
     ]
+
+
+def check_question_posture(questions: dict[str, Any]) -> list[str]:
+    """Every open question must be articulated as an open decision, never a blocker.
+
+    The programme director's ruling of 8 August 2026: an undecided thing carries
+    what it gates (a list, and an empty list is a welcome answer — it means
+    nothing waits), the default the build continues under, and the date after
+    which deferring stops being free. The old vocabulary — a blocking flag, a
+    blocks list, a due date — is refused outright, because a register that can
+    still say "blocking" will drift back to treating openness as a stop.
+    """
+    problems: list[str] = []
+    for qid, question in sorted(questions.items()):
+        if question.get("status") in {"CLOSED", "ANSWERED"}:
+            continue
+        for legacy in ("blocking", "blocks", "due"):
+            if legacy in question:
+                problems.append(
+                    f"{qid}: carries legacy field {legacy!r} — the register speaks in "
+                    "gates / while_open / decide_by, and the old vocabulary is refused"
+                )
+        if not isinstance(question.get("gates"), list):
+            problems.append(
+                f"{qid}: no gates list. Name the specific acts that wait — publishing, "
+                "promising, signing, spending — or say [] to record that nothing does"
+            )
+        if not str(question.get("while_open") or "").strip():
+            problems.append(
+                f"{qid}: no while_open. What does the build continue under while this "
+                "stays open? Openness is an instruction to keep building, not to stop"
+            )
+        if not question.get("decide_by"):
+            problems.append(f"{qid}: no decide_by. When does deferring stop being free?")
+    return problems
 
 
 # ---------------------------------------------------------------------------
@@ -1017,6 +1071,9 @@ def self_test() -> int:
     for problem in check_recommendations(stations):
         failures.append(f"recommendation: {problem}")
 
+    for problem in check_question_posture(load_questions()):
+        failures.append(f"question posture: {problem}")
+
     # every station must be traceable to a real file
     for station in stations:
         path = station["source"].split("::")[0]
@@ -1219,7 +1276,11 @@ def main() -> int:
         return 0
 
     if args.check:
-        problems = check_coverage(stations) + check_recommendations(stations)
+        problems = (
+            check_coverage(stations)
+            + check_recommendations(stations)
+            + check_question_posture(load_questions())
+        )
         posture = check_build_posture(stations)
         missing = missing_recommendations(stations)
 
