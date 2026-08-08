@@ -68,11 +68,39 @@ reference material.
 | SQHN standards, minutes, partner agreements | evidence work | Owner provides. Some are not public. |
 | Anything else | — | Ask. **No agent should ever hold a credential for this project.** |
 
+**If you are a Claude Cowork session:** the owner's folders are granted per session and do not
+carry over. Call `get_device_info` before you build anything, and request `~/qips-programme-office`
+and `~/qips-site` in a single dialog. You can then read his repository state and the built site
+directly instead of asking him to run commands. This is not a convenience — a previous session lost
+a working day to round trips it could have avoided with one call.
+
 **A write credential must never transit a chat.** This repository's CI greps for token patterns and
 fails the build on a hit. The established delivery pattern is a proved patch bundle the owner runs
 himself — see §8.
 
 ## 5 · STATE — append-log, newest first
+
+**6 August 2026, later (Claude/Cowork → next agent):**
+
+- **DONE — four decisions taken by the owner in a structured interview**, after he said plainly he
+  was struggling with the number of open decisions and the conflicting views. Recorded in the
+  Claude Project as `QIPS-Director-Decisions-2026-08-06.md` and reflected in §6 below.
+  **(1)** The start-date verdict is DEFERRED and now formally blocked on one answer from SQHN
+  finance — a drafted question is with the owner. **(2)** Four standing defaults ACCEPTED
+  (competency claim, coverage map, framework parked, patient-safety gap ships visible); tuition
+  PULLED BACK for a deliberate decision. **(3)** Next build is months 3–12 of the curriculum.
+  **(4)** The link to Dr. Oyewumi is HELD until the curriculum question is answered — which
+  removes the journey-fingerprint constraint, since no review pass has begun.
+- **DONE — the repository now announces its own baton.** `README.md`, `AGENTS.md` (item 0, which is
+  what Codex reads by convention) and `CLAUDE.md` all point at this file. Previously none of them
+  did, so an agent landing on the repository would not have found it. `CLAUDE.md` also carries the
+  device-bridge lesson: inventory your channels before building.
+- **IN-FLIGHT — months 3 to 12, spine level first.** Draft the artefact definition for each of the
+  ten outlined months to the standard months 1 and 2 already meet: performance outcome, why it sits
+  where it does, the evidence the participant submits, and how it connects to the capstone. This
+  unblocks six workstreams and is days of work. **It is NOT the teaching content**, which is the
+  body of work Q014 is really about — do not report the two as one thing.
+- **NOT STARTED:** unchanged from the block below.
 
 **6 August 2026 (Claude/Cowork → next agent):**
 
@@ -121,7 +149,13 @@ part of the handoff.
 
 ### A · Only he or SQHN can decide, and things are blocked until he does
 
-1. **The start date.** A six-advisor council recommended Option B — April 2027, redesigned to ten
+1. **The start date — DEFERRED 6 Aug, and now blocked on one answer.** The owner will not take the
+   verdict until SQHN finance confirms whether the USD 15,210 is an incremental cheque or salaried
+   staff time already on payroll. Incremental cash makes the shortfall roughly USD 17,500 and cohort
+   1 needs a named funder; salaried time makes the real hole about USD 2,200 and SQHN can carry it.
+   A drafted question is with the owner, targeting a reply by 20 August so it lands with the
+   indemnity figures on the 21st. **Do not re-open the calendar argument until that answer exists.**
+   The underlying recommendation: a six-advisor council recommended Option B — April 2027, redesigned to ten
    coaching groups and eighty seats — because cohort 1 **cannot break even inside a ceiling of 64
    seats at any price**. Best case needs 70; eighty seats is the first configuration that returns
    (+2,340). Fixed cost is USD 40,780. Accept, or overturn with a reason. *Blocks: the whole
@@ -135,18 +169,20 @@ part of the handoff.
 4. **The programme's name** (Q010, due 31 Aug) and **the certificate title and awarding authority**
    (Q002, due 31 Aug). Both need SQHN, not analysis.
 
-### B · Has a defensible default — accept it and move; nothing here is a one-way door
+### B · Defaults — FOUR ACCEPTED 6 Aug, ONE PULLED BACK. Do not re-litigate the accepted four.
 
-5. **Tuition.** The committee already ratified 450–600 working 500, with reasons minuted. It was
-   reopened for review by the previous agent, not by any new evidence. **Default: leave it at 500**
-   and let the reviewer's response inform the next sitting. It is shown to her as contested with
-   all three positions, which is the honest presentation either way.
-6. **The competency claim** (Q011) and **the coverage map** (Q012). Both are drafted, evidence-backed
+5. **Tuition — PULLED BACK 6 Aug for a deliberate decision.** The committee ratified 450–600
+   working 500, with reasons minuted; an agent reopened it, not new evidence. The owner declined to
+   simply accept the default because it carries real money. It does not revert to "contested by
+   default" — it becomes a decision to be taken with the comparator corridor and the three competing
+   positions in front of whoever takes it. Until then the page shows it as under review, which is
+   the honest presentation either way.
+6. **ACCEPTED.** The competency claim (Q011) and the coverage map (Q012). Both are drafted, evidence-backed
    and reach the reviewer as recommendations. **Default: let them stand and let her argue.** That is
    what they were written for.
-7. **The framework-authorship question** (Q013) is already parked to 20 November. It needs no
+7. **ACCEPTED.** The framework-authorship question (Q013) is parked to 20 November. It needs no
    attention now.
-8. **The patient-safety gap.** Known, stated, visible to the reviewer. **Default: ship it visible**
+8. **ACCEPTED — ships visible.** The patient-safety gap: known, stated, visible to the reviewer. **Default: ship it visible**
    and let the committee rule.
 
 ### C · Not decisions — work, or facts to obtain
@@ -156,7 +192,8 @@ part of the handoff.
 11. **Contactable names SQHN holds, and the 3-hour offering's conversion rate** (Q006, due 15 Sept).
 12. **The live send test** — ten minutes, and it closes the last failure that could silently cost
     the reviewer an entire pass. See §8.
-13. **One person who is not the author opens the walkthrough cold** — no explanation, two minutes,
+13. **One person who is not the author opens the walkthrough cold** — no longer urgent, since the
+    link is held, but still the largest untested surface. — no explanation, two minutes,
     watch without helping. This remains the largest untested surface in the system.
 
 **Go/no-go: 20 November 2026** — forty paid deposits, nine signed host-site MoUs, twelve consented

@@ -4,6 +4,11 @@ This repository is the shared operating system for the QIPS programme. It is des
 
 ## Start here
 
+**Taking over this project, as a person or as an agent? Read [`HANDOFF.md`](HANDOFF.md) first.**
+It is the current baton: where the work stands, what is decided, what is blocked on a human, the
+invariants you must not regress, and how to hand it back. Everything below is still true; the
+handoff tells you which parts matter today.
+
 1. Open [`ccc/control-room.html`](ccc/control-room.html) for the whole-programme view.
 2. Read [`canon/facts.yaml`](canon/facts.yaml) before treating any statement as settled.
 3. Read [`canon/open-questions.yaml`](canon/open-questions.yaml) for the decisions currently blocking progress.
