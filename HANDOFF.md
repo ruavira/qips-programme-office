@@ -80,6 +80,35 @@ himself — see §8.
 
 ## 5 · STATE — append-log, newest first
 
+**8 August 2026 (Claude/Cowork → next agent):**
+
+- **DONE — baton received and verified before any work.** All eleven §8 checks green at
+  `64890a1` on the clone, the GitHub remote and the owner's own disk (read directly over the
+  device bridge, per §4 — both folders granted in one dialog). The three surfaces agreed
+  byte-for-byte on branch and commit. One informational note: `decision_interview.py --check`
+  reports ST-F017 in the research queue needing a recommendation; not a failure, recorded here
+  so it is not rediscovered.
+- **DONE — the IN-FLIGHT item: months 3–12 defined at spine level.** All ten outlined months
+  brought to the standard months 1 and 2 already meet — performance outcome, why the month sits
+  where it does, evidence the participant submits, connection to the capstone — in
+  `workstreams/W02/working/W02-months-3-12-spine-definitions-2026-08-08.md`. Grounded in
+  F003/F004/F006/F010/F019, the objectives document's twelve draft outcomes, and the existing
+  employer evidence; no new external figures introduced. Five new unresolved assumptions
+  recorded (UA6–UA10). The document carries merge-ready YAML under a proposed third detail
+  level `spine`, plus the two-line validator amendment required on adoption, so a committee yes
+  is a minute plus a mechanical merge. **The spine YAML itself is untouched** — Item 1
+  authorised months 1–2 full and 3–12 outline, `engine/curriculum.py` enforces exactly that,
+  and the check was honoured, not worked around. **This is NOT the teaching content**; Q014
+  stays open and now has a defined target to author against.
+- **IN-FLIGHT — the definitions document is with the owner.** He reads it and either routes it
+  to the CCC (Lane 3, or an agenda item at the next sitting) or asks for revision. On adoption:
+  the mechanical merge, the validator amendment, and the new check proved to fire by deleting
+  one month's performance outcome and watching it go red.
+- **NOT STARTED:** unchanged from the blocks below, with one correction of scale: "author
+  months 3–12" now means the teaching content only (ten eLearning releases, learning maps,
+  live-session plans, artefact briefs, draft rubrics, accessibility equivalents), the spine
+  level being done. The merge item now reads 24 commits, not 20.
+
 **6 August 2026, later (Claude/Cowork → next agent):**
 
 - **DONE — four decisions taken by the owner in a structured interview**, after he said plainly he
@@ -168,6 +197,12 @@ part of the handoff.
    time. The council named this the one thing to do first. *Blocks: the financial model's meaning.*
 4. **The programme's name** (Q010, due 31 Aug) and **the certificate title and awarding authority**
    (Q002, due 31 Aug). Both need SQHN, not analysis.
+14. *(added 8 Aug — numbered out of sequence so older references to items 5–13 stay true)*
+   **Route the months 3–12 spine definitions to the committee.** The draft is in
+   `workstreams/W02/working/W02-months-3-12-spine-definitions-2026-08-08.md`, written to be
+   argued with. Nothing enters the spine without a minute; until then the ten months remain
+   outline in every published surface. *Blocks: the mechanical merge, and full value of the
+   unblocking this gives W05, W06, W09, W10, W11 and W14.*
 
 ### B · Defaults — FOUR ACCEPTED 6 Aug, ONE PULLED BACK. Do not re-litigate the accepted four.
 
