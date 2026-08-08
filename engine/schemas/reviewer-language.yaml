@@ -1,0 +1,172 @@
+# Turning the repository's language into the reviewer's language.
+#
+# WHY THIS EXISTS
+# ---------------
+# A committee member has no access to this repository, to the fact register, to
+# the workstream numbering, or to any platform the build sits on. So a sentence
+# that says "see F002" or "gates marketing copy (W14)" is not merely jargon — it
+# is unreadable. It points at something they cannot open and quietly signals that
+# the document was written for somebody else.
+#
+# The first version of the walkthrough leaked 511 internal references into
+# reviewer-facing text. Most were plumbing that should never have rendered at
+# all; 81 were inside prose and needed translating.
+#
+# TWO MECHANISMS, DELIBERATELY DIFFERENT
+#
+#   omit_fields   Plumbing. These exist so the ENGINE can trace a station back to
+#                 its origin. They are dropped from the reviewer's view entirely,
+#                 not reworded, because there is nothing in them for a human.
+#
+#   translations  Prose. Some identifiers appear inside sentences that are worth
+#                 reading, including sentences in the fact register itself, which
+#                 cannot be rewritten without a committee verdict. Those are
+#                 replaced with a plain-language name at render time. The
+#                 substance is kept; only the pointer changes.
+#
+# engine/walkthrough.py fails the build if any internal reference survives into
+# the rendered page. Translating is not optional politeness — an untranslated
+# identifier is a defect.
+
+# ---------------------------------------------------------------------------
+# Dropped from the reviewer's view. Engine plumbing.
+# ---------------------------------------------------------------------------
+# NOTE on `id`: it is NOT listed here. Acts need their id as the page anchor, and
+# an act id ("ACT4") is a position in the running order rather than a reference to
+# anything the reviewer cannot see. Only STATION ids are dropped, by shape, in
+# engine/walkthrough.py — omitting `id` wholesale broke every navigation link, and
+# the self-test did not notice because it only counted stops. A browser did.
+omit_fields:
+  - anchors            # which act claims a station
+  - source             # file and key the station was generated from
+  - internal_refs      # identifiers kept deliberately for the programme office
+  - owner              # workstream code
+  - show               # repository paths to underlying files
+  - catch_all
+  - source_of_truth
+  - settled_on
+
+# Evidence entries are kept ONLY when they carry a live URL the reviewer can
+# actually open. A repository path is a provenance record for the programme
+# office and a dead end for a committee member.
+evidence_must_be_reachable: true
+
+# Repository paths appear inside prose too — a fact's rationale ending
+# "Evidence: workstreams/.../....md" is provenance written for the programme
+# office. The reviewer gets told that a record exists without being sent to a
+# file they cannot open. Applied BEFORE identifier translation, so a path is
+# removed whole rather than half-translated into "workstreams/commercial and
+# pricing/working/...".
+path_replacement: the programme office's research record
+
+# Identifiers are routinely written as a parenthetical after a human label —
+# "Marketing copy (W14)". Translating the identifier in place yields "Marketing
+# copy (marketing)", which is worse than leaving it. The label already says what
+# the parenthetical says, so the parenthetical is dropped whole.
+drop_parenthetical_identifiers: true
+
+# The same identifiers also appear as a citation prefix — "F026 indemnity
+# trigger". Translating gives "the indemnity trigger indemnity trigger". Where an
+# identifier is immediately followed by the words that describe it, the
+# identifier goes and the words stay.
+drop_identifier_prefixes: true
+
+# When every piece of evidence behind a recommendation is a repository path, the
+# reviewer would otherwise see a recommendation with no evidence line at all —
+# which reads as unevidenced when it is not. Say so instead of going silent.
+evidence_unreachable_note: >-
+  The full research record sits with the programme office and can be circulated
+  on request; it is not reproduced here.
+
+# ---------------------------------------------------------------------------
+# Compound forms first — order matters. "the admissions decision condition 6"
+# reads worse than the identifier it replaced, so the pair is caught together.
+# ---------------------------------------------------------------------------
+compound_translations:
+  "W03-01 condition ([0-9]+)": "a recorded condition of the recognition decision"
+  "W05-01 condition ([0-9]+)": "a recorded condition of the faculty decision"
+  "W07-01 condition ([0-9]+)": "a recorded condition of the admissions decision"
+  "W02-01 condition ([0-9]+)": "a recorded condition of the curriculum decision"
+  "condition ([0-9]+) as amended": "a recorded condition, as amended"
+  "condition ([0-9]+)": "a recorded condition"
+
+# Insider vocabulary that reaches the reviewer from text this repository cannot
+# rewrite — chiefly the fact register, which only a committee decision may
+# change. Translating the word is faithful to the meaning and readable; leaving
+# it signals the document was written for somebody else.
+phrase_translations:
+  "approved canon": an approved decision
+  "in canon": in the approved record
+  "canon": the approved record
+  "a property test": an automated check
+  "property test": automated check
+  "an invariant": a rule
+  "invariant": rule
+  "promoted fact": recorded decision
+
+# ---------------------------------------------------------------------------
+# Identifier to plain-language name.
+# ---------------------------------------------------------------------------
+translations:
+  # Decisions already settled or still open
+  F002: the rule against teaching-and-consumption language
+  F012: the application window
+  F018: the admissions criteria decision
+  F020: the country decision
+  F022: the rule on how ISQua involvement is described
+  F024: the tuition decision
+  F025: the cohort size decision
+  F026: the indemnity trigger
+  F027: the go/no-go gate
+  F028: the rule holding partner names back
+
+  # Open questions
+  Q001: the question of what per-learner indemnity actually costs
+
+  # Assumptions the design rests on
+  UA3: the untested assumption that a coaching group of eight can review eight pieces of work in one call
+
+  # Areas of work. A reviewer does not need the numbering; they need to know
+  # which part of the programme a decision reaches into.
+  W01: the programme strategy workstream
+  W02: the curriculum workstream
+  W03: the recognition and continuing professional development workstream
+  W04: the observership and host sites workstream
+  W05: the faculty workstream
+  W06: the coaching workstream
+  W07: the admissions workstream
+  W09: the platform workstream
+  W10: the calendar workstream
+  W13: the naming workstream
+  W14: the marketing workstream
+  W15: the brand and partnerships workstream
+  W16: the commercial and pricing workstream
+  W17: the governance and risk workstream
+  W03-01: the recognition decision
+  W05-01: the faculty decision
+  W07-01: the admissions decision
+  W02-01: the curriculum decision
+  W16-01: the commercial decision
+
+# ---------------------------------------------------------------------------
+# What counts as a leak. Checked against the rendered page AFTER translation,
+# with URLs excluded — a live citation is a link the reviewer can follow, and
+# the path inside it is not an instruction to go and find a file they cannot see.
+# ---------------------------------------------------------------------------
+leak_patterns:
+  - name: fact identifier
+    pattern: '\bF\d{3}\b'
+  - name: open-question identifier
+    pattern: '\bQ\d{3}\b'
+  - name: workstream or dossier identifier
+    pattern: '\bW\d{2}(?:-\d{2})?\b'
+  - name: assumption identifier
+    pattern: '\bUA\d\b'
+  - name: station identifier
+    pattern: '\bST-[A-Za-z0-9_-]+'
+  - name: repository path
+    pattern: '\b(?:canon|engine|workstreams|governance|documents)/[\w./-]+'
+  - name: engine or schema filename
+    pattern: '\b[\w-]+\.(?:py|yaml)\b'
+  - name: bare condition reference
+    pattern: '\bcondition \d+\b'

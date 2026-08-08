@@ -93,13 +93,25 @@ def check_vocabulary(paths: list[Path]) -> list[str]:
             # A line that is explaining the rule is not breaking it.
             if stripped.startswith("#") or "never this" in stripped.lower():
                 continue
+            # A line carrying a source URL is a citation. Quoting what somebody else
+            # published — an eligibility rule, a regulator's wording, a paper's finding
+            # — is not the programme describing itself, and rewriting a quotation to
+            # satisfy our own vocabulary would misquote the source.
+            #
+            # This replaces a far leakier rule that exempted ANY line containing a
+            # quote character. In a YAML file nearly every value is quoted, so that
+            # exemption silently disabled the check across whole files.
+            if "http://" in line or "https://" in line:
+                continue
+
             for permitted, banned_forms in rules:
                 for banned in banned_forms:
-                    if re.search(rf"\b{re.escape(banned)}\b", line, flags=re.IGNORECASE):
-                        # The glossary permits "course" inside quoted text describing SQHN's own
-                        # existing products, which genuinely are courses.
-                        if banned.lower() == "course" and ('"' in line or "'" in line):
-                            continue
+                    # Plurals matter. The original pattern was \bcourse\b, which does
+                    # not match "courses" — nor "students", "modules", "lessons" or
+                    # "classes". A vocabulary check that catches only the singular
+                    # catches almost nothing, since the plural is the natural form in
+                    # marketing copy. Probed and confirmed on 2026-08-02.
+                    if re.search(rf"\b{re.escape(banned)}(?:e?s)?\b", line, flags=re.IGNORECASE):
                         failures.append(
                             f"{path.relative_to(ROOT)}:{line_number}: banned term "
                             f"{banned!r} — use {permitted!r}"

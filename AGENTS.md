@@ -4,6 +4,10 @@ This repository is governed by the QIPS IKR-POS profile in `governance/ikr-pos/`
 
 ## Before doing any work
 
+0. **Read `HANDOFF.md` end to end.** It is the current baton — state, blockers, invariants,
+   verification protocol and the relay protocol for handing back. If `HANDOFF.md` and this
+   repository disagree, the repository is right and the handoff is stale: fix the handoff first,
+   then continue.
 1. Read `README.md`, `canon/facts.yaml`, `canon/glossary.md`, `canon/open-questions.yaml`, `governance/ikr-pos/repository-charter.md`, `governance/ikr-pos/system-of-record-map.yaml`, and the target workstream's `brief.md` and `state.yaml`.
 2. Treat `canon/` as binding governance data, not a drafting area.
 3. Check `docs/reconciliation-register.md` before reusing an older artifact.

@@ -10,19 +10,20 @@ OUT = os.path.join(ROOT, "ccc", "control-room.html")
 facts = open(os.path.join(ROOT, "canon/facts.yaml"), encoding="utf-8").read()
 n_appr = facts.count("status: APPROVED")
 n_prop = facts.count("status: PROPOSED")
-oq = open(os.path.join(ROOT, "canon/open-questions.yaml"), encoding="utf-8").read()
+# Parsed with yaml, not regex. The regex this replaces required question and note
+# values to be double-quoted when almost none were, so the table rendered empty
+# cells for most questions and nothing noticed — a generated view failing silently
+# is exactly the class of defect this repository exists to prevent.
+import yaml
+_oq = yaml.safe_load(open(os.path.join(ROOT, "canon/open-questions.yaml"), encoding="utf-8"))
 questions = []
-for blk in re.split(r"\n  - id: ", oq)[1:]:
-    qid = blk.split("\n")[0].strip()
-    q = re.search(r'question: "(.*?)"', blk, re.S)
-    owner = re.search(r"owner: (\w+)", blk)
-    blocking = "blocking: true" in blk
-    blocks = re.search(r"blocks: \[(.*?)\]", blk)
-    due = re.search(r"due: ([\d-]+)", blk)
-    note = re.search(r'note: "(.*?)"', blk, re.S)
-    questions.append(dict(id=qid, q=q.group(1) if q else "", owner=owner.group(1) if owner else "",
-                          blocking=blocking, blocks=blocks.group(1) if blocks else "",
-                          due=due.group(1) if due else "", note=note.group(1) if note else ""))
+for _q in _oq.get("questions", []):
+    if _q.get("status") in ("CLOSED", "ANSWERED"):
+        continue
+    questions.append(dict(
+        id=_q["id"], q=_q.get("question", ""), owner=_q.get("owner", ""),
+        gates=_q.get("gates") or [], while_open=_q.get("while_open", ""),
+        decide_by=str(_q.get("decide_by", "")), note=_q.get("note", "")))
 
 DCOL = {"D1": "#0F5257", "D2": "#1D6F5C", "D3": "#3B5BA5", "D4": "#8A5A00"}
 SCOPE_LABEL = {"NOW": "Cohort 1", "NEXT": "Cohort 2", "LATER": "Later"}
@@ -47,11 +48,11 @@ for dk, (dname, ddesc) in DIRECTORATES.items():
       <div class="grid">"""
     for w in ws_list:
         qs = [q for q in questions if q["owner"] == w["id"]]
-        blocking_q = [q for q in qs if q["blocking"]]
+        gating_q = [q for q in qs if q["gates"]]
         deps = ", ".join(w["depends_on"]) if w["depends_on"] else "—"
         blocks = ", ".join(blocks_map.get(w["id"], [])) or "—"
-        flag = "blocked" if blocking_q else ("ready" if not w["depends_on"] else "waiting")
-        flabel = {"blocked": "Blocking question open", "ready": "Can start now", "waiting": "Waits on upstream"}[flag]
+        flag = "blocked" if gating_q else ("ready" if not w["depends_on"] else "waiting")
+        flabel = {"blocked": "Owns a gating decision", "ready": "Can start now", "waiting": "Waits on upstream"}[flag]
         cards += f"""
         <article class="ws {flag}" data-scope="{w['cohort1']}" style="--dc:{DCOL[dk]}" tabindex="0">
           <header>
@@ -67,18 +68,20 @@ for dk, (dname, ddesc) in DIRECTORATES.items():
               <h4>Produces</h4><ul>{''.join(f'<li>{esc(o)}</li>' for o in w['outputs'])}</ul>
               <h4>Research lenses</h4><ul>{''.join(f'<li>{esc(l)}</li>' for l in w['lenses'])}</ul>
               <h4>Benchmarks against</h4><p class="bm">{esc(' · '.join(w['benchmarks']))}</p>
-              <h4>Dependencies</h4><p class="bm">Waits on: <b>{deps}</b> &nbsp;·&nbsp; Blocks: <b>{blocks}</b></p>
+              <h4>Dependencies</h4><p class="bm">Waits on: <b>{deps}</b> &nbsp;·&nbsp; Feeds: <b>{blocks}</b></p>
               <h4>Standing note</h4><p class="note">{esc(w['note'])}</p>
-              {'<h4>Open questions it owns</h4><ul>' + ''.join(f"<li>{'<b>BLOCKING</b> · ' if q['blocking'] else ''}{esc(q['q'])} <span class=due>due {esc(q['due'])}</span></li>" for q in qs) + '</ul>' if qs else ''}
+              {'<h4>Open decisions it owns</h4><ul>' + ''.join(f"<li>{'<b>GATES</b> · ' if q['gates'] else ''}{esc(q['q'])} <span class=due>decide by {esc(q['decide_by'])}</span></li>" for q in qs) + '</ul>' if qs else ''}
             </div>
           </details>
         </article>"""
     cards += "</div></section>"
 
-blockers = "".join(f"""<tr class="{'blk' if q['blocking'] else ''}">
+blockers = "".join(f"""<tr class="{'blk' if q['gates'] else ''}">
   <td class="qid">{esc(q['id'])}</td><td>{esc(q['q'])}</td>
-  <td class="own">{esc(q['owner'])}</td><td class="own">{esc(q['blocks'])}</td>
-  <td class="due">{esc(q['due'])}</td></tr>""" for q in sorted(questions, key=lambda x: (not x["blocking"], x["due"])))
+  <td class="own">{esc(q['owner'])}</td>
+  <td>{esc(' · '.join(q['gates'])) if q['gates'] else 'nothing — open, not in the way'}</td>
+  <td>{esc(q['while_open'])}</td>
+  <td class="due">{esc(q['decide_by'])}</td></tr>""" for q in sorted(questions, key=lambda x: (not x["gates"], x["decide_by"])))
 
 now = [w['id'] for w in WORKSTREAMS if w['cohort1'] == 'NOW']
 nxt = [w['id'] for w in WORKSTREAMS if w['cohort1'] == 'NEXT']
@@ -160,7 +163,7 @@ footer{{margin-top:44px;padding-top:16px;border-top:1px solid #DCE4E3;color:#7C8
   <div class="stat"><b>{len(WORKSTREAMS)}</b><span>Workstreams</span></div>
   <div class="stat"><b>{n_appr}</b><span>Facts in canon</span></div>
   <div class="stat"><b>{n_prop}</b><span>Awaiting CCC</span></div>
-  <div class="stat"><b>{sum(1 for q in questions if q['blocking'])}</b><span>Blocking questions</span></div>
+  <div class="stat"><b>{sum(1 for q in questions if q['gates'])}</b><span>Decisions gating something</span></div>
   <div class="stat"><b>{len(now)}</b><span>In cohort 1</span></div>
 </div>
 </div></header>
@@ -168,15 +171,18 @@ footer{{margin-top:44px;padding-top:16px;border-top:1px solid #DCE4E3;color:#7C8
   <em>Show</em>
   <button class="f on" data-f="all">All</button>
   <button class="f" data-f="NOW">Cohort 1 only</button>
-  <button class="f" data-f="blocked">Blocked</button>
+  <button class="f" data-f="blocked">Gating decisions</button>
   <button class="f" data-f="ready">Can start now</button>
   <button class="f" data-f="expand">Expand all</button>
 </div></div>
 <div class="wrap">
 {cards}
 
-<h2 class="sec">Blocking questions — nothing ships until these close</h2>
-<table><thead><tr><th>Id</th><th>Question</th><th>Owner</th><th>Blocks</th><th>Due</th></tr></thead>
+<h2 class="sec">Open decisions — building never waits for these; some shipping does</h2>
+<p class="note" style="max-width:78ch">Every decision not yet taken, articulated as exactly that — never a blocker.
+Each names what staying open gates (for some of them, nothing at all), the default the build continues
+under meanwhile, and the date after which deferring stops being free. No decision is a one-way door.</p>
+<table><thead><tr><th>Id</th><th>Decision to take</th><th>Owner</th><th>Gates until decided</th><th>Building continues under</th><th>Decide by</th></tr></thead>
 <tbody>{blockers}</tbody></table>
 
 <h2 class="sec">The gate</h2>
