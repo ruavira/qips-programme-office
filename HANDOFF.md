@@ -80,6 +80,26 @@ himself — see §8.
 
 ## 5 · STATE — append-log, newest first
 
+**8 August 2026, evening (Claude/Cowork → next agent):**
+
+- **DONE — the deploy path liberated** (branch `proposal/liberation-deploy-on-push`,
+  stacking on the reframe branch). A five-layer lock-in audit found exactly one captive
+  layer: deploys ran from one Mac with a logged-in CLI and no CI — and the live page was
+  measured four commits behind the branch, still speaking vocabulary canon had since banned.
+  `.github/workflows/deploy-walkthrough.yml` now deploys on push to `main` only, gated on
+  the full §8 suite, and **verifies at the live URL** that the deployed page carries the
+  deploying commit's stamp and none of the banned vocabulary. Registered as IKR-CR-003.
+  Full audit table, the two owner secrets, first-run instructions and the multi-agent
+  access grants live in `docs/liberation-runbook.md`. Rollback is the old manual path,
+  unchanged. Once merged and secrets set: the merge that makes a thing true is the same
+  act that publishes it, from any tool, any account.
+- **IN-FLIGHT — three proposals now stack for the owner, in order:**
+  `proposal/decision-interview` (24 commits, on GitHub, awaiting review) →
+  `proposal/decisions-gate-not-block` (canon reframe, bundle on his machine) →
+  `proposal/liberation-deploy-on-push` (this). Plus the two secrets and one manual
+  workflow run per the runbook.
+- **NOT STARTED:** unchanged from the blocks below.
+
 **8 August 2026, later (Claude/Cowork → next agent):**
 
 - **DONE — the register reframed: open decisions, never blockers.** The director ruled that

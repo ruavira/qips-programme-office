@@ -116,3 +116,37 @@ changes:
       - Base44 (control-room export carries new fields plus deprecated aliases until the mirror confirms migration)
     synchronization_status: PENDING
     unresolved_decision: CCC ratification of the canon change; minute reference to be added at adoption
+
+  - id: IKR-CR-003
+    title: Deploy path liberated — walkthrough ships from GitHub on merge to main
+    requested_on: 2026-08-08
+    requested_by: Programme director (Ayodeji Esamuels), in session, 8 August 2026 — "get this on GitHub and make it accessible to multiple agents"
+    owner: W09
+    status: PROPOSED_AWAITING_OWNER_MERGE
+    change_type: DEPLOYMENT_PATH
+    scope:
+      - .github/workflows/deploy-walkthrough.yml
+      - docs/liberation-runbook.md
+    rationale: >-
+      Five-layer lock-in audit found code, hosting account, data and identity already
+      owner-controlled; the single captive layer was the deploy path — one Mac, a logged-in
+      CLI, no CI — and the live page was found four commits behind the branch, still carrying
+      vocabulary canon had since banned. The new workflow deploys on push to main only, gated
+      on the full section-8 suite, and verifies at the live URL that the deployed page carries
+      the deploying commit and none of the banned vocabulary. The merge that makes something
+      true becomes the act that publishes it.
+    explicitly_out_of_scope: >-
+      Base44 and Google Drive remain governed mirrors, not deploy targets; Netlify remains the
+      host because the account, the form inbox and the export path are the owner's own.
+    destructive_actions: []
+    programme_facts_changed: []
+    human_gates_triggered:
+      - OWNER_MERGE_APPROVAL
+      - OWNER_SECRET_CREATION (Netlify token and site id as GitHub repo secrets — never via chat)
+    validation:
+      - workflow YAML parses; gate-and-build sequence run in a clean clone of this branch, all checks green, artifact built with commit stamp
+      - first live deploy is deliberately owner-triggered via workflow_dispatch and self-verifies at the live URL
+    synchronization_required:
+      - Netlify (becomes automatic on merge, once secrets exist)
+    synchronization_status: PENDING_OWNER_SECRETS
+    unresolved_decision: none — no canon touched; the owner's merge is the approval
