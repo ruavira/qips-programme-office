@@ -27,7 +27,7 @@ makes divergence visible until reconciled.
 | Environment | Identifier / URL | Current governance status |
 |---|---|---|
 | GitHub repository | `ruavira/qips-programme-office` | AUTHORITATIVE |
-| Base44 application | App ID `6a68b8381ea8ff36dd473cd2` | MIRROR — W02 reconciliation verified against `d7f300b45ccff2cef262a9dcbce7d255f6e3bfca` |
+| Base44 application | App ID `6a68b8381ea8ff36dd473cd2` | MIRROR — governed QIPS subset verified against `d8cc75b0bc96cf5a80919917c2aff90f0c9d8975`; restricted isolation review open |
 | Base44 live URL | `https://passionate-base-logic-core.base44.app/` | MIRROR — publication claims remain gated |
 | Google Drive W02 review pack | `https://docs.google.com/document/d/1w5LTKrPPXrx-iAii-3laz8kCMbTlSnh855_HFQMPhEI` | REVIEW LAYER — W02 reconciliation verified against `d7f300b45ccff2cef262a9dcbce7d255f6e3bfca` |
 | Supabase | Project identifier not registered in this repository | NOT YET REGISTERED |
@@ -64,7 +64,7 @@ A URL without an exact source commit is not considered synchronized.
 
 `DRIFT_OPEN` or `AUTHORITY_CONFLICT` blocks production publication for the affected artifact.
 
-## 6. Current W02 synchronization baseline
+## 6. Historical W02 synchronization baseline — 31 July 2026
 
 | Surface | Repository source | Source revision | Status | Validation / required action |
 |---|---|---|---|---|
@@ -75,7 +75,10 @@ A URL without an exact source commit is not considered synchronized.
 | Netlify | No W02 deployment registered | — | NOT_REGISTERED | Deploy only approved web artifacts with source commit metadata |
 | Vercel | No W02 deployment registered | — | NOT_REGISTERED | Deploy only approved app/service artifacts with source commit metadata |
 
-## 7. W02 reconciliation detail
+## 7. Historical W02 reconciliation detail
+
+This section records the 31 July readback and has been superseded operationally by section 8. It is
+retained as synchronization history, not current programme state.
 
 The Base44 readback confirms:
 
@@ -94,7 +97,20 @@ The Drive readback confirms that the review pack now states:
 - Run 002 contains twelve work packages and nine quality gates;
 - GitHub is authoritative, Base44 is a mirror, Supabase is an approved-data surface only, and Netlify/Vercel are deployment surfaces.
 
-## 8. Change protocol
+## 8. Current Base44 reconciliation — 13 August 2026
+
+| Surface | Repository source | Source revision | Status | Validation / required action |
+|---|---|---|---|---|
+| GitHub `main` | Canon, 17 workstream states, approved/amended dossiers, document register and IKR-POS governance | `d8cc75b0bc96cf5a80919917c2aff90f0c9d8975` | AUTHORITATIVE | PR #25 merged after the repository proposal gates passed |
+| Base44 governed QIPS subset | Workstreams, affected dossiers and runs, and registered QIPS document IDs | `d8cc75b0bc96cf5a80919917c2aff90f0c9d8975` | IN_SYNC | Updated and read back 13 August 2026 America/Edmonton; revision-bearing records carry the exact source revision |
+| Base44 document isolation | Records outside the governed QIPS document register | restricted finding | DRIFT_OPEN | W09/W17 must classify and isolate out-of-scope records before any deletion, relocation, reclassification or access change |
+| Google Drive | Registered review and restricted-evidence layer | prior verified revisions | SYNC_PENDING | Post-decision permissions, duplicate, orphan and restricted-location audit remains RH-002 |
+
+The public repository records only the governance status of the isolation finding. Record-level
+details are deliberately excluded because this repository is public and may not expose another
+project's metadata. Those details must be retained in an approved restricted evidence location.
+
+## 9. Change protocol
 
 1. Change is proposed and reviewed in GitHub.
 2. Repository checks pass and the pull request records governance impact.
@@ -105,7 +121,7 @@ The Drive readback confirms that the review pack now states:
 6. This register or a machine-readable companion records the target revision and validation.
 7. Any divergence is opened as a tracked defect; it is never silently accepted.
 
-## 9. Anti-drift controls
+## 10. Anti-drift controls
 
 - No approved decision exists only in chat, email, Drive comments or a platform database.
 - No mirror may strip the words DRAFT, PROPOSED, PROTOTYPE or PUBLICATION PROHIBITED.
@@ -117,7 +133,7 @@ The Drive readback confirms that the review pack now states:
   publication, decision or dependency state.
 - Periodic reconciliation compares GitHub against every registered live surface.
 
-## 10. Reconciliation checklist
+## 11. Reconciliation checklist
 
 For each release or governance wave confirm:
 
@@ -133,7 +149,7 @@ For each release or governance wave confirm:
 - publication claims match approved canon;
 - open drift items have owner and due date.
 
-## 11. Decision rule
+## 12. Decision rule
 
 When surfaces disagree, GitHub governs unless a signed CCC decision exists that has not yet been
 transcribed. In that exceptional case, publication pauses while the signed decision is committed,

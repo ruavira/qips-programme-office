@@ -65,3 +65,15 @@ GitHub installation revision. The profile is now ratified. A 13 August 2026 repo
 confirmed that Base44 and the Drive ratification copy still need a post-decision readback and status
 reconciliation; publication, any change to authority, database activation and deployment remain
 subject to their explicit human gates.
+
+## Post-decision reconciliation — 13 August 2026
+
+The governed QIPS subset in Base44 was updated from and read back against GitHub revision
+`d8cc75b0bc96cf5a80919917c2aff90f0c9d8975`. Workstream, affected dossier and run states align to
+the repository, and every document ID registered for QIPS is represented in the mirror.
+
+An isolation review also found document records outside the governed QIPS register. Because this
+repository is public, record-level details are not reproduced here. The finding is `DRIFT_OPEN` and
+assigned to W09/W17. No out-of-scope record was adopted into QIPS, deleted, relocated, reclassified
+or subjected to an access change. The Drive permission, duplicate, restricted-location and orphan
+audit remains pending as RH-002.

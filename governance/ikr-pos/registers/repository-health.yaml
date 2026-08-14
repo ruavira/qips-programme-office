@@ -60,6 +60,15 @@ baseline:
       owner: W09
       priority: MEDIUM
       status: OPEN
+    - id: RH-007
+      issue: Classify and isolate Base44 document records outside the governed QIPS document register.
+      owner: W09/W17
+      priority: HIGH
+      status: OPEN_RESTRICTED_FINDING
+      opened_on: 2026-08-13
+      public_evidence: docs/workspace-synchronization-register.md#8-current-base44-reconciliation--13-august-2026
+      restricted_evidence_location: TBD_APPROVED_RESTRICTED_LOCATION
+      human_gate: Deletion, relocation, reclassification or access changes require explicit authority.
 
 indicators:
   required_governance_paths_present:
@@ -80,9 +89,12 @@ indicators:
     evidence: GitHub Actions job 91317371425
   mirror_reconciliation:
     target: IN_SYNC
-    current: IN_SYNC
+    current: PARTIAL_DRIFT_OPEN
     evidence:
       base44_app_id: 6a68b8381ea8ff36dd473cd2
+      base44_source_revision: d8cc75b0bc96cf5a80919917c2aff90f0c9d8975
+      base44_governed_qips_subset: IN_SYNC
+      base44_isolation_review: DRIFT_OPEN_RESTRICTED_FINDING
       drive_document_id: 1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
   registered_drive_documents_with_id_owner_status_version:
     target: 100
@@ -96,7 +108,8 @@ indicators:
     current: BASELINE_REQUIRED
   orphan_active_artifacts:
     target: 0
-    current: BASELINE_REQUIRED
+    current: RESTRICTED_AUDIT_REQUIRED
+    evidence: RH-007
   overdue_reviews:
     target: 0
     current: BASELINE_REQUIRED
