@@ -89,9 +89,20 @@ artifacts:
     title: QIPS IKR-POS Governance Profile
     owner: W09
     version: 1.0.0
-    lifecycle_status: DECISION_REQUIRED
-    authority_class: PROPOSED
+    lifecycle_status: EFFECTIVE
+    authority_class: APPROVED_PROJECT_CONTENT
     canonical_location: governance/ikr-pos/
     confidentiality: PROGRAMME
     source_or_parent: IKR-POS-v1.0.0
-    review_requirement: CCC_RATIFICATION
+    review_requirement: MONTHLY_REPOSITORY_HEALTH_REVIEW
+
+  - id: ART-WORKSTREAM-INVENTORY
+    title: Workstream Active Artifact Inventory
+    owner: W09
+    version: 1.0.0
+    lifecycle_status: EFFECTIVE
+    authority_class: DERIVED
+    canonical_location: governance/ikr-pos/registers/workstream-artifacts.yaml
+    confidentiality: PROGRAMME
+    source_or_parent: workstreams/W01-W17/working/
+    review_requirement: MONTHLY_REPOSITORY_HEALTH_REVIEW

@@ -3,7 +3,7 @@ profile:
   title: QIPS Institutional Knowledge Repository and Project Operating System
   version: 1.0.0
   installed_on: 2026-07-31
-  status: INSTALLED_PENDING_CCC_RATIFICATION
+  status: RATIFIED_ACTIVE
   control_owner: W09
   assurance_partner: W11
   approval_authority: CCC
@@ -64,5 +64,7 @@ installation_assertions:
 ratification:
   decision_id: IKR-D001
   required: true
-  status: PENDING
+  status: APPROVED
+  decided_on: 2026-08-01
+  minute_reference: ccc/minutes/2026-08-01.md
   question: Ratify QIPS-IKR-POS v1.0.0 as the programme's repository and project-governance operating system.

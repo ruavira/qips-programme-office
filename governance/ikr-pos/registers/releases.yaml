@@ -10,15 +10,17 @@ releases:
     title: Initial QIPS IKR-POS Profile
     version: 1.0.0
     release_type: GOVERNANCE_PROFILE
-    lifecycle_status: INSTALLED_OPERATING_BASELINE
-    authority_class: PROPOSED
+    lifecycle_status: RATIFIED_OPERATING_BASELINE
+    authority_class: APPROVED_PROJECT_CONTENT
     prepared_on: 2026-07-31
     installed_on: 2026-07-31
     source_branch: main
     source_commit: 0c6334d8a48ee5552f155fa92f277f5ba9321f72
     pull_request: 11
     approval_authority: CCC
-    approval_status: PENDING
+    approval_status: APPROVED
+    approved_on: 2026-08-01
+    minute_reference: ccc/minutes/2026-08-01.md
     decision_id: IKR-D001
     included_paths:
       - governance/ikr-pos/
@@ -42,5 +44,6 @@ releases:
         document_id: 1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
         document_url: https://docs.google.com/document/d/1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
     publication_status: INTERNAL_ONLY
-    restore_test: PENDING
-    ratification_note: The profile operates as the installed repository governance baseline. Formal policy ratification remains pending a minuted CCC verdict and must not be inferred from merge or synchronization.
+    restore_test: PASS_2026-08-13
+    restore_test_evidence: governance/ikr-pos/portable-restore-tests/2026-08-13.md
+    ratification_note: Ratified without conditions by the CCC on 1 August 2026, Item 5. The verdict changes governance authority only; it does not approve a programme fact, public publication, database activation or destructive migration.

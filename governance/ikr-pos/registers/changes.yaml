@@ -63,4 +63,50 @@ changes:
         document_id: 1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
         document_url: https://docs.google.com/document/d/1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
         readback_status: VERIFIED
-    unresolved_decision: IKR-D001
+    resolved_decision: IKR-D001
+
+  - id: IKR-CR-004
+    title: Reconcile ratification state, inventory active artifacts and prove portable restore
+    requested_on: 2026-08-13
+    requested_by: Programme Office continuation audit
+    owner: W09
+    assurance_owner: W11
+    status: IMPLEMENTED_PENDING_MIRROR_RECONCILIATION
+    change_type: REPOSITORY_HEALTH_AND_SYNCHRONIZATION
+    scope:
+      - governance/ikr-pos/installation-manifest.yaml
+      - governance/ikr-pos/installation-handover.md
+      - governance/ikr-pos/README.md
+      - governance/ikr-pos/synchronization-record.md
+      - governance/ikr-pos/registers/artifacts.yaml
+      - governance/ikr-pos/registers/releases.yaml
+      - governance/ikr-pos/registers/repository-health.yaml
+      - governance/ikr-pos/registers/migration-log.yaml
+      - governance/ikr-pos/registers/workstream-artifacts.yaml
+      - governance/ikr-pos/portable-restore-tests/2026-08-13.md
+      - documents/register.yaml
+      - engine/artifact_inventory.py
+      - engine/validate_ikr_pos.py
+    rationale: >-
+      The 1 August CCC minute and decision register approve IKR-D001, while four installed-profile
+      records still said PENDING. The same health baseline also required a file-level inventory and
+      a portable restore test. This change reconciles those records to the minute and supplies the
+      missing health evidence without changing programme canon.
+    destructive_actions: []
+    programme_facts_changed: []
+    open_questions_changed: []
+    human_gates_triggered: []
+    authoritative_sources:
+      - ccc/minutes/2026-08-01.md#item-5--ikr-d001-ratification-of-the-governance-operating-system
+      - governance/ikr-pos/registers/decisions.yaml#ikr-d001
+    validation:
+      - 124 active workstream working files inventoried with SHA-256 digests
+      - all 18 registered documents carry a non-empty ID, owner, status and version marker
+      - portable archive contained 390 entries and passed clean restore
+      - restored agenda and control room were byte-stable
+      - regenerated control-room JSON matched the authoritative source byte-for-byte
+      - IKR-POS validator passed in the restored export
+    synchronization_required:
+      - Base44
+      - Google_Drive_readback
+    synchronization_status: PENDING_AFTER_MERGE

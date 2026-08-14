@@ -13,7 +13,8 @@
 - Version 1.1.0 is a backward-compatible distribution and portability enhancement.
 - The v1.1.0 package is `READY_FOR_TRANSFER` and its package enhancements remain a `RELEASE_CANDIDATE` until separately approved.
 - This distribution does not constitute QIPS CCC ratification, public publication, database activation, deployment approval, or a change to programme authority.
-- QIPS decision `IKR-D001` remains pending.
+- QIPS decision `IKR-D001` was ratified without conditions on 1 August 2026; this distribution record
+  was reconciled to that decision on 13 August 2026.
 
 ## 2. Scope separation
 
@@ -100,7 +101,7 @@ infrastructure.
 ## 8. Human gates preserved
 
 - approval of v1.1.0 package enhancements;
-- QIPS CCC decision `IKR-D001`;
+- any later amendment to the ratified QIPS IKR-POS governance profile;
 - QIPS W02 prototype authorization;
 - public publication;
 - database or production activation;

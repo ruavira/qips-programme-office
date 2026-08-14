@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import sys
 from pathlib import Path
 from typing import Any
@@ -24,6 +25,7 @@ REQUIRED_PATHS = [
     "governance/ikr-pos/registers/access-confidentiality.yaml",
     "governance/ikr-pos/registers/migration-log.yaml",
     "governance/ikr-pos/registers/repository-health.yaml",
+    "governance/ikr-pos/registers/workstream-artifacts.yaml",
     "governance/ikr-pos/portable-export-manifest.yaml",
     "canon/facts.yaml",
     "canon/open-questions.yaml",
@@ -182,7 +184,47 @@ def validate_documents() -> int:
     required = {"id", "title", "owner", "status", "version"}
     for document in documents:
         require_keys(document, required, f"document {document.get('id')}")
+        empty = sorted(key for key in required if document.get(key) in (None, ""))
+        if empty:
+            fail(
+                f"document {document.get('id')} has empty required metadata: "
+                + ", ".join(empty)
+            )
     return len(documents)
+
+
+def validate_workstream_inventory() -> int:
+    data = load_yaml("governance/ikr-pos/registers/workstream-artifacts.yaml")
+    inventory = data.get("artifacts", [])
+    require_unique(inventory, "id", "workstream artifact inventory")
+    require_unique(inventory, "path", "workstream artifact inventory")
+    required = {
+        "id",
+        "title",
+        "owner",
+        "path",
+        "artifact_type",
+        "lifecycle_status",
+        "authority_class",
+        "confidentiality",
+        "version",
+        "sha256",
+        "review_requirement",
+    }
+    for artifact in inventory:
+        require_keys(artifact, required, f"workstream artifact {artifact.get('id')}")
+        path = ROOT / artifact["path"]
+        if not path.is_file():
+            fail(f"workstream artifact {artifact['id']} points to missing file {artifact['path']}")
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != artifact["sha256"]:
+            fail(f"workstream artifact {artifact['id']} has a stale SHA-256 digest")
+    declared = data.get("register", {}).get("artifact_count")
+    if declared != len(inventory):
+        fail(
+            f"workstream artifact inventory declares {declared} files but contains {len(inventory)}"
+        )
+    return len(inventory)
 
 
 def validate_facts() -> int:
@@ -295,6 +337,7 @@ def main() -> None:
         "decisions": validate_decisions(),
         "changes": validate_changes(),
         "documents": validate_documents(),
+        "workstream_artifacts": validate_workstream_inventory(),
         "facts": validate_facts(),
         "questions": validate_questions(),
         "graph": validate_dependency_graph(),
