@@ -71,7 +71,7 @@ changes:
     requested_by: Programme Office continuation audit
     owner: W09
     assurance_owner: W11
-    status: IMPLEMENTED_PENDING_MIRROR_RECONCILIATION
+    status: IMPLEMENTED_WITH_RESTRICTED_DRIFT_OPEN
     change_type: REPOSITORY_HEALTH_AND_SYNCHRONIZATION
     scope:
       - governance/ikr-pos/installation-manifest.yaml
@@ -95,7 +95,8 @@ changes:
     destructive_actions: []
     programme_facts_changed: []
     open_questions_changed: []
-    human_gates_triggered: []
+    human_gates_triggered:
+      - BASE44_OUT_OF_SCOPE_RECORD_DELETION_OR_ACCESS_CHANGE
     authoritative_sources:
       - ccc/minutes/2026-08-01.md#item-5--ikr-d001-ratification-of-the-governance-operating-system
       - governance/ikr-pos/registers/decisions.yaml#ikr-d001
@@ -109,4 +110,14 @@ changes:
     synchronization_required:
       - Base44
       - Google_Drive_readback
-    synchronization_status: PENDING_AFTER_MERGE
+    synchronization_status: PARTIAL_DRIFT_OPEN
+    synchronization_evidence:
+      base44:
+        app_id: 6a68b8381ea8ff36dd473cd2
+        source_revision: d8cc75b0bc96cf5a80919917c2aff90f0c9d8975
+        governed_qips_subset: IN_SYNC
+        registered_qips_document_ids: IN_SYNC
+        isolation_review: DRIFT_OPEN_RESTRICTED_FINDING
+      google_drive:
+        status: SYNC_PENDING
+        unresolved_health_action: RH-002

@@ -111,6 +111,20 @@ systems:
       exit_path: restricted Drive only
     review: Re-check at every repository-health review. Any new Base44-only entity must be listed here
       or moved to the repository.
+  current_divergence:
+    assessed_on: 2026-08-13
+    status: DRIFT_OPEN_RESTRICTED_FINDING
+    governed_qips_subset:
+      status: IN_SYNC
+      source_revision: d8cc75b0bc96cf5a80919917c2aff90f0c9d8975
+    public_finding: The Base44 document entity contains records outside the governed QIPS document register.
+    restricted_detail: Record-level metadata must be held in an approved restricted evidence location, not this
+      public repository.
+    owners:
+    - W09
+    - W17
+    required_action: Classify and isolate the records; obtain explicit authority before deletion, relocation,
+      reclassification or access changes.
 - id: SYS-SUPABASE
   name: Supabase
   identifier: null
