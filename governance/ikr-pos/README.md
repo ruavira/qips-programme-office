@@ -47,6 +47,8 @@ It does **not** authorize any programme fact, W02 prototype, publication, extern
 
 ## Status
 
-`INSTALLED_PENDING_CCC_RATIFICATION`
+`RATIFIED_ACTIVE`
 
-The operating controls take effect for repository work immediately after merge as a governance safeguard. Formal policy ratification remains a CCC decision and is recorded in the decision register when minuted.
+The CCC ratified the profile without conditions on 1 August 2026, Item 5. The operating controls are
+formal programme policy. This approval does not authorize public publication, database activation,
+external sharing, destructive migration or any programme fact.

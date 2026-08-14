@@ -9,7 +9,7 @@ register:
 
 baseline:
   assessed_on: 2026-07-31
-  assessment_status: INSTALLED_BASELINE_WITH_OPEN_ACTIONS
+  assessment_status: RATIFIED_BASELINE_WITH_OPEN_ACTIONS
   source_revision: 0c6334d8a48ee5552f155fa92f277f5ba9321f72
   strengths:
     - GitHub is explicitly declared the system of record.
@@ -26,7 +26,9 @@ baseline:
       issue: Complete file-level artifact inventory for active workstream working files.
       owner: W09
       priority: HIGH
-      status: OPEN
+      status: COMPLETE
+      completed_on: 2026-08-13
+      evidence: governance/ikr-pos/registers/workstream-artifacts.yaml
     - id: RH-002
       issue: Audit Drive permissions, restricted locations, duplicate copies, and orphan files.
       owner: W17
@@ -36,17 +38,23 @@ baseline:
       issue: Record a successful portable export and restore test.
       owner: W09
       priority: MEDIUM
-      status: OPEN
+      status: COMPLETE
+      completed_on: 2026-08-13
+      evidence: governance/ikr-pos/portable-restore-tests/2026-08-13.md
     - id: RH-004
       issue: Ratify IKR-D001 through a minuted CCC decision.
       owner: CCC
       priority: HIGH
-      status: OPEN
+      status: COMPLETE
+      completed_on: 2026-08-01
+      evidence: ccc/minutes/2026-08-01.md#item-5--ikr-d001-ratification-of-the-governance-operating-system
     - id: RH-005
       issue: Resolve the stale W09 BLOCKED state after assessing platform dependencies under the new governance profile.
       owner: W09
       priority: MEDIUM
-      status: OPEN
+      status: COMPLETE
+      completed_on: 2026-08-01
+      evidence: workstreams/W09/state.yaml
     - id: RH-006
       issue: Define approved Supabase or equivalent structured-data architecture before activation.
       owner: W09
@@ -79,7 +87,7 @@ indicators:
   registered_drive_documents_with_id_owner_status_version:
     target: 100
     unit: percent
-    current: BASELINE_REQUIRED
+    current: PASS
   conflicting_approved_canon:
     target: 0
     current: BASELINE_REQUIRED
@@ -94,8 +102,10 @@ indicators:
     current: BASELINE_REQUIRED
   portable_restore_test:
     target: PASS
-    current: NOT_RUN
+    current: PASS
+    evidence: governance/ikr-pos/portable-restore-tests/2026-08-13.md
   ccc_ratification:
     target: APPROVED_OR_AMENDED
-    current: PENDING
+    current: APPROVED
     decision_id: IKR-D001
+    evidence: ccc/minutes/2026-08-01.md

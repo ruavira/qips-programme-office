@@ -6,7 +6,7 @@
 **Installation PR:** #11  
 **Synchronized:** 2026-07-31 20:55 America/Edmonton  
 **Overall status:** `IN_SYNC`  
-**CCC ratification:** `PENDING` (`IKR-D001`)
+**CCC ratification:** `APPROVED` (`IKR-D001`, 1 August 2026, Item 5)
 
 ## GitHub
 
@@ -35,9 +35,9 @@ The following programme-document records were created and read back:
 - Governance Registers: `6a6d5fa0b7e20cd4a4196271`;
 - Installation and Ratification Pack: `6a6d60349bba2f9b8ec3d4c2`.
 
-Decision dossier `IKR-D001` was created as `ready_for_ccc`, verification `pass`, with record ID
-`6a6d5fadb7bc3f06457213fb`. It points to installation revision
-`0c6334d8a48ee5552f155fa92f277f5ba9321f72`. No approval is implied.
+Decision dossier `IKR-D001` was created with record ID `6a6d5fadb7bc3f06457213fb`. The CCC later
+ratified it without conditions on 1 August 2026. Base44 still requires post-merge reconciliation of
+that record from `ready_for_ccc` to `approved`; until then GitHub governs.
 
 ## Google Drive
 
@@ -60,7 +60,8 @@ Supabase, Netlify and Vercel as unregistered surfaces.
 
 ## Governance conclusion
 
-The installation content and its Base44 and Drive mirrors are reconciled against the exact GitHub
-installation revision. The profile is the current installed repository operating baseline. Formal
-policy ratification, publication, any change to authority, database activation and deployment remain
-subject to their explicit human gates. Decision `IKR-D001` remains pending.
+The installation content and its original Base44 and Drive mirrors are reconciled against the exact
+GitHub installation revision. The profile is now ratified. A 13 August 2026 repository-health review
+confirmed that Base44 and the Drive ratification copy still need a post-decision readback and status
+reconciliation; publication, any change to authority, database activation and deployment remain
+subject to their explicit human gates.

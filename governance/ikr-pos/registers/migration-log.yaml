@@ -44,10 +44,19 @@ migration:
       document_id: 1bIkR9rAbtWVJWuKLSjeYllUQPKgxpgFKHUqGQgZVJwM
       status: IN_SYNC
   deferred_inventory:
-    - file_level_artifact_inventory_for_all_workstream_working_files
     - duplicate_analysis_across_all_drive_folders
     - permission_audit_of_restricted_drive_locations
-    - portable_restore_test
+  completed_follow_up:
+    file_level_artifact_inventory:
+      completed_on: 2026-08-13
+      evidence: governance/ikr-pos/registers/workstream-artifacts.yaml
+      artifact_count: 124
+    portable_restore_test:
+      completed_on: 2026-08-13
+      status: PASS
+      evidence: governance/ikr-pos/portable-restore-tests/2026-08-13.md
   verification_status: INSTALLATION_AND_MIRROR_RECONCILIATION_COMPLETE
-  ratification_status: PENDING
+  ratification_status: APPROVED
   ratification_decision_id: IKR-D001
+  ratification_date: 2026-08-01
+  ratification_minute: ccc/minutes/2026-08-01.md

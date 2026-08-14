@@ -5,8 +5,8 @@
 **Installation PR:** #11  
 **Installation source revision:** `0c6334d8a48ee5552f155fa92f277f5ba9321f72`  
 **Operating owner:** W09  
-**Ratification authority:** CCC  
-**Mirror reconciliation:** COMPLETE
+**Ratification authority:** CCC — ratified 1 August 2026, Item 5
+**Installation mirror reconciliation:** COMPLETE; post-decision reconciliation pending
 
 ## Completed installation work
 
@@ -30,11 +30,11 @@
 - No programme fact or open question was changed by this installation.
 - No policy, dossier, workstream output, publication status, or CCC verdict was promoted.
 
-## Human gate
+## Ratification
 
-`IKR-D001` remains `PENDING` and is registered as `ready_for_ccc`. The installation operates as the
-current repository governance baseline, but formal policy ratification, publication, any change to
-CCC authority, database activation and deployment require their explicit human gates.
+`IKR-D001` was ratified without conditions at the CCC sitting of 1 August 2026, Item 5. The profile
+is therefore the approved repository-governance operating baseline. Publication, any change to CCC
+authority, database activation and deployment retain their separate explicit human gates.
 
 ## Validation result
 
@@ -66,16 +66,10 @@ Programme Office folder and read back:
 
 ## Remaining controlled actions
 
-- Obtain and record the CCC verdict for `IKR-D001`.
-- Complete a file-level inventory of active workstream working artifacts.
 - Audit Drive permissions, duplicates, restricted locations, and orphan files.
-- Run and record the first portable export-and-restore test.
-- Review the stale W09 workstream state separately; this installation does not silently change it.
 - Define and approve any future Supabase structured-data architecture before activation.
 
 ## Exact next objective
 
-Place `IKR-D001` on the continuous CCC decision docket and record an `APPROVE`, `AMEND`, `DEFER`, or
-`REJECT` verdict. After the verdict, update GitHub, Base44 and the Drive decision record, then execute
-the first repository-health review and portable restore test within the authority granted by that
-verdict.
+Reconcile Base44 and the Drive ratification copy to the approved decision and current Git source
+revision, then complete the Drive permission, duplicate, restricted-location and orphan-file audit.
