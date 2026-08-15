@@ -3,5 +3,5 @@ questions:
   - id: Q007
     question: "Is the Industrial Training Fund reimbursement real, and on what terms?"
     status: OPEN
-    due: 2026-09-30
+    decide_by: 2026-09-30
     next_evidence: "Primary written terms from the ITF; model value remains zero until verified."

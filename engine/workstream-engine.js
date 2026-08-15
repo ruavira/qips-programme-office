@@ -128,8 +128,14 @@ const OPTIONS_SCHEMA = {
       type: 'array',
       items: {
         type: 'object',
-        required: ['question', 'blocking'],
-        properties: { question: { type: 'string' }, blocking: { type: 'boolean' }, owner_suggestion: { type: 'string' } },
+        required: ['question', 'gates', 'while_open'],
+        properties: {
+          question: { type: 'string' },
+          gates: { type: 'array', items: { type: 'string' }, description: 'Specific acts that wait for the answer — publishing, promising, signing, spending. Empty means nothing waits.' },
+          while_open: { type: 'string', description: 'The default the build continues under while the question stays open.' },
+          decide_by_suggestion: { type: 'string', description: 'When deferring stops being free, if the research shows a date.' },
+          owner_suggestion: { type: 'string' },
+        },
       },
     },
   },
@@ -291,7 +297,7 @@ Produce, in the required schema:
 
 4. **Innovation opportunities** the research surfaced — the openings, not the wishes.
 
-5. **Open questions**, flagged blocking or not, with a suggested owner.
+5. **Open questions**, each articulated as an open decision, never a blocker: what it gates (possibly nothing), the default the build continues under, and a suggested owner.
 
 Remember what this programme is: a small team, a first cohort, a January 2027 date, and a
 brand whose audience has so far paid USD 37 for a three-hour course. Ambition is welcome;

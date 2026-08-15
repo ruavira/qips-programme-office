@@ -65,6 +65,92 @@ changes:
         readback_status: VERIFIED
     resolved_decision: IKR-D001
 
+  - id: IKR-CR-002
+    title: Open decisions articulated as gates, never as blockers
+    requested_on: 2026-08-08
+    requested_by: Programme director (Ayodeji Esamuels), in session, 8 August 2026
+    owner: W09
+    status: PROPOSED_AWAITING_CCC
+    change_type: GOVERNANCE_VOCABULARY
+    scope:
+      - canon/open-questions.yaml
+      - canon/glossary.md
+      - engine/decision_interview.py
+      - engine/agenda.py
+      - engine/controlroom.py
+      - engine/export_control_room.py
+      - engine/workstreams.py
+      - engine/workstream-engine.js
+      - engine/schemas/reviewer-language.yaml
+      - workstreams/W13/questions.yaml
+      - workstreams/W14/questions.yaml
+      - workstreams/W16/questions.yaml
+      - ccc/agenda.md
+      - ccc/control-room.html
+    rationale: >-
+      The director's ruling: every decision not yet made is articulated as an open decision,
+      never as a blocker. The question register adopts the model canon already uses for
+      PARAMETER facts — each open question carries gates (the specific acts of publishing,
+      promising, signing or spending that wait; possibly none), while_open (the default the
+      build continues under), and decide_by (the date deferring stops being free) — replacing
+      the blocking flag, blocks list and due date. The glossary bans "blocker" and "blocking";
+      engine/decision_interview.py refuses the legacy fields so the register cannot drift back.
+    explicitly_out_of_scope: >-
+      canon/dependencies.yaml (the workstream finalisation-sequencing graph) and dossier
+      verification metadata (blocking_findings_open) use the word in a different sense —
+      neither describes an undecided decision — and engine/scaffold.py preserves the day-one
+      bootstrap snapshot as history. Flagged for the committee rather than silently included.
+    destructive_actions: []
+    programme_facts_changed: []
+    open_questions_changed:
+      - Q001 through Q014 restated in the new schema; no question closed, none added
+    human_gates_triggered:
+      - CCC_CANON_RATIFICATION
+    validation:
+      - engine/decision_interview.py --check refuses legacy blocking/blocks/due fields (proved by restoring each defect and watching it fail)
+      - engine/decision_interview.py --check requires gates, while_open and decide_by on every open question (proved the same way)
+      - full section-8 suite green
+      - rebuilt walkthrough driven in headless Chromium; 14 of 14 question stops render the open-decision framing, zero console errors, the word "blocking" appears nowhere in the DOM
+    synchronization_required:
+      - Netlify (walkthrough redeploy, owner-run)
+      - Base44 (control-room export carries new fields plus deprecated aliases until the mirror confirms migration)
+    synchronization_status: PENDING
+    unresolved_decision: CCC ratification of the canon change; minute reference to be added at adoption
+
+  - id: IKR-CR-003
+    title: Deploy path liberated — walkthrough ships from GitHub on merge to main
+    requested_on: 2026-08-08
+    requested_by: Programme director (Ayodeji Esamuels), in session, 8 August 2026 — "get this on GitHub and make it accessible to multiple agents"
+    owner: W09
+    status: PROPOSED_AWAITING_OWNER_MERGE
+    change_type: DEPLOYMENT_PATH
+    scope:
+      - .github/workflows/deploy-walkthrough.yml
+      - docs/liberation-runbook.md
+    rationale: >-
+      Five-layer lock-in audit found code, hosting account, data and identity already
+      owner-controlled; the single captive layer was the deploy path — one Mac, a logged-in
+      CLI, no CI — and the live page was found four commits behind the branch, still carrying
+      vocabulary canon had since banned. The new workflow deploys on push to main only, gated
+      on the full section-8 suite, and verifies at the live URL that the deployed page carries
+      the deploying commit and none of the banned vocabulary. The merge that makes something
+      true becomes the act that publishes it.
+    explicitly_out_of_scope: >-
+      Base44 and Google Drive remain governed mirrors, not deploy targets; Netlify remains the
+      host because the account, the form inbox and the export path are the owner's own.
+    destructive_actions: []
+    programme_facts_changed: []
+    human_gates_triggered:
+      - OWNER_MERGE_APPROVAL
+      - OWNER_SECRET_CREATION (Netlify token and site id as GitHub repo secrets — never via chat)
+    validation:
+      - workflow YAML parses; gate-and-build sequence run in a clean clone of this branch, all checks green, artifact built with commit stamp
+      - first live deploy is deliberately owner-triggered via workflow_dispatch and self-verifies at the live URL
+    synchronization_required:
+      - Netlify (becomes automatic on merge, once secrets exist)
+    synchronization_status: PENDING_OWNER_SECRETS
+    unresolved_decision: none — no canon touched; the owner's merge is the approval
+
   - id: IKR-CR-004
     title: Reconcile ratification state, inventory active artifacts and prove portable restore
     requested_on: 2026-08-13
@@ -121,3 +207,40 @@ changes:
       google_drive:
         status: SYNC_PENDING
         unresolved_health_action: RH-002
+
+  - id: IKR-CR-005
+    title: Reconcile the design walkthrough and public Base44 presentation
+    requested_on: 2026-08-15
+    requested_by: Programme director, in session
+    owner: W09
+    assurance_owner: W11
+    status: IN_PROGRESS
+    change_type: PUBLIC_PRESENTATION_AND_SYNCHRONIZATION
+    scope:
+      - engine/walkthrough.py
+      - engine/schemas/walkthrough-journey.yaml
+      - engine/schemas/reviewer-language.yaml
+      - .github/workflows/deploy-walkthrough.yml
+      - Base44 app 6a68b8381ea8ff36dd473cd2
+    rationale: >-
+      The programme director confirmed that the intended programme length is 12 to 18 months and
+      asked for the design walkthrough and Base44 presentation to use much simpler language. The
+      repository still records a 12-month approved fact, so the length change must be presented as
+      a directed proposal until a CCC minute ratifies it. Public copy must also remove unsupported
+      partner, country, accreditation and certification claims.
+    destructive_actions: []
+    programme_facts_changed: []
+    proposed_fact_change:
+      id: F001
+      current: The programme is a 12-month hybrid professional programme, not a course.
+      proposed: The programme is designed to run for 12 to 18 months.
+      authority: Programme director direction, 2026-08-15
+    human_gates_triggered:
+      - CCC_CANON_RATIFICATION_FOR_F001
+      - OWNER_MERGE_APPROVAL
+      - BASE44_PUBLICATION_AUTHORIZATION
+    synchronization_required:
+      - GitHub
+      - Netlify
+      - Base44
+    synchronization_status: IN_PROGRESS

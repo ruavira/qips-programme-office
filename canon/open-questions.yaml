@@ -1,48 +1,71 @@
-# Every unresolved question in the programme, with an owner and a blocking status.
+# Every open decision in the programme, with an owner, what staying open gates, the
+# default the build continues under, and the date after which deferring stops being free.
 # A workstream may add questions it discovers. Only the CCC may close one.
-# BLOCKING means cohort 1 cannot proceed without it.
+#
+# AN OPEN DECISION IS NEVER A BLOCKER. Building never stops for an undecided thing.
+# What waits is named in `gates` — specific acts of publishing, promising, signing or
+# spending — and everything else proceeds under `while_open`, the recorded default.
+# `decide_by` is the date the choice gets expensive or an option closes off, not a
+# deadline for an answer. An empty gates list means nothing at all waits for the answer.
+#
+# This is the model canon already uses for PARAMETER facts (gates / does_not_gate /
+# decide_by), extended to this register by change IKR-CR-002
+# (governance/ikr-pos/registers/changes.yaml; CCC ratification pending — this file
+# does not merge without the verdict).
 
 questions:
 - id: Q001
   question: What is the per-learner medical indemnity and public liability premium across Nigeria, Ghana and Pakistan?
   owner: W17
-  blocking: true
-  blocks:
-  - W16
-  - W04
-  due: 2026-08-21
+  gates:
+  - The published price (W16), which carries the model's only zero
+  - Observership host-site terms that depend on indemnity (W04)
+  does_not_gate: Curriculum, assessment and admissions design; none of them depends on the premium.
+  while_open: The financial model carries the premium as an explicit zero marked unverified
+    rather than a plausible number, and no price is published while the zero stands.
+  decide_by: 2026-08-21
   note: The only zero in the financial model. Gates the price and the observership.
 
 - id: Q002
   question: What is the exact certificate title, the awarding entity, any post-nominals, and what CPD recognition
     can be claimed?
   owner: W03
-  blocking: true
-  blocks:
-  - W13
-  - W14
-  - W16
-  due: 2026-08-31
+  gates:
+  - Certificate artwork and title work (W13)
+  - Any marketing that names the credential (W14)
+  - The published price (W16), because the credential precedes the price
+  does_not_gate: Curriculum, assessment and observership design.
+  while_open: Cohort one is built as a controlled completion certificate with no post-nominal
+    and no recognition claim (CCC 2026-08-01, Item 2). Title, issuer statement and signatories
+    stay unwritten rather than guessed.
+  decide_by: 2026-08-31
   note: The credential precedes the price. Nothing markets until this exists.
 
 - id: Q003
   question: Who are the twelve faculty, and have they consented in writing to be named?
   owner: W05
-  blocking: true
-  blocks:
-  - W14
-  due: 2026-08-31
+  gates:
+  - Naming any faculty member in public material (W14)
+  does_not_gate: The faculty operating model itself — slot design, preparation briefs, conflict
+    clearance and coach development all proceed unnamed.
+  while_open: The faculty model runs on coverage slots rather than named individuals (W05-01),
+    so every brief is written against a slot and nobody is named anywhere public without written
+    consent.
+  decide_by: 2026-08-31
 
 - id: Q004
   question: What is the signed partner agreement between SQHN, Ruavira Collective Inc and The Arete Connoisseurs
     (TAC) — revenue share, IP, exit terms, and who may sign a host-site MoU?
   owner: W15
-  blocking: true
-  blocks:
-  - W04
-  - W12
-  - W16
-  due: 2026-09-30
+  gates:
+  - Signing any host-site MoU — who may sign is part of what this settles (W04)
+  - Any published revenue-share or IP term (W16)
+  - Committing partner obligations (W12)
+  does_not_gate: The Host Site Standard itself (F008), written from programme objectives rather
+    than from candidate sites, or host-site scouting.
+  while_open: The Host Site Standard stands and scouting continues; nothing is signed, and
+    partner naming stays governed by F028 whichever way this lands.
+  decide_by: 2026-09-30
   note: QAI removed 2026-08-01, so all three remaining parties are directly reachable. Signing this is what unlocks
     host-site recruitment.
 
@@ -50,9 +73,11 @@ questions:
   question: PARKED — should the programme engage the Quality and Accreditation Institute (QAI) as a partner, and
     on what terms?
   owner: W15
-  blocking: false
-  blocks: []
-  due: 2026-08-15
+  gates: []
+  while_open: QAI is absent from all published material and from the partner architecture
+    (programme director, 2026-08-01). That is a deferral, not a rejection, and nothing in
+    cohort 1 waits for it.
+  decide_by: 2026-08-15
   note: 'Parked by the programme director 2026-08-01. QAI removed from all published material and from the partner
     architecture with immediate effect. This defers the engagement decision; it does not reject the organisation.
     Identity verified 2026-08-01 from qai.org.in: Quality and Accreditation Institute, a private limited company
@@ -64,31 +89,39 @@ questions:
   status: PARKED
 
 - id: Q006
-  question: How many contactable names does SQHN hold, and what did the existing 3-hour course convert at?
+  question: How many contactable names does SQHN hold, and what did the existing 3-hour offering convert at?
   owner: W14
-  blocking: true
-  blocks:
-  - W07
-  - W16
-  due: 2026-09-15
+  gates:
+  - Setting a cohort-size target inside the F025 floor and ceiling — size is a funnel output, not an opinion (W07)
+  - Enrolment projections in any plan or model (W16)
+  does_not_gate: The monthly cycle, the coaching group size of eight, or the assessment model —
+    F025 holds across its whole declared range.
+  while_open: F025 keeps cohort size a parameter (floor 24, target 40, ceiling 64) and the
+    admissions engine is built size-agnostic, so the funnel answer sets a number inside a range
+    the design already survives.
+  decide_by: 2026-09-15
   note: Cohort size is a funnel output, not an opinion. Nobody has the denominator.
 
 - id: Q007
   question: Is the Industrial Training Fund reimbursement real, and on what terms?
   owner: W16
-  blocking: false
-  due: 2026-09-30
+  gates: []
+  while_open: Booked at zero in the financial model until primary-verified with the ITF itself,
+    so an answer can only improve the model, never invalidate it.
+  decide_by: 2026-09-30
   note: Booked at zero until primary-verified with the ITF itself.
 
 - id: Q008
   question: PARKED — what is the approved affiliation wording from Shifa International Hospitals and from ISQua?
   owner: W15
-  blocking: false
-  blocks: []
-  due: 2026-09-30
+  gates: []
+  while_open: F028 keeps every partner organisation unnamed in cohort-1 public material, so no
+    affiliation wording is needed by anything; F022 stands separately against any ISQua
+    institutional claim. Reopens automatically if a CCC decision releases partner naming.
+  decide_by: 2026-09-30
   status: PARKED
   note: Parked by the CCC on 2026-08-01. F028 rules that no partner organisation is named in any public-facing material
-    for cohort 1, so no affiliation wording is required and this question no longer blocks W14. It is deferred,
+    for cohort 1, so no affiliation wording is required and this question no longer gates W14. It is deferred,
     not answered and not rejected. It reopens automatically if and when a CCC decision releases partner naming.
     F022 remains in force as a standing guardrail against any ISQua institutional claim, whether or not ISQua is
     named.
@@ -96,17 +129,109 @@ questions:
 - id: Q009
   question: What is the data retention period and who is the data-protection contact?
   owner: W17
-  blocking: true
-  blocks:
-  - W09
-  - W14
-  due: 2026-09-30
+  gates:
+  - Activating the structured-knowledge database (W09)
+  - Publishing any privacy notice or retention statement (W14)
+  does_not_gate: Design of the application instrument; its personal-data fields are already
+    marked restricted and stay out of the programme's public records regardless.
+  while_open: No participant personal data enters the programme's public records or any
+    platform mirror — a standing rule, not a consequence of this question — and the database
+    stays unactivated.
+  decide_by: 2026-09-30
 
 - id: Q010
   question: What is the programme called?
   owner: W13
-  blocking: true
-  blocks:
-  - W14
-  - W03
-  due: 2026-08-31
+  gates:
+  - Publishing a programme name anywhere (W14)
+  - Certificate title work, jointly with the certificate-title decision (W03)
+  does_not_gate: Anything structural. No element of programme design depends on the name —
+    canon records the same for brand identity (F017).
+  while_open: Material continues under the descriptive working title with no brand claim, and
+    the W13 naming research is done and waiting for SQHN rather than for analysis.
+  decide_by: 2026-08-31
+- id: Q011
+  question: What must a graduate be able to do at the end of twelve months, and what
+    will the programme claim about that in public?
+  owner: W02
+  gates:
+  - Publishing any claim about what a graduate can do (W14)
+  - Certificate wording that implies a capability (W03)
+  - Naming architecture that encodes a claim (W13)
+  does_not_gate: Delivery. The programme can start, teach and coach without this being settled;
+    what it cannot do is describe the result in public.
+  while_open: The drafted claim and coverage map stand as evidence-backed recommendations in
+    front of the reviewer, written to be argued with (accepted defaults, 6 August 2026), and no
+    published surface makes a capability claim.
+  decide_by: 2026-09-30
+  note: Discovered 2026-08-06 while preparing the design walkthrough. The programme
+    has never written this down. Twelve artefacts exist; the objectives they serve
+    do not. Host sites are already described as qualified against a standard derived
+    from programme objectives, and no document contains those objectives. Meanwhile
+    published marketing text already promises capabilities the design does not define
+    and no check tests. It gates publication, not delivery — nothing may be published
+    on this until it is settled, and delivery can start without it.
+- id: Q012
+  question: Which domains of healthcare quality does the programme cover, at what depth,
+    and which does it deliberately leave out?
+  owner: W02
+  gates:
+  - Publishing any coverage claim against the field's published framework (W14)
+  - Public descriptions of scope in credential material (W03)
+  does_not_gate: The curriculum build itself; the spine carries the coverage whichever way the
+    committee rules on how it is described.
+  while_open: The seven-of-eight coverage proposal with one deliberate exclusion stands as a
+    draft before the committee (accepted default, 6 August 2026 — the coverage map reaches the
+    reviewer as a recommendation), and nothing public claims coverage.
+  decide_by: 2026-09-30
+  note: Discovered 2026-08-06. Two hundred and twenty-eight hours cannot cover the
+    whole field, and an informed buyer will benchmark the programme against the field's
+    published framework whether or not the programme does. Saying which parts are
+    covered, and which are not, is what makes the claim believable. Depends on the question of
+    what a graduate must be able to do.
+- id: Q013
+  question: PARKED — should SQHN author a competency framework for healthcare quality
+    professionals grounded in this region, with cohort 1 as its evidence base?
+  owner: W12
+  gates: []
+  while_open: Parked to the go/no-go date so it is revisited rather than lost. Nothing in
+    cohort 1 depends on it; cohort 1 generates its evidence base either way.
+  decide_by: 2026-11-20
+  status: PARKED
+  note: Raised 2026-08-06 by the programme office, parked immediately because it is
+    larger than this programme and is SQHN's decision rather than the programme office's.
+    No competency framework for healthcare quality professionals authored anywhere
+    in Africa could be found. A 2026 scoping review in the International Journal for
+    Quality in Health Care screened 14144 records and included 118 articles; its table
+    of publication regions does not contain Africa at all. A second 2026 review names
+    evaluation from a low- and middle-income perspective as the field's priority gap.
+    SQHN is the national accreditation body, already publishes facility standards,
+    and cohort 1 will generate forty improvement projects with baselines in Nigerian
+    hospitals. Revisit date set to the go/no-go gate so it is revisited rather than lost.
+- id: Q014
+  question: Who authors months 3 to 12 of the curriculum, on what schedule, and against
+    what review?
+  owner: W02
+  gates:
+  - Describing months 3 to 12 in public as existing content (W14)
+  - Production lock on anything downstream of the unwritten months — faculty preparation (W05),
+    coaching (W06), platform (W09), calendar (W10), evaluation (W11)
+  does_not_gate: Spine-level design, faculty slot briefs, the coaching standard, calendar and
+    technology work — all of which run against the artefact definitions rather than the
+    teaching content.
+  while_open: Spine-level definitions for all ten months are drafted (8 August 2026) and before
+    the committee, and every surface that mentions months 3 to 12 says plainly that the teaching
+    content is not yet written.
+  decide_by: 2026-09-30
+  note: Raised 2026-08-06 by the programme director, and it should have been here from
+    the beginning. Ten of the twelve months do not exist. The sitting of 1 August authorised
+    months 1 and 2 as a prototype only; everything from month 3 is an artefact name and
+    a line of outline. The design that has been reviewed, priced, staffed and scheduled
+    all year rests on content nobody has written. Cohort 1 begins 9 January 2027 and
+    applications open in October, so the programme will be describing this curriculum
+    in public before most of it exists. Every other gating item in this register is
+    a fact to go and find out; this one is the largest piece of unbuilt work in the
+    programme, and it was invisible here because a register of questions does not
+    naturally hold a body of work. The question is deliberately not "write the curriculum"
+    — it is who owns it, by when, and who checks it, because that is the decision that
+    stops it being forgotten again.
