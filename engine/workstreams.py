@@ -36,7 +36,7 @@ WORKSTREAMS = [
 
  dict(id="W02", d="D1", name="Curriculum and Instructional Design",
    maps_to="(b) full instructional design",
-   owner_question="What must a graduate be able to do, and what sequence of learning, practice and feedback reliably gets them there in twelve months?",
+   owner_question="What must a graduate be able to do, and what sequence of learning, practice and feedback reliably gets them there by the end of the programme?",
    outputs=["Competency framework mapped to an external standard",
             "Month-by-month curriculum map with the artefact ladder",
             "Learning design specification per month (eLearning, live, coaching, artefact)",
@@ -49,7 +49,7 @@ WORKSTREAMS = [
    benchmarks=["IHI Improvement Advisor", "ACHS Quality Improvement Lead", "AUC Hospital Management Diploma",
                "Health Foundation GenerationQ"],
    depends_on=["W01"], calibrates_with=["W03"], cohort1="NOW",
-   note="Largely built: the 12-month architecture, the artefact ladder and the monthly cycle already exist."),
+   note="Largely built: the 12-month core, the output ladder and the monthly cycle already exist. F030 proposes up to six additional months for supported workplace completion."),
 
  dict(id="W03", d="D1", name="Assessment, Certification and Credentialing",
    maps_to="MISSING from the original list",

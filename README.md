@@ -68,7 +68,11 @@ this — which is why the check refuses it.
 
 ## Current caution
 
-Several earlier artifacts describe a 12–18-month programme, seven gates or thirteen deliverables. Current canon fixes a **12-month** programme; older material must be treated as historical until reconciled. See [`docs/reconciliation-register.md`](docs/reconciliation-register.md).
+The approved record currently fixes a **12-month core** (F001). The programme director's intended
+**12–18 month** design is recorded separately as proposal F030: up to six additional months may be
+used for supported workplace completion. F030 does not replace F001 until the committee records its
+decision. Earlier 12–18 month material remains historical unless it agrees with this proposal. See
+[`docs/reconciliation-register.md`](docs/reconciliation-register.md).
 
 ## Security
 

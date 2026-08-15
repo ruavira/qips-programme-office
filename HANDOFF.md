@@ -12,11 +12,13 @@
 
 ## 1 · Mission
 
-A twelve-month hybrid professional programme in healthcare quality and patient safety, convened by
-SQHN and Partners, for working health professionals in Nigeria and comparable markets. Cohort 1 is
-scheduled January–December 2027 (a start-date change to April 2027 is under consideration — see §6).
-Participants do not attend and consume; each produces twelve artefacts carrying one real improvement
-in their own service, plus a forty-hour observership and a capstone.
+A 12–18 month hybrid professional programme in healthcare quality and patient safety, led publicly
+by SQHN, for working health professionals in Nigeria and comparable markets. The approved record
+still holds a 12-month core; F030 proposes up to six additional months for supported workplace
+completion and does not replace F001 until the committee records its decision. Cohort 1 is planned
+for 2027, with the final timetable following that duration decision. Participants apply the learning
+to one real improvement in their own service, supported by monthly outputs, a forty-hour site visit
+and a final improvement project.
 
 This repository is the programme's operating system: seventeen workstreams, an approved record
 (`canon/`), an open-questions register, a decision-capture engine, and a generated design
@@ -41,14 +43,14 @@ Deeper context: `README.md`, `docs/operating-model.md`, `QIPS-Programme-Office-A
 
 ## 3 · Repo map
 
-`canon/` — the approved record: `facts.yaml` (29 facts), `open-questions.yaml` (14 questions),
+`canon/` — the approved record: `facts.yaml` (30 facts), `open-questions.yaml` (14 questions),
 `glossary.md` (controlled vocabulary, enforced), `dependencies.yaml`. **Write only via a CCC
 verdict.** `CODEOWNERS` routes it to the owner.
 
 `ccc/` — the committee: minutes, generated agenda, generated control room. `agenda.md` and
 `control-room.html` are GENERATED; edit the generators, not the output.
 
-`engine/` — the machinery. `decision_interview.py` turns canon into 56 review stations;
+`engine/` — the machinery. `decision_interview.py` turns canon into 57 review stations;
 `walkthrough.py` renders those into a self-contained browser page and reads her answers back;
 `curriculum.py` validates the spine and enforces the controlled vocabulary; `admissions.py`,
 `parameters.py`, `decision_capture.py`, `validate_ikr_pos.py` each own a check. `engine/schemas/`
@@ -79,6 +81,21 @@ fails the build on a hit. The established delivery pattern is a proved patch bun
 himself — see §8.
 
 ## 5 · STATE — append-log, newest first
+
+**15 August 2026 (Codex → next agent):**
+
+- **DONE — one reconciled GitHub proposal.** Draft PR #27 replaces the overlapping walkthrough,
+  open-decision and deployment proposals. It is mergeable and tested, but deliberately remains a
+  draft because F030 (12–18 months) still needs a recorded committee decision.
+- **DONE — the reviewer experience simplified.** The default walkthrough is 10 priority questions;
+  longer 37- and 57-stop routes remain available. Reviewer-facing language now says learn,
+  discuss, apply and review; site visit; area of work; and decision paper.
+- **DONE — Base44 draft reconciled.** The sandbox mirrors Q001–Q014, carries F030 as PROPOSED,
+  uses gates/while-open/decide-by rather than blocker language, and builds successfully. The
+  public Base44 page is still the old version until the owner confirms Publish.
+- **OPEN — publication.** The live Base44 page and Netlify walkthrough still show the old wording.
+  Base44 needs an explicit Publish action. The walkthrough needs the committee minute, merge to
+  main, Netlify secrets, form detection and a verified production deployment.
 
 **8 August 2026, evening (Claude/Cowork → next agent):**
 
