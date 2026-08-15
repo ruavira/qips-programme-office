@@ -6,9 +6,9 @@ register:
   assurance_owner: W11
   status: ACTIVE
   generated_on: '2026-08-13'
-  source_revision: 1fef3e0c3ad847099357d93abfd0f043bc7ea771
+  source_revision: 77c5bd2
   coverage: workstreams/W01-W17/working excluding .keep files
-  artifact_count: 124
+  artifact_count: 127
 artifacts:
 - id: ART-W01-F5211346
   title: Draft dossier W01-01 — needs research architecture
@@ -98,6 +98,17 @@ artifacts:
   version: git
   sha256: 29be7f84d66f454f4bffa99c3bd4c5e1242720757ea384c83602af63baed627b
   review_requirement: WORKSTREAM_REVIEW_AND_CCC_IF_PROMOTED
+- id: ART-W02-29E9D442
+  title: What a healthcare quality professional is supposed to be able to do
+  owner: W02
+  path: workstreams/W02/working/W02-competency-evidence-base-2026-08-06.md
+  artifact_type: WORKING_ARTIFACT
+  lifecycle_status: DRAFT
+  authority_class: PROPOSED
+  confidentiality: PROGRAMME
+  version: git
+  sha256: 380c0817aaef8b6fcfde7872735faecee6a2c1ab02916086d768bcaf21bf5fe7
+  review_requirement: WORKSTREAM_REVIEW_AND_CCC_IF_PROMOTED
 - id: ART-W02-D2467C72
   title: Months 1 and 2 — prototype
   owner: W02
@@ -108,6 +119,28 @@ artifacts:
   confidentiality: PROGRAMME
   version: git
   sha256: 411a477ca909d2a94f280ed07bedc39d82c6fea8bab8f082fb2cc9fb39cfa1a0
+  review_requirement: WORKSTREAM_REVIEW_AND_CCC_IF_PROMOTED
+- id: ART-W02-A67FAB42
+  title: Months 3 to 12 — spine-level artefact definitions — DRAFT FOR THE COMMITTEE
+  owner: W02
+  path: workstreams/W02/working/W02-months-3-12-spine-definitions-2026-08-08.md
+  artifact_type: WORKING_ARTIFACT
+  lifecycle_status: DRAFT
+  authority_class: PROPOSED
+  confidentiality: PROGRAMME
+  version: git
+  sha256: 1874dcf69dc0ca57907c07218123065e1e126e96769260dbcf7f7be245e328e5
+  review_requirement: WORKSTREAM_REVIEW_AND_CCC_IF_PROMOTED
+- id: ART-W02-DC2ED36E
+  title: Programme objectives and competency spine — DRAFT FOR THE COMMITTEE
+  owner: W02
+  path: workstreams/W02/working/W02-programme-objectives-and-competency-spine-2026-08-06.md
+  artifact_type: WORKING_ARTIFACT
+  lifecycle_status: DRAFT
+  authority_class: PROPOSED
+  confidentiality: PROGRAMME
+  version: git
+  sha256: 209b4f23732c46194e4f801c7c6edc8ccda25968d06407bfc4a419be2ad35b2a
   review_requirement: WORKSTREAM_REVIEW_AND_CCC_IF_PROMOTED
 - id: ART-W02-DBCF1C69
   title: W02 content production and accessibility standard
@@ -338,7 +371,7 @@ artifacts:
   authority_class: PROPOSED
   confidentiality: PROGRAMME
   version: git
-  sha256: c979534920dfb9a80931c405437242f33c3efc317f1863839d68c8949f110679
+  sha256: cce2f4d5e96976bcece4ef69771634db72e2e64feabe551e89750cf370a73f8d
   review_requirement: WORKSTREAM_REVIEW_AND_CCC_IF_PROMOTED
 - id: ART-W04-67F94330
   title: Draft dossier W04-01 — host-site and observership architecture
@@ -1174,7 +1207,7 @@ artifacts:
   authority_class: PROPOSED
   confidentiality: PROGRAMME
   version: git
-  sha256: e4d2d050f07f49733961594c6e410d9e1b9081eafa3a882eb5c8d0c47d597736
+  sha256: cca334e7e464531450657bec4831486be700ee2c6e64b487b6c970f1a5cb9a63
   review_requirement: WORKSTREAM_REVIEW_AND_CCC_IF_PROMOTED
 - id: ART-W16-5F50FED4
   title: SELF-SUSTAINABILITY MECHANICS — FOUR-GAP RESEARCH REPORT
