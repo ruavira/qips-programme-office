@@ -46,7 +46,7 @@ Then five more that nobody has, and each of which fails the programme quietly if
 an unfinished one — none. No title, no awarding entity, no post-nominals, no assessment
 blueprint, no standard-setting method, no CPD recognition, no appeals policy. Your pricing
 council put it bluntly: the credential is the product, and no price exists before it does. A
-twelve-month programme whose graduates cannot say precisely what they hold is not a programme;
+long professional programme whose graduates cannot say precisely what they hold is not a programme;
 it is a long series of meetings.
 
 **W07 · Admissions, Recruitment and Selection.** Eligibility, the application itself, how you

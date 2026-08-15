@@ -36,7 +36,7 @@ WORKSTREAMS = [
 
  dict(id="W02", d="D1", name="Curriculum and Instructional Design",
    maps_to="(b) full instructional design",
-   owner_question="What must a graduate be able to do, and what sequence of learning, practice and feedback reliably gets them there in twelve months?",
+   owner_question="What must a graduate be able to do, and what sequence of learning, practice and feedback reliably gets them there by the end of the programme?",
    outputs=["Competency framework mapped to an external standard",
             "Month-by-month curriculum map with the artefact ladder",
             "Learning design specification per month (eLearning, live, coaching, artefact)",
@@ -49,7 +49,7 @@ WORKSTREAMS = [
    benchmarks=["IHI Improvement Advisor", "ACHS Quality Improvement Lead", "AUC Hospital Management Diploma",
                "Health Foundation GenerationQ"],
    depends_on=["W01"], calibrates_with=["W03"], cohort1="NOW",
-   note="Largely built: the 12-month architecture, the artefact ladder and the monthly cycle already exist."),
+   note="Largely built: the 12-month core, the output ladder and the monthly cycle already exist. F030 proposes up to six additional months for supported workplace completion."),
 
  dict(id="W03", d="D1", name="Assessment, Certification and Credentialing",
    maps_to="MISSING from the original list",
@@ -65,7 +65,7 @@ WORKSTREAMS = [
            "What comparable certificates actually say on the document"],
    benchmarks=["CPHQ (NAHQ)", "ISQua Fellowship", "ACHS QIL post-nominals", "CPSP and WACP award structures"],
    depends_on=["W02"], cohort1="NOW",
-   note="BLOCKING. The council's finding was blunt: the credential is the product, and no price exists before it does."),
+   note="GATES THE PRICE. The council's finding was blunt: the credential is the product, and no price exists before it does. The credential architecture keeps building meanwhile."),
 
  dict(id="W04", d="D1", name="Practicum and Observership",
    maps_to="(c) faculty and observership design — observership half",
@@ -97,7 +97,7 @@ WORKSTREAMS = [
            "Conflict of interest and commercial influence policy"],
    benchmarks=["IHI faculty model", "ISQua expert faculty", "Ghana and Nigeria postgraduate college faculty structures"],
    depends_on=["W02"], cohort1="NOW",
-   note="BLOCKING for January 2027: twelve named faculty with written consent."),
+   note="GATES PUBLIC NAMING for January 2027: twelve written faculty consents. The slot model builds on unnamed."),
 
  dict(id="W06", d="D2", name="Coaching Faculty and Coach Development",
    maps_to="(i) coaching faculty if different from teaching faculty",
@@ -267,7 +267,7 @@ WORKSTREAMS = [
            "Regulator relationships as a demand driver"],
    benchmarks=["ISQua EEA", "JCI and SafeCare institutional relationships", "University partnership models"],
    depends_on=[], cohort1="NOW",
-   note="BLOCKING and unowned: there is no signed agreement between SQHN, RCI, QAI and TAC, so nobody can sign a host site MoU."),
+   note="GATES SIGNING and unowned: no signed agreement between SQHN, RCI and TAC, so nobody may sign a host-site MoU yet. Scouting continues against the published standard."),
 
  dict(id="W16", d="D4", name="Pricing, Finance and Revenue Operations",
    maps_to="(d) cost, fees",
@@ -303,7 +303,7 @@ WORKSTREAMS = [
    benchmarks=["ISQua governance standards", "University placement governance",
                "Nigeria Data Protection Act, Ghana DPA, Pakistan PECA and draft PDPA"],
    depends_on=[], cohort1="NOW",
-   note="BLOCKING everything: the unquoted per-learner indemnity sits here and gates the price and the observership."),
+   note="GATES THE PRICE AND THE OBSERVERSHIP TERMS: the unquoted per-learner indemnity sits here, the model's only zero. Everything else builds on."),
 ]
 
 STATES = ["DORMANT", "SCOUTING", "RESEARCHING", "IN_COUNCIL", "VERIFYING",

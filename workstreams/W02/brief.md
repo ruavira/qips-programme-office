@@ -6,7 +6,7 @@ Proposed cohort-1 position: **NOW**
 
 ## The question this workstream exists to answer
 
-> What must a graduate be able to do, and what sequence of learning, practice and feedback reliably gets them there in twelve months?
+> What must a graduate be able to do, and what sequence of learning, practice and feedback reliably gets them there by the end of the programme?
 
 ## What it must produce
 
@@ -43,7 +43,7 @@ Cannot finalise until these workstreams have APPROVED facts: **W01, W03**
 
 ## Standing note
 
-Largely built: the 12-month architecture, the artefact ladder and the monthly cycle already exist.
+Largely built: the 12-month core, the output ladder and the monthly cycle already exist. F030 proposes up to six additional months for supported workplace completion.
 
 ## How this workstream runs
 

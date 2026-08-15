@@ -77,7 +77,7 @@ def build_snapshot():
     questions = load_yaml(ROOT / "canon/open-questions.yaml").get("questions", [])
     question_ids_by_owner = {}
     for question in questions:
-        if question.get("blocking"):
+        if question.get("gates"):
             question_ids_by_owner.setdefault(question["owner"], []).append(question["id"])
 
     workstream_rows = []
@@ -85,10 +85,10 @@ def build_snapshot():
         code = definition["id"]
         state = load_yaml(ROOT / f"workstreams/{code}/state.yaml")
         machine_state = state.get("state", "DORMANT")
-        blocking_questions = question_ids_by_owner.get(code, [])
+        gating_questions = question_ids_by_owner.get(code, [])
         if machine_state == "BLOCKED":
             health = "blocked"
-        elif blocking_questions or state.get("blocked_by"):
+        elif gating_questions or state.get("blocked_by"):
             health = "attention"
         else:
             health = "on_track"
@@ -106,20 +106,29 @@ def build_snapshot():
             "question": definition["owner_question"],
             "outputs": definition["outputs"],
             "dependencies": definition["depends_on"],
-            "blocking_questions": blocking_questions,
+            "gating_questions": gating_questions,
+            # Deprecated alias, kept until every downstream mirror confirms it
+            # reads gating_questions. Same content, old key.
+            "blocking_questions": gating_questions,
         })
 
     decision_rows = []
     for question in questions:
+        gates = question.get("gates") or []
         decision_rows.append({
             "decision_id": question["id"],
             "question": question["question"],
             "owner": question["owner"],
-            "blocking": bool(question.get("blocking")),
             "status": "open",
-            "blocks": question.get("blocks", []),
-            "due_date": iso(question.get("due")),
+            "gates": gates,
+            "while_open": question.get("while_open"),
+            "decide_by": iso(question.get("decide_by")),
             "note": question.get("note"),
+            # Deprecated aliases for downstream mirrors not yet migrated. The
+            # canonical fields are gates / while_open / decide_by above.
+            "blocking": bool(gates),
+            "blocks": gates,
+            "due_date": iso(question.get("decide_by")),
         })
 
     fact_rows = []

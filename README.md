@@ -4,6 +4,11 @@ This repository is the shared operating system for the QIPS programme. It is des
 
 ## Start here
 
+**Taking over this project, as a person or as an agent? Read [`HANDOFF.md`](HANDOFF.md) first.**
+It is the current baton: where the work stands, what is decided, what is blocked on a human, the
+invariants you must not regress, and how to hand it back. Everything below is still true; the
+handoff tells you which parts matter today.
+
 1. Open [`ccc/control-room.html`](ccc/control-room.html) for the whole-programme view.
 2. Read [`canon/facts.yaml`](canon/facts.yaml) before treating any statement as settled.
 3. Read [`canon/open-questions.yaml`](canon/open-questions.yaml) for the decisions currently blocking progress.
@@ -63,7 +68,11 @@ this — which is why the check refuses it.
 
 ## Current caution
 
-Several earlier artifacts describe a 12–18-month programme, seven gates or thirteen deliverables. Current canon fixes a **12-month** programme; older material must be treated as historical until reconciled. See [`docs/reconciliation-register.md`](docs/reconciliation-register.md).
+The approved record currently fixes a **12-month core** (F001). The programme director's intended
+**12–18 month** design is recorded separately as proposal F030: up to six additional months may be
+used for supported workplace completion. F030 does not replace F001 until the committee records its
+decision. Earlier 12–18 month material remains historical unless it agrees with this proposal. See
+[`docs/reconciliation-register.md`](docs/reconciliation-register.md).
 
 ## Security
 

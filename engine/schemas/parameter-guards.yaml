@@ -1,0 +1,139 @@
+# What must NOT appear in the build while a parameter is still open.
+#
+# WHY THIS EXISTS
+# ---------------
+# The programme director's instruction was that nothing is hardwired: the design
+# is built to work across whatever range a decision might land in, and the
+# committee resolves it afterwards. Until now that was a promise made in prose,
+# repeated in several files, and checked by nobody. A promise no test enforces
+# decays quietly — someone adds a price to a form because a page needed a number,
+# and the design stops being configurable without anyone deciding that it should.
+#
+# So the promise becomes a test. For every parameter still open, this file
+# declares what a RESOLVED value would look like and which artefacts must not
+# contain one. engine/parameters.py fails the build if one appears.
+#
+# WHERE THESE GUARDS DO AND DO NOT APPLY
+# --------------------------------------
+# They apply to BUILD ARTEFACTS: the instruments the programme actually runs on,
+# and anything a participant, applicant or reviewer sees.
+#
+# They do NOT apply to:
+#   canon/facts.yaml                    declares the range; that is its job
+#   engine/schemas/recommendations.yaml a recommendation names a value on purpose
+#   workstreams/**                      research must be able to discuss figures
+# A guard that fired on the research would make the research unwritable, and a
+# guard that fired on canon would make the parameter undeclarable.
+#
+# TWO KINDS OF CHECK
+#   patterns     textual — a resolved value has a recognisable shape
+#   structural   the artefact must positively DECLARE the absence, so that
+#                deleting the declaration is itself a failure. Structural checks
+#                are stronger and are preferred wherever the shape allows.
+
+build_artefacts:
+  - engine/schemas/application-form.yaml
+  - engine/schemas/admissions-rubric.yaml
+  - engine/schemas/curriculum-spine.yaml
+  - engine/schemas/walkthrough-journey.yaml
+
+guards:
+
+  - parameter: F024
+    resolved_value_is: a tuition figure
+    patterns:
+      # Any currency amount in an instrument an applicant touches. The programme
+      # publishes price on a price page, never on the application form — a fee
+      # printed beside the questions reads as a condition of applying, and the
+      # merit score explicitly does not consider ability to pay.
+      - '(?:USD|GBP|EUR|₦|NGN|GHS|GHC|PKR)\s?[0-9][0-9,.]*'
+      - '\b(?:fee|tuition|price)\s+(?:of|is|:)\s*[0-9]'
+    structural:
+      - artefact: engine/schemas/application-form.yaml
+        must_declare_absent: form.omissions.price
+      - artefact: engine/schemas/admissions-rubric.yaml
+        must_declare_absent: deliberately_absent.price
+
+  - parameter: F025
+    resolved_value_is: a number of places in the cohort
+    patterns:
+      - '\b[0-9]{1,3}\s+(?:places|seats)\b'
+      - '\b(?:cohort|intake)\s+(?:size|of)\s+[0-9]'
+      - '\blimited to\s+[0-9]'
+    structural:
+      - artefact: engine/schemas/application-form.yaml
+        must_declare_absent: form.omissions.cohort_size
+      - artefact: engine/schemas/admissions-rubric.yaml
+        must_declare_absent: deliberately_absent.cohort_cap
+
+  - parameter: F018
+    resolved_value_is: a chosen eligibility rule
+    structural:
+      # The eligibility options are held as a block and swapped as one when the
+      # decision is taken. While it is open, no option may be active — an active
+      # option IS the decision, taken by whoever edited the file.
+      - artefact: engine/schemas/application-form.yaml
+        must_be_null: eligibility_policy.active_option
+      - artefact: engine/schemas/application-form.yaml
+        must_declare_absent: form.omissions.eligibility_floor
+      - artefact: engine/schemas/admissions-rubric.yaml
+        must_declare_absent: deliberately_absent.eligibility_breadth
+
+  - parameter: F020
+    resolved_value_is: a fixed list of countries
+    patterns:
+      # A hardcoded country dropdown is the classic way this parameter gets
+      # resolved by accident. The form takes free entry and resolves eligibility
+      # at review time against the country set as it then stands.
+      - 'options:\s*\[\s*(?:Nigeria|Ghana|Pakistan)'
+    structural:
+      - artefact: engine/schemas/application-form.yaml
+        must_declare_absent: form.omissions.country_list
+      - artefact: engine/schemas/admissions-rubric.yaml
+        must_declare_absent: deliberately_absent.country_allocation
+
+  - parameter: F017
+    resolved_value_is: a settled brand identity
+    structural:
+      - artefact: engine/schemas/application-form.yaml
+        must_declare_absent: form.omissions.partner_names
+
+  - parameter: F007
+    resolved_value_is: a fixed observership geography
+    patterns:
+      - '\bobservership\b[^.]{0,60}\b(?:must be|only) (?:in|within) (?:your own|the same) (?:city|state)\b'
+
+  - parameter: F029
+    resolved_value_is: a faculty payment rate
+    patterns:
+      - '\bhonorarium\s+of\s+[0-9]'
+      - '\b(?:paid|payment)\s+(?:at|of)\s+(?:USD|₦|NGN)\s?[0-9]'
+
+# ---------------------------------------------------------------------------
+# Absences that belong to no single parameter.
+#
+# The rubric's score threshold is the case that exposed the gap: it is a
+# deliberate absence, it is load-bearing, and it is not a canon parameter — so a
+# guard keyed only to parameters left it completely unguarded. Found by a probe
+# that expected a bite and got nothing.
+# ---------------------------------------------------------------------------
+always_declared_absent:
+  - artefact: engine/schemas/admissions-rubric.yaml
+    path: deliberately_absent.score_threshold
+    why: >-
+      No pass mark is approved. The council refused to set one from synthetic
+      cases and the committee did not overrule; a threshold needs observed
+      completion data. Deleting this declaration would let a mark appear without
+      anyone deciding to set one.
+
+# ---------------------------------------------------------------------------
+# Parameters with no recommendation yet must say WHY, here. An empty research
+# queue and an unexplained gap look identical otherwise, and the difference
+# matters: one is finished work, the other is work nobody has noticed is missing.
+# ---------------------------------------------------------------------------
+research_pending:
+  F017: >-
+    Blocked rather than unresearched. While partner names are held back from
+    public material, the only publicly available option is SQHN-led, so there is
+    nothing to compare and no recommendation to make. Research would not clear
+    this; a decision on partner naming would.

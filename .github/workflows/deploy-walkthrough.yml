@@ -1,0 +1,105 @@
+# Deploy the design walkthrough to Netlify — on push to main, gated on the full
+# section-8 suite, from any machine and no machine in particular.
+#
+# WHY THIS EXISTS. Until 8 August 2026 the only deploy path was one Mac: build with
+# walkthrough.py into ~/qips-site, then netlify-cli with a login that lives on that
+# machine. The audit that day found the live page four commits behind the branch,
+# still speaking vocabulary canon had since banned — the exact silent-drift failure
+# a repository full of checks exists to prevent. After this workflow, the live page
+# always reflects main: if they ever disagree, that is an incident, not a mystery.
+#
+# GOVERNANCE. Deploys fire only from main, and only the owner merges to main — so
+# the merge that makes something true is the same act that publishes it. Proposal
+# branches never deploy. The gates run inside this job because a pull request
+# opened with GITHUB_TOKEN does not trigger other workflows (see AGENTS.md).
+#
+# FIRST RUN: trigger manually via workflow_dispatch — merges performed by GitHub
+# Apps do not fire push workflows, and the first run doubles as the secrets check.
+# Rollback: the old manual path (HANDOFF.md §5 rebuild command) still works.
+
+name: deploy-walkthrough
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "engine/**"
+      - "canon/**"
+      - ".github/workflows/deploy-walkthrough.yml"
+  workflow_dispatch:
+    inputs:
+      reviewer:
+        description: "Reviewer name stamped into the page"
+        required: false
+        default: "Dr Oyewumi"
+
+concurrency:
+  group: deploy-walkthrough
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  gates-build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse to run without deploy secrets
+        env:
+          HAS_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN != '' }}
+          HAS_SITE: ${{ secrets.NETLIFY_SITE_ID != '' }}
+        run: |
+          if [ "$HAS_TOKEN" != "true" ] || [ "$HAS_SITE" != "true" ]; then
+            echo "::error::NETLIFY_AUTH_TOKEN and/or NETLIFY_SITE_ID repo secrets are missing."
+            echo "::error::One-time setup lives in docs/liberation-runbook.md — this is deliberate loudness, not breakage."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the one dependency
+        run: pip install pyyaml
+
+      - name: Run the full verification suite (HANDOFF.md section 8) — the deploy gate
+        run: |
+          python3 engine/validate_ikr_pos.py
+          python3 engine/curriculum.py --self-test
+          python3 engine/curriculum.py --vocabulary
+          python3 engine/admissions.py --self-test
+          python3 engine/decision_capture.py --self-test
+          python3 engine/decision_interview.py --self-test
+          python3 engine/decision_interview.py --check
+          python3 engine/parameters.py --self-test
+          python3 engine/walkthrough.py --self-test
+          python3 engine/walkthrough.py --check
+          git diff --exit-code -- ccc/agenda.md ccc/control-room.html
+
+      - name: Build the walkthrough from this exact commit
+        env:
+          REVIEWER: ${{ inputs.reviewer || 'Dr Oyewumi' }}
+        run: |
+          mkdir -p site
+          python3 engine/walkthrough.py --pwa site --submit-mode netlify \
+            --reviewer "$REVIEWER" --commit "${GITHUB_SHA:0:7}"
+          test -s site/index.html
+
+      - name: Deploy to the owner's Netlify site
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npx --yes netlify-cli@17 deploy --dir site --prod --message "main@${GITHUB_SHA:0:7} via deploy-walkthrough"
+
+      - name: Verify at the destination, not the source
+        run: |
+          sleep 10
+          curl -sSf https://qips-walkthrough.netlify.app > /tmp/live.html
+          grep -q "\"${GITHUB_SHA:0:7}\"" /tmp/live.html \
+            && echo "Live page carries this commit's stamp." \
+            || { echo "::error::Live page does not carry ${GITHUB_SHA:0:7} — deploy did not land."; exit 1; }
+          if grep -qi '"blocking"' /tmp/live.html; then
+            echo "::error::Banned vocabulary reached the live page."; exit 1
+          fi

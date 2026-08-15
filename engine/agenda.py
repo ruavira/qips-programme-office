@@ -43,7 +43,13 @@ def main() -> None:
 
     prepared = max((meta.get("prepared") for meta, _ in dossier_rows), default=date.today())
     questions = load_yaml(ROOT / "canon/open-questions.yaml").get("questions", [])
-    blocking = [question for question in questions if question.get("blocking")]
+    # Every open decision, gating ones first, then by the date deferring stops
+    # being free. Nothing here is a blocker: building continues under each
+    # question's recorded default whichever way — or whenever — it is decided.
+    open_questions = sorted(
+        (q for q in questions if q.get("status") not in {"CLOSED", "ANSWERED"}),
+        key=lambda q: (not q.get("gates"), str(q.get("decide_by", "9999"))),
+    )
 
     lines = [
         "# CCC agenda — continuous decision docket",
@@ -85,19 +91,23 @@ def main() -> None:
         ])
 
     lines.extend([
-        f"## Item {len(dossier_rows) + 1} — blocking questions that remain open",
+        f"## Item {len(dossier_rows) + 1} — open decisions, none of them a blocker",
         "",
-        "The architecture decisions above may narrow these questions but do not close them by",
-        "implication.",
+        "Every decision not yet taken, articulated as exactly that. Each carries what staying",
+        "open gates — specific acts of publishing, promising, signing or spending, and for some",
+        "of them nothing at all — the default the build continues under meanwhile, and the date",
+        "after which deferring stops being free. Building never stops for anything in this",
+        "table. The architecture decisions above may narrow these questions but do not close",
+        "them by implication.",
         "",
-        "| Q | Question | Owner | Due | Gates |",
-        "|---|---|---|---|---|",
+        "| Q | Decision to take | Owner | Gates until decided | Building continues under | Decide by |",
+        "|---|---|---|---|---|---|",
     ])
-    for question in blocking:
-        gates = ", ".join(question.get("blocks", []))
+    for question in open_questions:
+        gates = " · ".join(question.get("gates") or []) or "nothing — open, not in the way"
         lines.append(
             f"| {question['id']} | {question['question']} | {question['owner']} | "
-            f"{question.get('due', '—')} | {gates or '—'} |"
+            f"{gates} | {question.get('while_open', '—')} | {question.get('decide_by', '—')} |"
         )
 
     lines.extend([
