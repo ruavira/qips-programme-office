@@ -1,0 +1,22 @@
+{
+  "package_id": "MIGRATE-OS",
+  "name": "Application Migration & Replatforming Operating System",
+  "version": "0.1.0",
+  "status": "RELEASE_CANDIDATE",
+  "prepared": "2026-08-03",
+  "archive_name": "MIGRATE-OS_v0.1.0.zip",
+  "sha256": "24699dfc3ff4196bc7088b0c9729901c542a9d758ac1a7676bd6d3773ad28954",
+  "packaged_file_count": 78,
+  "validator": "PASS",
+  "unit_tests": {"passed": 13, "failed": 0},
+  "primary_adapter": "base44-to-nextjs-supabase",
+  "live_structure_validation": {
+    "entities": 74,
+    "controllers": 4,
+    "pages": 14,
+    "routes": 15,
+    "server_actions": 73
+  },
+  "production_proven": false,
+  "next_validation": "Complete a non-production migration rehearsal against the ITC Base44 export and test rollback."
+}
