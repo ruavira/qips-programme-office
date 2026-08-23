@@ -107,11 +107,12 @@ himself — see §8.
   Aiyenigba / `ruavirainc@gmail.com` as owner. No additional direct named permission was present in
   the final permission inventory.
 - **OPEN — GitHub/Netlify recovery.** Work continues on branch
-  `proposal/recovery-containment-2026-08-23`. Draft PR #28 is open, mergeable and unmerged at
-  remote head `5edeee9`; the final detailed receipt is committed locally at `6663302` but public
-  upload is paused because it contains private Drive identifiers/links and requires explicit
-  informed approval. The live Netlify walkthrough remains behind the authoritative repository;
-  the staged recovery tab is waiting for the owner to complete GitHub sign-in.
+  `proposal/recovery-containment-2026-08-23`. Draft PR #28 is open, mergeable and unmerged. The
+  complete detailed receipt—including private Drive identifiers/links and cross-platform
+  metadata—was published at commit `94d940f` after explicit informed approval from the programme
+  director; GitHub repository-check run #77 passed. The live Netlify walkthrough remains behind
+  the authoritative repository; the staged recovery tab is waiting for the owner to complete
+  GitHub sign-in.
 
 **15 August 2026 (Codex → next agent):**
 

@@ -101,9 +101,12 @@ changes:
       github:
         proposal_branch: proposal/recovery-containment-2026-08-23
         draft_pull_request: https://github.com/ruavira/qips-programme-office/pull/28
-        remote_head: 5edeee9d8c22b025ef9c7818399c7f70786ec235
+        initial_remote_head: 5edeee9d8c22b025ef9c7818399c7f70786ec235
         local_receipt_commit: 6663302e6d92ce109fdd59a52cf156cbfd9c9bda
-        detailed_receipt_publication: PENDING_EXPLICIT_SENSITIVE_EGRESS_APPROVAL
+        public_receipt_commit: 94d940f549e27eb3c69bcbb133105ad816d4cbeb
+        detailed_receipt_publication: COMPLETE_AFTER_EXPLICIT_INFORMED_APPROVAL
+        repository_checks_run: 77
+        repository_checks: PASS
       netlify:
         recovery_status: BLOCKED_ON_OWNER_GITHUB_SIGN_IN
         live_url: https://qips-walkthrough.netlify.app
