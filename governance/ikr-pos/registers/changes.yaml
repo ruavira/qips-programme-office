@@ -6,6 +6,89 @@ register:
   status: ACTIVE
 
 changes:
+  - id: IKR-CR-006
+    title: Cross-platform recovery, containment and governed resynchronization
+    requested_on: 2026-08-23
+    requested_by: Programme director, in Codex session — "Start the recovery"
+    owner: W09
+    assurance_owner: W11
+    privacy_owner: W17
+    status: AUTHORIZED_IN_PROGRESS
+    change_type: ACCESS_CONTAINMENT_AND_CROSS_PLATFORM_RECOVERY
+    scope:
+      - Google Drive folder 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
+      - Base44 app 6a68b8381ea8ff36dd473cd2
+      - governance/ikr-pos/
+      - documents/register.yaml
+      - workstreams/W09/
+      - HANDOFF.md
+      - Netlify walkthrough deployment
+    rationale: >-
+      A live cross-platform audit on 2026-08-23 found that the QIPS Drive root granted
+      anyone-with-link writer access, Base44 indexed the entire connected Drive rather than
+      the governed QIPS folder, programme mirrors disagreed with GitHub, public presentation
+      crossed unresolved claim gates, and the Netlify walkthrough was thirteen commits behind
+      the authoritative repository. The programme director explicitly authorized the recommended
+      recovery sequence end to end.
+    destructive_actions:
+      - Remove the anyone-with-link writer permission from the QIPS Drive root while preserving named access.
+      - Quarantine, rather than permanently delete, Base44 document metadata outside the governed QIPS register.
+    explicitly_out_of_scope:
+      - Approving or superseding programme canon without a minuted CCC verdict.
+      - Inventing insurance, credential, faculty, partner, privacy or programme-name decisions.
+      - Copying secrets, participant data, private contacts or restricted evidence into GitHub.
+    human_gates_triggered:
+      - OWNER_ACCESS_POLICY_CHANGE
+      - OWNER_BASE44_SYNCHRONIZATION_CHANGE
+      - OWNER_PUBLIC_PRESENTATION_CORRECTION
+      - OWNER_DEPLOYMENT_RECOVERY
+    authorization:
+      authority: Programme director
+      recorded_on: 2026-08-23
+      instruction: Start the recovery
+      canon_authority_delegated: false
+    implementation_order:
+      - Contain Drive public editing and Base44 whole-Drive ingestion.
+      - Repair GitHub governance and state records.
+      - Reconcile Base44 and Drive mirrors from the authoritative Git revision.
+      - Restore and verify Netlify deployment.
+      - Prepare decision-ready programme restart work without crossing CCC gates.
+    rollback:
+      drive: Preserve named permissions; record removed permission identifiers and verify owner access before and after the change.
+      base44: Create a sandbox checkpoint before edits; quarantine records instead of deleting; restore code from the checkpoint if verification fails.
+      github: Work on a proposal branch and revert the recovery commit or close the pull request if review fails.
+      netlify: Preserve the last known deployment as the rollback target until the new deployment passes live revision and form checks.
+    programme_facts_changed: []
+    open_questions_changed: []
+    synchronization_required:
+      - GitHub
+      - Google_Drive
+      - Base44
+      - Netlify
+    synchronization_status: BASE44_CONTAINED_DRIVE_AND_DEPLOYMENT_PENDING
+    implementation_receipts:
+      base44:
+        pre_change_checkpoint_commit: fbf630bff026ea4c620984375951c884822d620b
+        verified_checkpoint_commit: 61af0a1
+        build: PASS
+        whole_drive_ingestion: DISABLED
+        qips_folder_scope: ENFORCED
+        restricted_folder_exclusion: ENFORCED
+        direct_programme_governance_writes: DISABLED
+        programme_document_records_total: 1319
+        programme_document_records_quarantined: 1306
+        programme_document_records_visible: 13
+        out_of_scope_visible_records: 0
+        deletion_count: 0
+        public_frontend_status: EXPLICIT_BASE44_PUBLISH_REQUIRED
+      drive:
+        root_folder_id: 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
+        public_writer_removal: PENDING_ACTION_TIME_CONFIRMATION
+      github:
+        proposal_branch: proposal/recovery-containment-2026-08-23
+      netlify:
+        recovery_status: PENDING
+
   - id: IKR-CR-001
     title: Install IKR-POS over QIPS
     requested_on: 2026-07-31

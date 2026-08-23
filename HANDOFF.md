@@ -82,6 +82,31 @@ himself — see §8.
 
 ## 5 · STATE — append-log, newest first
 
+**23 August 2026 (Codex recovery run → next agent):**
+
+- **AUTHORIZED — cross-platform recovery is active under IKR-CR-006.** The programme director
+  instructed Codex to “Start the recovery”. This authorizes access containment, synchronization,
+  presentation correction and deployment recovery; it does **not** delegate CCC authority to
+  approve or supersede canon.
+- **DONE — Base44 whole-Drive exposure is contained.** Pre-change checkpoint
+  `fbf630bff026ea4c620984375951c884822d620b`; verified sandbox revision `61af0a1`; build green.
+  Drive listing and reconciliation are scoped to the configured QIPS folder tree, exclude
+  `90 Restricted`, and no longer auto-register discovered files. Direct fact promotion, decision
+  advancement, workstream editing and CCC-verdict recording are disabled. Of 1,319 document rows,
+  1,306 are now restricted/archived and only the 13 GitHub-registered QIPS documents remain visible;
+  zero rows were deleted.
+- **OPEN — Base44 Publish.** The corrected frontend is committed in the sandbox, but live visual
+  verification still sees the prior public copy. Use the Base44 Publish control, then verify the
+  landing page, `/programme`, and authenticated control-room views against sandbox revision
+  `61af0a1`.
+- **OPEN — Drive permission containment.** The QIPS Drive root still has an anyone-with-link writer
+  entry. The exact UI action is staged, but the permission change requires action-time human
+  confirmation. Preserve the owner and every named collaborator; remove only anonymous link editing.
+- **OPEN — GitHub/Netlify recovery.** Work continues on branch
+  `proposal/recovery-containment-2026-08-23`. The live Netlify walkthrough remains behind the
+  authoritative repository until the recovery proposal is reviewed and the deployment path has
+  valid owner-managed credentials.
+
 **15 August 2026 (Codex → next agent):**
 
 - **DONE — one reconciled GitHub proposal.** Draft PR #27 replaces the overlapping walkthrough,
