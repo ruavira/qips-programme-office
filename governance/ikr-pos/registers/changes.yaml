@@ -13,7 +13,7 @@ changes:
     owner: W09
     assurance_owner: W11
     privacy_owner: W17
-    status: AUTHORIZED_IN_PROGRESS
+    status: IMPLEMENTED_AWAITING_OWNER_REVIEW
     change_type: ACCESS_CONTAINMENT_AND_CROSS_PLATFORM_RECOVERY
     scope:
       - Google Drive folder 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
@@ -65,7 +65,7 @@ changes:
       - Google_Drive
       - Base44
       - Netlify
-    synchronization_status: BASE44_AND_DRIVE_RECOVERED_GITHUB_REVIEW_AND_NETLIFY_PENDING
+    synchronization_status: RECOVERY_CONTROLS_COMPLETE_GITHUB_PR_AWAITING_REVIEW
     implementation_receipts:
       base44:
         pre_change_checkpoint_commit: fbf630bff026ea4c620984375951c884822d620b
@@ -103,16 +103,31 @@ changes:
         draft_pull_request: https://github.com/ruavira/qips-programme-office/pull/28
         initial_remote_head: 5edeee9d8c22b025ef9c7818399c7f70786ec235
         local_receipt_commit: 6663302e6d92ce109fdd59a52cf156cbfd9c9bda
-        public_receipt_commit: 94d940f549e27eb3c69bcbb133105ad816d4cbeb
+        public_receipt_commit: b774398bd0cd9aa2986ce959ca94cc0657387296
         detailed_receipt_publication: COMPLETE_AFTER_EXPLICIT_INFORMED_APPROVAL
-        repository_checks_run: 77
+        repository_checks_run: 78
         repository_checks: PASS
       netlify:
-        recovery_status: BLOCKED_ON_OWNER_GITHUB_SIGN_IN
+        recovery_status: COMPLETE_VERIFIED
         live_url: https://qips-walkthrough.netlify.app
-        live_source_commit: 0dd9c5e
+        deployment_id: 6a8b603c0407f60ee8ea46f8
+        deployment_method: NETLIFY_DROP_VERIFIED_ZIP
+        published_at: 2026-08-23T15:04:00-06:00
+        previous_live_source_commit: 0dd9c5e
+        live_source_commit: 2b17389cd4fcdfe26ccefbe22454652b09ae5382
         expected_authoritative_source_commit: 2b17389cd4fcdfe26ccefbe22454652b09ae5382
-        live_revision_verification: STALE
+        live_revision_verification: PASS
+        stale_revision_absent: true
+        desktop_visual_verification: PASS
+        mobile_visual_verification: PASS
+        navigation_verification: PASS
+        browser_console_errors: 0
+        pwa_asset_verification: PASS
+        netlify_form_processing: PASS
+        form_detection: ENABLED
+        active_form: qips-walkthrough-responses
+        historical_submissions_preserved: 2
+        live_submission_test: NOT_PERFORMED
 
   - id: IKR-CR-001
     title: Install IKR-POS over QIPS
