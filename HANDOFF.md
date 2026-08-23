@@ -89,23 +89,29 @@ himself — see §8.
   presentation correction and deployment recovery; it does **not** delegate CCC authority to
   approve or supersede canon.
 - **DONE — Base44 whole-Drive exposure is contained.** Pre-change checkpoint
-  `fbf630bff026ea4c620984375951c884822d620b`; verified sandbox revision `61af0a1`; build green.
+  `fbf630bff026ea4c620984375951c884822d620b`; hardened sandbox revision `36514ab`; build green.
   Drive listing and reconciliation are scoped to the configured QIPS folder tree, exclude
   `90 Restricted`, and no longer auto-register discovered files. Direct fact promotion, decision
-  advancement, workstream editing and CCC-verdict recording are disabled. Of 1,319 document rows,
+  advancement, workstream editing, CCC-verdict recording and in-app briefing generation are
+  disabled. Drive synchronization, Drive metadata listing and GitHub repository browsing now
+  require an authenticated Base44 administrator. Of 1,319 document rows,
   1,306 are now restricted/archived and only the 13 GitHub-registered QIPS documents remain visible;
   zero rows were deleted.
-- **OPEN — Base44 Publish.** The corrected frontend is committed in the sandbox, but live visual
-  verification still sees the prior public copy. Use the Base44 Publish control, then verify the
-  landing page, `/programme`, and authenticated control-room views against sandbox revision
-  `61af0a1`.
-- **OPEN — Drive permission containment.** The QIPS Drive root still has an anyone-with-link writer
-  entry. The exact UI action is staged, but the permission change requires action-time human
-  confirmation. Preserve the owner and every named collaborator; remove only anonymous link editing.
+- **DONE — Base44 checkpoint `36514ab` is published and verified.** The post-hardening scan reports
+  `No issues found`, the Publish dialog reported `No risks`, and the public landing page now carries
+  the governed 12-month language without unsupported certification claims. Authenticated
+  `/programme` and control-room views render the governed projection; the programme footer says
+  that GitHub remains authoritative.
+- **DONE — Drive anonymous editing is contained.** The QIPS Drive root now has `Restricted` general
+  access. API readback shows no `anyone` permission, reports `shared: false`, and preserves Emmanuel
+  Aiyenigba / `ruavirainc@gmail.com` as owner. No additional direct named permission was present in
+  the final permission inventory.
 - **OPEN — GitHub/Netlify recovery.** Work continues on branch
-  `proposal/recovery-containment-2026-08-23`. The live Netlify walkthrough remains behind the
-  authoritative repository until the recovery proposal is reviewed and the deployment path has
-  valid owner-managed credentials.
+  `proposal/recovery-containment-2026-08-23`. Draft PR #28 is open, mergeable and unmerged at
+  remote head `5edeee9`; the final detailed receipt is committed locally at `6663302` but public
+  upload is paused because it contains private Drive identifiers/links and requires explicit
+  informed approval. The live Netlify walkthrough remains behind the authoritative repository;
+  the staged recovery tab is waiting for the owner to complete GitHub sign-in.
 
 **15 August 2026 (Codex → next agent):**
 

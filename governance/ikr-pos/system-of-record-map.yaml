@@ -40,8 +40,10 @@ systems:
   - unregistered_approved_claims
   access_recovery:
     assessed_on: 2026-08-23
-    anyone_with_link_writer: REMOVAL_PENDING_ACTION_TIME_CONFIRMATION
-    named_collaborators: PRESERVE
+    anyone_with_link_writer: REMOVED_AND_VERIFIED
+    general_access: RESTRICTED
+    owner_preserved: ruavirainc@gmail.com
+    direct_named_permissions_after_change: OWNER_ONLY
 - id: SYS-DRIVE-FACULTY
   name: Restricted faculty candidate and appointment records
   parent: SYS-DRIVE
@@ -118,11 +120,11 @@ systems:
       or moved to the repository.
   current_divergence:
     assessed_on: 2026-08-23
-    status: CONTAINED_AWAITING_PUBLIC_FRONTEND_PUBLISH
+    status: IN_SYNC_PUBLISHED_AND_VERIFIED
     governed_qips_subset:
       status: IN_SYNC
       source_revision: 2b17389cd4fcdfe26ccefbe22454652b09ae5382
-    sandbox_revision: 61af0a1
+    sandbox_revision: 36514ab
     pre_recovery_checkpoint_revision: fbf630bff026ea4c620984375951c884822d620b
     document_containment:
       total_records: 1319
@@ -131,12 +133,14 @@ systems:
       out_of_scope_visible_records: 0
       deleted_records: 0
     drive_ingestion: Scoped to the configured QIPS folder tree, excludes 90 Restricted, and does not auto-register newly discovered files.
-    programme_governance_writes: Direct fact promotion, decision advancement, workstream editing and CCC verdict recording are disabled in Base44.
-    public_frontend: The corrected frontend is committed in the sandbox, but the live Base44 URL continues to serve the previous published version until an explicit Base44 Publish action.
+    programme_governance_writes: Direct fact promotion, decision advancement, workstream editing, CCC verdict recording and in-app briefing generation are disabled in Base44.
+    connector_access: Drive synchronization, Drive metadata listing and GitHub repository browsing require an authenticated Base44 administrator; anonymous service-role execution is disabled.
+    security_scan: PASS on sandbox revision 36514ab; Base44 reports No issues found and the Publish dialog reports No risks.
+    public_frontend: Sandbox revision 36514ab is published. The public landing page and authenticated programme/control-room views passed visual verification; GitHub-authoritative wording is present and unsupported certification claims are absent.
     owners:
     - W09
     - W17
-    required_action: Publish sandbox revision 61af0a1 through Base44, then visually verify public and authenticated routes. No deletion is required.
+    required_action: Maintain mirror discipline and repeat the security and visual gates before future publication. No deletion is required.
 - id: SYS-SUPABASE
   name: Supabase
   identifier: null
