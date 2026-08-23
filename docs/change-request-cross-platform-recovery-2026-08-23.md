@@ -3,7 +3,8 @@
 **Requester:** Programme director  
 **Date:** 2026-08-23  
 **Priority:** Critical  
-**Status:** Authorized / in progress  
+**Status:** Implemented / awaiting owner review of draft PR #28
+
 **Change record:** IKR-CR-006
 
 ## Description
@@ -58,6 +59,19 @@ publication and continuity risk while preserving the existing programme design.
 - **Base44:** restore the pre-recovery sandbox checkpoint; quarantined records remain recoverable.
 - **GitHub:** revert the proposal commit or close the unmerged pull request.
 - **Netlify:** keep serving the prior deployment until the new revision passes verification.
+
+## Execution outcome
+
+| Step | Outcome | Receipt |
+|---|---|---|
+| Drive containment | Complete | General access is Restricted; no anonymous permission remains; owner access was preserved. |
+| Base44 containment and correction | Complete | Hardened revision `36514ab` is published, security-clean and visually verified. |
+| GitHub governance recovery | Complete / review open | Draft PR #28 is mergeable and unmerged; repository-check run #78 passed at `b774398`. |
+| Netlify deployment recovery | Complete | Production deploy `6a8b603c0407f60ee8ea46f8` is published from source `2b17389`. |
+| Live walkthrough assurance | Pass | Desktop/mobile layout, decision navigation, PWA assets and browser console passed; stale revision `0dd9c5e` is absent. |
+| Netlify form continuity | Pass | Form detection is enabled; `qips-walkthrough-responses` is active and its two historical submissions remain. No test response was sent. |
+
+No programme fact or open question was approved, closed or superseded by this recovery.
 
 ## Approvals
 
