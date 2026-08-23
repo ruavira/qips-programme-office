@@ -82,6 +82,41 @@ himself — see §8.
 
 ## 5 · STATE — append-log, newest first
 
+**23 August 2026 (Codex recovery run → next agent):**
+
+- **AUTHORIZED — cross-platform recovery is active under IKR-CR-006.** The programme director
+  instructed Codex to “Start the recovery”. This authorizes access containment, synchronization,
+  presentation correction and deployment recovery; it does **not** delegate CCC authority to
+  approve or supersede canon.
+- **DONE — Base44 whole-Drive exposure is contained.** Pre-change checkpoint
+  `fbf630bff026ea4c620984375951c884822d620b`; hardened sandbox revision `36514ab`; build green.
+  Drive listing and reconciliation are scoped to the configured QIPS folder tree, exclude
+  `90 Restricted`, and no longer auto-register discovered files. Direct fact promotion, decision
+  advancement, workstream editing, CCC-verdict recording and in-app briefing generation are
+  disabled. Drive synchronization, Drive metadata listing and GitHub repository browsing now
+  require an authenticated Base44 administrator. Of 1,319 document rows,
+  1,306 are now restricted/archived and only the 13 GitHub-registered QIPS documents remain visible;
+  zero rows were deleted.
+- **DONE — Base44 checkpoint `36514ab` is published and verified.** The post-hardening scan reports
+  `No issues found`, the Publish dialog reported `No risks`, and the public landing page now carries
+  the governed 12-month language without unsupported certification claims. Authenticated
+  `/programme` and control-room views render the governed projection; the programme footer says
+  that GitHub remains authoritative.
+- **DONE — Drive anonymous editing is contained.** The QIPS Drive root now has `Restricted` general
+  access. API readback shows no `anyone` permission, reports `shared: false`, and preserves Emmanuel
+  Aiyenigba / `ruavirainc@gmail.com` as owner. No additional direct named permission was present in
+  the final permission inventory.
+- **DONE — GitHub and Netlify recovery are verified; owner review remains.** Work continues on branch
+  `proposal/recovery-containment-2026-08-23`. Draft PR #28 is open, mergeable and unmerged. The
+  complete detailed receipt—including private Drive identifiers/links and cross-platform
+  metadata—was published after explicit informed approval from the programme director; GitHub
+  repository-check run #78 passed at `b774398`. Netlify production deploy
+  `6a8b603c0407f60ee8ea46f8` is published from authoritative source `2b17389`; the former stale
+  `0dd9c5e` revision is absent. Desktop and mobile rendering, decision navigation, PWA assets and
+  a zero-error browser console passed live verification. Form detection re-indexed the existing
+  `qips-walkthrough-responses` form and preserved its two historical submissions. No test response
+  was sent. PR #28 deliberately remains draft and unmerged for the owner's review; no canon changed.
+
 **15 August 2026 (Codex → next agent):**
 
 - **DONE — one reconciled GitHub proposal.** Draft PR #27 replaces the overlapping walkthrough,

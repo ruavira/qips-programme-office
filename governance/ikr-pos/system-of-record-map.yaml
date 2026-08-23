@@ -20,6 +20,7 @@ systems:
 - id: SYS-DRIVE
   name: Google Drive
   identifier: documents/register.yaml
+  root_folder_id: 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
   role: HUMAN_REVIEW_AND_RESTRICTED_EVIDENCE_LAYER
   layers:
   - AUTHORITATIVE_SOURCE_LIBRARY
@@ -37,6 +38,12 @@ systems:
   prohibited:
   - silent_canon_changes
   - unregistered_approved_claims
+  access_recovery:
+    assessed_on: 2026-08-23
+    anyone_with_link_writer: REMOVED_AND_VERIFIED
+    general_access: RESTRICTED
+    owner_preserved: ruavirainc@gmail.com
+    direct_named_permissions_after_change: OWNER_ONLY
 - id: SYS-DRIVE-FACULTY
   name: Restricted faculty candidate and appointment records
   parent: SYS-DRIVE
@@ -112,19 +119,28 @@ systems:
     review: Re-check at every repository-health review. Any new Base44-only entity must be listed here
       or moved to the repository.
   current_divergence:
-    assessed_on: 2026-08-13
-    status: DRIFT_OPEN_RESTRICTED_FINDING
+    assessed_on: 2026-08-23
+    status: IN_SYNC_PUBLISHED_AND_VERIFIED
     governed_qips_subset:
       status: IN_SYNC
-      source_revision: d8cc75b0bc96cf5a80919917c2aff90f0c9d8975
-    public_finding: The Base44 document entity contains records outside the governed QIPS document register.
-    restricted_detail: Record-level metadata must be held in an approved restricted evidence location, not this
-      public repository.
+      source_revision: 2b17389cd4fcdfe26ccefbe22454652b09ae5382
+    sandbox_revision: 36514ab
+    pre_recovery_checkpoint_revision: fbf630bff026ea4c620984375951c884822d620b
+    document_containment:
+      total_records: 1319
+      restricted_archived_records: 1306
+      programme_visible_records: 13
+      out_of_scope_visible_records: 0
+      deleted_records: 0
+    drive_ingestion: Scoped to the configured QIPS folder tree, excludes 90 Restricted, and does not auto-register newly discovered files.
+    programme_governance_writes: Direct fact promotion, decision advancement, workstream editing, CCC verdict recording and in-app briefing generation are disabled in Base44.
+    connector_access: Drive synchronization, Drive metadata listing and GitHub repository browsing require an authenticated Base44 administrator; anonymous service-role execution is disabled.
+    security_scan: PASS on sandbox revision 36514ab; Base44 reports No issues found and the Publish dialog reports No risks.
+    public_frontend: Sandbox revision 36514ab is published. The public landing page and authenticated programme/control-room views passed visual verification; GitHub-authoritative wording is present and unsupported certification claims are absent.
     owners:
     - W09
     - W17
-    required_action: Classify and isolate the records; obtain explicit authority before deletion, relocation,
-      reclassification or access changes.
+    required_action: Maintain mirror discipline and repeat the security and visual gates before future publication. No deletion is required.
 - id: SYS-SUPABASE
   name: Supabase
   identifier: null
@@ -141,16 +157,34 @@ systems:
   - source_revision_contract_defined
 - id: SYS-NETLIFY
   name: Netlify
-  identifier: null
-  role: FUTURE_DEPLOYMENT_SURFACE
-  status: NOT_REGISTERED
+  identifier: qips-walkthrough
+  live_url: https://qips-walkthrough.netlify.app
+  role: PUBLIC_REVIEW_WALKTHROUGH_DEPLOYMENT_SURFACE
+  status: ACTIVE_PUBLISHED
   layers:
   - PUBLISHED_PORTAL
-  activation_gates:
-  - site_identifier_registered
-  - approved_artifact
-  - source_commit_recorded
-  - publication_authorized
+  - REVIEW_RESPONSE_COLLECTION
+  authority_rule: Netlify serves a generated projection of the GitHub source revision and cannot approve or supersede programme canon.
+  prohibited:
+  - independent_canon
+  - unversioned_publication
+  - secrets_in_repository_or_chat
+  current_deployment:
+    assessed_on: 2026-08-23
+    deployment_id: 6a8b603c0407f60ee8ea46f8
+    source_commit: 2b17389cd4fcdfe26ccefbe22454652b09ae5382
+    previous_stale_source_commit: 0dd9c5e
+    status: PUBLISHED_AND_VERIFIED
+    desktop_visual_verification: PASS
+    mobile_visual_verification: PASS
+    navigation_verification: PASS
+    browser_console_errors: 0
+    pwa_asset_verification: PASS
+  form_handling:
+    detection: ENABLED
+    active_form: qips-walkthrough-responses
+    historical_submissions_preserved: 2
+    live_submission_test: NOT_PERFORMED
 - id: SYS-VERCEL
   name: Vercel
   identifier: null

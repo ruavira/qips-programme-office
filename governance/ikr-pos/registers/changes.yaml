@@ -6,6 +6,129 @@ register:
   status: ACTIVE
 
 changes:
+  - id: IKR-CR-006
+    title: Cross-platform recovery, containment and governed resynchronization
+    requested_on: 2026-08-23
+    requested_by: Programme director, in Codex session — "Start the recovery"
+    owner: W09
+    assurance_owner: W11
+    privacy_owner: W17
+    status: IMPLEMENTED_AWAITING_OWNER_REVIEW
+    change_type: ACCESS_CONTAINMENT_AND_CROSS_PLATFORM_RECOVERY
+    scope:
+      - Google Drive folder 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
+      - Base44 app 6a68b8381ea8ff36dd473cd2
+      - governance/ikr-pos/
+      - documents/register.yaml
+      - workstreams/W09/
+      - HANDOFF.md
+      - Netlify walkthrough deployment
+    rationale: >-
+      A live cross-platform audit on 2026-08-23 found that the QIPS Drive root granted
+      anyone-with-link writer access, Base44 indexed the entire connected Drive rather than
+      the governed QIPS folder, programme mirrors disagreed with GitHub, public presentation
+      crossed unresolved claim gates, and the Netlify walkthrough was thirteen commits behind
+      the authoritative repository. The programme director explicitly authorized the recommended
+      recovery sequence end to end.
+    destructive_actions:
+      - Remove the anyone-with-link writer permission from the QIPS Drive root while preserving named access.
+      - Quarantine, rather than permanently delete, Base44 document metadata outside the governed QIPS register.
+    explicitly_out_of_scope:
+      - Approving or superseding programme canon without a minuted CCC verdict.
+      - Inventing insurance, credential, faculty, partner, privacy or programme-name decisions.
+      - Copying secrets, participant data, private contacts or restricted evidence into GitHub.
+    human_gates_triggered:
+      - OWNER_ACCESS_POLICY_CHANGE
+      - OWNER_BASE44_SYNCHRONIZATION_CHANGE
+      - OWNER_PUBLIC_PRESENTATION_CORRECTION
+      - OWNER_DEPLOYMENT_RECOVERY
+    authorization:
+      authority: Programme director
+      recorded_on: 2026-08-23
+      instruction: Start the recovery
+      canon_authority_delegated: false
+    implementation_order:
+      - Contain Drive public editing and Base44 whole-Drive ingestion.
+      - Repair GitHub governance and state records.
+      - Reconcile Base44 and Drive mirrors from the authoritative Git revision.
+      - Restore and verify Netlify deployment.
+      - Prepare decision-ready programme restart work without crossing CCC gates.
+    rollback:
+      drive: Preserve named permissions; record removed permission identifiers and verify owner access before and after the change.
+      base44: Create a sandbox checkpoint before edits; quarantine records instead of deleting; restore code from the checkpoint if verification fails.
+      github: Work on a proposal branch and revert the recovery commit or close the pull request if review fails.
+      netlify: Preserve the last known deployment as the rollback target until the new deployment passes live revision and form checks.
+    programme_facts_changed: []
+    open_questions_changed: []
+    synchronization_required:
+      - GitHub
+      - Google_Drive
+      - Base44
+      - Netlify
+    synchronization_status: RECOVERY_CONTROLS_COMPLETE_GITHUB_PR_AWAITING_REVIEW
+    implementation_receipts:
+      base44:
+        pre_change_checkpoint_commit: fbf630bff026ea4c620984375951c884822d620b
+        verified_checkpoint_commit: 36514ab
+        build: PASS
+        whole_drive_ingestion: DISABLED
+        qips_folder_scope: ENFORCED
+        restricted_folder_exclusion: ENFORCED
+        direct_programme_governance_writes: DISABLED
+        anonymous_drive_sync: DISABLED
+        drive_sync_authorization: AUTHENTICATED_ADMIN_REQUIRED
+        drive_metadata_listing_authorization: AUTHENTICATED_ADMIN_REQUIRED
+        github_repository_browsing_authorization: AUTHENTICATED_ADMIN_REQUIRED
+        in_app_briefing_generation: DISABLED
+        security_scan: PASS_NO_ISSUES_FOUND
+        programme_document_records_total: 1319
+        programme_document_records_quarantined: 1306
+        programme_document_records_visible: 13
+        out_of_scope_visible_records: 0
+        deletion_count: 0
+        public_frontend_status: PUBLISHED_AND_VISUALLY_VERIFIED
+        public_frontend_revision: 36514ab
+        public_landing_verification: PASS
+        authenticated_programme_verification: PASS
+        authenticated_control_room_verification: PASS
+      drive:
+        root_folder_id: 1e2hs6yuN27dbZPCVcnQzKfE6ezssXdIc
+        public_writer_removal: COMPLETE_VERIFIED
+        general_access: RESTRICTED
+        anyone_permissions_after_change: 0
+        owner_preserved: ruavirainc@gmail.com
+        connector_readback_shared: false
+      github:
+        proposal_branch: proposal/recovery-containment-2026-08-23
+        draft_pull_request: https://github.com/ruavira/qips-programme-office/pull/28
+        initial_remote_head: 5edeee9d8c22b025ef9c7818399c7f70786ec235
+        local_receipt_commit: 6663302e6d92ce109fdd59a52cf156cbfd9c9bda
+        public_receipt_commit: b774398bd0cd9aa2986ce959ca94cc0657387296
+        detailed_receipt_publication: COMPLETE_AFTER_EXPLICIT_INFORMED_APPROVAL
+        repository_checks_run: 78
+        repository_checks: PASS
+      netlify:
+        recovery_status: COMPLETE_VERIFIED
+        live_url: https://qips-walkthrough.netlify.app
+        deployment_id: 6a8b603c0407f60ee8ea46f8
+        deployment_method: NETLIFY_DROP_VERIFIED_ZIP
+        published_at: 2026-08-23T15:04:00-06:00
+        previous_live_source_commit: 0dd9c5e
+        live_source_commit: 2b17389cd4fcdfe26ccefbe22454652b09ae5382
+        expected_authoritative_source_commit: 2b17389cd4fcdfe26ccefbe22454652b09ae5382
+        live_revision_verification: PASS
+        stale_revision_absent: true
+        desktop_visual_verification: PASS
+        mobile_visual_verification: PASS
+        navigation_verification: PASS
+        browser_console_errors: 0
+        pwa_asset_verification: PASS
+        netlify_form_processing: PASS
+        form_detection: ENABLED
+        active_form: qips-walkthrough-responses
+        historical_submissions_preserved: 2
+        live_submission_test: NOT_PERFORMED
+
   - id: IKR-CR-001
     title: Install IKR-POS over QIPS
     requested_on: 2026-07-31
