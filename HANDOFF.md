@@ -106,13 +106,16 @@ himself — see §8.
   access. API readback shows no `anyone` permission, reports `shared: false`, and preserves Emmanuel
   Aiyenigba / `ruavirainc@gmail.com` as owner. No additional direct named permission was present in
   the final permission inventory.
-- **OPEN — GitHub/Netlify recovery.** Work continues on branch
+- **DONE — GitHub and Netlify recovery are verified; owner review remains.** Work continues on branch
   `proposal/recovery-containment-2026-08-23`. Draft PR #28 is open, mergeable and unmerged. The
   complete detailed receipt—including private Drive identifiers/links and cross-platform
-  metadata—was published at commit `94d940f` after explicit informed approval from the programme
-  director; GitHub repository-check run #77 passed. The live Netlify walkthrough remains behind
-  the authoritative repository; the staged recovery tab is waiting for the owner to complete
-  GitHub sign-in.
+  metadata—was published after explicit informed approval from the programme director; GitHub
+  repository-check run #78 passed at `b774398`. Netlify production deploy
+  `6a8b603c0407f60ee8ea46f8` is published from authoritative source `2b17389`; the former stale
+  `0dd9c5e` revision is absent. Desktop and mobile rendering, decision navigation, PWA assets and
+  a zero-error browser console passed live verification. Form detection re-indexed the existing
+  `qips-walkthrough-responses` form and preserved its two historical submissions. No test response
+  was sent. PR #28 deliberately remains draft and unmerged for the owner's review; no canon changed.
 
 **15 August 2026 (Codex → next agent):**
 
